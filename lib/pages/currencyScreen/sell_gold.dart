@@ -33,10 +33,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   double walletbalace;
   void getWalletBalanced() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/6158849d3b5cb8a0c1d96040'));
+    var request = http.Request('GET',
+        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -72,7 +70,7 @@ class _CurrencyScreenState extends State<SellGold> {
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
+            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
     request.bodyFields = {
       'paymentId': uuid,
       'amount': amountController.text,
@@ -99,11 +97,11 @@ class _CurrencyScreenState extends State<SellGold> {
   }
 
   void removefromwallet(String payId) async {
-    var headers = {
-      'Content-Type': 'application/json'
-    };
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'PUT', Uri.parse('https://goldv2.herokuapp.com/api/wallet/add/${Userdata.sId}'));
+        'PUT',
+        Uri.parse(
+            'https://goldv2.herokuapp.com/api/wallet/add/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',
@@ -120,65 +118,68 @@ class _CurrencyScreenState extends State<SellGold> {
 
     if (response.statusCode == 201) {
       print(await response.stream.bytesToString());
-     showDialog(
+      showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            backgroundColor: scaffoldBgColor,
-            title: Center(
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundColor: Colors.green,
-                child: Icon(
-                  Icons.check,
-                  size: 30.0,
-                  color: scaffoldBgColor,
+                backgroundColor: scaffoldBgColor,
+                title: Center(
+                  child: CircleAvatar(
+                    radius: 20.0,
+                    backgroundColor: Colors.green,
+                    child: Icon(
+                      Icons.check,
+                      size: 30.0,
+                      color: scaffoldBgColor,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Center(
-                      child: Text(
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Center(
+                          child: Text(
                         "REQUEST PLACED",
                         style: black16BoldTextStyle,
                       )),
-                  Center(
-                      child: Text(
+                      Center(
+                          child: Text(
                         'SUCCESS',
                         style: black14MediumTextStyle,
                       )),
-                  heightSpace,
-                  Center(
-                    child: Container(
-                      color: whiteColor,
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(
-                          child: Padding(
+                      heightSpace,
+                      Center(
+                        child: Container(
+                          color: whiteColor,
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(payId),
                           )),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Clipboard.setData(new ClipboardData(text: payId)).then((_){
-                        final snackBar = SnackBar(content: Text('PaymentId Copied!'));
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(new ClipboardData(text: payId))
+                              .then((_) {
+                            final snackBar =
+                                SnackBar(content: Text('PaymentId Copied!'));
 
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      });
-                    },
-                    child: Center(
-                        child: Text(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          });
+                        },
+                        child: Center(
+                            child: Text(
                           'Click to Copy',
                           style: black14MediumTextStyle,
                         )),
+                      ),
+                      heightSpace,
+                    ],
                   ),
-                  heightSpace,
-                ],
-              ),
-            ),
-          ));
+                ),
+              ));
     } else {
       print(response.reasonPhrase);
     }
@@ -256,7 +257,6 @@ class _CurrencyScreenState extends State<SellGold> {
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     print(response.paymentId);
     await removefromwallet(response.paymentId.toString());
-
   }
 
   // Fluttertoast.showToast(
@@ -550,7 +550,8 @@ class _CurrencyScreenState extends State<SellGold> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              aboutPortfolioItem('Average Sell Price', 'INR ${data.sell.toStringAsFixed(2)}'),
+              aboutPortfolioItem(
+                  'Average Sell Price', 'INR ${data.sell.toStringAsFixed(2)}'),
               Container(
                 height: 75.0,
                 width: (width - fixPadding * 6.0) / 2,
@@ -842,7 +843,6 @@ class _CurrencyScreenState extends State<SellGold> {
                           onTap: () async {
                             openCheckout();
                             Navigator.of(context).pop();
-
                           },
                           borderRadius: BorderRadius.circular(7.0),
                           child: Container(
@@ -1033,7 +1033,6 @@ class _CurrencyScreenState extends State<SellGold> {
                           onTap: () async {
                             openCheckout();
                             Navigator.of(context).pop();
-
                           },
                           borderRadius: BorderRadius.circular(7.0),
                           child: Container(

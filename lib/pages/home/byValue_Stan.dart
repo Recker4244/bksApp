@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
@@ -83,7 +84,7 @@ class _standardValueState extends State<standardValue> {
   openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': amountController.text,
+      'amount': (double.parse(valueController.text)) * 100.0,
       'name': "Standard Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -127,10 +128,9 @@ class _standardValueState extends State<standardValue> {
             'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
 
     final body = {
-      "paymentId": id,
       "status": "Saved",
-      "amount": amountController.text,
-      "gold": valueController.text,
+      "amount": valueController.text,
+      "gold": amountController.text,
       "mode": "online"
     };
     request.body = jsonEncode(body);
@@ -141,6 +141,68 @@ class _standardValueState extends State<standardValue> {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
       installmentID = s['data']['_id'];
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                backgroundColor: scaffoldBgColor,
+                title: Center(
+                  child: CircleAvatar(
+                    radius: 20.0,
+                    backgroundColor: Colors.green,
+                    child: Icon(
+                      Icons.check,
+                      size: 30.0,
+                      color: scaffoldBgColor,
+                    ),
+                  ),
+                ),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Center(
+                          child: Text(
+                        "REQUEST PLACED",
+                        style: black16BoldTextStyle,
+                      )),
+                      Center(
+                          child: Text(
+                        'SUCCESS',
+                        style: black14MediumTextStyle,
+                      )),
+                      heightSpace,
+                      Center(
+                        child: Container(
+                          color: whiteColor,
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(id),
+                          )),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(new ClipboardData(text: id))
+                              .then((_) {
+                            final snackBar =
+                                SnackBar(content: Text('PaymentId Copied!'));
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          });
+                        },
+                        child: Center(
+                            child: Text(
+                          'Click to Copy',
+                          style: black14MediumTextStyle,
+                        )),
+                      ),
+                      heightSpace,
+                    ],
+                  ),
+                ),
+              ));
     } else {
       print(response.reasonPhrase);
     }
@@ -155,9 +217,11 @@ class _standardValueState extends State<standardValue> {
     request.bodyFields = {
       "userId": Userdata.sId,
       "status": "Running",
-      "amount": amountController.text,
+      "amount": valueController.text,
       "planId": widget.planID, //Todo not in instant
-      "installmentId": installmentID
+      "installmentId": installmentID,
+      "addressId": "",
+      "maturityDate": ""
     };
 
     http.StreamedResponse response = await request.send();
@@ -169,6 +233,7 @@ class _standardValueState extends State<standardValue> {
       // datas = DataS.fromJson(s['data']);
 
       // SubscribeID = datas.sId;
+
     } else {
       print(response.reasonPhrase);
     }
@@ -182,8 +247,7 @@ class _standardValueState extends State<standardValue> {
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     installmentID = await pay(response.paymentId);
-    createSubscription(installmentID);
-    return showDialog(
+    showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
               backgroundColor: scaffoldBgColor,
@@ -219,26 +283,33 @@ class _standardValueState extends State<standardValue> {
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('otp'),
+                          child: Text(response.paymentId),
                         )),
                       ),
                     ),
-                    height20Space,
-                    Center(
-                        child: Text(
-                      "Tap to Copy Verification OTP",
-                      style: black12MediumTextStyle,
-                    )),
+                    GestureDetector(
+                      onTap: () {
+                        Clipboard.setData(
+                                new ClipboardData(text: response.paymentId))
+                            .then((_) {
+                          final snackBar =
+                              SnackBar(content: Text('PaymentId Copied!'));
+
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      },
+                      child: Center(
+                          child: Text(
+                        'Click to Copy',
+                        style: black14MediumTextStyle,
+                      )),
+                    ),
                     heightSpace,
-                    Center(
-                        child: Text(
-                      'Show this code while you visit Store',
-                      style: black12MediumTextStyle,
-                    ))
                   ],
                 ),
               ),
             ));
+    await createSubscription(installmentID);
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
