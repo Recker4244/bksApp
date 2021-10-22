@@ -2,6 +2,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 class BankFailScreen extends StatelessWidget {
   const BankFailScreen({Key key}) : super(key: key);

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'Categories.dart';
 
 class Collections extends StatefulWidget {
@@ -98,12 +98,9 @@ class _CollectionsState extends State<Collections> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! Something went wrong "
-                    ))
-            );;
+                    body: Text(" Oops !! Something went wrong ")));
+            ;
           }
         }
       },

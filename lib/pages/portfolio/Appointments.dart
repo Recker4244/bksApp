@@ -6,7 +6,7 @@ import 'package:gold247/models/order.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/Eshop/itemdetails.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:gold247/pages/profile/Appointment_Details.dart';
 import 'package:gold247/pages/profile/Shop_order_details.dart';

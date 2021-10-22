@@ -5,7 +5,7 @@ import 'package:gold247/pages/portfolio/Cart.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/pages/Eshop/itemdetails.dart';
 import 'package:gold247/constant/constant.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

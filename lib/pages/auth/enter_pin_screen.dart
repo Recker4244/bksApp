@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/pages/screens.dart';
+import 'package:gold247/language/locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -97,17 +98,17 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                     heightSpace,
                     (progress)
                         ? SpinKitRing(
-                      color: primaryColor,
-                      size: 20.0,
-                      lineWidth: 1.5,
-                    )
+                            color: primaryColor,
+                            size: 20.0,
+                            lineWidth: 1.5,
+                          )
                         : InkWell(
-                      onTap: () {},
-                      child: Text(
-                        'Forgot PIN?',
-                        style: primaryColor14RegularTextStyle,
-                      ),
-                    ),
+                            onTap: () {},
+                            child: Text(
+                              'Forgot PIN?',
+                              style: primaryColor14RegularTextStyle,
+                            ),
+                          ),
                   ],
                 ),
                 // Pin point end
@@ -275,7 +276,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
               progress = true;
               Timer(
                   Duration(seconds: 3),
-                      () => Navigator.push(
+                  () => Navigator.push(
                       context,
                       PageTransition(
                           duration: Duration(milliseconds: 600),

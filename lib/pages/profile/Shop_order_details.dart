@@ -7,6 +7,7 @@ import 'package:gold247/models/order.dart';
 import 'package:gold247/models/orderDetails.dart';
 import 'package:gold247/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:gold247/language/locale.dart';
 
 class Yourorderdetails extends StatefulWidget {
   final String id;

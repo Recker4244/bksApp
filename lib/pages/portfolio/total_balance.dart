@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
+import 'package:gold247/language/locale.dart';
 
 class TotalBalance extends StatefulWidget {
   final subscription sub;
@@ -86,7 +87,8 @@ class _TotalBalanceState extends State<TotalBalance> {
                       PageTransition(
                           type: PageTransitionType.size,
                           alignment: Alignment.bottomCenter,
-                          child: Deposit(balance: widget.avail,sub:widget.sub.sId)));
+                          child: Deposit(
+                              balance: widget.avail, sub: widget.sub.sId)));
                 },
                 child: Container(
                   height: 50.0,

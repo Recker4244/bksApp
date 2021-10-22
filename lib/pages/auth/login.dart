@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sizer/sizer.dart';
+import 'package:gold247/language/languageCubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -42,29 +45,123 @@ class _LoginState extends State<Login> {
   bool whatsapp = true;
 
   @override
-  Widget buildCheckbox() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Checkbox(
-          activeColor: primaryColor,
-          value: value,
-          onChanged: (value) {
-            setState(() {
-              this.value = value;
-              whatsapp = value;
-            });
-          },
-        ),
-        Text(
-          'Click here to recieve Whatsapp Notifications',
-          style: black14RegularTextStyle,
-        ),
-      ],
-    );
-  }
-
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
+    Widget buildCheckbox() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Checkbox(
+            activeColor: primaryColor,
+            value: value,
+            onChanged: (value) {
+              setState(() {
+                this.value = value;
+                whatsapp = value;
+              });
+            },
+          ),
+          Text(
+            locale.uncheck,
+            style: black14RegularTextStyle,
+          ),
+        ],
+      );
+    }
+
+    void Change_Language() async {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true, // set this to true
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          double width = MediaQuery.of(context).size.width;
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Wrap(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(fixPadding * 2.0),
+                      decoration: BoxDecoration(
+                        color: scaffoldBgColor,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(10.0)),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: width,
+                            alignment: Alignment.center,
+                            child: Text(
+                              locale.Choose,
+                              style: primaryColor18BoldTextStyle,
+                            ),
+                          ),
+                          height20Space,
+                          Container(
+                            width: double.infinity,
+                            height: 0.7,
+                            color: greyColor.withOpacity(0.4),
+                          ),
+
+                          Hindi_or_English(),
+
+                          height20Space,
+                          // Buy Button
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.leftToRightWithFade,
+                                  child: OTPScreen(),
+                                ),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(7.0),
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(fixPadding * 1.7),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.0),
+                                color: primaryColor,
+                              ),
+                              child: Text(
+                                locale.continuebutton.toUpperCase(),
+                                style: white16MediumTextStyle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      );
+      final PhoneNumberOb = numberController.text;
+      final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+      http.Response response = await http.post(
+        Uri.parse("https://goldv2.herokuapp.com/api/auth/register"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        mobilenumber.phoneNumber = PhoneReplace;
+        mobilenumber.whatsapp = whatsapp;
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: scaffoldBgColor,
@@ -84,7 +181,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 5.h),
               Text(
-                'Signin with phone number',
+                locale.signin,
                 style: grey14BoldTextStyle,
               ),
               Padding(
@@ -117,7 +214,7 @@ class _LoginState extends State<Login> {
                     inputBorder: InputBorder.none,
                     inputDecoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 0.0),
-                      hintText: 'Phone Number',
+                      hintText: locale.PhoneNumber,
                       hintStyle: black16SemiBoldTextStyle,
                       border: InputBorder.none,
                     ),
@@ -144,7 +241,7 @@ class _LoginState extends State<Login> {
                       color: primaryColor,
                     ),
                     child: Text(
-                      'Continue',
+                      locale.continuebutton,
                       style: white18BoldTextStyle,
                     ),
                   ),
@@ -154,7 +251,7 @@ class _LoginState extends State<Login> {
                 height: 2.h,
               ),
               Text(
-                'We’ll send otp for verification',
+                locale.willSend,
                 style: black14MediumTextStyle,
               ),
               SizedBox(
@@ -165,12 +262,14 @@ class _LoginState extends State<Login> {
                   Navigator.push<void>(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => GuestHome(language: "Hindi",),
+                      builder: (BuildContext context) => GuestHome(
+                        language: locale.Hindi,
+                      ),
                     ),
                   );
                 },
                 child: Text(
-                  'Guest Login',
+                  locale.guestLogin,
                   style: red16BoldTextStyle,
                 ),
               ),
@@ -204,99 +303,6 @@ class _LoginState extends State<Login> {
       return true;
     }
   }
-
-  void Change_Language() async {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // set this to true
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) {
-        double width = MediaQuery.of(context).size.width;
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Wrap(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(fixPadding * 2.0),
-                    decoration: BoxDecoration(
-                      color: scaffoldBgColor,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10.0)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: width,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Choose Language',
-                            style: primaryColor18BoldTextStyle,
-                          ),
-                        ),
-                        height20Space,
-                        Container(
-                          width: double.infinity,
-                          height: 0.7,
-                          color: greyColor.withOpacity(0.4),
-                        ),
-
-                        Hindi_or_English(),
-
-                        height20Space,
-                        // Buy Button
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.leftToRightWithFade,
-                                child: OTPScreen(),
-                              ),
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(7.0),
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(fixPadding * 1.7),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.0),
-                              color: primaryColor,
-                            ),
-                            child: Text(
-                              'continue'.toUpperCase(),
-                              style: white16MediumTextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-    final PhoneNumberOb = numberController.text;
-    final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
-    http.Response response = await http.post(
-      Uri.parse("https://goldv2.herokuapp.com/api/auth/register"),
-      headers: {"Content-Type": "application/json"},
-      body: json.encode({"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
-    );
-    print(response.body);
-    if (response.statusCode == 200) {
-      mobilenumber.phoneNumber = PhoneReplace;
-      mobilenumber.whatsapp = whatsapp;
-    }
-  }
 }
 
 class Hindi_or_English extends StatefulWidget {
@@ -306,7 +312,7 @@ class Hindi_or_English extends StatefulWidget {
 
 class _Hindi_or_EnglishState extends State<Hindi_or_English> {
   bool isHindi = false;
-
+  LanguageCubit _languageCubit;
   void setLanguage(bool set) {
     setState(() {
       isHindi = set;
@@ -314,7 +320,15 @@ class _Hindi_or_EnglishState extends State<Hindi_or_English> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _languageCubit = BlocProvider.of<LanguageCubit>(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: fixPadding * 2.0),
       child: Row(
@@ -328,6 +342,7 @@ class _Hindi_or_EnglishState extends State<Hindi_or_English> {
                   setState(() {
                     isHindi = true;
                   });
+                  _languageCubit.selectHindiLanguage();
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -348,7 +363,7 @@ class _Hindi_or_EnglishState extends State<Hindi_or_English> {
               ),
               widthSpace,
               Text(
-                'Hindi',
+                locale.Hindi,
                 style: primaryColor14MediumTextStyle,
               ),
             ],
@@ -362,6 +377,7 @@ class _Hindi_or_EnglishState extends State<Hindi_or_English> {
                   setState(() {
                     isHindi = false;
                   });
+                  _languageCubit.selectEngLanguage();
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -382,7 +398,7 @@ class _Hindi_or_EnglishState extends State<Hindi_or_English> {
               ),
               widthSpace,
               Text(
-                'English',
+                locale.English,
                 style: primaryColor14MediumTextStyle,
               ),
             ],

@@ -6,6 +6,7 @@ import 'package:gold247/models/referral.dart';
 import 'package:gold247/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
+import 'package:gold247/language/locale.dart';
 
 class Referal_Bonus_Detials extends StatefulWidget {
   @override

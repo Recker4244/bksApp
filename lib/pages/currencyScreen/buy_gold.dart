@@ -13,7 +13,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'dart:convert';
-
+import 'package:gold247/language/locale.dart';
 import 'package:uuid/uuid.dart';
 import 'package:sizer/sizer.dart';
 

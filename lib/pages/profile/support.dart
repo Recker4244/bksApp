@@ -1,5 +1,6 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:gold247/language/locale.dart';
 
 class Support extends StatefulWidget {
   @override

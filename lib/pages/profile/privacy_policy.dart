@@ -1,5 +1,6 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:gold247/language/locale.dart';
 
 class PrivacyPolicy extends StatelessWidget {
   const PrivacyPolicy({Key key}) : super(key: key);

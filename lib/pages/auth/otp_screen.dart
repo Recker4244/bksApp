@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:gold247/language/locale.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/models/bankDetails.dart';
@@ -204,6 +205,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       body: ListView(
@@ -237,7 +239,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
                 child: Text(
-                  'Enter the otp code from the phone we just sent you',
+                  locale.enterOTP,
                   style: grey14BoldTextStyle,
                   textAlign: TextAlign.center,
                 ),
@@ -394,15 +396,10 @@ class _OTPScreenState extends State<OTPScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      'Didn\'t receive OTP Code?',
-                      style: grey14MediumTextStyle,
-                    ),
-                    width5Space,
                     InkWell(
                       onTap: () => otpCheck(),
                       child: Text(
-                        'Resend',
+                        locale.resend,
                         style: black18BoldTextStyle,
                       ),
                     ),
@@ -425,7 +422,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       color: primaryColor,
                     ),
                     child: Text(
-                      'Continue',
+                      locale.continuebutton,
                       style: white14BoldTextStyle,
                     ),
 //                    floatingActionButton: FloatingActionButton(

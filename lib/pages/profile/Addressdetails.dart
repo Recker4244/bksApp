@@ -7,7 +7,7 @@ import 'package:gold247/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:sizer/sizer.dart';
 
 class AddressDetails extends StatefulWidget {
@@ -53,6 +53,7 @@ class _AddressDetailsState extends State<AddressDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -75,7 +76,7 @@ class _AddressDetailsState extends State<AddressDetails> {
                   backgroundColor: primaryColor,
                   titleSpacing: 0.0,
                   title: Text(
-                    'ADDRESS DETAILS',
+                    locale.addresstitle,
                     style: TextStyle(
                       color: scaffoldBgColor,
                       fontSize: 16,
@@ -106,7 +107,7 @@ class _AddressDetailsState extends State<AddressDetails> {
                                     alignment: WrapAlignment.start,
                                     children: [
                                       Text(
-                                        "LANDMARK :",
+                                        locale.Address,
                                         style: primaryColor18BoldTextStyle,
                                       ),
                                       Text(
@@ -121,7 +122,7 @@ class _AddressDetailsState extends State<AddressDetails> {
                                   Wrap(
                                     children: [
                                       Text(
-                                        "PIN CODE :",
+                                        locale.PINCODE,
                                         style: primaryColor18BoldTextStyle,
                                       ),
                                       Text(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:gold247/language/locale.dart';
 
 class Plan extends StatefulWidget {
   @override

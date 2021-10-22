@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/pages/screens.dart';
+import 'package:gold247/language/locale.dart';
 
 class EditProfile extends StatefulWidget {
   @override

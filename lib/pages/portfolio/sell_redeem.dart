@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:gold247/language/locale.dart';
 
 class Withdraw extends StatefulWidget {
   final String balance;
@@ -409,12 +410,8 @@ class _WithdrawState extends State<Withdraw> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! No data "
-                    ))
-            );
+                    body: Text(" Oops !! No data ")));
           }
         }
       },

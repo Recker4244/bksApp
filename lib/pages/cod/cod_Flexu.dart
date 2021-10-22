@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 enum adressType { Home, Work, Others }
 adressType _character = adressType.Home;

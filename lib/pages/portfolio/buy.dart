@@ -18,6 +18,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gold247/language/locale.dart';
 
 class Deposit extends StatefulWidget {
   final String balance;
@@ -648,12 +649,8 @@ class _DepositState extends State<Deposit> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! No data "
-                    ))
-            );
+                    body: Text(" Oops !! No data ")));
           }
         }
       },

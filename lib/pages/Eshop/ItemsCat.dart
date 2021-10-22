@@ -9,7 +9,7 @@ import 'package:gold247/models/product.dart';
 import 'package:gold247/models/variety.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/videoplayer.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 import 'package:carousel_slider/carousel_slider.dart';

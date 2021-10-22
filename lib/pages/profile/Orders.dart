@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:gold247/pages/profile/Shop_order_details.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 class Orders extends StatefulWidget {
   const Orders({Key key}) : super(key: key);

@@ -6,6 +6,7 @@ import 'package:gold247/models/item.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:gold247/language/locale.dart';
 
 class Eshop extends StatefulWidget {
   Eshop({this.id, this.type});
@@ -116,14 +117,10 @@ class _EshopState extends State<Eshop> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
                     body: Center(
-                      child: Text(
-                          " Oops !! No Items found "
-                      ),
-                    ))
-            );
+                      child: Text(" Oops !! No Items found "),
+                    )));
           }
         }
       },

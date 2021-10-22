@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'byWght_ProceddF.dart';
+import 'package:gold247/language/locale.dart';
 
 class ByWght_Value extends StatefulWidget {
   ByWght_Value(this.plantype);

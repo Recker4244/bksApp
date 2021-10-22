@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:gold247/models/subscription.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/language/locale.dart';
 
 class Collections extends StatefulWidget {
   const Collections({Key key}) : super(key: key);

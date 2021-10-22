@@ -14,6 +14,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../Eshop/COD_address.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:gold247/language/locale.dart';
 
 class ByValFlexi extends StatefulWidget {
   double val;

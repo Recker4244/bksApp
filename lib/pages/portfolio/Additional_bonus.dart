@@ -3,7 +3,7 @@ import 'dart:js';
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:gold247/pages/currencyScreen/buy_gold.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Additional_Bonus extends StatefulWidget {
@@ -37,10 +37,7 @@ class _Additional_BonusState extends State<Additional_Bonus> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(30),
             height: 220,
             decoration: BoxDecoration(
@@ -67,10 +64,7 @@ class _Additional_BonusState extends State<Additional_Bonus> {
                 height20Space,
                 Container(
                   padding: EdgeInsets.all(20),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
+                  width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: primaryColor,
@@ -115,21 +109,36 @@ class _Additional_BonusState extends State<Additional_Bonus> {
           Column(
             children: <Widget>[
               Choice_Card1(
-                'Surya Joined and Enroll in this plan', '1.08 GRAM', 'Click TO REMIND','SKIP PAYMENTS',context, BuyGold(),BuyGold(),
+                'Surya Joined and Enroll in this plan',
+                '1.08 GRAM',
+                'Click TO REMIND',
+                'SKIP PAYMENTS',
+                context,
+                BuyGold(),
+                BuyGold(),
               ),
               Choice_Card1(
-                'Prince Joined and Enroll in this plan', '2.18 GRAM', 'Click TO REMIND','SKIP PAYMENTS', context,BuyGold(),BuyGold(),
+                'Prince Joined and Enroll in this plan',
+                '2.18 GRAM',
+                'Click TO REMIND',
+                'SKIP PAYMENTS',
+                context,
+                BuyGold(),
+                BuyGold(),
               ),
               Choice_Card1(
-                'Agni Joined and Enroll in this plan', '1.95 GRAM', 'Click TO REMIND','SKIP PAYMENTS',context, BuyGold(),BuyGold(),
+                'Agni Joined and Enroll in this plan',
+                '1.95 GRAM',
+                'Click TO REMIND',
+                'SKIP PAYMENTS',
+                context,
+                BuyGold(),
+                BuyGold(),
               ),
             ],
           ),
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             alignment: Alignment.center,
             color: primaryColor,
             padding: EdgeInsets.all(10),
@@ -144,16 +153,14 @@ class _Additional_BonusState extends State<Additional_Bonus> {
   }
 
   Choice_Card1(
-      String mainText,
-      String amount,
-      String bottomText1,
-      String bottomText2,
-      BuildContext context,
-
-      Widget navigateTo1,
-      Widget navigateTo2,
-
-      ) {
+    String mainText,
+    String amount,
+    String bottomText1,
+    String bottomText2,
+    BuildContext context,
+    Widget navigateTo1,
+    Widget navigateTo2,
+  ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
@@ -161,7 +168,6 @@ class _Additional_BonusState extends State<Additional_Bonus> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: whiteColor,
-
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -260,7 +266,6 @@ class _Additional_BonusState extends State<Additional_Bonus> {
                     ),
                   ),
                 ),
-
                 InkWell(
                   onTap: () {
                     Navigator.push(

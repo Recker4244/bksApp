@@ -5,7 +5,7 @@ import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:gold247/models/user.dart';
-
+import 'package:gold247/language/locale.dart';
 ////TODO     market
 
 class Market extends StatefulWidget {
@@ -98,12 +98,8 @@ class _MarketState extends State<Market> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! Something went wrong "
-                    ))
-            );
+                    body: Text(" Oops !! Something went wrong ")));
           }
         }
       },

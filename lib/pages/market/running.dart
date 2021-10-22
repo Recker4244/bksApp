@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/pages/portfolio/Buy_Plan.dart';
 import 'dart:convert';
+import 'package:gold247/language/locale.dart';
 
 class Running extends StatefulWidget {
   final List<subscription> running;

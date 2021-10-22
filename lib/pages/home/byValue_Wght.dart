@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'byWght_ProceddF.dart';
+import 'package:gold247/language/locale.dart';
 
 class ByValue_Wght extends StatefulWidget {
   ByValue_Wght(this.plantype);
@@ -423,12 +424,8 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
             } else {
               return SafeArea(
                   child: Scaffold(
-
                       backgroundColor: scaffoldBgColor,
-                      body: Text(
-                          " Oops !! Something went wrong "
-                      ))
-              );
+                      body: Text(" Oops !! Something went wrong ")));
             }
           }
         });

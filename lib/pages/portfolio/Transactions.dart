@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/models/user.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

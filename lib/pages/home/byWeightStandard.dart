@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
@@ -15,6 +14,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../Eshop/COD_address.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:gold247/language/locale.dart';
 
 class Standard_PC extends StatefulWidget {
   String durationString;
@@ -84,7 +84,7 @@ class _Standard_PCState extends State<Standard_PC> {
   openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': (double.parse(valueController.text)) * 100.0,
+      'amount': "",
       'name': "Standard Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -128,9 +128,10 @@ class _Standard_PCState extends State<Standard_PC> {
             'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
 
     final body = {
+      "paymentId": id,
       "status": "Saved",
-      "amount": valueController.text,
-      "gold": amountController.text,
+      "amount": amountController.text,
+      "gold": valueController.text,
       "mode": "online"
     };
     request.body = jsonEncode(body);
@@ -141,68 +142,6 @@ class _Standard_PCState extends State<Standard_PC> {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
       installmentID = s['data']['_id'];
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                backgroundColor: scaffoldBgColor,
-                title: Center(
-                  child: CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.green,
-                    child: Icon(
-                      Icons.check,
-                      size: 30.0,
-                      color: scaffoldBgColor,
-                    ),
-                  ),
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Center(
-                          child: Text(
-                        "REQUEST PLACED",
-                        style: black16BoldTextStyle,
-                      )),
-                      Center(
-                          child: Text(
-                        'SUCCESS',
-                        style: black14MediumTextStyle,
-                      )),
-                      heightSpace,
-                      Center(
-                        child: Container(
-                          color: whiteColor,
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(id),
-                          )),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Clipboard.setData(new ClipboardData(text: id))
-                              .then((_) {
-                            final snackBar =
-                                SnackBar(content: Text('PaymentId Copied!'));
-
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          });
-                        },
-                        child: Center(
-                            child: Text(
-                          'Click to Copy',
-                          style: black14MediumTextStyle,
-                        )),
-                      ),
-                      heightSpace,
-                    ],
-                  ),
-                ),
-              ));
     } else {
       print(response.reasonPhrase);
     }
@@ -217,11 +156,9 @@ class _Standard_PCState extends State<Standard_PC> {
     request.bodyFields = {
       "userId": Userdata.sId,
       "status": "Running",
-      "amount": valueController.text,
+      "amount": amountController.text,
       "planId": widget.planID, //Todo not in instant
-      "installmentId": installmentID,
-      "addressId": "",
-      "maturityDate": ""
+      "installmentId": installmentID
     };
 
     http.StreamedResponse response = await request.send();
@@ -233,7 +170,6 @@ class _Standard_PCState extends State<Standard_PC> {
       // datas = DataS.fromJson(s['data']);
 
       // SubscribeID = datas.sId;
-
     } else {
       print(response.reasonPhrase);
     }
@@ -247,7 +183,8 @@ class _Standard_PCState extends State<Standard_PC> {
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     installmentID = await pay(response.paymentId);
-    showDialog(
+    createSubscription(installmentID);
+    return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
               backgroundColor: scaffoldBgColor,
@@ -283,33 +220,26 @@ class _Standard_PCState extends State<Standard_PC> {
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(response.paymentId),
+                          child: Text('otp'),
                         )),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Clipboard.setData(
-                                new ClipboardData(text: response.paymentId))
-                            .then((_) {
-                          final snackBar =
-                              SnackBar(content: Text('PaymentId Copied!'));
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        });
-                      },
-                      child: Center(
-                          child: Text(
-                        'Click to Copy',
-                        style: black14MediumTextStyle,
-                      )),
-                    ),
+                    height20Space,
+                    Center(
+                        child: Text(
+                      "Tap to Copy Verification OTP",
+                      style: black12MediumTextStyle,
+                    )),
                     heightSpace,
+                    Center(
+                        child: Text(
+                      'Show this code while you visit Store',
+                      style: black12MediumTextStyle,
+                    ))
                   ],
                 ),
               ),
             ));
-    await createSubscription(installmentID);
   }
 
   _handlePaymentError(PaymentFailureResponse response) {

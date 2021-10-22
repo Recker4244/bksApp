@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../portfolio/Cart.dart';
 import 'package:http/http.dart' as http;
 import 'package:gold247/models/user.dart';
+import 'package:gold247/language/locale.dart';
 
 class Itemdetails extends StatefulWidget {
   final ItemList item;
@@ -31,14 +32,13 @@ class _ItemdetailsState extends State<Itemdetails> {
       });
     }
   }
+
   addToCart() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST',
         Uri.parse('https://goldv2.herokuapp.com/api/cart/add/${Userdata.sId}'));
-    request.body = json.encode({"itemDetail": widget.item.sId,
-      "quantity":count
-    }
-    );
+    request.body =
+        json.encode({"itemDetail": widget.item.sId, "quantity": count});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -52,6 +52,7 @@ class _ItemdetailsState extends State<Itemdetails> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -78,17 +79,17 @@ class _ItemdetailsState extends State<Itemdetails> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: ()async {
-                 await addToCart();
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
-
+                onTap: () async {
+                  await addToCart();
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Cart()));
                 },
                 child: Container(
                   height: 50.0,
                   width: (width - 1.0) / 2,
                   alignment: Alignment.center,
                   child: Text(
-                    'ADD TO CART'.toUpperCase(),
+                    locale.addtocart.toUpperCase(),
                     style: white16BoldTextStyle,
                   ),
                 ),
@@ -99,7 +100,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                 color: whiteColor.withOpacity(0.5),
               ),
               InkWell(
-                onTap: ()async {
+                onTap: () async {
                   await addToCart();
                   Navigator.push(
                     context,
@@ -113,7 +114,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                   width: (width - 1.0) / 2,
                   alignment: Alignment.center,
                   child: Text(
-                    'BUY NOW'.toUpperCase(),
+                    locale.buyNow.toUpperCase(),
                     style: white16BoldTextStyle,
                   ),
                 ),
@@ -152,8 +153,8 @@ class _ItemdetailsState extends State<Itemdetails> {
                             child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(5),
-                                  )),
+                                Radius.circular(5),
+                              )),
                               height: 40,
                               width: 40,
                               alignment: Alignment.center,
@@ -180,8 +181,8 @@ class _ItemdetailsState extends State<Itemdetails> {
                             child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(5),
-                                  )),
+                                Radius.circular(5),
+                              )),
                               height: 40,
                               width: 40,
                               alignment: Alignment.center,
@@ -204,7 +205,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Description',
+                        locale.Description,
                         style: primaryColor18BoldTextStyle,
                       ),
                       heightSpace,
@@ -230,7 +231,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                   height20Space,
                   height20Space,
                   TextWidget(
-                    main: "SKU Number",
+                    main: locale.SKU,
                     value: widget.item.sKU,
                   ),
                   TextWidget(
@@ -249,7 +250,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                   Column(
                     children: <Widget>[
                       Text(
-                        'CHARGES APPLIED',
+                        locale.charges,
                         style: primaryColor18BoldTextStyle,
                       ),
                       Row(

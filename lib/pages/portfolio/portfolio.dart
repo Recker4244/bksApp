@@ -15,6 +15,7 @@ import 'referral_bonus_details.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:gold247/language/locale.dart';
 
 class Portfolio extends StatefulWidget {
   const Portfolio({Key key}) : super(key: key);
@@ -170,6 +171,31 @@ class _PortfolioState extends State<Portfolio> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
+    portfolioValue() {
+      // double width = MediaQuery.of(context).size.width;
+      return Material(
+        elevation: 2.0,
+        child: Container(
+          padding: EdgeInsets.only(bottom: fixPadding * 1.5),
+          color: whiteColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              valueItem(locale.totalSaved, '${gold.toStringAsFixed(2)} GRAM'),
+              Container(
+                height: 8.h,
+                width: 0.5.w,
+                color: primaryColor,
+              ),
+              valueItem(locale.currentValue, 'INR ${amount}'),
+            ],
+          ),
+        ),
+      );
+    }
+
     return FutureBuilder(
       future: init(),
       initialData: null,
@@ -193,7 +219,7 @@ class _PortfolioState extends State<Portfolio> {
                 backgroundColor: whiteColor,
                 title: Center(
                   child: Text(
-                    'Your Portfolio',
+                    locale.yourPortfolio,
                     style: primaryColor18BoldTextStyle,
                   ),
                 ),
@@ -203,27 +229,27 @@ class _PortfolioState extends State<Portfolio> {
                 children: [
                   portfolioValue(),
                   Choice_Card(
-                      'Total Gold Saved In Plans',
+                      locale.TotalinPlans,
                       '${planBonus.toStringAsFixed(2)} GRAM',
-                      'CHECK DETAILS',
+                      locale.CheckDetails,
                       FontAwesomeIcons.solidCalendarCheck,
                       Market()),
                   Choice_Card(
-                      'Total Instant Gold Available',
+                      locale.TotalInstant,
                       '${instantBonus.toStringAsFixed(2)} GRAM',
-                      'CHECK DETAILS',
+                      locale.CheckDetails,
                       FontAwesomeIcons.coins,
                       BuyGold()),
                   Choice_Card(
-                      'Total Referral Bonus',
+                      locale.TotalReferal,
                       '${totalbonus.toStringAsFixed(2)} GRAM',
-                      'CHECK DETAILS',
+                      locale.CheckDetails,
                       FontAwesomeIcons.shareAlt,
                       Referal_Bonus_Detials()),
                   Choice_Card(
-                      'Total Plan Bonus',
+                      locale.TotalPlanBonus,
                       "${totalplanbonus.toStringAsFixed(2)} GRAM",
-                      'CHECK DETAILS',
+                      locale.CheckDetails,
                       FontAwesomeIcons.piggyBank,
                       Plan_Bonnus_Details(
                         byweight: totalplanbonusbyweight.toStringAsFixed(2),
@@ -241,30 +267,6 @@ class _PortfolioState extends State<Portfolio> {
           }
         }
       },
-    );
-  }
-
-  portfolioValue() {
-    // double width = MediaQuery.of(context).size.width;
-    return Material(
-      elevation: 2.0,
-      child: Container(
-        padding: EdgeInsets.only(bottom: fixPadding * 1.5),
-        color: whiteColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            valueItem('Total Saved', '${gold.toStringAsFixed(2)} GRAM'),
-            Container(
-              height: 8.h,
-              width: 0.5.w,
-              color: primaryColor,
-            ),
-            valueItem('Current Value', 'INR ${amount}'),
-          ],
-        ),
-      ),
     );
   }
 

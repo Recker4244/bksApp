@@ -17,6 +17,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:gold247/language/locale.dart';
 
 var redeemBalance = 0.0;
 
@@ -467,12 +468,8 @@ class _CartState extends State<Cart> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! No data "
-                    ))
-            );
+                    body: Text(" Oops !! No data ")));
           }
         }
       },

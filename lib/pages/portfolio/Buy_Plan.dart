@@ -5,6 +5,7 @@ import 'package:gold247/pages/profile/bank_details.dart';
 import 'package:gold247/widget/column_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 class Buy_plan extends StatefulWidget {
   const Buy_plan({Key key}) : super(key: key);

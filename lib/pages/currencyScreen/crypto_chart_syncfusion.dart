@@ -5,6 +5,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:http/http.dart' as http;
+import 'package:gold247/language/locale.dart';
 
 class CryptoChartSyncfusion extends StatefulWidget {
   CryptoChartSyncfusion({@required this.type});
@@ -133,12 +134,8 @@ class _CryptoChartSyncfusionState extends State<CryptoChartSyncfusion> {
             } else {
               return SafeArea(
                   child: Scaffold(
-
                       backgroundColor: scaffoldBgColor,
-                      body: Text(
-                          " Oops !! Something went wrong "
-                      ))
-              );
+                      body: Text(" Oops !! Something went wrong ")));
             }
           }
         });

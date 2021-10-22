@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:gold247/language/locale.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/models/user.dart';
 import 'package:intl/intl.dart';

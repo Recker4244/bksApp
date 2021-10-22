@@ -2,6 +2,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 class CurrencyScreen extends StatefulWidget {
   const CurrencyScreen({Key key}) : super(key: key);
@@ -547,10 +548,9 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                             child: Text(
                               'Buy'.toUpperCase(),
                               style: TextStyle(
-                                color: scaffoldBgColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold
-                              ),
+                                  color: scaffoldBgColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -749,10 +749,9 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                             child: Text(
                               'buy'.toUpperCase(),
                               style: TextStyle(
-                                color: scaffoldBgColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold
-                              ),
+                                  color: scaffoldBgColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

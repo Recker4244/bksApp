@@ -3,6 +3,7 @@ import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:gold247/language/locale.dart';
 
 class Forfeited extends StatefulWidget {
   final List<subscription> forfeited;

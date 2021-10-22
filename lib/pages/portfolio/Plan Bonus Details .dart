@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/language/locale.dart';
 
 class Plan_Bonnus_Details extends StatefulWidget {
   final String byweight;
@@ -179,12 +180,8 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
           } else {
             return SafeArea(
                 child: Scaffold(
-
                     backgroundColor: scaffoldBgColor,
-                    body: Text(
-                        " Oops !! No data "
-                    ))
-            );
+                    body: Text(" Oops !! No data ")));
           }
         }
       },

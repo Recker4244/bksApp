@@ -9,6 +9,7 @@ import 'package:gold247/models/bankDetails.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gold247/language/locale.dart';
 
 class BankDetails extends StatefulWidget {
   const BankDetails({Key key}) : super(key: key);
@@ -190,13 +191,193 @@ class _BankDetailsState extends State<BankDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
+    selectAccountTypeItem(type) {
+      double width = MediaQuery.of(context).size.width;
+      return Expanded(
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              selectedAccountType = type;
+            });
+          },
+          child: Container(
+            width: (width - fixPadding * 4.0) / 2,
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 18.0,
+                  height: 18.0,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.0),
+                    border: Border.all(
+                      width: 0.8,
+                      color: (selectedAccountType == type)
+                          ? primaryColor
+                          : greenColor,
+                    ),
+                  ),
+                  child: Container(
+                    width: 10.0,
+                    height: 10.0,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: (selectedAccountType == type)
+                          ? primaryColor
+                          : whiteColor,
+                    ),
+                  ),
+                ),
+                widthSpace,
+                Text(
+                  type,
+                  style: primaryColor16BoldTextStyle,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    bankDetail() {
+      return Padding(
+        padding: const EdgeInsets.all(fixPadding * 3.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Name Field Start
+
+            Container(
+              padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: whiteColor,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: primaryColor,
+                  ),
+                ),
+                child: TextField(
+                  focusNode: accountFocus,
+                  controller: accountNumberController,
+                  keyboardType: TextInputType.number,
+                  style: primaryColor16BoldTextStyle,
+                  decoration: InputDecoration(
+                    labelText: locale.AcctNum,
+                    labelStyle: primaryColor16BoldTextStyle,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                  ),
+                  onChanged: (value) {},
+                ),
+              ),
+            ),
+            // Name Field End
+
+            // IFSC Code Field Start
+            Container(
+              padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: whiteColor,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: primaryColor,
+                  ),
+                ),
+                child: TextField(
+                  focusNode: ifscFocus,
+                  controller: ifscCodeController,
+                  keyboardType: TextInputType.text,
+                  style: primaryColor16BoldTextStyle,
+                  decoration: InputDecoration(
+                    labelText: locale.ifsc,
+                    labelStyle: primaryColor16BoldTextStyle,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                  ),
+                  onChanged: (value) {},
+                ),
+              ),
+            ),
+            // IFSC Code Field End
+
+            // Select Account Type Start
+            Text(
+              'Select Account Type',
+              style: primaryColor16BoldTextStyle,
+            ),
+            heightSpace,
+
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                selectAccountTypeItem('Savings'),
+                selectAccountTypeItem('Current'),
+              ],
+            ),
+
+            // Select Account Type End
+
+            height20Space,
+
+            // Save Button Start
+            InkWell(
+              onTap: () => apiCall(ifscCodeController.text),
+              borderRadius: BorderRadius.circular(7.0),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(fixPadding * 1.5),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  color: primaryColor,
+                ),
+                child: Text(
+                  'Proceed',
+                  style: white14BoldTextStyle,
+                ),
+              ),
+            ),
+            // Save Button End
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'YOUR BANK DETAILS',
+          locale.banktitle,
           style: white16SemiBoldTextStyle,
         ),
         leading: IconButton(
@@ -236,182 +417,4 @@ class _BankDetailsState extends State<BankDetails> {
   //   );
   // }
 
-  bankDetail() {
-    return Padding(
-      padding: const EdgeInsets.all(fixPadding * 3.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Name Field Start
-
-          Container(
-            padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-            child: Theme(
-              data: ThemeData(
-                primaryColor: whiteColor,
-                textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: primaryColor,
-                ),
-              ),
-              child: TextField(
-                focusNode: accountFocus,
-                controller: accountNumberController,
-                keyboardType: TextInputType.number,
-                style: primaryColor16BoldTextStyle,
-                decoration: InputDecoration(
-                  labelText: 'Account Number',
-                  labelStyle: primaryColor16BoldTextStyle,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(color: primaryColor, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(color: primaryColor, width: 1),
-                  ),
-                ),
-                onChanged: (value) {},
-              ),
-            ),
-          ),
-          // Name Field End
-
-          // IFSC Code Field Start
-          Container(
-            padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-            child: Theme(
-              data: ThemeData(
-                primaryColor: whiteColor,
-                textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: primaryColor,
-                ),
-              ),
-              child: TextField(
-                focusNode: ifscFocus,
-                controller: ifscCodeController,
-                keyboardType: TextInputType.text,
-                style: primaryColor16BoldTextStyle,
-                decoration: InputDecoration(
-                  labelText: 'IFSC Code',
-                  labelStyle: primaryColor16BoldTextStyle,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(color: primaryColor, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                    borderSide: BorderSide(color: primaryColor, width: 1),
-                  ),
-                ),
-                onChanged: (value) {},
-              ),
-            ),
-          ),
-          // IFSC Code Field End
-
-          // Select Account Type Start
-          Text(
-            'Select Account Type',
-            style: primaryColor16BoldTextStyle,
-          ),
-          heightSpace,
-
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              selectAccountTypeItem('Savings'),
-              selectAccountTypeItem('Current'),
-            ],
-          ),
-
-          // Select Account Type End
-
-          height20Space,
-
-          // Save Button Start
-          InkWell(
-            onTap: () => apiCall(ifscCodeController.text),
-            borderRadius: BorderRadius.circular(7.0),
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(fixPadding * 1.5),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7.0),
-                color: primaryColor,
-              ),
-              child: Text(
-                'Proceed',
-                style: white14BoldTextStyle,
-              ),
-            ),
-          ),
-          // Save Button End
-        ],
-      ),
-    );
-  }
-
-  selectAccountTypeItem(type) {
-    double width = MediaQuery.of(context).size.width;
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            selectedAccountType = type;
-          });
-        },
-        child: Container(
-          width: (width - fixPadding * 4.0) / 2,
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 18.0,
-                height: 18.0,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9.0),
-                  border: Border.all(
-                    width: 0.8,
-                    color: (selectedAccountType == type)
-                        ? primaryColor
-                        : greenColor,
-                  ),
-                ),
-                child: Container(
-                  width: 10.0,
-                  height: 10.0,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: (selectedAccountType == type)
-                        ? primaryColor
-                        : whiteColor,
-                  ),
-                ),
-              ),
-              widthSpace,
-              Text(
-                type,
-                style: primaryColor16BoldTextStyle,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

@@ -13,6 +13,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import '../Eshop/COD_address.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:gold247/language/locale.dart';
 
 class SellOld extends StatefulWidget {
   SellOld();
@@ -242,6 +243,51 @@ class _SellOldState extends State<SellOld> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
+    Your_Portfolio(
+        String kartage, double sellPrice, String Weight, String amount) {
+      return Container(
+        height: 330,
+        child: Padding(
+          padding: EdgeInsets.all(fixPadding * 2.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                locale.calculation,
+                style: primaryColor16MediumTextStyle,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Portfolio_card(locale.selected,
+                        kartage), //TODO${kartage} ${sellPrice} ${amount}
+                    Portfolio_card(
+                      locale.sellper,
+                      'INR ${sellPrice.toStringAsFixed(2)}',
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Portfolio_card(locale.weightEntered, "${Weight} GRAM"),
+                    Portfolio_card(locale.approx, ' INR  ${amount}'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -331,7 +377,7 @@ class _SellOldState extends State<SellOld> {
                                   return InputDecorator(
                                     decoration: InputDecoration(
                                       labelText:
-                                          'Select Karatege'.toUpperCase(),
+                                          locale.selectKarat.toUpperCase(),
                                       labelStyle: primaryColor18BoldTextStyle,
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -431,7 +477,7 @@ class _SellOldState extends State<SellOld> {
                               height: 60.0,
                               padding: EdgeInsets.all(fixPadding * 1.5),
                               child: Text(
-                                'Place Request for Verification',
+                                locale.PlaceRequest,
                                 style: white18BoldTextStyle,
                               ),
                             ),
@@ -534,49 +580,6 @@ class _Gold_Price_barState extends State<Gold_Price_bar> {
   }
 }
 
-Your_Portfolio(String kartage, double sellPrice, String Weight, String amount) {
-  return Container(
-    height: 330,
-    child: Padding(
-      padding: EdgeInsets.all(fixPadding * 2.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'CALCULATION',
-            style: primaryColor16MediumTextStyle,
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Portfolio_card('Selected Karatage',
-                    kartage), //TODO${kartage} ${sellPrice} ${amount}
-                Portfolio_card(
-                  'Per Gram Sell Price',
-                  'INR ${sellPrice.toStringAsFixed(2)}',
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Portfolio_card('Weight Entered', "${Weight} GRAM"),
-                Portfolio_card('Approximate sell price', ' INR  ${amount}'),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 class Portfolio_card extends StatelessWidget {
   Portfolio_card(this.tag, this.text);
 
@@ -632,25 +635,26 @@ class Payment_Method extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          '   Choose Payment Mode',
+          locale.choosePayment,
           style: primaryColor16MediumTextStyle,
         ),
         heightSpace,
         Payment_Card(
           FontAwesomeIcons.creditCard,
-          'Use Payment Gateway Service to pay instantly',
-          'Online Payment',
+          locale.usePayment,
+          locale.herepayment,
           BankDetails(),
         ),
         heightSpace,
         Payment_Card(
           Icons.location_on,
-          'You can pay at your doorstep',
-          'Cash On Delivery',
+          locale.useCOC,
+          locale.hereCOC,
           Adress_Details_Payment(),
         ),
       ],

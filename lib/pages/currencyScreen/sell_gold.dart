@@ -7,7 +7,7 @@ import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
-
+import 'package:gold247/language/locale.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:http/http.dart' as http;
@@ -33,8 +33,10 @@ class _CurrencyScreenState extends State<SellGold> {
 
   double walletbalace;
   void getWalletBalanced() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://goldv2.herokuapp.com/api/wallet/6158849d3b5cb8a0c1d96040'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -70,7 +72,7 @@ class _CurrencyScreenState extends State<SellGold> {
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+            'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
     request.bodyFields = {
       'paymentId': uuid,
       'amount': amountController.text,
