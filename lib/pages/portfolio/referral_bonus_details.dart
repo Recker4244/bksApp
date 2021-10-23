@@ -108,7 +108,7 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
                                 style: primaryColor18BoldTextStyle,
                               ),
                               Text(
-                                '${(Userdata.joiningBonus + 5.80).toStringAsFixed(2)} GRAM',
+                                '${((Userdata.joiningBonus).toDouble() + (totalbonus)).toStringAsFixed(2)} GRAM',
                                 style: primaryColor16MediumTextStyle,
                               ),
                               Container(
@@ -147,7 +147,7 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
                                           style: white12MediumTextStyle,
                                         ),
                                         Text(
-                                          '5.80 GRAM',
+                                          totalbonus.toStringAsFixed(2),
                                           style: white14MediumTextStyle,
                                         ),
                                       ],

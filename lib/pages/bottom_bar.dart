@@ -32,7 +32,8 @@ class _BottomBarState extends State<BottomBar> {
   int currentIndex;
   @override
   void initState() {
-    if (!Userdata.isInvested) Future.delayed(Duration.zero, showTutorial);
+    if (!Userdata.isInvested)
+      Future.delayed(Duration(seconds: 2), showTutorial);
     super.initState();
 
     if (widget.index != null) {
@@ -52,8 +53,8 @@ class _BottomBarState extends State<BottomBar> {
     });
   }
 
-  void showTutorial() {
-    initTargets();
+  void showTutorial() async {
+    targets = await initTargets();
     tutorialCoachMark = TutorialCoachMark(
       context,
       targets: targets,
@@ -193,12 +194,41 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  void initTargets() {
+  Future<List<TargetFocus>> initTargets() async {
     targets.clear();
+
+    // targets.add(
+    //   TargetFocus(
+    //     identify: "keyBottomNavigation1",
+    //     keyTarget: keyBottomNavigation1,
+    //     alignSkip: Alignment.topRight,
+    //     contents: [
+    //       TargetContent(
+    //         align: ContentAlign.top,
+    //         builder: (context, controller) {
+    //           return Container(
+    //             child: Column(
+    //               mainAxisSize: MainAxisSize.min,
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: <Widget>[
+    //                 Text(
+    //                   "Here you can Buy and save for your future",
+    //                   style: TextStyle(
+    //                     color: Colors.white,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     ],
+    //   ),
+    // );
     targets.add(
       TargetFocus(
-        identify: "keyBottomNavigation2",
-        keyTarget: keyBottomNavigation2,
+        identify: "keyBottomNavigation1",
+        keyTarget: keyBottomNavigation1,
         alignSkip: Alignment.topRight,
         contents: [
           TargetContent(
@@ -210,7 +240,7 @@ class _BottomBarState extends State<BottomBar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Here you can check all your savings",
+                      "Here you can Buy and Save for your future",
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -223,7 +253,6 @@ class _BottomBarState extends State<BottomBar> {
         ],
       ),
     );
-
     targets.add(
       TargetFocus(
         identify: "keyBottomNavigation2",
@@ -283,7 +312,7 @@ class _BottomBarState extends State<BottomBar> {
     );
     targets.add(
       TargetFocus(
-        identify: "keyBottomNavigation3",
+        identify: "keyBottomNavigation4",
         keyTarget: keyBottomNavigation4,
         alignSkip: Alignment.topRight,
         contents: [
@@ -309,5 +338,6 @@ class _BottomBarState extends State<BottomBar> {
         ],
       ),
     );
+    return targets;
   }
 }

@@ -40,6 +40,10 @@ class _LoginState extends State<Login> {
   //     prefs.setString('phoneNumber', number);
   //   });
   // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   bool value = true;
   bool whatsapp = true;
@@ -115,13 +119,7 @@ class _LoginState extends State<Login> {
                           // Buy Button
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.leftToRightWithFade,
-                                  child: OTPScreen(),
-                                ),
-                              );
+                              Navigator.pop(context);
                             },
                             borderRadius: BorderRadius.circular(7.0),
                             child: Container(
@@ -148,18 +146,6 @@ class _LoginState extends State<Login> {
           );
         },
       );
-      final PhoneNumberOb = numberController.text;
-      final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
-      http.Response response = await http.post(
-        Uri.parse("https://goldv2.herokuapp.com/api/auth/register"),
-        headers: {"Content-Type": "application/json"},
-        body: json.encode({"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
-      );
-      print(response.body);
-      if (response.statusCode == 200) {
-        mobilenumber.phoneNumber = PhoneReplace;
-        mobilenumber.whatsapp = whatsapp;
-      }
     }
 
     return Scaffold(
@@ -230,7 +216,29 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: fixPadding * 3.0, vertical: 15.0),
                 child: InkWell(
-                  onTap: () => Change_Language(),
+                  onTap: () async {
+                    final PhoneNumberOb = numberController.text;
+                    final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+                    http.Response response = await http.post(
+                      Uri.parse(
+                          "https://goldv2.herokuapp.com/api/auth/register"),
+                      headers: {"Content-Type": "application/json"},
+                      body: json.encode(
+                          {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+                    );
+                    print(response.body);
+                    if (response.statusCode == 200) {
+                      mobilenumber.phoneNumber = PhoneReplace;
+                      mobilenumber.whatsapp = whatsapp;
+                    }
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.leftToRightWithFade,
+                        child: OTPScreen(),
+                      ),
+                    );
+                  },
                   borderRadius: BorderRadius.circular(10.0),
                   child: Container(
                     width: double.infinity,
@@ -259,17 +267,39 @@ class _LoginState extends State<Login> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push<void>(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => GuestHome(
-                        language: locale.Hindi,
+                  if (isHindi)
+                    Navigator.push<void>(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => GuestHome(
+                          language: "Hindi",
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  else
+                    Navigator.push<void>(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => GuestHome(
+                          language: "English",
+                        ),
+                      ),
+                    );
                 },
                 child: Text(
                   locale.guestLogin,
+                  style: red16BoldTextStyle,
+                ),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Change_Language();
+                },
+                child: Text(
+                  locale.Choose,
                   style: red16BoldTextStyle,
                 ),
               ),
@@ -305,13 +335,14 @@ class _LoginState extends State<Login> {
   }
 }
 
+bool isHindi = false;
+
 class Hindi_or_English extends StatefulWidget {
   @override
   _Hindi_or_EnglishState createState() => _Hindi_or_EnglishState();
 }
 
 class _Hindi_or_EnglishState extends State<Hindi_or_English> {
-  bool isHindi = false;
   LanguageCubit _languageCubit;
   void setLanguage(bool set) {
     setState(() {

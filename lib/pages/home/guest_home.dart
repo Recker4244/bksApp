@@ -885,6 +885,9 @@ class _GuestHomeState extends State<GuestHome> {
                   activityContainer(),
                   buyGold(data.buy.toStringAsFixed(2)),
                   sellGold(data.sell.toStringAsFixed(2)),
+                  SizedBox(
+                    height: 8,
+                  ),
                   howto(),
                   height20Space,
                   test(),

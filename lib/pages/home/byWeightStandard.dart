@@ -23,12 +23,14 @@ class Standard_PC extends StatefulWidget {
   String planname;
   String planID;
   String shortname;
+  num min;
   Standard_PC(
       {this.planID,
       this.shortname,
       this.duration,
       this.planname,
       this.cycleid,
+      this.min,
       this.durationString});
   @override
   _Standard_PCState createState() => _Standard_PCState();
@@ -38,8 +40,8 @@ class _Standard_PCState extends State<Standard_PC> {
   Razorpay _razorpay;
   String val = "0";
   final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
-  final valueController = TextEditingController(text: "0.0");
-  final amountController = TextEditingController(text: "0.0");
+  TextEditingController valueController = TextEditingController(text: "0.0");
+  TextEditingController amountController = TextEditingController();
 
   List portfolioItem;
   int buyprice;
@@ -110,7 +112,7 @@ class _Standard_PCState extends State<Standard_PC> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-
+    amountController = TextEditingController(text: widget.min.toString());
     return true;
   }
 
@@ -438,7 +440,15 @@ class _Standard_PCState extends State<Standard_PC> {
                               data: ThemeData(
                                 primaryColor: primaryColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String value) {
+                                  if (num.parse(value) < widget.min) {
+                                    return "Minimum Amount: ${widget.min.toStringAsFixed(2)}";
+                                  } else
+                                    return "";
+                                },
                                 onChanged: (String value) {
                                   setState(() {
                                     valueController.text =

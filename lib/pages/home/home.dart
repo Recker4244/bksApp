@@ -145,6 +145,25 @@ class _HomeState extends State<Home> {
     }
   }
 
+  List<MetalGroup> temp = [];
+  Future getMetals() async {
+    var request = http.Request(
+        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+
+      Iterable t = jsonDecode(responseString);
+      temp =
+          List<MetalGroup>.from(t.map((model) => MetalGroup.fromJson(model)));
+    } else {
+      print(response.reasonPhrase);
+    }
+    return temp;
+  }
+
   Future<bool> init;
   Future<bool> initialise() async {
     await getportfoliobalance();
@@ -152,6 +171,7 @@ class _HomeState extends State<Home> {
     //await getGoldBalance();
     await fetchStandardPlans();
     await fetchData();
+    await getMetals();
     return true;
   }
 
@@ -591,6 +611,9 @@ class _HomeState extends State<Home> {
                                   type: PageTransitionType.size,
                                   alignment: Alignment.bottomCenter,
                                   child: standardValue(
+                                      min: Standardplans[index]
+                                          .cyclePeriod
+                                          .minValue,
                                       planname: "${Standardplans[index].name}",
                                       duration: Standardplans[index].duration,
                                       durationString:
@@ -606,6 +629,9 @@ class _HomeState extends State<Home> {
                                   type: PageTransitionType.size,
                                   alignment: Alignment.bottomCenter,
                                   child: Standard_PC(
+                                    min: Standardplans[index]
+                                        .cyclePeriod
+                                        .minWeight,
                                     planname: "${Standardplans[index].name}",
                                     duration: Standardplans[index].duration,
                                     durationString:
@@ -867,16 +893,6 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  Share.share("$Code", subject: "Referal Code");
-                  // Navigator.push(
-                  //     context,
-                  //     PageTransition(
-                  //         type: PageTransitionType.size,
-                  //         alignment: Alignment.bottomCenter,
-                  //         child: TotalBalance()));
-                },
-
                 //TODO : Push to refer a friend
 
                 borderRadius: BorderRadius.vertical(
@@ -946,6 +962,15 @@ class _HomeState extends State<Home> {
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),
+                onTap: () {
+                  Share.share("$Code", subject: "Referal Code");
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         type: PageTransitionType.size,
+                  //         alignment: Alignment.bottomCenter,
+                  //         child: TotalBalance()));
+                },
                 child: Container(
                   padding: EdgeInsets.all(fixPadding),
                   alignment: Alignment.center,
@@ -1186,8 +1211,12 @@ class _HomeState extends State<Home> {
                     referAfriend(Userdata.refCode.toString()),
                     SellOldGold(
                         double.parse(data.sell.toStringAsFixed(2)),
-                        double.parse((data.sell * 0.85).toStringAsFixed(2)),
-                        double.parse((data.sell * 0.75).toStringAsFixed(2)),
+                        double.parse(
+                            (data.sell * temp[1].referenceId.toDouble())
+                                .toStringAsFixed(2)),
+                        double.parse(
+                            (data.sell * temp[2].referenceId.toDouble())
+                                .toStringAsFixed(2)),
                         width: width),
                   ],
                 ),

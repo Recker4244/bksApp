@@ -17,7 +17,8 @@ import 'package:gold247/language/locale.dart';
 
 class Withdraw extends StatefulWidget {
   final String balance;
-  const Withdraw({Key key, this.balance}) : super(key: key);
+  final String sub;
+  const Withdraw({Key key, this.balance, this.sub}) : super(key: key);
 
   @override
   _WithdrawState createState() => _WithdrawState();
@@ -324,7 +325,11 @@ class _WithdrawState extends State<Withdraw> {
                                     PageTransition(
                                         type: PageTransitionType.size,
                                         alignment: Alignment.center,
-                                        child: BankDetails()));
+                                        child: BankDetails(
+                                          subscriptionId: widget.sub,
+                                          gold: weightController.text,
+                                          buysellId: "615b296904b89d0016b7ad9c",
+                                        )));
                               },
                               child: Text(
                                 'sell gold'.toUpperCase(),

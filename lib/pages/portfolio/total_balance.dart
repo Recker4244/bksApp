@@ -116,6 +116,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Withdraw(
+                              sub: widget.sub.sId,
                               balance: widget.avail,
                             )));
                 },

@@ -33,10 +33,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   double walletbalace;
   void getWalletBalanced() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/6158849d3b5cb8a0c1d96040'));
+    var request = http.Request('GET',
+        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -66,37 +64,37 @@ class _CurrencyScreenState extends State<SellGold> {
   String InstallID;
   String SubscribeID;
   DataIN info;
-  Installment Instas;
-  Future Instalments() async {
-    var uuid = Uuid().v1();
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
-    request.bodyFields = {
-      'paymentId': uuid,
-      'amount': amountController.text,
-      "status": "Plan Initiated",
-      "instantGoldApplied": "false",
-      "mode": "online",
-    };
+  // Installment Instas;
+  // Future Instalments() async {
+  //   var uuid = Uuid().v1();
+  //   var request = http.Request(
+  //       'POST',
+  //       Uri.parse(
+  //           'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
+  //   request.bodyFields = {
+  //     'paymentId': uuid,
+  //     'amount': amountController.text,
+  //     "status": "Plan Initiated",
+  //     "instantGoldApplied": "false",
+  //     "mode": "online",
+  //   };
 
-    http.StreamedResponse response = await request.send();
+  //   http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      Map s = jsonDecode(responseString);
-      Instas = Installment.fromJson(s);
+  //   if (response.statusCode == 200) {
+  //     final responseString = await response.stream.bytesToString();
+  //     Map s = jsonDecode(responseString);
+  //     Instas = Installment.fromJson(s);
 
-      info = DataIN.fromJson(s['data']);
-      InstallID = info.sId;
-    } else {
-      print(response.reasonPhrase);
-    }
-    print(Instas.success);
-    print("ok");
-    return Instas;
-  }
+  //     info = DataIN.fromJson(s['data']);
+  //     InstallID = info.sId;
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  //   print(Instas.success);
+  //   print("ok");
+  //   return Instas;
+  // }
 
   void removefromwallet(String payId) async {
     var headers = {'Content-Type': 'application/json'};
@@ -189,32 +187,32 @@ class _CurrencyScreenState extends State<SellGold> {
 
   DataS datas;
   PlanSubscriptions pSubs;
-  Future Instant_Sunscription() async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/instant/${Userdata.sId}'));
-    request.bodyFields = {
-      "userId": Userdata.sId,
-      "status": "Completed",
-      "amount": amountController.text,
-      "installmentId": InstallID,
-    };
+  // Future Instant_Sunscription() async {
+  //   var request = http.Request(
+  //       'POST',
+  //       Uri.parse(
+  //           'https://goldv2.herokuapp.com/api/subscription/create/instant/${Userdata.sId}'));
+  //   request.bodyFields = {
+  //     "userId": Userdata.sId,
+  //     "status": "Completed",
+  //     "amount": amountController.text,
+  //     "installmentId": InstallID,
+  //   };
 
-    http.StreamedResponse response = await request.send();
+  //   http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      Map s = jsonDecode(responseString);
-      pSubs = PlanSubscriptions.fromJson(s);
-      datas = DataS.fromJson(s['data']);
+  //   if (response.statusCode == 200) {
+  //     final responseString = await response.stream.bytesToString();
+  //     Map s = jsonDecode(responseString);
+  //     pSubs = PlanSubscriptions.fromJson(s);
+  //     datas = DataS.fromJson(s['data']);
 
-      SubscribeID = datas.sId;
-    } else {
-      print(response.reasonPhrase);
-    }
-    return pSubs;
-  }
+  //     SubscribeID = datas.sId;
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  //   return pSubs;
+  // }
 
   Razorpay _razorpay;
   String val = "0";

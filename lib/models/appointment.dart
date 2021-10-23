@@ -151,8 +151,8 @@ class MetalGroup {
   List<Metals> metals;
   String status;
   String karatage;
-  double fineness;
-  int referenceId;
+  num fineness;
+  num referenceId;
   String shortName;
   String createdAt;
   String updatedAt;

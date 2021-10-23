@@ -12,7 +12,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/language/locale.dart';
 
 class BankDetails extends StatefulWidget {
-  const BankDetails({Key key}) : super(key: key);
+  final String buysellId;
+  final String gold;
+  final String subscriptionId;
+  const BankDetails({Key key, this.buysellId, this.gold, this.subscriptionId})
+      : super(key: key);
 
   @override
   _BankDetailsState createState() => _BankDetailsState();
@@ -50,12 +54,13 @@ class _BankDetailsState extends State<BankDetails> {
   }
 
   Future sell() async {
+    var headers = {'Content-Type': 'application/json'};
+    final body = {"buySellId": widget.buysellId, "goldsell": widget.gold};
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/sell-subscription/615a36842e03f30016432c27/6158849d3b5cb8a0c1d96040'));
-    request.body =
-        '''{\n    "buySellId": "615a0bedbe82960016f2668b",\n    "goldSell": 0.5\n}''';
+            'https://goldv2.herokuapp.com/api/sell-subscription/${widget.subscriptionId}/${Userdata.sId}'));
+    request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
 
@@ -139,13 +144,45 @@ class _BankDetailsState extends State<BankDetails> {
           bankdetail = bankDetails.fromJson(datas);
         });
         Navigator.pop(context, true);
-        return Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            child: BankSuccessScreen(),
-          ),
-        );
+
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  backgroundColor: scaffoldBgColor,
+                  title: Center(
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Colors.green,
+                      child: Icon(
+                        Icons.check,
+                        size: 30.0,
+                        color: scaffoldBgColor,
+                      ),
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Center(
+                            child: Text(
+                          "${widget.gold} GRAM SOLD",
+                          style: black16BoldTextStyle,
+                        )),
+                        Center(
+                            child: Text(
+                          '${DateTime.now()}',
+                          style: black14MediumTextStyle,
+                        )),
+                        heightSpace,
+                        Center(
+                            child: Text(
+                          'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
+                          style: black14MediumTextStyle,
+                        )),
+                      ],
+                    ),
+                  ),
+                ));
       } else if (value == false) {
         http.Response responseBank = await http.put(
           Uri.parse(
@@ -163,13 +200,52 @@ class _BankDetailsState extends State<BankDetails> {
           bankdetail = bankDetails.fromJson(datas);
         });
         Navigator.pop(context, true);
-        return Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            child: BankSuccessScreen(),
-          ),
-        );
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  backgroundColor: scaffoldBgColor,
+                  title: Center(
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Colors.green,
+                      child: Icon(
+                        Icons.check,
+                        size: 30.0,
+                        color: scaffoldBgColor,
+                      ),
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Center(
+                            child: Text(
+                          "${widget.gold} GRAM SOLD",
+                          style: black16BoldTextStyle,
+                        )),
+                        Center(
+                            child: Text(
+                          '${DateTime.now()}',
+                          style: black14MediumTextStyle,
+                        )),
+                        heightSpace,
+                        Center(
+                            child: Text(
+                          'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
+                          style: black14MediumTextStyle,
+                        )),
+                      ],
+                    ),
+                  ),
+                ));
+
+        // return Navigator.push(
+        //   context,
+        //   PageTransition(
+        //     type: PageTransitionType.fade,
+        //     child: BankSuccessScreen(),
+        //   ),
+        // );
       }
     } else if (response.statusCode == 404) {
       Navigator.pop(context, true);
