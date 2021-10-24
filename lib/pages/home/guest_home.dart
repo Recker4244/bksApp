@@ -306,9 +306,22 @@ class _GuestHomeState extends State<GuestHome> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$title',
-                    style: white14BoldTextStyle,
+                  Row(
+                    children: [
+                      Text(
+                        '$title',
+                        style: white14BoldTextStyle,
+                      ),
+                      Spacer(),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Image(
+                          height: 20.sp,
+                          width: 20.sp,
+                          image: AssetImage('assets/key.png'),
+                        ),
+                      )
+                    ],
                   ),
                   height5Space,
                   Text(
