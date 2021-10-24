@@ -182,12 +182,12 @@ class _Adress_Details_Payment_StanState
                       children: <Widget>[
                         Center(
                             child: Text(
-                          "COLLECTION REQUEST PLACED",
+                          locale.COLLECTIONREQUESTPLACED,
                           style: black14BoldTextStyle,
                         )),
                         Center(
                             child: Text(
-                          'SUCCESS',
+                          locale.SUCCESS,
                           style: black14MediumTextStyle,
                         )),
                         heightSpace,
@@ -211,7 +211,7 @@ class _Adress_Details_Payment_StanState
                         heightSpace,
                         Center(
                             child: Text(
-                          'Show this code while you visit Store',
+                          locale.showcode,
                           style: black12MediumTextStyle,
                         )),
                         GestureDetector(
@@ -227,7 +227,7 @@ class _Adress_Details_Payment_StanState
                             },
                             child: Center(
                                 child: Text(
-                              "Tap to Copy Verification OTP",
+                              locale.taptocopy,
                               style: black16MediumTextStyle,
                             )))
                       ],
@@ -258,13 +258,13 @@ class _Adress_Details_Payment_StanState
                         Center(
                             child: Center(
                           child: Text(
-                            "COLLECTION REQUEST FAILED",
+                            locale.COLLECTIONREQUESTFAILED,
                             style: black16BoldTextStyle,
                           ),
                         )),
                         Center(
                             child: Text(
-                          'FAILED',
+                          locale.FAILED,
                           style: black14MediumTextStyle,
                         )),
                         heightSpace,
@@ -285,7 +285,7 @@ class _Adress_Details_Payment_StanState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'Address Details',
+          locale.addresstitle,
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,
@@ -321,7 +321,7 @@ class _Adress_Details_Payment_StanState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Address',
+                        labelText: locale.Address,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -364,7 +364,7 @@ class _Adress_Details_Payment_StanState
                       keyboardType: TextInputType.number,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Pincode',
+                        labelText: locale.PINCODE,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -409,7 +409,7 @@ class _Adress_Details_Payment_StanState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'LandMark',
+                        labelText: locale.LandMark,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -435,7 +435,7 @@ class _Adress_Details_Payment_StanState
               heightSpace,
               !available
                   ? Text(
-                      'Not Serviceable Area, Please Change your Address',
+                      locale.NotService,
                       style: black14SemiBoldTextStyle,
                     )
                   : Container(),
@@ -465,7 +465,7 @@ class _Adress_Details_Payment_StanState
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'Proceed'.toUpperCase(),
+                          locale.Proceed.toUpperCase(),
                           style: TextStyle(
                             color: scaffoldBgColor,
                             fontWeight: FontWeight.bold,
@@ -496,7 +496,7 @@ class _Adress_TypeState extends State<Adress_Type> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Adress Type',
+          locale.AdressType,
           style: primaryColor16MediumTextStyle,
         ),
         height5Space,
@@ -536,7 +536,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Home",
+          locale.Home,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -551,7 +551,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Work",
+          locale.Work,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -566,7 +566,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Others",
+          locale.Others,
           style: primaryColor16MediumTextStyle,
         ),
       ],

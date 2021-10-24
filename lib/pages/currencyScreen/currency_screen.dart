@@ -41,7 +41,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                   width: (width - 1.0) / 2,
                   alignment: Alignment.center,
                   child: Text(
-                    'SELL BY VALUE'.toUpperCase(),
+                    locale.SellValue.toUpperCase(),
                     style: white16BoldTextStyle,
                   ),
                 ),
@@ -58,7 +58,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                   width: (width - 1.0) / 2,
                   alignment: Alignment.center,
                   child: Text(
-                    'SELL BY WEIGHT'.toUpperCase(),
+                    locale.SellWeight.toUpperCase(),
                     style: white16BoldTextStyle,
                   ),
                 ),
@@ -260,7 +260,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Gain/Loss',
+                      locale.Gain,
                       style: grey14MediumTextStyle,
                     ),
                     Row(
@@ -397,7 +397,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                           width: width,
                           alignment: Alignment.center,
                           child: Text(
-                            'Buy 24 KT GOLD By Value',
+                            locale.Buy24KTValue,
                             style: primaryColor18BoldTextStyle,
                           ),
                         ),
@@ -440,7 +440,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Current 24 KT GOLD Buy Price',
+                                    locale.currentbuy,
                                     style: grey14BoldTextStyle,
                                   ),
                                   height5Space,

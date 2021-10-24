@@ -19,6 +19,7 @@ Map<String, String> english() {
     'email': 'Email Address',
     'pan': 'PAN Number (optional)',
     'referalcode': 'Referral ID (optional)',
+    'DateOfBirth': 'Date Of Birth',
 
     //OTP Screen *
 
@@ -96,8 +97,8 @@ Map<String, String> english() {
     'CurrentValue': 'Current Value',
     'AvgBuyPrice': 'Average Buy Price',
     'AvgSellPrice': 'Average Sell Price',
-    'Gain': 'Gain',
-    'Loss': 'Loss',
+    'Gain': 'Gain/Loss',
+    'copy': 'Click to Copy',
     'BuyWeight': 'Buy By Weight',
     'BuyValue': 'Buy By Value',
     'SellWeight': 'Sell By Weight',
@@ -169,14 +170,22 @@ Map<String, String> english() {
     'addresstitle': 'YOUR ADDRESS DETAILS',
     'Address': 'Address',
     'PINCODE': 'PINCODE',
-
+    'LandMark': 'LandMark',
+    'NotService': 'Not Serviceable Area, Please Change your Address',
+    'AdressType': 'Address Type',
+    'Home': 'Home',
+    'work': 'Work',
+    'others': 'Others',
     //Item Detail Page *
     'Description': 'Description',
     'SKU': 'SKU Number',
     'charges': 'Charges Applied',
     'addtocart': 'ADD TO CART',
     'buyNow': 'Buy Now',
-
+    'COLLECTIONREQUESTPLACED': 'COLLECTION REQUEST PLACED',
+    'COLLECTIONREQUESTFAILED': 'COLLECTION REQUEST FAILED',
+    'ShowThisCode': 'Show this code while you visit Store',
+    'FAILED': 'FAILED',
     //Cart
     'cart': 'Cart',
     'Summary': 'Summary',
@@ -214,7 +223,7 @@ Map<String, String> english() {
     'Okay': 'Okay',
     'Congratulations': 'Congratulations',
     'successmsg': 'You have successfully bought',
-
+    'SUCCESS': 'SUCCESS',
     'taptocopy': 'Tap to copy Verification OTP',
     'showcode': 'Show this code while you visit our store',
     'bankdebit':
@@ -232,7 +241,8 @@ Map<String, String> english() {
     'skip': 'Crossed Maximum Skip Limits',
     'unpaidskip': 'Crossed Maximum Unpaid Skips',
     'canceled': 'Your Plan IS Forfeited',
-
+    'REQUESTPLACED': 'REQUEST PLACED',
+    'REQUESTFAILED': 'REQUEST FAILED',
     //Order Details
     'orderDetails': 'Order Details',
     'OrderID:': 'Order ID',

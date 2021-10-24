@@ -99,8 +99,8 @@ Map<String, String> hindi() {
     'CurrentValue': 'वर्तमान मूल्य',
     'AvgBuyPrice': 'औसत खरीद मूल्य',
     'AvgSellPrice': 'औसत बिक्री मूल्य',
-    'Gain': 'बढ़त',
-    'Loss': 'नुकसान',
+    'Gain': 'बढ़त/नुकसान',
+    'copy': 'कॉपी करने के लिए क्लिक करें',
     'BuyWeight': 'वजन के हिसाब से खरीदें',
     'BuyValue': 'मूल्य से खरीदें',
     'SellWeight': 'वजन के हिसाब से बेचें',
@@ -172,14 +172,22 @@ Map<String, String> hindi() {
     'addresstitle': 'आपका पता विवरण',
     'Address': 'पता',
     'PINCODE': 'पिन कोड',
-
+    'LandMark': 'सीमाचिह्न',
+    'NotService': 'सेवा योग्य क्षेत्र नहीं, कृपया अपना पता बदलें',
+    'AdressType': '',
+    'Home': '',
+    'work': '',
+    'others': '',
     //Item Detail Page
     'Description': 'विवरण',
     'SKU': 'एसकेयू नंबर',
     'charges': 'लागू शुल्क',
     'addtocart': 'कार्ट में जोड़ें',
     'buyNow': 'अभी खरीदें',
-
+    'COLLECTIONREQUESTPLACED': 'संग्रह अनुरोध रखा गया',
+    'COLLECTIONREQUESTFAILED': 'संग्रह अनुरोध विफल',
+    'ShowThisCode': 'स्टोर पर जाते समय यह कोड दिखाएं',
+    'FAILED': 'अनुत्तीर्ण होना',
     //Cart
     'cart': 'कार्ट',
     'Summary': 'सारांश',
@@ -234,7 +242,8 @@ Map<String, String> hindi() {
     'skip': 'पार की गई अधिकतम छोड़ें सीमा',
     'unpaidskip': 'क्रास्ड मैक्सिमम अनपेड स्किप',
     'canceled': 'आपकी योजना ज़ब्त है',
-
+    'REQUESTPLACED': 'अनुरोध किया गया',
+    'SUCCESS': 'सफलता',
     //Order Details
     'orderDetails': 'ऑर्डर का विवरण',
     'OrderID:': 'आदेश ID',
@@ -248,7 +257,7 @@ Map<String, String> hindi() {
     'redeemGold': 'गोल्ड रिडीम करें',
     'InstantGold': 'तत्काल सोना',
     'Taxes': 'कर और शुल्क',
-
+    'REQUESTFAILED': 'अनुरोध विफल रहा',
     //transactions
 
     'yourTransactions': 'आपके लेन-देन',

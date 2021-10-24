@@ -124,12 +124,12 @@ class _Adress_Details_Payment_BuygoldState
                     children: <Widget>[
                       Center(
                           child: Text(
-                        "REQUEST PLACED",
+                        locale.REQUESTPLACED,
                         style: black16BoldTextStyle,
                       )),
                       Center(
                           child: Text(
-                        'SUCCESS',
+                        locale.SUCCESS,
                         style: black14MediumTextStyle,
                       )),
                     ],
@@ -199,7 +199,7 @@ class _Adress_Details_Payment_BuygoldState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'BUY GOLD',
+          locale.BUYGOLD,
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,
@@ -235,7 +235,7 @@ class _Adress_Details_Payment_BuygoldState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Adress',
+                        labelText: locale.Address,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -278,7 +278,7 @@ class _Adress_Details_Payment_BuygoldState
                       keyboardType: TextInputType.number,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'PinCode',
+                        labelText: locale.PINCODE,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -323,7 +323,7 @@ class _Adress_Details_Payment_BuygoldState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'LandMark',
+                        labelText: locale.LandMark,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -349,7 +349,7 @@ class _Adress_Details_Payment_BuygoldState
               heightSpace,
               !available
                   ? Text(
-                      'Not Serviceable Area, Please Change your Address',
+                      locale.NotService,
                       style: black14SemiBoldTextStyle,
                     )
                   : Container(),
@@ -480,7 +480,7 @@ class _Adress_Details_Payment_BuygoldState
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'Proceed'.toUpperCase(),
+                          locale.Proceed.toUpperCase(),
                           style: TextStyle(
                             color: scaffoldBgColor,
                             fontWeight: FontWeight.bold,
@@ -511,7 +511,7 @@ class _Adress_TypeState extends State<Adress_Type> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Adress Type',
+          locale.AdressType,
           style: primaryColor16MediumTextStyle,
         ),
         height5Space,
@@ -551,7 +551,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Home",
+          locale.Home,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -566,7 +566,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Work",
+          locale.work,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -581,7 +581,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Others",
+          locale.others,
           style: primaryColor16MediumTextStyle,
         ),
       ],
