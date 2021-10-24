@@ -337,7 +337,7 @@ class _GuestHomeState extends State<GuestHome> {
           children: [
             Text(
               locale.youcando,
-              style: white16BoldTextStyle,
+              style: gold16BoldTextStyle,
             ),
             height20Space,
             acitivites(locale.BuySave, locale.buygoldbenefits,

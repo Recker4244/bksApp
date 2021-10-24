@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
 const Color scaffoldLightColor = const Color(0xFFFFF1E0);
 const Color primaryColor = const Color(0xFF95203D);
 const Color whiteColor = const Color(0xFFFEF8F0);
@@ -205,7 +202,12 @@ const TextStyle white16BoldTextStyle = const TextStyle(
   color: whiteColor,
   fontWeight: FontWeight.bold,
 );
-
+const TextStyle gold16BoldTextStyle = const TextStyle(
+  fontFamily: 'Jost',
+  fontSize: 16.0,
+  color: orangeColor,
+  fontWeight: FontWeight.bold,
+);
 const TextStyle white18BoldTextStyle = const TextStyle(
   fontFamily: 'Jost',
   fontSize: 18.0,
@@ -391,7 +393,5 @@ const TextStyle black12LightTextStyle = const TextStyle(
   color: blackColor,
   fontWeight: FontWeight.normal,
 );
-
-
 
 String goldIngotsPath = 'assets/crypto_icon/gold_ingots.png';
