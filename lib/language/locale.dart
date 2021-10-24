@@ -29,6 +29,10 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['uncheck'];
   }
 
+  String get register {
+    return _localizedValues[locale.languageCode]['register'];
+  }
+
   String get continuebutton {
     return _localizedValues[locale.languageCode]['continuebutton'];
   }

@@ -13,6 +13,10 @@ Map<String, String> hindi() {
     'Hindi': 'हिंदी',
     'English': 'अंग्रेज़ी',
 
+    //register Screen
+
+    'register': 'Register your account',
+
     //OTP Screen
 
     'enterOTP': 'ओटीपी कोड दर्ज करें जो हमने आपको अभी भेजा है',

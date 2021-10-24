@@ -147,7 +147,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 30.0),
               Text(
-                'Register your account',
+                locale.register,
                 style: grey14BoldTextStyle,
               ),
               height20Space,

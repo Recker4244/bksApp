@@ -243,12 +243,12 @@ class _GuestHomeState extends State<GuestHome> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Welcome',
+                    locale.welcome,
                     style: grey16BoldTextStyle,
                   ),
                   heightSpace,
                   Text(
-                    'To My Gold',
+                    locale.tomygold,
                     style: black22BoldTextStyle,
                   ),
                 ],
@@ -688,7 +688,7 @@ class _GuestHomeState extends State<GuestHome> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    'BUY RATE:',
+                                    locale.BuyRate,
                                     style: grey14BoldTextStyle,
                                   ),
                                   Icon(
@@ -731,7 +731,7 @@ class _GuestHomeState extends State<GuestHome> {
                     color: whiteColor,
                   ),
                   child: Text(
-                    'Buy Instant Gold'.toUpperCase(),
+                    locale.BuyInstantGold.toUpperCase(),
                     style: primaryColor16MediumTextStyle,
                   ),
                 ),
@@ -819,7 +819,7 @@ class _GuestHomeState extends State<GuestHome> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    'SELL RATE:',
+                                    locale.SellRate,
                                     style: grey14BoldTextStyle,
                                   ),
                                   Icon(
@@ -862,7 +862,7 @@ class _GuestHomeState extends State<GuestHome> {
                     color: whiteColor,
                   ),
                   child: Text(
-                    'Sell Instant Gold'.toUpperCase(),
+                    locale.SellInstantGold.toUpperCase(),
                     style: primaryColor16MediumTextStyle,
                   ),
                 ),
