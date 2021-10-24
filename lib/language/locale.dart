@@ -33,6 +33,26 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['register'];
   }
 
+  String get username {
+    return _localizedValues[locale.languageCode]['username'];
+  }
+
+  String get email {
+    return _localizedValues[locale.languageCode]['email'];
+  }
+
+  String get DateOfBirth {
+    return _localizedValues[locale.languageCode]['DateOfBirth'];
+  }
+
+  String get pan {
+    return _localizedValues[locale.languageCode]['pan'];
+  }
+
+  String get referalcode {
+    return _localizedValues[locale.languageCode]['referalcode'];
+  }
+
   String get continuebutton {
     return _localizedValues[locale.languageCode]['continuebutton'];
   }

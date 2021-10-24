@@ -15,6 +15,10 @@ Map<String, String> english() {
     //register Screen
 
     'register': 'Register your account',
+    'username': 'Username',
+    'email': 'Email Address',
+    'pan': 'PAN Number (optional)',
+    'referalcode': 'Referral ID (optional)',
 
     //OTP Screen *
 

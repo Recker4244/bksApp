@@ -172,7 +172,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: 'Username',
+                      hintText: locale.username,
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),
@@ -201,7 +201,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: 'Email',
+                      hintText: locale.email,
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),
@@ -244,7 +244,7 @@ class _RegisterState extends State<Register> {
                     },
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: 'Date Of Birth',
+                      hintText: locale.DateOfBirth,
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),
@@ -272,7 +272,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: 'PAN ID (Optional)',
+                      hintText: locale.pan,
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),
@@ -300,7 +300,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: 'REFERAL ID (Optional)',
+                      hintText: locale.referalcode,
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),
@@ -325,7 +325,7 @@ class _RegisterState extends State<Register> {
                       color: primaryColor,
                     ),
                     child: Text(
-                      'Continue',
+                      locale.continuebutton,
                       style: white14BoldTextStyle,
                     ),
                   ),

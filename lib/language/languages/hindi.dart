@@ -15,8 +15,12 @@ Map<String, String> hindi() {
 
     //register Screen
 
-    'register': 'Register your account',
-
+    'register': 'अपने खाते को पंजीकृत करें',
+    'username': 'उपयोगकर्ता नाम',
+    'email': 'ईमेल पता',
+    'pan': 'पैन नंबर (वैकल्पिक)',
+    'referalcode': 'रेफ़रल आईडी (वैकल्पिक)',
+    'DateOfBirth': 'जन्म की तारीख',
     //OTP Screen
 
     'enterOTP': 'ओटीपी कोड दर्ज करें जो हमने आपको अभी भेजा है',
