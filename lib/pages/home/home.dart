@@ -270,7 +270,7 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      locale.TotalBalance,
+                      locale.total,
                       style: white16MediumTextStyle,
                     ),
                     heightSpace,

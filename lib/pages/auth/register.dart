@@ -23,6 +23,7 @@ class _RegisterState extends State<Register> {
   final dobController = TextEditingController();
   final panController = TextEditingController();
   final refferController = TextEditingController();
+  final pan = TextEditingController();
   FocusNode firstFocusNode = FocusNode();
   FocusNode secondFocusNode = FocusNode();
   FocusNode thirdFocusNode = FocusNode();
@@ -97,7 +98,9 @@ class _RegisterState extends State<Register> {
       body: {
         "fname": nameController.text,
         "email": emailController.text,
-        "dob": dobController.text
+        "dob": dobController.text,
+        "refCode": refferController.text,
+        "pan": pan.text,
       },
     );
 
@@ -247,6 +250,34 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
+              ),
+              height20Space,
+              Padding(
+                padding: EdgeInsets.only(right: 20.0, left: 20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4.0,
+                        spreadRadius: 1.0,
+                        color: blackColor.withOpacity(0.05),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: pan,
+                    style: black14MediumTextStyle,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 20.0),
+                      hintText: 'PAN ID (Optional)',
+                      hintStyle: black14MediumTextStyle,
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
               ), //Password
               height20Space,
               Padding(
@@ -267,7 +298,6 @@ class _RegisterState extends State<Register> {
                     controller: refferController,
                     style: black14MediumTextStyle,
                     keyboardType: TextInputType.text,
-                    obscureText: true,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
                       hintText: 'REFERAL ID (Optional)',
