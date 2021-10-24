@@ -177,7 +177,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                     height: 50.0,
                     padding: EdgeInsets.all(fixPadding * 1.5),
                     child: Text(
-                      'Proceed For Payment',
+                      locale.Proceed,
                       style: white18BoldTextStyle,
                     ),
                   ),
@@ -232,7 +232,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'BUY RATE:',
+                                          locale.BuyRate,
                                           style: grey14BoldTextStyle,
                                         ),
                                         Icon(
@@ -279,7 +279,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                   style: black18BoldTextStyle);
                             }
                             return Text(
-                                "Price Changes in ${C.min == null ? 0 : C.min}:${C.sec} minutes",
+                                "${locale.priceChange} ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                                 style: black18BoldTextStyle);
                           },
                         ),
@@ -306,9 +306,9 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.text,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  suffix: Text('GRAM',
+                                  suffix: Text(locale.GRAM,
                                       style: primaryColor18BoldTextStyle),
-                                  labelText: 'Weight of Gold',
+                                  labelText: locale.WeightofGold,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -328,7 +328,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 builder: (FormFieldState<String> state) {
                                   return InputDecorator(
                                     decoration: InputDecoration(
-                                      labelText: 'Cycle Period',
+                                      labelText: locale.cyclePeriod,
                                       labelStyle: primaryColor18BoldTextStyle,
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -372,7 +372,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  labelText: 'Duration',
+                                  labelText: locale.duration,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
                                     getcyclename(CyclePController) ==
@@ -404,7 +404,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  labelText: 'Amount',
+                                  labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
                                     'INR',

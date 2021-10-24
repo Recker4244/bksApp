@@ -104,7 +104,7 @@ class _RunningState extends State<Running> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Total Gold Saved in this Plan",
+                                locale.TotalGoldPlans",
                                 style: grey14BoldTextStyle,
                               ),
                               SizedBox(
@@ -152,7 +152,7 @@ class _RunningState extends State<Running> {
                                           balance: gold.toStringAsFixed(2))));
                             },
                             child: Text(
-                              "BUY GOLD",
+                              locale.BUYGOLD,
                               style: black14BoldTextStyle,
                             ),
                           ),
@@ -207,14 +207,14 @@ class _RunningState extends State<Running> {
                                                   height: 13,
                                                 ),
                                                 Text(
-                                                  "Your plan will be forfeited"
+                                                 locale.forfietwarning
                                                       .toUpperCase(),
                                                   style: black16MediumTextStyle,
                                                 ),
                                                 // heightSpace,
                                                 // SizedBox(height: 5),
                                                 Text(
-                                                  "crossed maximum unpaid skips"
+                                                  locale.unpaidskip
                                                       .toUpperCase(),
                                                   style: black16MediumTextStyle,
                                                 ),
@@ -246,7 +246,7 @@ class _RunningState extends State<Running> {
                                                           // crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
                                                             Text(
-                                                              "BONUS LOSS",
+                                                              locale.bonusloss,
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Jost',
@@ -287,7 +287,7 @@ class _RunningState extends State<Running> {
                                                         // crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           Text(
-                                                            "HANDLING CHARGES",
+                                                          locale.handling,
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Jost',
@@ -322,7 +322,7 @@ class _RunningState extends State<Running> {
 
                                                 SizedBox(height: 13.0),
                                                 Text(
-                                                  'Still wish to proceed?',
+                                                 locale.still,
                                                   style: grey14BoldTextStyle,
                                                 ),
                                                 SizedBox(height: 13.0),
@@ -348,7 +348,7 @@ class _RunningState extends State<Running> {
                                                                           10))),
                                                       child: Center(
                                                         child: Text(
-                                                          "PROCEED TO SKIP",
+                                                          locale.proceedToSkip",
                                                           style: TextStyle(
                                                             fontFamily: 'Jost',
                                                             fontSize: 14.0,

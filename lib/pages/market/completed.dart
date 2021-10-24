@@ -98,7 +98,7 @@ class _CompletedState extends State<Completed> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Total Gold Saved in this Plan",
+                                      locale.TotalGoldPlans,
                                       style: grey14BoldTextStyle,
                                     ),
                                     SizedBox(
@@ -135,7 +135,7 @@ class _CompletedState extends State<Completed> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                'SELL/REDEEM',
+                                locale.SELLREDEEM,
                                 style: black14BoldTextStyle,
                               ),
                             ],

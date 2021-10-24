@@ -28,7 +28,7 @@ class BankSuccessScreen extends StatelessWidget {
                 height20Space,
                 height20Space,
                 Text(
-                  'Congratulations!',
+                  locale.Congratulations,
                   style: black18SemiBoldTextStyle,
                 ),
               ],
@@ -85,7 +85,7 @@ class BankSuccessScreen extends StatelessWidget {
                         color: greenColor,
                       ),
                       child: Text(
-                        'Great!',
+                        locale.Okay,
                         style: white16MediumTextStyle,
                       ),
                     ),

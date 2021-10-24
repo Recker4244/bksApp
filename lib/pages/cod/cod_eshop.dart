@@ -126,7 +126,7 @@ class _Adress_Details_Payment_EshopState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'BUY GOLD',
+          locale.BUYGOLD,
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,
@@ -162,7 +162,7 @@ class _Adress_Details_Payment_EshopState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Adress',
+                        labelText: locale.Address,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -205,7 +205,7 @@ class _Adress_Details_Payment_EshopState
                       keyboardType: TextInputType.number,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'PinCode',
+                        labelText: locale.PINCODE,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -250,7 +250,7 @@ class _Adress_Details_Payment_EshopState
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'LandMark',
+                        labelText: locale.LandMark,
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -276,7 +276,7 @@ class _Adress_Details_Payment_EshopState
               heightSpace,
               !available
                   ? Text(
-                      'Not Serviceable Area, Please Change your Address',
+                      locale.NotService,
                       style: black14SemiBoldTextStyle,
                     )
                   : Container(),
@@ -319,12 +319,12 @@ class _Adress_Details_Payment_EshopState
                                         children: <Widget>[
                                           Center(
                                               child: Text(
-                                            "COLLECTION REQUEST PLACED",
+                                            locale.COLLECTIONREQUESTPLACED,
                                             style: black14BoldTextStyle,
                                           )),
                                           Center(
                                               child: Text(
-                                            'SUCCESS',
+                                            locale.SUCCESS,
                                             style: black14MediumTextStyle,
                                           )),
                                           heightSpace,
@@ -354,7 +354,7 @@ class _Adress_Details_Payment_EshopState
                                           heightSpace,
                                           Center(
                                               child: Text(
-                                            'Show this code while you visit Store',
+                                            locale.ShowThisCode,
                                             style: black12MediumTextStyle,
                                           ))
                                         ],
@@ -383,13 +383,13 @@ class _Adress_Details_Payment_EshopState
                                           Center(
                                               child: Center(
                                             child: Text(
-                                              "COLLECTION REQUEST FAILED",
+                                              locale.COLLECTIONREQUESTFAILED,
                                               style: black16BoldTextStyle,
                                             ),
                                           )),
                                           Center(
                                               child: Text(
-                                            'FAILED',
+                                            locale.FAILED,
                                             style: black14MediumTextStyle,
                                           )),
                                           heightSpace,
@@ -410,7 +410,7 @@ class _Adress_Details_Payment_EshopState
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'Proceed'.toUpperCase(),
+                          locale.Proceed.toUpperCase(),
                           style: TextStyle(
                             color: scaffoldBgColor,
                             fontWeight: FontWeight.bold,
@@ -441,7 +441,7 @@ class _Adress_TypeState extends State<Adress_Type> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Adress Type',
+          locale.AdressType,
           style: primaryColor16MediumTextStyle,
         ),
         height5Space,
@@ -481,7 +481,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Home",
+          locale.Home,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -496,7 +496,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Work",
+          locale.Work,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -511,7 +511,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          "Others",
+          locale.Others,
           style: primaryColor16MediumTextStyle,
         ),
       ],

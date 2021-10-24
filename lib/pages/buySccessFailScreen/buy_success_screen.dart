@@ -29,7 +29,7 @@ class BuySuccessScreen extends StatelessWidget {
                 height20Space,
                 height20Space,
                 Text(
-                  'Congratulations!',
+                  locale.Congratulations,
                   style: black18SemiBoldTextStyle,
                 ),
               ],
@@ -92,7 +92,7 @@ class BuySuccessScreen extends StatelessWidget {
                         color: greenColor,
                       ),
                       child: Text(
-                        'Okay!',
+                        locale.Okay,
                         style: white16MediumTextStyle,
                       ),
                     ),

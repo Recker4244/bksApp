@@ -12,7 +12,13 @@ Map<String, String> english() {
     'Choose': 'Choose Language',
     'Hindi': 'Hindi',
     'English': 'English',
+    //register Screen
 
+    'register': 'Register your account',
+    'username': 'Username',
+    'email': 'Email Address',
+    'pan': 'PAN Number (optional)',
+    'referalcode': 'Referral ID (optional)',
     //OTP Screen
 
     'enterOTP': 'Enter the OTP code we just sent you',

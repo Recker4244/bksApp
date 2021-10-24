@@ -134,12 +134,12 @@ class _CurrencyScreenState extends State<SellGold> {
                     children: <Widget>[
                       Center(
                           child: Text(
-                        "REQUEST PLACED",
+                        locale.REQUESTPLACED,
                         style: black16BoldTextStyle,
                       )),
                       Center(
                           child: Text(
-                        'SUCCESS',
+                        locale.SUCCESS,
                         style: black14MediumTextStyle,
                       )),
                       heightSpace,
@@ -167,7 +167,7 @@ class _CurrencyScreenState extends State<SellGold> {
                         },
                         child: Center(
                             child: Text(
-                          'Click to Copy',
+                          locale.copy,
                           style: black14MediumTextStyle,
                         )),
                       ),
@@ -343,7 +343,7 @@ class _CurrencyScreenState extends State<SellGold> {
                               width: (width - 1.0) / 2,
                               alignment: Alignment.center,
                               child: Text(
-                                'SELL BY VALUE'.toUpperCase(),
+                                locale.SellValue.toUpperCase(),
                                 style: white16BoldTextStyle,
                               ),
                             ),
@@ -361,7 +361,7 @@ class _CurrencyScreenState extends State<SellGold> {
                               width: (width - 1.0) / 2,
                               alignment: Alignment.center,
                               child: Text(
-                                'SELL BY WEIGHT'.toUpperCase(),
+                                locale.SellWeight.toUpperCase(),
                                 style: white16BoldTextStyle,
                               ),
                             ),
@@ -412,7 +412,7 @@ class _CurrencyScreenState extends State<SellGold> {
                     ),
                     widthSpace,
                     Text(
-                      'SELL 24 KT GOLD',
+                      locale.Sell24KT,
                       style: black16BoldTextStyle,
                     ),
                   ],
@@ -477,7 +477,7 @@ class _CurrencyScreenState extends State<SellGold> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Current 24KT Gold Sell Price',
+                      locale.currentbuy,
                       style: black14RegularTextStyle,
                     ),
                     height5Space,
@@ -527,7 +527,7 @@ class _CurrencyScreenState extends State<SellGold> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Your Instant Gold Details',
+            locale.yourInstant,
             style: primaryColor16BoldTextStyle,
           ),
           heightSpace,
@@ -536,8 +536,8 @@ class _CurrencyScreenState extends State<SellGold> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               aboutPortfolioItem(
-                  'Gold Saved', '${walletbalace.toStringAsFixed(2)} GRAM'),
-              aboutPortfolioItem('Current Value',
+                  locale.GoldSaved, '${walletbalace.toStringAsFixed(2)} GRAM'),
+              aboutPortfolioItem(locale.CurrentValue,
                   'INR ${(walletbalace * double.parse(data.sell.toString())).toStringAsFixed(2)}'),
             ],
           ),
@@ -547,7 +547,7 @@ class _CurrencyScreenState extends State<SellGold> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               aboutPortfolioItem(
-                  'Average Sell Price', 'INR ${data.sell.toStringAsFixed(2)}'),
+                  locale.AvgSellPrice, 'INR ${data.sell.toStringAsFixed(2)}'),
               Container(
                 height: 75.0,
                 width: (width - fixPadding * 6.0) / 2,
@@ -568,7 +568,7 @@ class _CurrencyScreenState extends State<SellGold> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Gain/Loss',
+                      locale.Gain,
                       style: grey14MediumTextStyle,
                     ),
                     Row(
@@ -705,7 +705,7 @@ class _CurrencyScreenState extends State<SellGold> {
                           width: width,
                           alignment: Alignment.center,
                           child: Text(
-                            'BUY 24 KT GOLD BY VALUE',
+                            locale.Buy24KTValue,
                             style: primaryColor18BoldTextStyle,
                           ),
                         ),
@@ -746,7 +746,7 @@ class _CurrencyScreenState extends State<SellGold> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Current 24KT Gold Buy Price',
+                                    locale.currentbuy,
                                     style: grey14BoldTextStyle,
                                   ),
                                   height5Space,
@@ -782,7 +782,7 @@ class _CurrencyScreenState extends State<SellGold> {
                             keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
-                              labelText: 'Amount',
+                              labelText: locale.value,
                               labelStyle: primaryColor18BoldTextStyle,
                               suffix: Text(
                                 'INR',
@@ -820,10 +820,10 @@ class _CurrencyScreenState extends State<SellGold> {
                             keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
-                              labelText: 'Weight',
+                              labelText: locale.weight,
                               labelStyle: primaryColor18BoldTextStyle,
                               suffix: Text(
-                                'GRAM  ',
+                                locale.GRAM,
                                 style: primaryColor18BoldTextStyle,
                               ),
                               border: OutlineInputBorder(
@@ -852,7 +852,7 @@ class _CurrencyScreenState extends State<SellGold> {
                               color: primaryColor,
                             ),
                             child: Text(
-                              'sell'.toUpperCase(),
+                              locale.Sell.toUpperCase(),
                               style: white16MediumTextStyle,
                             ),
                           ),
@@ -898,7 +898,7 @@ class _CurrencyScreenState extends State<SellGold> {
                           width: width,
                           alignment: Alignment.center,
                           child: Text(
-                            'BUY 24 KT GOLD BY WEIGHT',
+                            locale.Buy24KTWeight,
                             style: primaryColor18BoldTextStyle,
                           ),
                         ),
@@ -939,7 +939,7 @@ class _CurrencyScreenState extends State<SellGold> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Current 24KT Gold Price',
+                                    locale.currentsell,
                                     style: grey14BoldTextStyle,
                                   ),
                                   height5Space,
@@ -975,10 +975,10 @@ class _CurrencyScreenState extends State<SellGold> {
                             keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
-                              labelText: 'WEIGHT',
+                              labelText: locale.weight,
                               labelStyle: primaryColor18BoldTextStyle,
                               suffix: Text(
-                                'GRAM',
+                                locale.GRAM,
                                 style: primaryColor18BoldTextStyle,
                               ),
                               border: OutlineInputBorder(
@@ -1011,7 +1011,7 @@ class _CurrencyScreenState extends State<SellGold> {
                             keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
-                              labelText: 'Amount',
+                              labelText: locale.value,
                               labelStyle: primaryColor18BoldTextStyle,
                               prefix: Text(
                                 'INR  ',
@@ -1043,7 +1043,7 @@ class _CurrencyScreenState extends State<SellGold> {
                               color: primaryColor,
                             ),
                             child: Text(
-                              'Sell'.toUpperCase(),
+                              locale.Sell.toUpperCase(),
                               style: white16MediumTextStyle,
                             ),
                           ),

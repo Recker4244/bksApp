@@ -206,12 +206,12 @@ class _standardValueState extends State<standardValue> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST PLACED",
+                      locale.REQUESTPLACED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'SUCCESS',
+                      locale.SUCCESS,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -229,13 +229,13 @@ class _standardValueState extends State<standardValue> {
                     height20Space,
                     Center(
                         child: Text(
-                      "Tap to Copy Verification OTP",
+                      locale.taptocopy,
                       style: black12MediumTextStyle,
                     )),
                     heightSpace,
                     Center(
                         child: Text(
-                      'Show this code while you visit Store',
+                      locale.showcode,
                       style: black12MediumTextStyle,
                     ))
                   ],
@@ -265,12 +265,12 @@ class _standardValueState extends State<standardValue> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST FAILED",
+                      locale.REQUESTFAILED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'FAILED',
+                      locale.FAILED,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -374,7 +374,7 @@ class _standardValueState extends State<standardValue> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'BUY RATE:',
+                                          locale.BuyRate,
                                           style: grey14BoldTextStyle,
                                         ),
                                         Icon(
@@ -422,7 +422,7 @@ class _standardValueState extends State<standardValue> {
                                   style: black18BoldTextStyle);
                             }
                             return Text(
-                                "Price Changes in ${C.min == null ? 0 : C.min}:${C.sec} minutes",
+                                "${locale.priceChange} ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                                 style: black18BoldTextStyle);
                           },
                         ),
@@ -460,7 +460,7 @@ class _standardValueState extends State<standardValue> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  labelText: 'Amount',
+                                  labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
                                     'INR',
@@ -495,7 +495,7 @@ class _standardValueState extends State<standardValue> {
                                   labelText: 'Weight of Gold',
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
-                                    'GRAM',
+                                    locale.GRAM,
                                     style: primaryColor18BoldTextStyle,
                                   ),
                                   border: OutlineInputBorder(
@@ -507,7 +507,7 @@ class _standardValueState extends State<standardValue> {
                             ),
                           ),
                           Text(
-                            '   Choose Payment Mode',
+                            locale.choosePayment,
                             style: primaryColor16MediumTextStyle,
                           ),
                           heightSpace,
@@ -541,7 +541,7 @@ class _standardValueState extends State<standardValue> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          'Use Payment Gateway Service to pay instantly',
+                                          locale.herepayment,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -552,7 +552,7 @@ class _standardValueState extends State<standardValue> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          'Online Payment',
+                                          locale.usePayment,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -603,7 +603,7 @@ class _standardValueState extends State<standardValue> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          "Cash on Delivery",
+                                          locale.useCOC,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -614,7 +614,7 @@ class _standardValueState extends State<standardValue> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          "Collect at your door step",
+                                          locale.hereCOC,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -653,7 +653,7 @@ class _standardValueState extends State<standardValue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Your Portfolio',
+              locale.yourPortfolio,
               style: primaryColor16MediumTextStyle,
             ),
             Expanded(
@@ -661,9 +661,9 @@ class _standardValueState extends State<standardValue> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Portfolio_card('Saving Gold', saveGold),
+                  Portfolio_card(locale.Saving, saveGold),
                   Portfolio_card(
-                    'Bonus By Maturity',
+                    locale.Bonus,
                     BonusC,
                   ),
                 ],
@@ -674,8 +674,8 @@ class _standardValueState extends State<standardValue> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Portfolio_card('Duration', Duration.toString()),
-                  Portfolio_card('Total Saving', Saving),
+                  Portfolio_card(locale.duration, Duration.toString()),
+                  Portfolio_card(locale.totalSaving, Saving),
                 ],
               ),
             ),
@@ -768,8 +768,8 @@ class Payment_Method extends StatelessWidget {
         //heightSpace,
         Payment_Card(
           Icons.location_on,
-          'You can pay at your doorstep',
-          'Cash On Delivery',
+          locale.hereCOC,
+          locale.useCOC,
           Adress_Details_Payment_Flex(
             amount: amount,
             gold: gold,

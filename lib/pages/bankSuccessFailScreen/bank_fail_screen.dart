@@ -31,7 +31,7 @@ class BankFailScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
                   child: Text(
-                    'Oops...Something Went Wrong!',
+                    locale.oops,
                     style: black18SemiBoldTextStyle,
                   ),
                 ),
@@ -89,7 +89,7 @@ class BankFailScreen extends StatelessWidget {
                         color: redColor,
                       ),
                       child: Text(
-                        'Okay!',
+                        locale.Okay,
                         style: white16MediumTextStyle,
                       ),
                     ),

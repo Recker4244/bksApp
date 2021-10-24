@@ -12,7 +12,20 @@ Map<String, String> hindi() {
     'Choose': 'भाषा चुनें',
     'Hindi': 'हिंदी',
     'English': 'अंग्रेज़ी',
+    //Shop
+    'shoptitle': 'बेहतरीन ज्वैलरी की खरीदारी करें',
+    'collectionss': 'हमारा संग्रह',
+    'categories': 'रुझान वाली श्रेणियाँ',
+    'OurVarieties': 'रुझान वाली श्रेणियाँ',
 
+    //register Screen
+
+    'register': 'अपने खाते को पंजीकृत करें',
+    'username': 'उपयोगकर्ता नाम',
+    'email': 'ईमेल पता',
+    'pan': 'पैन नंबर (वैकल्पिक)',
+    'referalcode': 'रेफ़रल आईडी (वैकल्पिक)',
+    'DateOfBirth': 'जन्म की तारीख',
     //OTP Screen
 
     'enterOTP': 'ओटीपी कोड दर्ज करें जो हमने आपको अभी भेजा है',
@@ -38,7 +51,7 @@ Map<String, String> hindi() {
     'refer': 'मित्र को आमंत्रित करें',
     'perGrame': 'पैर ग्राम',
     'Sellyour': 'अपना पुराना सोना बेचें',
-
+    'WeightofGold': 'सोने का वजन',
     //Portfolio Screen
 
     'yourPortfolio': 'आपका पोर्टफोलियो',
@@ -91,8 +104,8 @@ Map<String, String> hindi() {
     'CurrentValue': 'वर्तमान मूल्य',
     'AvgBuyPrice': 'औसत खरीद मूल्य',
     'AvgSellPrice': 'औसत बिक्री मूल्य',
-    'Gain': 'बढ़त',
-    'Loss': 'नुकसान',
+    'Gain': 'बढ़त/नुकसान',
+    'copy': 'कॉपी करने के लिए क्लिक करें',
     'BuyWeight': 'वजन के हिसाब से खरीदें',
     'BuyValue': 'मूल्य से खरीदें',
     'SellWeight': 'वजन के हिसाब से बेचें',
@@ -164,14 +177,22 @@ Map<String, String> hindi() {
     'addresstitle': 'आपका पता विवरण',
     'Address': 'पता',
     'PINCODE': 'पिन कोड',
-
+    'LandMark': 'सीमाचिह्न',
+    'NotService': 'सेवा योग्य क्षेत्र नहीं, कृपया अपना पता बदलें',
+    'AdressType': '',
+    'Home': '',
+    'work': '',
+    'others': '',
     //Item Detail Page
     'Description': 'विवरण',
     'SKU': 'एसकेयू नंबर',
     'charges': 'लागू शुल्क',
     'addtocart': 'कार्ट में जोड़ें',
     'buyNow': 'अभी खरीदें',
-
+    'COLLECTIONREQUESTPLACED': 'संग्रह अनुरोध रखा गया',
+    'COLLECTIONREQUESTFAILED': 'संग्रह अनुरोध विफल',
+    'ShowThisCode': 'स्टोर पर जाते समय यह कोड दिखाएं',
+    'FAILED': 'अनुत्तीर्ण होना',
     //Cart
     'cart': 'कार्ट',
     'Summary': 'सारांश',
@@ -187,7 +208,7 @@ Map<String, String> hindi() {
     'TotalSaved': 'कुल सहेजा गया',
     'BonusEarned': 'अर्जित बोनस',
     'SELLREDEEM': 'बेचें/भुनाएं',
-
+    'proceedToSkip': 'स्किप करने के लिए आगे बढ़ें',
     //walkthrough
 
     'home': 'घर यहां आप अपने भविष्य के लिए खरीद और बचत कर सकते हैं',
@@ -226,7 +247,8 @@ Map<String, String> hindi() {
     'skip': 'पार की गई अधिकतम छोड़ें सीमा',
     'unpaidskip': 'क्रास्ड मैक्सिमम अनपेड स्किप',
     'canceled': 'आपकी योजना ज़ब्त है',
-
+    'REQUESTPLACED': 'अनुरोध किया गया',
+    'SUCCESS': 'सफलता',
     //Order Details
     'orderDetails': 'ऑर्डर का विवरण',
     'OrderID:': 'आदेश ID',
@@ -240,7 +262,7 @@ Map<String, String> hindi() {
     'redeemGold': 'गोल्ड रिडीम करें',
     'InstantGold': 'तत्काल सोना',
     'Taxes': 'कर और शुल्क',
-
+    'REQUESTFAILED': 'अनुरोध विफल रहा',
     //transactions
 
     'yourTransactions': 'आपके लेन-देन',
@@ -277,6 +299,7 @@ Map<String, String> hindi() {
     'sellgoldtitle': 'अपना पुराना सोना बेचो',
     'sellBenfits': 'अपना पुराना सोना सर्वोत्तम मूल्य पर बेचें',
     'howTo': 'कैसे-कैसे वीडियो',
-    'testimonials': 'प्रशंसापत्र'
+    'testimonials': 'प्रशंसापत्र',
+    'TotalGoldPlans': 'इस योजना में बचाया गया कुल सोना',
   };
 }

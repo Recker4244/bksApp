@@ -29,12 +29,72 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['uncheck'];
   }
 
+  String get register {
+    return _localizedValues[locale.languageCode]['register'];
+  }
+
+  String get username {
+    return _localizedValues[locale.languageCode]['username'];
+  }
+
+  String get email {
+    return _localizedValues[locale.languageCode]['email'];
+  }
+
+  String get DateOfBirth {
+    return _localizedValues[locale.languageCode]['DateOfBirth'];
+  }
+
+  String get pan {
+    return _localizedValues[locale.languageCode]['pan'];
+  }
+
+  String get referalcode {
+    return _localizedValues[locale.languageCode]['referalcode'];
+  }
+
+  String get LandMark {
+    return _localizedValues[locale.languageCode]['LandMark'];
+  }
+
+  String get NotService {
+    return _localizedValues[locale.languageCode]['NotService'];
+  }
+
+  String get AdressType {
+    return _localizedValues[locale.languageCode]['AdressType'];
+  }
+
+  String get Home {
+    return _localizedValues[locale.languageCode]['Home'];
+  }
+
+  String get work {
+    return _localizedValues[locale.languageCode]['work'];
+  }
+
+  String get others {
+    return _localizedValues[locale.languageCode]['others'];
+  }
+
+  String get SUCCESS {
+    return _localizedValues[locale.languageCode]['SUCCESS'];
+  }
+
+  String get ShowThisCode {
+    return _localizedValues[locale.languageCode]['ShowThisCode'];
+  }
+
   String get continuebutton {
     return _localizedValues[locale.languageCode]['continuebutton'];
   }
 
   String get willSend {
     return _localizedValues[locale.languageCode]['willSend'];
+  }
+
+  String get REQUESTPLACED {
+    return _localizedValues[locale.languageCode]['REQUESTPLACED'];
   }
 
   String get guestLogin {
@@ -637,6 +697,26 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['tryagain'];
   }
 
+  String get COLLECTIONREQUESTPLACED {
+    return _localizedValues[locale.languageCode]['COLLECTIONREQUESTPLACED'];
+  }
+
+  String get FAILED {
+    return _localizedValues[locale.languageCode]['FAILED'];
+  }
+
+  String get proceedToSkip {
+    return _localizedValues[locale.languageCode]['proceedToSkip'];
+  }
+
+  String get TotalGoldPlans {
+    return _localizedValues[locale.languageCode]['TotalGoldPlans'];
+  }
+
+  String get COLLECTIONREQUESTFAILED {
+    return _localizedValues[locale.languageCode]['COLLECTIONREQUESTFAILED'];
+  }
+
   String get Okay {
     return _localizedValues[locale.languageCode]['Okay'];
   }
@@ -663,6 +743,34 @@ class AppLocalizations {
 
   String get onHold {
     return _localizedValues[locale.languageCode]['onHold'];
+  }
+
+  String get copy {
+    return _localizedValues[locale.languageCode]['copy'];
+  }
+
+  String get shoptitle {
+    return _localizedValues[locale.languageCode]['shoptitle'];
+  }
+
+  String get collectionss {
+    return _localizedValues[locale.languageCode]['collectionss'];
+  }
+
+  String get categories {
+    return _localizedValues[locale.languageCode]['categories'];
+  }
+
+  String get OurVarieties {
+    return _localizedValues[locale.languageCode]['OurVarieties'];
+  }
+
+  String get REQUESTFAILED {
+    return _localizedValues[locale.languageCode]['REQUESTFAILED'];
+  }
+
+  String get WeightofGold {
+    return _localizedValues[locale.languageCode]['WeightofGold'];
   }
 
   String get payBefore {

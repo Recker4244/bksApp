@@ -137,7 +137,7 @@ class _ItemsCatState extends State<ItemsCat> {
                     backgroundColor: whiteColor,
                     title: Center(
                       child: Text(
-                        'Shop Finest Jewellery',
+                        locale.shoptitle,
                         style: primaryColor18BoldTextStyle,
                       ),
                     ),
@@ -185,7 +185,7 @@ class _ItemsCatState extends State<ItemsCat> {
                         height: 3.h,
                       ),
                       Text(
-                        'Our Collection ',
+                        locale.collectionss,
                         style: primaryColor16MediumTextStyle,
                       ),
                       heightSpace,
@@ -228,7 +228,7 @@ class _ItemsCatState extends State<ItemsCat> {
                       ),
                       height20Space,
                       Text(
-                        'Trending Categories ',
+                        locale.categories,
                         style: primaryColor16MediumTextStyle,
                       ),
                       heightSpace,
@@ -268,7 +268,7 @@ class _ItemsCatState extends State<ItemsCat> {
                       ),
                       //height20Space,
                       Text(
-                        'Our Varieties ',
+                        locale.OurVarieties,
                         style: primaryColor16MediumTextStyle,
                       ),
                       heightSpace,
