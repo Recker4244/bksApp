@@ -206,12 +206,12 @@ class _ByValFlexiState extends State<ByValFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST PLACED",
+                      locale.REQUESTPLACED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'SUCCESS',
+                      locale.SUCCESS,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -229,13 +229,13 @@ class _ByValFlexiState extends State<ByValFlexi> {
                     height20Space,
                     Center(
                         child: Text(
-                      "Tap to Copy Verification OTP",
+                      locale.taptocopy,
                       style: black12MediumTextStyle,
                     )),
                     heightSpace,
                     Center(
                         child: Text(
-                      'Show this code while you visit Store',
+                      locale.showcode,
                       style: black12MediumTextStyle,
                     ))
                   ],
@@ -265,12 +265,12 @@ class _ByValFlexiState extends State<ByValFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST FAILED",
+                      locale.REQUESTFAILED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'FAILED',
+                      locale.FAILED,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -374,7 +374,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'BUY RATE:',
+                                          locale.BuyRate,
                                           style: grey14BoldTextStyle,
                                         ),
                                         Icon(
@@ -422,7 +422,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                   style: black18BoldTextStyle);
                             }
                             return Text(
-                                "Price Changes in ${C.min == null ? 0 : C.min}:${C.sec} minutes",
+                                "${locale.priceChange} ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                                 style: black18BoldTextStyle);
                           },
                         ),
@@ -459,7 +459,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                               "${widget.duration} ${widget.shortName}",
                               "${(widget.val * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM"),
                           Text(
-                            '   Choose Payment Mode',
+                            locale.choosePayment,
                             style: primaryColor16MediumTextStyle,
                           ),
                           heightSpace,
@@ -493,7 +493,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          'Use Payment Gateway Service to pay instantly',
+                                          locale.herepayment,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -504,7 +504,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          'Online Payment',
+                                          locale.usePayment,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -558,7 +558,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          'You can pay at your doorstep',
+                                          locale.hereCOC,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -569,7 +569,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          'Cash On Delivery',
+                                          locale.useCOC,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,

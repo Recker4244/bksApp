@@ -741,8 +741,28 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['copy'];
   }
 
+  String get shoptitle {
+    return _localizedValues[locale.languageCode]['shoptitle'];
+  }
+
+  String get collectionss {
+    return _localizedValues[locale.languageCode]['collectionss'];
+  }
+
+  String get categories {
+    return _localizedValues[locale.languageCode]['categories'];
+  }
+
+  String get OurVarieties {
+    return _localizedValues[locale.languageCode]['OurVarieties'];
+  }
+
   String get REQUESTFAILED {
     return _localizedValues[locale.languageCode]['REQUESTFAILED'];
+  }
+
+  String get WeightofGold {
+    return _localizedValues[locale.languageCode]['WeightofGold'];
   }
 
   String get payBefore {

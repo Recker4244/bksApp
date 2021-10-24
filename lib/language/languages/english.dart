@@ -12,6 +12,13 @@ Map<String, String> english() {
     'Choose': 'Choose Language',
     'Hindi': 'Hindi',
     'English': 'English',
+
+    //shop
+    'shoptitle': 'Shop Finest Jewellery',
+    'collectionss': 'Our Collection',
+    'categories': 'Trending Categories',
+    'OurVarieties': 'Our Varieties',
+
     //register Screen
 
     'register': 'Register your account',
@@ -139,7 +146,7 @@ Map<String, String> english() {
     'weightEntered': 'Weight Entered',
     'approx': 'Approximate Sell Price',
     'PlaceRequest': 'Place Request for verification',
-
+    'WeightofGold': 'Weight of Gold',
     //referralBonus
 
     'referalBonus': 'Referral Bonus',

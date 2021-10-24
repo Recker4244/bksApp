@@ -12,6 +12,11 @@ Map<String, String> hindi() {
     'Choose': 'भाषा चुनें',
     'Hindi': 'हिंदी',
     'English': 'अंग्रेज़ी',
+    //Shop
+    'shoptitle': 'बेहतरीन ज्वैलरी की खरीदारी करें',
+    'collectionss': 'हमारा संग्रह',
+    'categories': 'रुझान वाली श्रेणियाँ',
+    'OurVarieties': 'रुझान वाली श्रेणियाँ',
 
     //register Screen
 
@@ -46,7 +51,7 @@ Map<String, String> hindi() {
     'refer': 'मित्र को आमंत्रित करें',
     'perGrame': 'पैर ग्राम',
     'Sellyour': 'अपना पुराना सोना बेचें',
-
+    'WeightofGold': 'सोने का वजन',
     //Portfolio Screen
 
     'yourPortfolio': 'आपका पोर्टफोलियो',
