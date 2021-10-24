@@ -77,12 +77,12 @@ class _SellOldState extends State<SellOld> {
                         children: <Widget>[
                           Center(
                               child: Text(
-                            "REQUEST PLACED",
+                            locale.REQUESTPLACED,
                             style: black16BoldTextStyle,
                           )),
                           Center(
                               child: Text(
-                            'SUCCESS',
+                            locale.SUCCESS,
                             style: black14MediumTextStyle,
                           )),
                           heightSpace,
@@ -111,14 +111,14 @@ class _SellOldState extends State<SellOld> {
                               });
                             },
                             child: Text(
-                              "Tap to Copy OTP",
+                              locale.copy,
                               style: black12MediumTextStyle,
                             ),
                           )),
                           heightSpace,
                           Center(
                               child: Text(
-                            'Show this code while you visit Store',
+                            locale.ShowThisCode
                             style: black12MediumTextStyle,
                           ))
                         ],
@@ -149,12 +149,12 @@ class _SellOldState extends State<SellOld> {
                       children: <Widget>[
                         Center(
                             child: Text(
-                          "REQUEST FAILED",
+                          locale.REQUESTFAILED,
                           style: black16BoldTextStyle,
                         )),
                         Center(
                             child: Text(
-                          'FAILED',
+                          locale.FAILED,
                           style: black14MediumTextStyle,
                         )),
                         heightSpace,
@@ -320,7 +320,7 @@ class _SellOldState extends State<SellOld> {
                   backgroundColor: primaryColor,
                   centerTitle: true,
                   title: Text(
-                    "Sell Your Old Gold",
+                    locale.sellgoldtitle,
                     style: white18MediumTextStyle,
                   ),
                 ),
@@ -351,11 +351,11 @@ class _SellOldState extends State<SellOld> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  labelText: 'Weight',
+                                  labelText: locale.weight,
                                   fillColor: whiteColor,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
-                                    'GRAM',
+                                    locale.GRAM,
                                     style: primaryColor18BoldTextStyle,
                                   ),
                                   border: OutlineInputBorder(
@@ -455,7 +455,7 @@ class _SellOldState extends State<SellOld> {
                                         style: black18BoldTextStyle);
                                   }
                                   return Text(
-                                      "Price Changes in ${C.min == null ? 0 : C.min}:${C.sec} minutes",
+                                      "${locale.priceChange} ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                                       style: black18BoldTextStyle);
                                 },
                               ),

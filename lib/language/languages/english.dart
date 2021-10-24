@@ -241,6 +241,7 @@ Map<String, String> english() {
     'handling': 'HANDLING CHARGES',
     'still': 'Still wish to proceed?',
     'proceedTOSELLREDEEM': 'PROCEED TO SELL/REDEEM',
+    'proceedToSkip': 'PROCEED TO SKIP',
     'ordernotplaced': 'ORDER NOT PLACED',
     'failuremsg':
         'If any amount debited from your bank account will be returned within 24-48 hours',
@@ -300,6 +301,10 @@ Map<String, String> english() {
     'sellgoldtitle': 'Sell your old Gold',
     'sellBenfits': 'Sell your old gold at best price',
     'howTo': 'How-To Videos',
-    'testimonials': 'Testimonials'
+    'testimonials': 'Testimonials',
+
+    //Market
+
+    'TotalGoldPlans': 'Total Gold Saved in this Plan',
   };
 }

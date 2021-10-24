@@ -98,7 +98,7 @@ class _ForfeitedState extends State<Forfeited> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Total Gold Saved in this Plan",
+                                      locale.TotalGoldPlans,
                                       style: grey14BoldTextStyle,
                                     ),
                                     SizedBox(
@@ -135,7 +135,7 @@ class _ForfeitedState extends State<Forfeited> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                'SELL/REDEEM',
+                                locale.SELLREDEEM,
                                 style: black14BoldTextStyle,
                               ),
                             ],

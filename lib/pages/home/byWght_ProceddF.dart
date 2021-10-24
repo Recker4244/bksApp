@@ -207,12 +207,12 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST PLACED",
+                      locale.REQUESTPLACED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'SUCCESS',
+                      locale.SUCCESS,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -230,13 +230,13 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                     height20Space,
                     Center(
                         child: Text(
-                      "Tap to Copy Verification OTP",
+                      locale.taptocopy,
                       style: black12MediumTextStyle,
                     )),
                     heightSpace,
                     Center(
                         child: Text(
-                      'Show this code while you visit Store',
+                      locale.showcode,
                       style: black12MediumTextStyle,
                     ))
                   ],
@@ -266,12 +266,12 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "REQUEST FAILED",
+                      locale.REQUESTFAILED,
                       style: black16BoldTextStyle,
                     )),
                     Center(
                         child: Text(
-                      'FAILED',
+                      locale.FAILED,
                       style: black14MediumTextStyle,
                     )),
                     heightSpace,
@@ -375,7 +375,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'BUY RATE:',
+                                          locale.BuyRate,
                                           style: grey14BoldTextStyle,
                                         ),
                                         Icon(
@@ -423,7 +423,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                   style: black18BoldTextStyle);
                             }
                             return Text(
-                                "Price Changes in ${C.min == null ? 0 : C.min}:${C.sec} minutes",
+                                "${locale.priceChange} ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                                 style: black18BoldTextStyle);
                           },
                         ),
@@ -460,7 +460,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                               "${widget.duration} ${widget.shortName}",
                               "${(widget.val * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM"),
                           Text(
-                            '   Choose Payment Mode',
+                            locale.choosePayment,
                             style: primaryColor16MediumTextStyle,
                           ),
                           heightSpace,
@@ -493,7 +493,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                     children: <Widget>[
                                       SizedBox(
                                         child: Text(
-                                          'Use Payment Gateway Service',
+                                          locale.herepayment,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -509,7 +509,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          'Online Payment',
+                                          locale.usePayment,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -563,7 +563,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                       SizedBox(
                                         //width: 180,
                                         child: Text(
-                                          'You can pay at your doorstep',
+                                          locale.hereCOC,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                         ),
@@ -573,7 +573,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                          'Cash On Delivery',
+                                          locale.useCOC,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -610,7 +610,7 @@ Your_Portfolio(String saveGold, String BonusC, String Duration, String Saving) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Your Portfolio',
+            locale.YourPortfolio,
             style: primaryColor16MediumTextStyle,
           ),
           Expanded(
@@ -618,9 +618,9 @@ Your_Portfolio(String saveGold, String BonusC, String Duration, String Saving) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Portfolio_card('Saving Gold', saveGold.toString()),
+                Portfolio_card(locale.Saving, saveGold.toString()),
                 Portfolio_card(
-                  'Bonus By Maturity',
+                  locale.Bonus,
                   BonusC,
                 ),
               ],
@@ -631,8 +631,8 @@ Your_Portfolio(String saveGold, String BonusC, String Duration, String Saving) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Portfolio_card('Duration', Duration.toString()),
-                Portfolio_card('Total Saving', Saving),
+                Portfolio_card(locale.duration, Duration.toString()),
+                Portfolio_card(locale.totalSaving, Saving),
               ],
             ),
           ),

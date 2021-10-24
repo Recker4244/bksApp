@@ -208,7 +208,7 @@ Map<String, String> hindi() {
     'TotalSaved': 'कुल सहेजा गया',
     'BonusEarned': 'अर्जित बोनस',
     'SELLREDEEM': 'बेचें/भुनाएं',
-
+    'proceedToSkip': 'स्किप करने के लिए आगे बढ़ें',
     //walkthrough
 
     'home': 'घर यहां आप अपने भविष्य के लिए खरीद और बचत कर सकते हैं',
@@ -299,6 +299,7 @@ Map<String, String> hindi() {
     'sellgoldtitle': 'अपना पुराना सोना बेचो',
     'sellBenfits': 'अपना पुराना सोना सर्वोत्तम मूल्य पर बेचें',
     'howTo': 'कैसे-कैसे वीडियो',
-    'testimonials': 'प्रशंसापत्र'
+    'testimonials': 'प्रशंसापत्र',
+    'TotalGoldPlans': 'इस योजना में बचाया गया कुल सोना',
   };
 }

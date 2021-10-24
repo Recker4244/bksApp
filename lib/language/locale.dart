@@ -705,6 +705,14 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]['FAILED'];
   }
 
+  String get proceedToSkip {
+    return _localizedValues[locale.languageCode]['proceedToSkip'];
+  }
+
+  String get TotalGoldPlans {
+    return _localizedValues[locale.languageCode]['TotalGoldPlans'];
+  }
+
   String get COLLECTIONREQUESTFAILED {
     return _localizedValues[locale.languageCode]['COLLECTIONREQUESTFAILED'];
   }
