@@ -268,7 +268,7 @@ class _GuestHomeState extends State<GuestHome> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Image.asset(
-                  'assets/user/guest.PNG',
+                  'assets/user/bksmain.png',
                   width: 80.0,
                   height: 80.0,
                   fit: BoxFit.cover,
@@ -381,7 +381,7 @@ class _GuestHomeState extends State<GuestHome> {
             ),
             height5Space,
             acitivites(locale.sellgoldtitle, locale.sellBenfits,
-                FontAwesomeIcons.piggyBank),
+                FontAwesomeIcons.balanceScale),
             height5Space,
 
             // Text(
