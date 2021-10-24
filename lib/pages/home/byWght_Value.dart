@@ -297,7 +297,8 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 onChanged: (String value) {
                                   setState(() {
                                     valueController.text =
-                                        (int.parse(value) * data.buy)
+                                        (double.parse(value) *
+                                                data.buy.toDouble())
                                             .toStringAsFixed(2);
                                   });
                                 },
@@ -305,6 +306,8 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.text,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  suffix: Text('GRAM',
+                                      style: primaryColor18BoldTextStyle),
                                   labelText: 'Weight of Gold',
                                   labelStyle: primaryColor18BoldTextStyle,
                                   border: OutlineInputBorder(

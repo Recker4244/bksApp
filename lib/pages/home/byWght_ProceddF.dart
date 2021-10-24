@@ -15,6 +15,7 @@ import '../Eshop/COD_address.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:sizer/sizer.dart';
 
 class ByWeightFlexi extends StatefulWidget {
   double val;
@@ -150,9 +151,9 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
     final body = {
       "plan": {
-        "mode": "Value",
-        "duration": 20,
-        "cyclePeriod": "6158779c9d83e000168038bc"
+        "mode": "Weight",
+        "duration": widget.duration,
+        "cyclePeriod": widget.CycleP
       },
       "userId": Userdata.sId,
       "status": "Running",
@@ -491,14 +492,18 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       SizedBox(
-                                        width: 150,
                                         child: Text(
-                                          'Use Payment Gateway Service to pay instantly',
+                                          'Use Payment Gateway Service',
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
+
+                                      // SizedBox(
+                                      //   width: 15.w,
+                                      //   child:
+                                      // ),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -556,7 +561,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       SizedBox(
-                                        width: 180,
+                                        //width: 180,
                                         child: Text(
                                           'You can pay at your doorstep',
                                           style: black16BoldTextStyle,

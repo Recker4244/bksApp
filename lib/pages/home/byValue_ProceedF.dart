@@ -150,9 +150,9 @@ class _ByValFlexiState extends State<ByValFlexi> {
 
     final body = {
       "plan": {
-        "mode": "Value",
-        "duration": 20,
-        "cyclePeriod": "6158779c9d83e000168038bc"
+        "mode": "Weight",
+        "duration": widget.duration,
+        "cyclePeriod": widget.CycleP
       },
       "userId": Userdata.sId,
       "status": "Running",

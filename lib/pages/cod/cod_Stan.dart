@@ -5,12 +5,15 @@ import 'package:gold247/models/FlexiSubscription.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_fail_screen.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_success_screen.dart';
+import 'package:gold247/pages/portfolio/Appointments.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:gold247/language/locale.dart';
 
 enum adressType { Home, Work, Others }
@@ -153,6 +156,12 @@ class _Adress_Details_Payment_StanState
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
       setState(() {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                type: PageTransitionType.size,
+                alignment: Alignment.bottomCenter,
+                child: Appointments()));
         showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -275,7 +284,7 @@ class _Adress_Details_Payment_StanState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'BUY GOLD',
+          'Address Details',
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,

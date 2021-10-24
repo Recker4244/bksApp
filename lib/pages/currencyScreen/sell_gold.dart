@@ -101,7 +101,7 @@ class _CurrencyScreenState extends State<SellGold> {
     var request = http.Request(
         'PUT',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/add/${Userdata.sId}'));
+            'https://goldv2.herokuapp.com/api/wallet/remove/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',

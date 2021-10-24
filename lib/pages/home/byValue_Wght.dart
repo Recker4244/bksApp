@@ -405,6 +405,10 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 keyboardType: TextInputType.text,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  suffix: Text(
+                                    'GRAM',
+                                    style: primaryColor18BoldTextStyle,
+                                  ),
                                   labelText: 'Weight of Gold',
                                   labelStyle: primaryColor18BoldTextStyle,
                                   border: OutlineInputBorder(

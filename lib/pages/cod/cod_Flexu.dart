@@ -8,6 +8,7 @@ import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_fail_screen.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_success_screen.dart';
+import 'package:gold247/pages/portfolio/Appointments.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -161,7 +162,7 @@ class _Adress_Details_Payment_FlexState
             PageTransition(
                 type: PageTransitionType.size,
                 alignment: Alignment.bottomCenter,
-                child: BottomBar()));
+                child: Appointments()));
         showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -284,7 +285,7 @@ class _Adress_Details_Payment_FlexState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          'BUY GOLD',
+          'Address Details',
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,
