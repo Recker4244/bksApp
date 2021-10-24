@@ -105,11 +105,7 @@ class _CurrencyScreenState extends State<SellGold> {
 
     final body = {
       "gold": '${valueController.text}',
-      "transaction": {
-        "paymentId": '$payId',
-        "amount": '${amountController.text}',
-        "status": "Debited"
-      }
+      "transaction": {"amount": '${amountController.text}', "status": "Debited"}
     };
     request.headers.addAll(headers);
     request.body = jsonEncode(body);
@@ -214,37 +210,37 @@ class _CurrencyScreenState extends State<SellGold> {
   //   return pSubs;
   // }
 
-  Razorpay _razorpay;
+  // Razorpay _razorpay;
   String val = "0";
-  final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
-  void openCheckout() async {
-    var options = {
-      'key': Rkey,
-      'amount': double.parse(amountController.text) * 100.0,
-      'name': "Instant Sell gold",
-      'retry': {'enabled': true, 'max_count': 1},
-      'send_sms_hash': true,
-      'prefill': {'contact': Userdata.mobile, 'email': Userdata.email},
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
+  // final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
+  // void openCheckout() async {
+  //   var options = {
+  //     'key': Rkey,
+  //     'amount': double.parse(amountController.text) * 100.0,
+  //     'name': "Instant Sell gold",
+  //     'retry': {'enabled': true, 'max_count': 1},
+  //     'send_sms_hash': true,
+  //     'prefill': {'contact': Userdata.mobile, 'email': Userdata.email},
+  //     'external': {
+  //       'wallets': ['paytm']
+  //     }
+  //   };
 
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint('Error: e');
-    }
-  }
+  //   try {
+  //     _razorpay.open(options);
+  //   } catch (e) {
+  //     debugPrint('Error: e');
+  //   }
+  // }
 
   Future<bool> init;
   Future<bool> initialise() async {
     await fetchData();
     await getWalletBalanced();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // _razorpay = Razorpay();
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     return true;
   }
 
@@ -254,58 +250,58 @@ class _CurrencyScreenState extends State<SellGold> {
     super.initState();
   }
 
-  _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    print(response.paymentId);
-    await removefromwallet(response.paymentId.toString());
-  }
+  // _handlePaymentSuccess(PaymentSuccessResponse response) async {
+  //   print(response.paymentId);
+  //   await removefromwallet(response.paymentId.toString());
+  // }
 
-  // Fluttertoast.showToast(
-  //     msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
+  // // Fluttertoast.showToast(
+  // //     msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
 
-  _handlePaymentError(PaymentFailureResponse response) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              backgroundColor: scaffoldBgColor,
-              title: Center(
-                child: CircleAvatar(
-                  radius: 20.0,
-                  backgroundColor: Colors.red,
-                  child: Icon(
-                    Icons.sms_failed_rounded,
-                    size: 30.0,
-                    color: scaffoldBgColor,
-                  ),
-                ),
-              ),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Center(
-                        child: Text(
-                      "REQUEST FAILED",
-                      style: black16BoldTextStyle,
-                    )),
-                    Center(
-                        child: Text(
-                      'FAILED',
-                      style: black14MediumTextStyle,
-                    )),
-                    heightSpace,
-                  ],
-                ),
-              ),
-            ));
-    // Fluttertoast.showToast(
-    //     msg: "ERROR: " + response.code.toString() + " - " + response.message,
-    //     toastLength: Toast.LENGTH_SHORT);
-  }
+  // _handlePaymentError(PaymentFailureResponse response) {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) => AlertDialog(
+  //             backgroundColor: scaffoldBgColor,
+  //             title: Center(
+  //               child: CircleAvatar(
+  //                 radius: 20.0,
+  //                 backgroundColor: Colors.red,
+  //                 child: Icon(
+  //                   Icons.sms_failed_rounded,
+  //                   size: 30.0,
+  //                   color: scaffoldBgColor,
+  //                 ),
+  //               ),
+  //             ),
+  //             content: SingleChildScrollView(
+  //               child: ListBody(
+  //                 children: <Widget>[
+  //                   Center(
+  //                       child: Text(
+  //                     "REQUEST FAILED",
+  //                     style: black16BoldTextStyle,
+  //                   )),
+  //                   Center(
+  //                       child: Text(
+  //                     'FAILED',
+  //                     style: black14MediumTextStyle,
+  //                   )),
+  //                   heightSpace,
+  //                 ],
+  //               ),
+  //             ),
+  //           ));
+  //   // Fluttertoast.showToast(
+  //   //     msg: "ERROR: " + response.code.toString() + " - " + response.message,
+  //   //     toastLength: Toast.LENGTH_SHORT);
+  // }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(
-        msg: "EXTERNAL_WALLET: " + response.walletName,
-        toastLength: Toast.LENGTH_SHORT);
-  }
+  // void _handleExternalWallet(ExternalWalletResponse response) {
+  //   Fluttertoast.showToast(
+  //       msg: "EXTERNAL_WALLET: " + response.walletName,
+  //       toastLength: Toast.LENGTH_SHORT);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -760,12 +756,12 @@ class _CurrencyScreenState extends State<SellGold> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'INR ${(buyprice) + (buyprice * 0.03)}',
+                                        'INR ${(buyprice)}',
                                         style: black18BoldTextStyle,
                                       ),
                                       widthSpace,
                                       Text(
-                                        '(GST 3% INCLUDED)',
+                                        '(GST 0% INCLUDED)',
                                         style: black12MediumTextStyle,
                                       ),
                                     ],
@@ -801,8 +797,8 @@ class _CurrencyScreenState extends State<SellGold> {
                               var val =
                                   double.parse('${amountController.text}');
                               var amount = (val /
-                                  double.parse((buyprice + (buyprice * 0.03))
-                                      .toStringAsPrecision(3)));
+                                  double.parse(
+                                      (buyprice).toStringAsPrecision(3)));
                               setState(() {
                                 valueController.text = '$amount';
                               });
@@ -841,8 +837,10 @@ class _CurrencyScreenState extends State<SellGold> {
                         // Buy Button
                         InkWell(
                           onTap: () async {
-                            openCheckout();
-                            Navigator.of(context).pop();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BankDetails()));
                           },
                           borderRadius: BorderRadius.circular(7.0),
                           child: Container(
@@ -951,12 +949,12 @@ class _CurrencyScreenState extends State<SellGold> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'INR ${buyPrice + (buyPrice * 0.03)}',
+                                        'INR ${buyPrice}',
                                         style: black18BoldTextStyle,
                                       ),
                                       widthSpace,
                                       Text(
-                                        '(GST 3% INCLUDED)',
+                                        '(GST 0% INCLUDED)',
                                         style: black12MediumTextStyle,
                                       ),
                                     ],
@@ -990,9 +988,8 @@ class _CurrencyScreenState extends State<SellGold> {
                             ),
                             onChanged: (value) {
                               var val = double.parse('${valueController.text}');
-                              var amount = (val *
-                                  double.parse((buyPrice + (buyPrice * 0.03))
-                                      .toString()));
+                              var amount =
+                                  (val * double.parse((buyPrice).toString()));
                               setState(() {
                                 amountController.text = '$amount';
                               });
@@ -1031,8 +1028,10 @@ class _CurrencyScreenState extends State<SellGold> {
                         // Buy Button
                         InkWell(
                           onTap: () async {
-                            openCheckout();
-                            Navigator.of(context).pop();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BankDetails()));
                           },
                           borderRadius: BorderRadius.circular(7.0),
                           child: Container(

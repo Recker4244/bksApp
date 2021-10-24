@@ -117,6 +117,7 @@ class _Adress_Details_Payment_EshopState
     }
   }
 
+  final _formkeyeshop = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,282 +135,294 @@ class _Adress_Details_Payment_EshopState
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            height20Space,
-            height20Space,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: addresscontroller,
-                    keyboardType: TextInputType.streetAddress,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'Adress',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+        child: Form(
+          key: _formkeyeshop,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              height20Space,
+              height20Space,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {},
+                    child: TextFormField(
+                      controller: addresscontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.streetAddress,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'Adress',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: PINcontroller,
-                    keyboardType: TextInputType.number,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'PinCode',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+              SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {
-                      checkPincode(value);
-                    },
+                    child: TextFormField(
+                      controller: PINcontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.number,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'PinCode',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        checkPincode(value);
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: Landmarkcontroller,
-                    keyboardType: TextInputType.streetAddress,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'LandMark',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+              SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {},
+                    child: TextFormField(
+                      controller: Landmarkcontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.streetAddress,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'LandMark',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
                 ),
               ),
-            ),
-            heightSpace,
-            !available
-                ? Text(
-                    'Not Serviceable Area, Please Change your Address',
-                    style: black14SemiBoldTextStyle,
-                  )
-                : Container(),
-            height20Space,
-            height20Space,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Adress_Type(),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: fixPadding * 6),
-            //   child:
-            // ),
-            SizedBox(height: fixPadding * 3.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: InkWell(
-                onTap: () async {
-                  await createOrder();
-                  setState(() {
-                    if (orderdetail['otp'] != null) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                backgroundColor: scaffoldBgColor,
-                                title: Center(
-                                  child: CircleAvatar(
-                                    radius: 20.0,
-                                    backgroundColor: Colors.green,
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 30.0,
-                                      color: scaffoldBgColor,
-                                    ),
-                                  ),
-                                ),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      Center(
-                                          child: Text(
-                                        "COLLECTION REQUEST PLACED",
-                                        style: black14BoldTextStyle,
-                                      )),
-                                      Center(
-                                          child: Text(
-                                        'SUCCESS',
-                                        style: black14MediumTextStyle,
-                                      )),
-                                      heightSpace,
-                                      Center(
-                                          child: Text(
-                                        DateTime.now().toString(),
-                                        style: black12MediumTextStyle,
-                                      )),
-                                      Center(
-                                        child: Container(
-                                          color: whiteColor,
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Center(
-                                              child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(orderdetail["otp"]),
-                                          )),
+              heightSpace,
+              !available
+                  ? Text(
+                      'Not Serviceable Area, Please Change your Address',
+                      style: black14SemiBoldTextStyle,
+                    )
+                  : Container(),
+              height20Space,
+              height20Space,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Adress_Type(),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: fixPadding * 6),
+              //   child:
+              // ),
+              SizedBox(height: fixPadding * 3.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: InkWell(
+                  onTap: () async {
+                    if (_formkeyeshop.currentState.validate()) {
+                      await createOrder();
+                      setState(() {
+                        if (orderdetail['otp'] != null) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                    backgroundColor: scaffoldBgColor,
+                                    title: Center(
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor: Colors.green,
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 30.0,
+                                          color: scaffoldBgColor,
                                         ),
                                       ),
-                                      // height20Space,
-                                      // Center(
-                                      //     child: Text(
-                                      //       "Tap to Copy Verification OTP",
-                                      //       style: black12MediumTextStyle,
-                                      //     )),
-                                      heightSpace,
-                                      Center(
-                                          child: Text(
-                                        'Show this code while you visit Store',
-                                        style: black12MediumTextStyle,
-                                      ))
-                                    ],
-                                  ),
-                                ),
-                              ));
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                backgroundColor: scaffoldBgColor,
-                                title: Center(
-                                  child: CircleAvatar(
-                                    radius: 20.0,
-                                    backgroundColor: Colors.red,
-                                    child: Icon(
-                                      Icons.sms_failed_rounded,
-                                      size: 30.0,
-                                      color: scaffoldBgColor,
                                     ),
-                                  ),
-                                ),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      Center(
-                                          child: Center(
-                                        child: Text(
-                                          "COLLECTION REQUEST FAILED",
-                                          style: black16BoldTextStyle,
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Center(
+                                              child: Text(
+                                            "COLLECTION REQUEST PLACED",
+                                            style: black14BoldTextStyle,
+                                          )),
+                                          Center(
+                                              child: Text(
+                                            'SUCCESS',
+                                            style: black14MediumTextStyle,
+                                          )),
+                                          heightSpace,
+                                          Center(
+                                              child: Text(
+                                            DateTime.now().toString(),
+                                            style: black12MediumTextStyle,
+                                          )),
+                                          Center(
+                                            child: Container(
+                                              color: whiteColor,
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Center(
+                                                  child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(orderdetail["otp"]),
+                                              )),
+                                            ),
+                                          ),
+                                          // height20Space,
+                                          // Center(
+                                          //     child: Text(
+                                          //       "Tap to Copy Verification OTP",
+                                          //       style: black12MediumTextStyle,
+                                          //     )),
+                                          heightSpace,
+                                          Center(
+                                              child: Text(
+                                            'Show this code while you visit Store',
+                                            style: black12MediumTextStyle,
+                                          ))
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                    backgroundColor: scaffoldBgColor,
+                                    title: Center(
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(
+                                          Icons.sms_failed_rounded,
+                                          size: 30.0,
+                                          color: scaffoldBgColor,
                                         ),
-                                      )),
-                                      Center(
-                                          child: Text(
-                                        'FAILED',
-                                        style: black14MediumTextStyle,
-                                      )),
-                                      heightSpace,
-                                    ],
-                                  ),
-                                ),
-                              ));
+                                      ),
+                                    ),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Center(
+                                              child: Center(
+                                            child: Text(
+                                              "COLLECTION REQUEST FAILED",
+                                              style: black16BoldTextStyle,
+                                            ),
+                                          )),
+                                          Center(
+                                              child: Text(
+                                            'FAILED',
+                                            style: black14MediumTextStyle,
+                                          )),
+                                          heightSpace,
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                        }
+                      });
                     }
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  height: 55,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Proceed'.toUpperCase(),
-                        style: TextStyle(
-                          color: scaffoldBgColor,
-                          fontWeight: FontWeight.bold,
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    height: 55,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'Proceed'.toUpperCase(),
+                          style: TextStyle(
+                            color: scaffoldBgColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

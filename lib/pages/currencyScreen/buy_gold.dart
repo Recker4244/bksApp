@@ -200,7 +200,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   void openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': double.parse(amountController.text) * 100.0,
+      'amount': (double.parse(amountController.text)) * 100.0,
       'name': "Instant buy gold",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,

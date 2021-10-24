@@ -71,6 +71,7 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
   }
 
   @override
+  final _formkeycod = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,156 +89,165 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            height20Space,
-            height20Space,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: addresscontroller,
-                    keyboardType: TextInputType.streetAddress,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'Adress',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+        child: Form(
+          key: _formkeycod,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              height20Space,
+              height20Space,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {},
+                    child: TextFormField(
+                      controller: addresscontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.streetAddress,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'Adress',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: PINcontroller,
-                    keyboardType: TextInputType.number,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'PinCode',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+              SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {
-                      checkPincode(value);
-                    },
+                    child: TextFormField(
+                      controller: PINcontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.number,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'PinCode',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        checkPincode(value);
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Container(
-                color: whiteColor,
-                // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                child: Theme(
-                  data: ThemeData(
-                    primaryColor: whiteColor,
-                    textSelectionTheme: TextSelectionThemeData(
-                      cursorColor: primaryColor,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: Landmarkcontroller,
-                    keyboardType: TextInputType.streetAddress,
-                    style: primaryColor16MediumTextStyle,
-                    decoration: InputDecoration(
-                      labelText: 'LandMark',
-                      labelStyle: TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
+              SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  color: whiteColor,
+                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                  child: Theme(
+                    data: ThemeData(
+                      primaryColor: whiteColor,
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: primaryColor,
                       ),
                     ),
-                    onChanged: (value) {},
+                    child: TextFormField(
+                      controller: Landmarkcontroller,
+                      validator: (value) =>
+                          value.isEmpty ? "Field cannot be empty" : null,
+                      keyboardType: TextInputType.streetAddress,
+                      style: primaryColor16MediumTextStyle,
+                      decoration: InputDecoration(
+                        labelText: 'LandMark',
+                        labelStyle: TextStyle(
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
                 ),
               ),
-            ),
-            heightSpace,
-            !available
-                ? Text(
-                    'Not Serviceable Area, Please Change your Address',
-                    style: black14SemiBoldTextStyle,
-                  )
-                : Container(),
-            height20Space,
-            height20Space,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Adress_Type(),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: fixPadding * 6),
-            //   child:
-            // ),
-            SizedBox(height: fixPadding * 3.0),
-            Proceed_Button(),
-          ],
+              heightSpace,
+              !available
+                  ? Text(
+                      'Not Serviceable Area, Please Change your Address',
+                      style: black14SemiBoldTextStyle,
+                    )
+                  : Container(),
+              height20Space,
+              height20Space,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Adress_Type(),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: fixPadding * 6),
+              //   child:
+              // ),
+              SizedBox(height: fixPadding * 3.0),
+              Proceed_Button(),
+            ],
+          ),
         ),
       ),
     );
