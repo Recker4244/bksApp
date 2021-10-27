@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 import 'byValue_Wght.dart';
 import 'byWght_Value.dart';
 import 'byValue_ProceedF.dart';
@@ -235,6 +236,39 @@ class _HomeState extends State<Home> {
       );
     }
 
+    userdummyGreeting() {
+      return Padding(
+        padding: EdgeInsets.all(fixPadding * 2.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '',
+                  style: grey16MediumTextStyle,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  '',
+                  style: black22BoldTextStyle,
+                ),
+              ],
+            ),
+            Container(
+              height: 80,
+              width: 80,
+            )
+          ],
+        ),
+      );
+    }
+
     balanceContainer() {
       return Container(
         padding: EdgeInsets.all(fixPadding * 2.0),
@@ -278,6 +312,73 @@ class _HomeState extends State<Home> {
                       '${bonusbalance} ${locale.GRAM}',
                       style: white26BoldTextStyle,
                     ),
+                  ],
+                ),
+                // Container(
+                //   padding: EdgeInsets.all(fixPadding * 0.7),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(20.0),
+                //     color: whiteColor,
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Icon(
+                //         Icons.arrow_drop_up,
+                //         size: 26.0,
+                //         color: primaryColor,
+                //       ),
+                //       Text(
+                //         '10%',
+                //         style: primaryColor14MediumTextStyle,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    dummybalanceContainer() {
+      return Container(
+        padding: EdgeInsets.all(fixPadding * 2.0),
+        margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          color: primaryColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(''),
+            SizedBox(
+              height: 1.h,
+            ),
+            Text(
+                //
+                ''),
+            SizedBox(
+              height: 3.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      locale.total,
+                      style: white16MediumTextStyle,
+                    ),
+                    heightSpace,
+                    Text(''),
                   ],
                 ),
                 // Container(
@@ -433,6 +534,26 @@ class _HomeState extends State<Home> {
                     style: primaryColor16MediumTextStyle,
                   ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    dummybuyGold() {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(
+            fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: whiteColor,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4.0,
+                spreadRadius: 1.0,
+                color: blackColor.withOpacity(0.05),
               ),
             ],
           ),
@@ -741,6 +862,55 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
+
+    dummymyportfolio() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              left: fixPadding * 2.0,
+              bottom: fixPadding,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 22.h,
+            child: ListView.builder(
+              itemCount: Standardplans.length,
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: (index != 2 - 1)
+                      ? EdgeInsets.only(left: fixPadding * 2.0)
+                      : EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Container(
+                      width: 55.w,
+                      padding: EdgeInsets.all(fixPadding),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: whiteColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 4.0,
+                            spreadRadius: 1.0,
+                            color: blackColor.withOpacity(0.05),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -1185,13 +1355,23 @@ class _HomeState extends State<Home> {
         if (snapshot.connectionState == ConnectionState.none ||
             snapshot.connectionState == ConnectionState.waiting) {
           return SafeArea(
-            child: Scaffold(
-                backgroundColor: scaffoldBgColor,
-                body: Center(
-                    child: CircularProgressIndicator(
-                  color: primaryColor,
-                ))),
-          );
+              child: Scaffold(
+            backgroundColor: scaffoldBgColor,
+            body: Shimmer.fromColors(
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.white,
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: [
+                  userdummyGreeting(),
+                  dummybalanceContainer(),
+                  dummybuyGold(),
+                  dummybuyGold(),
+                  dummymyportfolio()
+                ],
+              ),
+            ),
+          ));
         } else {
           if (snapshot.hasData) {
             return SafeArea(

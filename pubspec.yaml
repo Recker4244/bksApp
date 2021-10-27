@@ -53,6 +53,7 @@ dependencies:
   firebase_analytics: ^8.3.3
   showcaseview: ^1.1.1
   tutorial_coach_mark: ^1.1.1
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
