@@ -20,8 +20,7 @@ class YourorderdetailsState extends State<Yourorderdetails> {
   orderdetails temp;
 
   getorderbyid(String id) async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/order/${id}'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/order/${id}'));
 
     http.StreamedResponse response = await request.send();
 

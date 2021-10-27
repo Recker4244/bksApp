@@ -46,8 +46,8 @@ class _ByValFlexiState extends State<ByValFlexi> {
   int endTime;
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -64,10 +64,8 @@ class _ByValFlexiState extends State<ByValFlexi> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -117,9 +115,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "paymentId": id,
@@ -135,7 +131,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
     } else {
       print(response.reasonPhrase);
     }
@@ -143,10 +139,8 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   createSubscription(String installmentid) async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
 
     final body = {
       "plan": {
@@ -184,6 +178,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     createSubscription(installmentID);
     return showDialog(
@@ -245,6 +240,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -288,6 +284,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,

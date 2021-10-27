@@ -26,7 +26,7 @@ class cycles {
 
   cycles.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     graceperiod = json['graceperiod'];
     minValue = json['minValue'];
@@ -41,7 +41,7 @@ class cycles {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['graceperiod'] = this.graceperiod;
     data['minValue'] = this.minValue;

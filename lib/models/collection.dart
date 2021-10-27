@@ -17,7 +17,7 @@ class collection {
       this.status});
 
   collection.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     collectionName = json['collection_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -28,7 +28,7 @@ class collection {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['collection_name'] = this.collectionName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;

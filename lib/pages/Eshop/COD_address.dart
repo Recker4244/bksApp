@@ -28,7 +28,7 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
       _character = adressType.Home;
     }
     http.Response response = await http.put(
-      Uri.parse("https://goldv2.herokuapp.com/api/account/"),
+      Uri.parse("${baseurl}/api/account/"),
       body: json.encode({
         'user': Userdata.sId,
         'landMark': addresscontroller.text,
@@ -45,8 +45,8 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
   }
 
   checkPincode(String pincode) async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/pincode/search/$pincode'));
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
 
     http.StreamedResponse response = await request.send();
 

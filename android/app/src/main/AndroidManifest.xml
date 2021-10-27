@@ -9,7 +9,7 @@
   
 </queries>
    <application
-        android:label="My Gold"
+        android:label="BKS MyGold"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

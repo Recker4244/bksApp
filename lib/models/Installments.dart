@@ -34,16 +34,16 @@ class DataIN {
 
   DataIN(
       {this.mode,
-        this.amount,
-        this.gold,
-        this.bonusSaved,
-        this.otp,
-        this.sId,
-        this.paymentId,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.amount,
+      this.gold,
+      this.bonusSaved,
+      this.otp,
+      this.sId,
+      this.paymentId,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   DataIN.fromJson(Map<String, dynamic> json) {
     mode = json['mode'];
@@ -51,7 +51,7 @@ class DataIN {
     gold = json['gold'];
     bonusSaved = json['bonusSaved'];
     otp = json['otp'];
-    sId = json['_id'];
+    sId = json['id'];
     paymentId = json['paymentId'];
     status = json['status'];
     createdAt = json['createdAt'];
@@ -66,7 +66,7 @@ class DataIN {
     data['gold'] = this.gold;
     data['bonusSaved'] = this.bonusSaved;
     data['otp'] = this.otp;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['paymentId'] = this.paymentId;
     data['status'] = this.status;
     data['createdAt'] = this.createdAt;

@@ -34,16 +34,16 @@ class DataS {
 
   DataS(
       {this.installments,
-        this.status,
-        this.unpaidSkips,
-        this.skipCount,
-        this.unpaidInvestments,
-        this.sId,
-        this.user,
-        this.plan,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.status,
+      this.unpaidSkips,
+      this.skipCount,
+      this.unpaidInvestments,
+      this.sId,
+      this.user,
+      this.plan,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   DataS.fromJson(Map<String, dynamic> json) {
     installments = json['installments'].cast<String>();
@@ -51,7 +51,7 @@ class DataS {
     unpaidSkips = json['unpaidSkips'];
     skipCount = json['skipCount'];
     unpaidInvestments = json['unpaidInvestments'];
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     plan = json['plan'];
     createdAt = json['createdAt'];
@@ -66,7 +66,7 @@ class DataS {
     data['unpaidSkips'] = this.unpaidSkips;
     data['skipCount'] = this.skipCount;
     data['unpaidInvestments'] = this.unpaidInvestments;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     data['plan'] = this.plan;
     data['createdAt'] = this.createdAt;

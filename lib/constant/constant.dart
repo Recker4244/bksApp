@@ -10,6 +10,8 @@ const Color orangeColor = const Color(0xFFFFA500);
 const Color greenColor = const Color(0xFF006400);
 const Color scaffoldBgColor = const Color(0xFFFFECCF);
 
+const String baseurl = "https://goldv2.herokuapp.com";
+
 const double fixPadding = 10.0;
 
 const SizedBox heightSpace = const SizedBox(height: 10.0);

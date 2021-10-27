@@ -18,7 +18,7 @@ class product {
 
   product.fromJson(Map<String, dynamic> json) {
     images = json['images'].cast<String>();
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     video = json['video'];
     createdAt = json['createdAt'];
@@ -29,7 +29,7 @@ class product {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['images'] = this.images;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['video'] = this.video;
     data['createdAt'] = this.createdAt;

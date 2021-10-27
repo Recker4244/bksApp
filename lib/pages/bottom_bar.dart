@@ -33,7 +33,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   void initState() {
     if (!Userdata.isInvested)
-      Future.delayed(Duration(seconds: 2), showTutorial);
+      Future.delayed(Duration(seconds: 3), showTutorial);
     super.initState();
 
     if (widget.index != null) {
@@ -126,19 +126,31 @@ class _BottomBarState extends State<BottomBar> {
               height: 8.h,
               width: double.infinity,
               color: whiteColor,
-              padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+              //padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  bottomBarItem(
-                      FontAwesomeIcons.home, 'assets/icon/grey/user.png', 1),
-                  bottomBarItem(FontAwesomeIcons.piggyBank,
-                      'assets/icon/grey/user.png', 2),
-                  bottomBarItem(
-                      FontAwesomeIcons.store, 'assets/icon/grey/user.png', 3),
-                  bottomBarItem(
-                      FontAwesomeIcons.user, 'assets/icon/grey/user.png', 4),
+                  Expanded(
+                      child: Center(
+                    child: bottomBarItem(
+                        FontAwesomeIcons.home, 'assets/icon/grey/user.png', 1),
+                  )),
+                  Expanded(
+                      child: Center(
+                    child: bottomBarItem(FontAwesomeIcons.piggyBank,
+                        'assets/icon/grey/user.png', 2),
+                  )),
+                  Expanded(
+                      child: Center(
+                    child: bottomBarItem(
+                        FontAwesomeIcons.store, 'assets/icon/grey/user.png', 3),
+                  )),
+                  Expanded(
+                      child: Center(
+                    child: bottomBarItem(
+                        FontAwesomeIcons.user, 'assets/icon/grey/user.png', 4),
+                  )),
                 ],
               ),
             ),

@@ -37,7 +37,7 @@ class order {
       this.amount});
 
   order.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     status = json['status'];
     consignment = json['consignment'];
     redeemGoldApplied = json['redeemGoldApplied'];
@@ -60,7 +60,7 @@ class order {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['status'] = this.status;
     data['consignment'] = this.consignment;
     data['redeemGoldApplied'] = this.redeemGoldApplied;
@@ -134,7 +134,7 @@ class User {
       this.deviceToken});
 
   User.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     fname = json['fname'];
     email = json['email'];
     address = json['address'].cast<String>();
@@ -158,7 +158,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['fname'] = this.fname;
     data['email'] = this.email;
     data['address'] = this.address;
@@ -199,7 +199,7 @@ class Cart {
       this.iV});
 
   Cart.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     if (json['items'] != null) {
       items = new List<Items>();
@@ -214,7 +214,7 @@ class Cart {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     if (this.items != null) {
       data['items'] = this.items.map((v) => v.toJson()).toList();
@@ -234,14 +234,14 @@ class Items {
   Items({this.sId, this.itemDetail, this.quantity});
 
   Items.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     itemDetail = json['itemDetail'];
     quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['itemDetail'] = this.itemDetail;
     data['quantity'] = this.quantity;
     return data;
@@ -271,7 +271,7 @@ class Address {
       this.iV});
 
   Address.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     addressType = json['addressType'];
     isDefaultAddress = json['isDefaultAddress'];
     user = json['user'];
@@ -284,7 +284,7 @@ class Address {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['addressType'] = this.addressType;
     data['isDefaultAddress'] = this.isDefaultAddress;
     data['user'] = this.user;
@@ -303,12 +303,12 @@ class BuySell {
   BuySell({this.sId});
 
   BuySell.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     return data;
   }
 }

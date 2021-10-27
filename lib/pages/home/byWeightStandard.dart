@@ -48,8 +48,8 @@ class _Standard_PCState extends State<Standard_PC> {
   int endTime;
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -66,10 +66,8 @@ class _Standard_PCState extends State<Standard_PC> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -86,7 +84,7 @@ class _Standard_PCState extends State<Standard_PC> {
   openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': "",
+      'amount': amountController.text,
       'name': "Standard Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -125,9 +123,7 @@ class _Standard_PCState extends State<Standard_PC> {
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "paymentId": id,
@@ -143,7 +139,7 @@ class _Standard_PCState extends State<Standard_PC> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
     } else {
       print(response.reasonPhrase);
     }
@@ -151,10 +147,8 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   createSubscription(String installmentid) async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
     request.bodyFields = {
       "userId": Userdata.sId,
       "status": "Running",
@@ -184,6 +178,7 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     createSubscription(installmentID);
     return showDialog(
@@ -235,7 +230,7 @@ class _Standard_PCState extends State<Standard_PC> {
                     heightSpace,
                     Center(
                         child: Text(
-                     locale.showcode
+                      locale.showcode,
                       style: black12MediumTextStyle,
                     ))
                   ],
@@ -245,6 +240,7 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -288,6 +284,7 @@ class _Standard_PCState extends State<Standard_PC> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -541,7 +538,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          locale.herepayment
+                                          locale.herepayment,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -552,7 +549,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                         locale.usePayment,
+                                          locale.usePayment,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -644,6 +641,7 @@ class _Standard_PCState extends State<Standard_PC> {
 
   Your_Portfolio(
       String saveGold, String BonusC, String Duration, String Saving) {
+    var locale = AppLocalizations.of(context);
     return Container(
       height: 330,
       child: Padding(
@@ -751,6 +749,7 @@ class Payment_Method extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:gold247/constants.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/subscription.dart';
@@ -23,10 +23,8 @@ class TotalBalance extends StatefulWidget {
 class _TotalBalanceState extends State<TotalBalance> {
   num handling = 0;
   gethandlingcharges() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/6003c895e1c432d4c7fb8b27'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/6003c895e1c432d4c7fb8b27'));
 
     http.StreamedResponse response = await request.send();
 

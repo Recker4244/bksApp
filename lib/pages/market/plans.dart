@@ -14,8 +14,7 @@ class _PlanState extends State<Plan> {
   List Data;
   Future fetchData() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price'));
+    response = await http.get(Uri.parse('${baseurl}/api/buy-sell-price'));
     if (response.statusCode == 200) {
       setState(() {
         Data = json.decode(response.body);

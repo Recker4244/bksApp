@@ -26,7 +26,7 @@ class Transaction {
     mode = json['mode'];
     amount = json['amount'];
     instantGoldApplied = json['instantGoldApplied'];
-    sId = json['_id'];
+    sId = json['id'];
     paymentId = json['paymentId'];
     status = json['status'];
     deleveryAgent = json['deleveryAgent'];
@@ -40,7 +40,7 @@ class Transaction {
     data['mode'] = this.mode;
     data['amount'] = this.amount;
     data['instantGoldApplied'] = this.instantGoldApplied;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['paymentId'] = this.paymentId;
     data['status'] = this.status;
     data['deleveryAgent'] = this.deleveryAgent;

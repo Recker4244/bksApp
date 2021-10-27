@@ -39,10 +39,9 @@ class _SellOldState extends State<SellOld> {
   Future CreatePlans() async {
     //TODO add url and body
     var headers = {'Content-Type': 'application/json'};
+    var locale = AppLocalizations.of(context);
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/appointment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/appointment/create/${Userdata.sId}'));
     request.bodyFields = {
       "weight": valueController.text,
       "metalGroup": karatageID,
@@ -118,7 +117,7 @@ class _SellOldState extends State<SellOld> {
                           heightSpace,
                           Center(
                               child: Text(
-                            locale.ShowThisCode
+                            locale.ShowThisCode,
                             style: black12MediumTextStyle,
                           ))
                         ],
@@ -172,8 +171,8 @@ class _SellOldState extends State<SellOld> {
   List<buysellprice> price;
 
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -190,8 +189,7 @@ class _SellOldState extends State<SellOld> {
 
   List<MetalGroup> temp = [];
   Future getMetals() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/metal-group'));
 
     http.StreamedResponse response = await request.send();
 
@@ -210,8 +208,8 @@ class _SellOldState extends State<SellOld> {
 
   MetalGroup parti;
   Future getMetalbyID(String id) async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group/${id}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/metal-group/${id}'));
 
     http.StreamedResponse response = await request.send();
 

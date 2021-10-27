@@ -23,7 +23,7 @@ class UserAddress {
   UserAddress.fromJson(Map<String, dynamic> json) {
     addressType = json['addressType'];
     isDefaultAddress = json['isDefaultAddress'];
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     pin = json['pin'];
     landMark = json['landMark'];
@@ -36,7 +36,7 @@ class UserAddress {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['addressType'] = this.addressType;
     data['isDefaultAddress'] = this.isDefaultAddress;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
@@ -102,7 +102,7 @@ class User {
     joiningBonus = json['joiningBonus'];
     gBPBonusEntries = json['GBPBonusEntries'].cast<String>();
     deviceToken = json['deviceToken'];
-    sId = json['_id'];
+    sId = json['id'];
     mobile = json['mobile'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -124,7 +124,7 @@ class User {
     data['joiningBonus'] = this.joiningBonus;
     data['GBPBonusEntries'] = this.gBPBonusEntries;
     data['deviceToken'] = this.deviceToken;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['mobile'] = this.mobile;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;

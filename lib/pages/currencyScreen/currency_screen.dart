@@ -22,6 +22,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       bottomNavigationBar: Material(
@@ -214,6 +215,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
   }
 
   aboutPortfolio() {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(fixPadding * 2.0),
@@ -375,6 +377,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext bc) {
         double width = MediaQuery.of(context).size.width;
+        var locale = AppLocalizations.of(context);
         return StatefulBuilder(
           builder: (context, setState) {
             return Padding(

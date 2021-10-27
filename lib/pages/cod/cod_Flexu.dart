@@ -73,8 +73,8 @@ class _Adress_Details_Payment_FlexState
   }
 
   checkPincode(String pincode) async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/pincode/search/$pincode'));
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
 
     http.StreamedResponse response = await request.send();
 
@@ -104,9 +104,7 @@ class _Adress_Details_Payment_FlexState
   pay() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "user": Userdata.sId,
@@ -123,7 +121,7 @@ class _Adress_Details_Payment_FlexState
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
       otp = s['data']['otp'];
       createSubscription(installmentID);
     } else {
@@ -133,11 +131,10 @@ class _Adress_Details_Payment_FlexState
   }
 
   createSubscription(String installmentid) async {
+    var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/flexi/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/flexi/${Userdata.sId}'));
     request.body = json.encode({
       "plan": {
         "mode": widget.mode,
@@ -280,6 +277,7 @@ class _Adress_Details_Payment_FlexState
   final _formkeyflex = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
@@ -493,6 +491,7 @@ class Adress_Type extends StatefulWidget {
 class _Adress_TypeState extends State<Adress_Type> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -522,6 +521,7 @@ class Adress_Type_selector extends StatefulWidget {
 class _Adress_Type_selectorState extends State<Adress_Type_selector> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -552,7 +552,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          locale.Work,
+          locale.work,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -567,7 +567,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          locale.Others,
+          locale.others,
           style: primaryColor16MediumTextStyle,
         ),
       ],

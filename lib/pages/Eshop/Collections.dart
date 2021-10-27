@@ -21,8 +21,7 @@ class Collections extends StatefulWidget {
 class _CollectionsState extends State<Collections> {
   List<collection> temp;
   Future getCollections() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/collection/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/collection/'));
 
     http.StreamedResponse response = await request.send();
 

@@ -17,7 +17,7 @@ class Video {
       this.iV});
 
   Video.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     language = json['language'];
     category = json['category'];
     video = json['video'];
@@ -28,7 +28,7 @@ class Video {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['language'] = this.language;
     data['category'] = this.category;
     data['video'] = this.video;

@@ -30,7 +30,7 @@ class MetalGroup {
       });
     }
     status = json['status'];
-    sId = json['_id'];
+    sId = json['id'];
     karatage = json['karatage'];
     fineness = json['fineness'];
     referenceId = json['referenceId'];
@@ -46,7 +46,7 @@ class MetalGroup {
       data['metals'] = this.metals.map((v) => v.toJson()).toList();
     }
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['karatage'] = this.karatage;
     data['fineness'] = this.fineness;
     data['referenceId'] = this.referenceId;
@@ -75,7 +75,7 @@ class Metals {
       this.iV});
 
   Metals.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     icon = json['icon'];
     createdAt = json['createdAt'];
@@ -85,7 +85,7 @@ class Metals {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['icon'] = this.icon;
     data['createdAt'] = this.createdAt;

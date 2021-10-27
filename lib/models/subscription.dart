@@ -35,7 +35,7 @@ class subscription {
       this.totalBonus});
 
   subscription.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     if (json['installments'] != null) {
       installments = new List<Installments>();
       json['installments'].forEach((v) {
@@ -60,7 +60,7 @@ class subscription {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.installments != null) {
       data['installments'] = this.installments.map((v) => v.toJson()).toList();
     }
@@ -111,7 +111,7 @@ class Installments {
       this.iV});
 
   Installments.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     mode = json['mode'];
     amount = json['amount'];
     gold = json['gold'];
@@ -125,7 +125,7 @@ class Installments {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['mode'] = this.mode;
     data['amount'] = this.amount;
     data['gold'] = this.gold;
@@ -146,13 +146,13 @@ class User {
   User({this.sId, this.mobile});
 
   User.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     mobile = json['mobile'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['mobile'] = this.mobile;
     return data;
   }
@@ -181,7 +181,7 @@ class Plan {
       this.iV});
 
   Plan.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     mode = json['mode'];
     duration = json['duration'];
     planType = json['planType'];
@@ -194,7 +194,7 @@ class Plan {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['mode'] = this.mode;
     data['duration'] = this.duration;
     data['planType'] = this.planType;

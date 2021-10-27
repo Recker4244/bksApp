@@ -38,8 +38,8 @@ class _CurrencyScreenState extends State<BuyGold> {
   bool message;
   double walletbalace = 0.0;
   void getWalletBalanced() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -51,12 +51,11 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   addtowallet(String payId) async {
+    var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
 
     var request = http.Request(
-        'PUT',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/add/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/add/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',
@@ -143,8 +142,8 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -165,9 +164,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   Future Instalments() async {
     var uuid = Uuid().v1();
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
     request.bodyFields = {
       'paymentId': uuid,
       'amount': amountController.text,
@@ -243,6 +240,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   //     msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -289,6 +287,7 @@ class _CurrencyScreenState extends State<BuyGold> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
     return FutureBuilder(
         future: init,
@@ -374,6 +373,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   currencyPriceChart(int bp) {
+    var locale = AppLocalizations.of(context);
     return Container(
       color: scaffoldBgColor,
       child: Column(
@@ -511,6 +511,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   aboutPortfolio() {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(fixPadding * 2.0),
@@ -671,6 +672,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   buyByValue(double buyprice) {
+    var locale = AppLocalizations.of(context);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // set this to true
@@ -869,6 +871,7 @@ class _CurrencyScreenState extends State<BuyGold> {
       isScrollControlled: true, // set this to true
       backgroundColor: Colors.transparent,
       builder: (BuildContext bc) {
+        var locale = AppLocalizations.of(context);
         double width = MediaQuery.of(context).size.width;
         return StatefulBuilder(
           builder: (context, setState) {

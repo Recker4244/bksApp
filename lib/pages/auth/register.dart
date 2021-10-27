@@ -94,7 +94,7 @@ class _RegisterState extends State<Register> {
       return FocusScope.of(context).requestFocus(thirdFocusNode);
     }
     http.Response response = await http.put(
-      Uri.parse("https://goldv2.herokuapp.com/api/user/" + widget.id),
+      Uri.parse("${baseurl}/api/user/" + widget.id),
       body: {
         "fname": nameController.text,
         "email": emailController.text,
@@ -117,6 +117,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       body: ListView(

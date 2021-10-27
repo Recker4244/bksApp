@@ -37,24 +37,24 @@ class DataI {
 
   DataI(
       {this.status,
-        this.storeLocation,
-        this.sId,
-        this.user,
-        this.weight,
-        this.metalGroup,
-        this.buySellPrice,
-        this.otp,
-        this.appointmentDate,
-        this.appointmentTime,
-        this.verifier,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.storeLocation,
+      this.sId,
+      this.user,
+      this.weight,
+      this.metalGroup,
+      this.buySellPrice,
+      this.otp,
+      this.appointmentDate,
+      this.appointmentTime,
+      this.verifier,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   DataI.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     storeLocation = json['storeLocation'];
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     weight = json['weight'].toString();
     metalGroup = json['metalGroup'];
@@ -72,7 +72,7 @@ class DataI {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['storeLocation'] = this.storeLocation;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     data['weight'] = this.weight;
     data['metalGroup'] = this.metalGroup;

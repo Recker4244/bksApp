@@ -40,7 +40,7 @@ class Data {
       this.bank});
 
   Data.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     gold = json['gold'];
     if (json['transactions'] != null) {
@@ -57,7 +57,7 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     data['gold'] = this.gold;
     if (this.transactions != null) {
@@ -82,7 +82,7 @@ class Transactions {
   Transactions({this.sId, this.paymentId, this.amount, this.status});
 
   Transactions.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     paymentId = json['paymentId'];
     amount = json['amount'];
     status = json['status'];
@@ -90,7 +90,7 @@ class Transactions {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['paymentId'] = this.paymentId;
     data['amount'] = this.amount;
     data['status'] = this.status;
@@ -121,7 +121,7 @@ class Bank {
       this.iV});
 
   Bank.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     accountnum = json['Accountnum'];
     iFSC = json['IFSC'];
     bank = json['Bank'];
@@ -134,7 +134,7 @@ class Bank {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['Accountnum'] = this.accountnum;
     data['IFSC'] = this.iFSC;
     data['Bank'] = this.bank;

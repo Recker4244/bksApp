@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/constants.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -161,9 +162,8 @@ class _LoginState extends State<Login> {
             children: [
               Image.asset(
                 'assets/Logo.png',
-                width: 40.w,
                 height: 20.h,
-                fit: BoxFit.cover,
+                //fit: BoxFit.cover,
               ),
               SizedBox(height: 5.h),
               Text(
@@ -220,8 +220,7 @@ class _LoginState extends State<Login> {
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
                     http.Response response = await http.post(
-                      Uri.parse(
-                          "https://goldv2.herokuapp.com/api/auth/register"),
+                      Uri.parse("${baseurl}/api/auth/register"),
                       headers: {"Content-Type": "application/json"},
                       body: json.encode(
                           {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),

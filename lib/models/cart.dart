@@ -66,7 +66,7 @@ class ItemDetail {
       this.updatedAt});
 
   ItemDetail.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     if (json['charges'] != null) {
       charges = new List<Charges>();
       json['charges'].forEach((v) {
@@ -102,7 +102,7 @@ class ItemDetail {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.charges != null) {
       data['charges'] = this.charges.map((v) => v.toJson()).toList();
     }
@@ -159,7 +159,7 @@ class Charges {
       this.modifiedDate});
 
   Charges.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     status = json['status'];
     type = json['Type'];
     percentage = json['Percentage'];
@@ -173,7 +173,7 @@ class Charges {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['status'] = this.status;
     data['Type'] = this.type;
     data['Percentage'] = this.percentage;
@@ -204,7 +204,7 @@ class Item {
       this.iV});
 
   Item.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     images = json['images'].cast<String>();
     name = json['name'];
     createdAt = json['createdAt'];
@@ -214,7 +214,7 @@ class Item {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['images'] = this.images;
     data['name'] = this.name;
     data['createdAt'] = this.createdAt;
@@ -233,7 +233,7 @@ class Composition {
   Composition({this.sId, this.weight, this.diamond, this.metalGroup});
 
   Composition.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     weight = json['weight'];
     diamond = json['diamond'];
     metalGroup = json['metalGroup'] != null
@@ -243,7 +243,7 @@ class Composition {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['weight'] = this.weight;
     data['diamond'] = this.diamond;
     if (this.metalGroup != null) {
@@ -280,7 +280,7 @@ class MetalGroup {
   MetalGroup.fromJson(Map<String, dynamic> json) {
     metals = json['metals'].cast<String>();
     status = json['status'];
-    sId = json['_id'];
+    sId = json['id'];
     karatage = json['karatage'];
     fineness = json['fineness'];
     referenceId = json['referenceId'];
@@ -294,7 +294,7 @@ class MetalGroup {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['metals'] = this.metals;
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['karatage'] = this.karatage;
     data['fineness'] = this.fineness;
     data['referenceId'] = this.referenceId;
@@ -325,7 +325,7 @@ class Collections {
       this.status});
 
   Collections.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     collectionName = json['collection_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -336,7 +336,7 @@ class Collections {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['collection_name'] = this.collectionName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;
@@ -366,7 +366,7 @@ class Category {
       this.status});
 
   Category.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     categoryName = json['category_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -377,7 +377,7 @@ class Category {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['category_name'] = this.categoryName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;

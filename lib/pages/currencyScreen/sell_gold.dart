@@ -33,8 +33,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   double walletbalace;
   void getWalletBalanced() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -47,8 +47,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -70,7 +70,7 @@ class _CurrencyScreenState extends State<SellGold> {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
+  //           '${baseurl}/api/installment/create/6158849d3b5cb8a0c1d96040'));
   //   request.bodyFields = {
   //     'paymentId': uuid,
   //     'amount': amountController.text,
@@ -98,10 +98,9 @@ class _CurrencyScreenState extends State<SellGold> {
 
   void removefromwallet(String payId) async {
     var headers = {'Content-Type': 'application/json'};
+    var locale = AppLocalizations.of(context);
     var request = http.Request(
-        'PUT',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/remove/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',
@@ -187,7 +186,7 @@ class _CurrencyScreenState extends State<SellGold> {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           'https://goldv2.herokuapp.com/api/subscription/create/instant/${Userdata.sId}'));
+  //           '${baseurl}/api/subscription/create/instant/${Userdata.sId}'));
   //   request.bodyFields = {
   //     "userId": Userdata.sId,
   //     "status": "Completed",
@@ -306,6 +305,7 @@ class _CurrencyScreenState extends State<SellGold> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -390,6 +390,7 @@ class _CurrencyScreenState extends State<SellGold> {
   }
 
   currencyPriceChart(int sp) {
+    var locale = AppLocalizations.of(context);
     return Container(
       color: scaffoldBgColor,
       child: Column(
@@ -519,6 +520,7 @@ class _CurrencyScreenState extends State<SellGold> {
   }
 
   aboutPortfolio() {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(fixPadding * 2.0),
@@ -676,6 +678,7 @@ class _CurrencyScreenState extends State<SellGold> {
   }
 
   sellByValue(double buyprice) {
+    var locale = AppLocalizations.of(context);
     double price;
     showModalBottomSheet(
       context: context,
@@ -777,7 +780,14 @@ class _CurrencyScreenState extends State<SellGold> {
                           data: ThemeData(
                             primaryColor: greyColor,
                           ),
-                          child: TextField(
+                          child: TextFormField(
+                            validator: (String value) {
+                              if (double.parse(value) <= 0.0)
+                                return 'You do not have sufficient balance';
+                              return null;
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             controller: amountController,
                             keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
@@ -870,6 +880,7 @@ class _CurrencyScreenState extends State<SellGold> {
   }
 
   sellByWeight(double buyPrice) {
+    var locale = AppLocalizations.of(context);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // set this to true

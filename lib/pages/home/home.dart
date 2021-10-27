@@ -46,10 +46,8 @@ class _HomeState extends State<Home> {
   String bonusbalance = '0';
 
   Future getportfoliobalance() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/balance/user/${Userdata.sId}'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -64,8 +62,8 @@ class _HomeState extends State<Home> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -82,8 +80,7 @@ class _HomeState extends State<Home> {
 
   Future fetchStandardPlans() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse("https://goldv2.herokuapp.com/api/plan/type/standard/"));
+    response = await http.get(Uri.parse("${baseurl}/api/plan/type/standard/"));
 
     // response code 200 means that the request was successful
     if (response.statusCode == 200) {
@@ -111,7 +108,7 @@ class _HomeState extends State<Home> {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/balance/${Userdata.sId}/${Subscription.sId}'));
+            '${baseurl}/api/subscription/balance/${Userdata.sId}/${Subscription.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -128,10 +125,8 @@ class _HomeState extends State<Home> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -147,8 +142,7 @@ class _HomeState extends State<Home> {
 
   List<MetalGroup> temp = [];
   Future getMetals() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/metal-group'));
 
     http.StreamedResponse response = await request.send();
 
@@ -270,7 +264,7 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      locale.total,
+                      locale.TotalPlanBonus,
                       style: white16MediumTextStyle,
                     ),
                     heightSpace,

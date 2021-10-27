@@ -10,7 +10,7 @@ class BuySellList {
       {this.sId, this.buy, this.sell, this.createdAt, this.updatedAt, this.iV});
 
   BuySellList.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     buy = json['buy'];
     sell = json['sell'];
     createdAt = json['createdAt'];
@@ -20,7 +20,7 @@ class BuySellList {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['buy'] = this.buy;
     data['sell'] = this.sell;
     data['createdAt'] = this.createdAt;

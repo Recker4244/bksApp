@@ -21,7 +21,7 @@ class plan {
       this.iV});
 
   plan.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     planType = json['planType'];
     name = json['name'];
     cyclePeriod = json['cyclePeriod'];
@@ -34,7 +34,7 @@ class plan {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['planType'] = this.planType;
     data['name'] = this.name;
     data['cyclePeriod'] = this.cyclePeriod;

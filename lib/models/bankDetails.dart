@@ -21,7 +21,7 @@ class bankDetails {
       this.iV});
 
   bankDetails.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     accountnum = json['Accountnum'];
     iFSC = json['IFSC'];
     bank = json['Bank'];
@@ -34,7 +34,7 @@ class bankDetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['Accountnum'] = this.accountnum;
     data['IFSC'] = this.iFSC;
     data['Bank'] = this.bank;

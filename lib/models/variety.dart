@@ -17,7 +17,7 @@ class variety {
       this.status});
 
   variety.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     varietyName = json['variety_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -28,7 +28,7 @@ class variety {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['variety_name'] = this.varietyName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;

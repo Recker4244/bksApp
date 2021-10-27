@@ -23,8 +23,7 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   List<category> temp;
   Future getcategories() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/category/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/category/'));
 
     http.StreamedResponse response = await request.send();
 

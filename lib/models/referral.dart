@@ -20,7 +20,7 @@ class referral {
 
   referral.fromJson(Map<String, dynamic> json) {
     bonus = (json['bonus']).toString();
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     refereedBy = json['refereedBy'] != null
         ? new User.fromJson(json['refereedBy'])
@@ -36,7 +36,7 @@ class referral {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['bonus'] = this.bonus;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
@@ -64,7 +64,7 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     fname = json['fname'];
     email = json['email'];
-    sId = json['_id'];
+    sId = json['id'];
     mobile = json['mobile'];
   }
 
@@ -72,7 +72,7 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['fname'] = this.fname;
     data['email'] = this.email;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['mobile'] = this.mobile;
     return data;
   }
@@ -115,7 +115,7 @@ class Subscription {
     skipCount = json['skipCount'];
     unpaidInvestments = json['unpaidInvestments'];
     maturityDate = json['maturityDate'];
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     address = json['address'];
     plan = json['plan'] != null ? new Plan.fromJson(json['plan']) : null;
@@ -132,7 +132,7 @@ class Subscription {
     data['skipCount'] = this.skipCount;
     data['unpaidInvestments'] = this.unpaidInvestments;
     data['maturityDate'] = this.maturityDate;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     data['address'] = this.address;
     if (this.plan != null) {
@@ -152,13 +152,13 @@ class Plan {
   Plan({this.sId, this.name});
 
   Plan.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     return data;
   }

@@ -46,7 +46,7 @@ class _DepositState extends State<Deposit> {
   ];
 
   // void getsubId()async{
-  //   var request = http.Request('GET', Uri.parse('https://goldv2.herokuapp.com/api/subscription/user/${Userdata.sId}'));
+  //   var request = http.Request('GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.sId}'));
   //
   //
   //   http.StreamedResponse response = await request.send();
@@ -54,7 +54,7 @@ class _DepositState extends State<Deposit> {
   //   if (response.statusCode == 200) {
   //     final responseString=await response.stream.bytesToString();
   //     Map det=jsonDecode(responseString);
-  //     subID=det['data'][0]['_id'].toString();
+  //     subID=det['data'][0]['id'].toString();
   //   }
   //   else {
   //   print(response.reasonPhrase);
@@ -66,9 +66,7 @@ class _DepositState extends State<Deposit> {
   void createInstallment(String payid) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
     final body = {
       "paymentId": payid,
       "status": "Saved",
@@ -84,7 +82,7 @@ class _DepositState extends State<Deposit> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      installmentId = det['data']['_id'];
+      installmentId = det['data']['id'];
       addInstallmentSubs();
     } else {
       print(response.reasonPhrase);
@@ -96,7 +94,7 @@ class _DepositState extends State<Deposit> {
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/installments/add/${widget.sub}'));
+            '${baseurl}/api/subscription/installments/add/${widget.sub}'));
     final body = {"installmentId": installmentId};
     request.body = json.encode(body);
     request.headers.addAll(headers);
@@ -147,8 +145,8 @@ class _DepositState extends State<Deposit> {
   final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {

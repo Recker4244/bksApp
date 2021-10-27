@@ -27,8 +27,8 @@ class _OrdersState extends State<Orders> {
 
   changeStatus(String id) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/order/status/$id'));
+    var request =
+        http.Request('POST', Uri.parse('${baseurl}/api/order/status/$id'));
     request.body = json.encode({"status": "Cancelled"});
     request.headers.addAll(headers);
 
@@ -44,9 +44,7 @@ class _OrdersState extends State<Orders> {
 
   Future getordersbyid() async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/order/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/order/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 

@@ -23,7 +23,7 @@ class standardplan {
   standardplan.fromJson(Map<String, dynamic> json) {
     mode = json['mode'];
     duration = json['duration'];
-    sId = json['_id'];
+    sId = json['id'];
     planType = json['planType'];
     name = json['name'];
     cyclePeriod = json['cyclePeriod'] != null
@@ -38,7 +38,7 @@ class standardplan {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['mode'] = this.mode;
     data['duration'] = this.duration;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['planType'] = this.planType;
     data['name'] = this.name;
     if (this.cyclePeriod != null) {
@@ -79,7 +79,7 @@ class CyclePeriod {
 
   CyclePeriod.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     graceperiod = json['graceperiod'];
     minValue = json['minValue'];
@@ -94,7 +94,7 @@ class CyclePeriod {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['graceperiod'] = this.graceperiod;
     data['minValue'] = this.minValue;

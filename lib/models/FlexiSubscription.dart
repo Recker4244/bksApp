@@ -34,16 +34,16 @@ class DataFS {
 
   DataFS(
       {this.installments,
-        this.status,
-        this.unpaidSkips,
-        this.skipCount,
-        this.unpaidInvestments,
-        this.sId,
-        this.user,
-        this.customPlan,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.status,
+      this.unpaidSkips,
+      this.skipCount,
+      this.unpaidInvestments,
+      this.sId,
+      this.user,
+      this.customPlan,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   DataFS.fromJson(Map<String, dynamic> json) {
     installments = json['installments'].cast<String>();
@@ -51,7 +51,7 @@ class DataFS {
     unpaidSkips = json['unpaidSkips'];
     skipCount = json['skipCount'];
     unpaidInvestments = json['unpaidInvestments'];
-    sId = json['_id'];
+    sId = json['id'];
     user = json['user'];
     customPlan = json['customPlan'] != null
         ? new CustomPlan.fromJson(json['customPlan'])
@@ -68,7 +68,7 @@ class DataFS {
     data['unpaidSkips'] = this.unpaidSkips;
     data['skipCount'] = this.skipCount;
     data['unpaidInvestments'] = this.unpaidInvestments;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['user'] = this.user;
     if (this.customPlan != null) {
       data['customPlan'] = this.customPlan.toJson();
@@ -92,18 +92,18 @@ class CustomPlan {
 
   CustomPlan(
       {this.mode,
-        this.duration,
-        this.sId,
-        this.name,
-        this.planType,
-        this.cyclePeriod,
-        this.createdAt,
-        this.updatedAt});
+      this.duration,
+      this.sId,
+      this.name,
+      this.planType,
+      this.cyclePeriod,
+      this.createdAt,
+      this.updatedAt});
 
   CustomPlan.fromJson(Map<String, dynamic> json) {
     mode = json['mode'];
     duration = json['duration'];
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     planType = json['planType'];
     cyclePeriod = json['cyclePeriod'] != null
@@ -117,7 +117,7 @@ class CustomPlan {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['mode'] = this.mode;
     data['duration'] = this.duration;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['planType'] = this.planType;
     if (this.cyclePeriod != null) {
@@ -144,20 +144,20 @@ class CyclePeriod {
 
   CyclePeriod(
       {this.status,
-        this.sId,
-        this.cycle,
-        this.name,
-        this.graceperiod,
-        this.minValue,
-        this.minWeight,
-        this.shortName,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.sId,
+      this.cycle,
+      this.name,
+      this.graceperiod,
+      this.minValue,
+      this.minWeight,
+      this.shortName,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   CyclePeriod.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    sId = json['_id'];
+    sId = json['id'];
     cycle = json['cycle'];
     name = json['name'];
     graceperiod = json['graceperiod'];
@@ -172,7 +172,7 @@ class CyclePeriod {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['cycle'] = this.cycle;
     data['name'] = this.name;
     data['graceperiod'] = this.graceperiod;

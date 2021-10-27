@@ -38,7 +38,7 @@ class SingleItemDetails {
 
   SingleItemDetails.fromJson(Map<String, dynamic> json) {
     charges = json['charges'].cast<String>();
-    sId = json['_id'];
+    sId = json['id'];
     item = json['item'] != null ? new Item.fromJson(json['item']) : null;
     if (json['composition'] != null) {
       composition = new List<Composition>();
@@ -69,7 +69,7 @@ class SingleItemDetails {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['charges'] = this.charges;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.item != null) {
       data['item'] = this.item.toJson();
     }
@@ -117,7 +117,7 @@ class Item {
 
   Item.fromJson(Map<String, dynamic> json) {
     images = json['images'].cast<String>();
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -127,7 +127,7 @@ class Item {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['images'] = this.images;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
@@ -144,14 +144,14 @@ class Composition {
   Composition({this.sId, this.diamond, this.metalGroup});
 
   Composition.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     diamond = json['diamond'];
     metalGroup = json['metalGroup'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['diamond'] = this.diamond;
     data['metalGroup'] = this.metalGroup;
     return data;
@@ -180,7 +180,7 @@ class Collections {
 
   Collections.fromJson(Map<String, dynamic> json) {
     images = json['images'].cast<String>();
-    sId = json['_id'];
+    sId = json['id'];
     collectionName = json['collection_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -192,7 +192,7 @@ class Collections {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['images'] = this.images;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['collection_name'] = this.collectionName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;
@@ -227,7 +227,7 @@ class Category {
 
   Category.fromJson(Map<String, dynamic> json) {
     images = json['images'].cast<String>();
-    sId = json['_id'];
+    sId = json['id'];
     categoryName = json['category_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -240,7 +240,7 @@ class Category {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['images'] = this.images;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['category_name'] = this.categoryName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;

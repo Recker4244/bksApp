@@ -17,7 +17,7 @@ class category {
       this.status});
 
   category.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     categoryName = json['category_name'];
     img1 = json['img1'];
     img2 = json['img2'];
@@ -28,7 +28,7 @@ class category {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['category_name'] = this.categoryName;
     data['img1'] = this.img1;
     data['img2'] = this.img2;

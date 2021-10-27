@@ -33,7 +33,7 @@ class appointment {
       this.valuation});
 
   appointment.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     status = json['status'];
     storeLocation = json['storeLocation'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
@@ -58,7 +58,7 @@ class appointment {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['status'] = this.status;
     data['storeLocation'] = this.storeLocation;
     if (this.user != null) {
@@ -114,7 +114,7 @@ class User {
       this.updatedAt});
 
   User.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     userId = json['UserId'];
     mobile = json['Mobile'];
     firstName = json['FirstName'];
@@ -130,7 +130,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['UserId'] = this.userId;
     data['Mobile'] = this.mobile;
     data['FirstName'] = this.firstName;
@@ -171,7 +171,7 @@ class MetalGroup {
       this.iV});
 
   MetalGroup.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     if (json['metals'] != null) {
       metals = new List<Metals>();
       json['metals'].forEach((v) {
@@ -190,7 +190,7 @@ class MetalGroup {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.metals != null) {
       data['metals'] = this.metals.map((v) => v.toJson()).toList();
     }
@@ -223,7 +223,7 @@ class Metals {
       this.iV});
 
   Metals.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     icon = json['icon'];
     createdAt = json['createdAt'];
@@ -233,7 +233,7 @@ class Metals {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['icon'] = this.icon;
     data['createdAt'] = this.createdAt;
@@ -266,7 +266,7 @@ class BuySellPrice {
       this.iV});
 
   BuySellPrice.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     kt24 = json['kt24'] != null ? new Kt24.fromJson(json['kt24']) : null;
     kt22 = json['kt22'] != null ? new Kt24.fromJson(json['kt22']) : null;
     kt18 = json['kt18'] != null ? new Kt24.fromJson(json['kt18']) : null;
@@ -279,7 +279,7 @@ class BuySellPrice {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     if (this.kt24 != null) {
       data['kt24'] = this.kt24.toJson();
     }
@@ -352,7 +352,7 @@ class Verifier {
       this.iV});
 
   Verifier.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     email = json['email'];
     address = json['address'].cast<String>();
@@ -369,7 +369,7 @@ class Verifier {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['email'] = this.email;
     data['address'] = this.address;
