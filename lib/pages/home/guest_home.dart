@@ -337,116 +337,122 @@ class _GuestHomeState extends State<GuestHome> {
     }
 
     activityContainer() {
-      return Container(
-        padding: EdgeInsets.all(fixPadding * 2.0),
-        margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: primaryColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              locale.youcando,
-              style: gold16BoldTextStyle,
-            ),
-            height20Space,
-            acitivites(locale.BuySave, locale.buygoldbenefits,
-                FontAwesomeIcons.calendarCheck),
-            height5Space,
-            Divider(
-              color: whiteColor,
-              endIndent: 10,
-              indent: 10,
-              thickness: 1,
-            ),
-            height5Space,
-            acitivites(locale.BuyInstantGold, locale.instantbenefits,
-                FontAwesomeIcons.snowflake),
-            height5Space,
-            Divider(
-              color: whiteColor,
-              endIndent: 10,
-              indent: 10,
-              thickness: 1,
-            ),
-            height5Space,
-            acitivites(locale.refer, locale.referingBenefits,
-                FontAwesomeIcons.shareAlt),
-            height5Space,
-            Divider(
-              color: whiteColor,
-              endIndent: 10,
-              indent: 10,
-              thickness: 1,
-            ),
-            height5Space,
-            acitivites(locale.SaveBonus, locale.SaveBonusenefit,
-                FontAwesomeIcons.piggyBank),
-            height5Space,
-            Divider(
-              color: whiteColor,
-              endIndent: 10,
-              indent: 10,
-              thickness: 1,
-            ),
-            height5Space,
-            acitivites(locale.sellgoldtitle, locale.sellBenfits,
-                FontAwesomeIcons.balanceScale),
-            height5Space,
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
+        child: Container(
+          padding: EdgeInsets.all(fixPadding * 2.0),
+          margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            color: primaryColor,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                locale.youcando,
+                style: gold16BoldTextStyle,
+              ),
+              height20Space,
+              acitivites(locale.BuySave, locale.buygoldbenefits,
+                  FontAwesomeIcons.calendarCheck),
+              height5Space,
+              Divider(
+                color: whiteColor,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+              ),
+              height5Space,
+              acitivites(locale.BuyInstantGold, locale.instantbenefits,
+                  FontAwesomeIcons.snowflake),
+              height5Space,
+              Divider(
+                color: whiteColor,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+              ),
+              height5Space,
+              acitivites(locale.refer, locale.referingBenefits,
+                  FontAwesomeIcons.shareAlt),
+              height5Space,
+              Divider(
+                color: whiteColor,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+              ),
+              height5Space,
+              acitivites(locale.SaveBonus, locale.SaveBonusenefit,
+                  FontAwesomeIcons.piggyBank),
+              height5Space,
+              Divider(
+                color: whiteColor,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+              ),
+              height5Space,
+              acitivites(locale.sellgoldtitle, locale.sellBenfits,
+                  FontAwesomeIcons.balanceScale),
+              height5Space,
 
-            // Text(
-            //   '\$4,50,933',
-            //   style: white36BoldTextStyle,
-            // ),
-            // height20Space,
-            // heightSpace,
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [
-            //     Column(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text(
-            //           'Monthly profit',
-            //           style: white16MediumTextStyle,
-            //         ),
-            //         heightSpace,
-            //         Text(
-            //           '\$12,484',
-            //           style: white26BoldTextStyle,
-            //         ),
-            //       ],
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.all(fixPadding * 0.7),
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(20.0),
-            //         color: whiteColor.withOpacity(0.2),
-            //       ),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Icon(
-            //             Icons.arrow_drop_up,
-            //             size: 26.0,
-            //             color: whiteColor,
-            //           ),
-            //           Text(
-            //             '+10%',
-            //             style: white14MediumTextStyle,
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // )
-          ],
+              // Text(
+              //   '\$4,50,933',
+              //   style: white36BoldTextStyle,
+              // ),
+              // height20Space,
+              // heightSpace,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   crossAxisAlignment: CrossAxisAlignment.end,
+              //   children: [
+              //     Column(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           'Monthly profit',
+              //           style: white16MediumTextStyle,
+              //         ),
+              //         heightSpace,
+              //         Text(
+              //           '\$12,484',
+              //           style: white26BoldTextStyle,
+              //         ),
+              //       ],
+              //     ),
+              //     Container(
+              //       padding: EdgeInsets.all(fixPadding * 0.7),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(20.0),
+              //         color: whiteColor.withOpacity(0.2),
+              //       ),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.start,
+              //         crossAxisAlignment: CrossAxisAlignment.center,
+              //         children: [
+              //           Icon(
+              //             Icons.arrow_drop_up,
+              //             size: 26.0,
+              //             color: whiteColor,
+              //           ),
+              //           Text(
+              //             '+10%',
+              //             style: white14MediumTextStyle,
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // )
+            ],
+          ),
         ),
       );
     }
