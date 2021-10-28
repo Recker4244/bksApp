@@ -97,6 +97,7 @@ class _CurrencyScreenState extends State<SellGold> {
   // }
 
   void removefromwallet(String payId) async {
+    var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'PUT',
@@ -305,7 +306,682 @@ class _CurrencyScreenState extends State<SellGold> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
+    currencyPriceChart(int sp) {
+      return Container(
+        color: scaffoldBgColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(fixPadding * 2.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      widthSpace,
+                      Text(
+                        locale.Sell24KT,
+                        style: black16BoldTextStyle,
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        watchlist = !watchlist;
+                      });
+                      if (watchlist) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Added to watchlist'),
+                        ));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Remove from watchlist'),
+                        ));
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(18.0),
+                    child: Container(
+                      width: 36.0,
+                      height: 36.0,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18.0),
+                        border: Border.all(
+                          width: 0.6,
+                          color: primaryColor.withOpacity(0.6),
+                        ),
+                      ),
+                      child: Icon(
+                        (watchlist) ? Icons.star : Icons.star_border,
+                        size: 24.0,
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'assets/crypto_icon/btc.png',
+                      width: 60.0,
+                      height: 60.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  widthSpace,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        locale.currentbuy,
+                        style: black14RegularTextStyle,
+                      ),
+                      height5Space,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'INR ${sp}',
+                            style: black18SemiBoldTextStyle,
+                          ),
+                          widthSpace,
+                          Icon(
+                            data.sellChange > 0
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down,
+                            color: data.sellChange > 0 ? greenColor : redColor,
+                          ),
+                          Text(
+                            '${(data.sellChange).abs()}%',
+                            style: black14BoldTextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            height20Space,
+            Container(
+              width: double.infinity,
+              height: 250.0,
+              child: CryptoChartSyncfusion(type: "sell"),
+            ),
+          ],
+        ),
+      );
+    }
+
+    aboutPortfolioItem(title, value) {
+      double width = MediaQuery.of(context).size.width;
+      return Container(
+        height: 75.0,
+        width: (width - fixPadding * 6.0) / 2,
+        padding: EdgeInsets.all(fixPadding),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: whiteColor,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 4.0,
+              spreadRadius: 1.0,
+              color: blackColor.withOpacity(0.05),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: grey14MediumTextStyle,
+            ),
+            Text(
+              value.toString(),
+              style: black16BoldTextStyle,
+            ),
+          ],
+        ),
+      );
+    }
+
+    aboutPortfolio() {
+      double width = MediaQuery.of(context).size.width;
+      return Padding(
+        padding: const EdgeInsets.all(fixPadding * 2.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              locale.yourInstant,
+              style: primaryColor16BoldTextStyle,
+            ),
+            heightSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                aboutPortfolioItem(locale.GoldSaved,
+                    '${walletbalace.toStringAsFixed(2)} GRAM'),
+                aboutPortfolioItem(locale.CurrentValue,
+                    'INR ${(walletbalace * double.parse(data.sell.toString())).toStringAsFixed(2)}'),
+              ],
+            ),
+            heightSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                aboutPortfolioItem(
+                    locale.AvgSellPrice, 'INR ${data.sell.toStringAsFixed(2)}'),
+                Container(
+                  height: 75.0,
+                  width: (width - fixPadding * 6.0) / 2,
+                  padding: EdgeInsets.all(fixPadding),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: whiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4.0,
+                        spreadRadius: 1.0,
+                        color: blackColor.withOpacity(0.05),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        locale.Gain,
+                        style: grey14MediumTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            data.sellChange > 0
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down,
+                            color: data.sellChange > 0 ? greenColor : redColor,
+                          ),
+                          Text(
+                            '${(data.sellChange).abs()}%',
+                            style: black14BoldTextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    aboutItem(iconPath, title, value) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: fixPadding * 2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      iconPath,
+                      width: 16.0,
+                      height: 16.0,
+                      fit: BoxFit.cover,
+                    ),
+                    width5Space,
+                    Text(
+                      title,
+                      style: black14RegularTextStyle,
+                    ),
+                  ],
+                ),
+                Text(
+                  value,
+                  style: black14MediumTextStyle,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 0.7,
+            color: greyColor.withOpacity(0.4),
+          ),
+        ],
+      );
+    }
+
+    sellByValue(double buyprice) {
+      double price;
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true, // set this to true
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          double width = MediaQuery.of(context).size.width;
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Wrap(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(fixPadding * 2.0),
+                      decoration: BoxDecoration(
+                        color: scaffoldBgColor,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(10.0)),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: width,
+                            alignment: Alignment.center,
+                            child: Text(
+                              locale.Buy24KTValue,
+                              style: primaryColor18BoldTextStyle,
+                            ),
+                          ),
+                          height20Space,
+                          Container(
+                            width: double.infinity,
+                            height: 0.7,
+                            color: greyColor.withOpacity(0.4),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: fixPadding * 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 60.0,
+                                  width: 60.0,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    'assets/crypto_icon/gold_ingots.png',
+                                    width: 36.0,
+                                    height: 36.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                widthSpace,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      locale.currentbuy,
+                                      style: grey14BoldTextStyle,
+                                    ),
+                                    height5Space,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'INR ${(buyprice)}',
+                                          style: black18BoldTextStyle,
+                                        ),
+                                        widthSpace,
+                                        Text(
+                                          '(GST 0% INCLUDED)',
+                                          style: black12MediumTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Enter Value Textfield
+                          Theme(
+                            data: ThemeData(
+                              primaryColor: greyColor,
+                            ),
+                            child: TextField(
+                              controller: amountController,
+                              keyboardType: TextInputType.number,
+                              style: primaryColor18BoldTextStyle,
+                              decoration: InputDecoration(
+                                labelText: locale.value,
+                                labelStyle: primaryColor18BoldTextStyle,
+                                suffix: Text(
+                                  'INR',
+                                  style: primaryColor18BoldTextStyle,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: greyColor, width: 0.7),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                var val =
+                                    double.parse('${amountController.text}');
+                                var amount = (val /
+                                    double.parse(
+                                        (buyprice).toStringAsPrecision(3)));
+                                setState(() {
+                                  valueController.text = '$amount';
+                                });
+                              },
+                            ),
+                          ),
+
+                          height20Space,
+
+                          // Amount Textfield
+                          Theme(
+                            data: ThemeData(
+                              primaryColor: greyColor,
+                              backgroundColor: whiteColor,
+                            ),
+                            child: TextField(
+                              enabled: false,
+                              controller: valueController,
+                              keyboardType: TextInputType.number,
+                              style: primaryColor18BoldTextStyle,
+                              decoration: InputDecoration(
+                                labelText: locale.weight,
+                                labelStyle: primaryColor18BoldTextStyle,
+                                suffix: Text(
+                                  locale.GRAM,
+                                  style: primaryColor18BoldTextStyle,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: greyColor, width: 0.7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          height20Space,
+                          // Buy Button
+                          InkWell(
+                            onTap: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BankDetails()));
+                            },
+                            borderRadius: BorderRadius.circular(7.0),
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(fixPadding * 1.7),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.0),
+                                color: primaryColor,
+                              ),
+                              child: Text(
+                                locale.Sell.toUpperCase(),
+                                style: white16MediumTextStyle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
+
+    sellByWeight(double buyPrice) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true, // set this to true
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          double width = MediaQuery.of(context).size.width;
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Wrap(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(fixPadding * 2.0),
+                      decoration: BoxDecoration(
+                        color: scaffoldBgColor,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(10.0)),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: width,
+                            alignment: Alignment.center,
+                            child: Text(
+                              locale.Buy24KTWeight,
+                              style: primaryColor18BoldTextStyle,
+                            ),
+                          ),
+                          height20Space,
+                          Container(
+                            width: double.infinity,
+                            height: 0.7,
+                            color: greyColor.withOpacity(0.4),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: fixPadding * 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 60.0,
+                                  width: 60.0,
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    'assets/crypto_icon/gold_ingots.png',
+                                    width: 36.0,
+                                    height: 36.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                widthSpace,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      locale.currentsell,
+                                      style: grey14BoldTextStyle,
+                                    ),
+                                    height5Space,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'INR ${buyPrice}',
+                                          style: black18BoldTextStyle,
+                                        ),
+                                        widthSpace,
+                                        Text(
+                                          '(GST 0% INCLUDED)',
+                                          style: black12MediumTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Enter Value Textfield
+                          Theme(
+                            data: ThemeData(
+                              primaryColor: greyColor,
+                            ),
+                            child: TextField(
+                              controller: valueController,
+                              keyboardType: TextInputType.number,
+                              style: primaryColor18BoldTextStyle,
+                              decoration: InputDecoration(
+                                labelText: locale.weight,
+                                labelStyle: primaryColor18BoldTextStyle,
+                                suffix: Text(
+                                  locale.GRAM,
+                                  style: primaryColor18BoldTextStyle,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: greyColor, width: 0.7),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                var val =
+                                    double.parse('${valueController.text}');
+                                var amount =
+                                    (val * double.parse((buyPrice).toString()));
+                                setState(() {
+                                  amountController.text = '$amount';
+                                });
+                              },
+                            ),
+                          ),
+
+                          height20Space,
+
+                          // Amount Textfield
+                          Theme(
+                            data: ThemeData(
+                              primaryColor: greyColor,
+                              backgroundColor: whiteColor,
+                            ),
+                            child: TextField(
+                              enabled: false,
+                              controller: amountController,
+                              keyboardType: TextInputType.number,
+                              style: primaryColor18BoldTextStyle,
+                              decoration: InputDecoration(
+                                labelText: locale.value,
+                                labelStyle: primaryColor18BoldTextStyle,
+                                prefix: Text(
+                                  'INR  ',
+                                  style: primaryColor18BoldTextStyle,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: greyColor, width: 0.7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          height20Space,
+                          // Buy Button
+                          InkWell(
+                            onTap: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BankDetails()));
+                            },
+                            borderRadius: BorderRadius.circular(7.0),
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(fixPadding * 1.7),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.0),
+                                color: primaryColor,
+                              ),
+                              child: Text(
+                                locale.Sell.toUpperCase(),
+                                style: white16MediumTextStyle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
+
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -387,677 +1063,6 @@ class _CurrencyScreenState extends State<SellGold> {
             }
           }
         });
-  }
-
-  currencyPriceChart(int sp) {
-    return Container(
-      color: scaffoldBgColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(fixPadding * 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back),
-                    ),
-                    widthSpace,
-                    Text(
-                      locale.Sell24KT,
-                      style: black16BoldTextStyle,
-                    ),
-                  ],
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      watchlist = !watchlist;
-                    });
-                    if (watchlist) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Added to watchlist'),
-                      ));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Remove from watchlist'),
-                      ));
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(18.0),
-                  child: Container(
-                    width: 36.0,
-                    height: 36.0,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18.0),
-                      border: Border.all(
-                        width: 0.6,
-                        color: primaryColor.withOpacity(0.6),
-                      ),
-                    ),
-                    child: Icon(
-                      (watchlist) ? Icons.star : Icons.star_border,
-                      size: 24.0,
-                      color: primaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 60.0,
-                  width: 60.0,
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/crypto_icon/btc.png',
-                    width: 60.0,
-                    height: 60.0,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                widthSpace,
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      locale.currentbuy,
-                      style: black14RegularTextStyle,
-                    ),
-                    height5Space,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'INR ${sp}',
-                          style: black18SemiBoldTextStyle,
-                        ),
-                        widthSpace,
-                        Icon(
-                          data.sellChange > 0
-                              ? Icons.arrow_drop_up
-                              : Icons.arrow_drop_down,
-                          color: data.sellChange > 0 ? greenColor : redColor,
-                        ),
-                        Text(
-                          '${(data.sellChange).abs()}%',
-                          style: black14BoldTextStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          height20Space,
-          Container(
-            width: double.infinity,
-            height: 250.0,
-            child: CryptoChartSyncfusion(type: "sell"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  aboutPortfolio() {
-    double width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.all(fixPadding * 2.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            locale.yourInstant,
-            style: primaryColor16BoldTextStyle,
-          ),
-          heightSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              aboutPortfolioItem(
-                  locale.GoldSaved, '${walletbalace.toStringAsFixed(2)} GRAM'),
-              aboutPortfolioItem(locale.CurrentValue,
-                  'INR ${(walletbalace * double.parse(data.sell.toString())).toStringAsFixed(2)}'),
-            ],
-          ),
-          heightSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              aboutPortfolioItem(
-                  locale.AvgSellPrice, 'INR ${data.sell.toStringAsFixed(2)}'),
-              Container(
-                height: 75.0,
-                width: (width - fixPadding * 6.0) / 2,
-                padding: EdgeInsets.all(fixPadding),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: whiteColor,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4.0,
-                      spreadRadius: 1.0,
-                      color: blackColor.withOpacity(0.05),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      locale.Gain,
-                      style: grey14MediumTextStyle,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          data.sellChange > 0
-                              ? Icons.arrow_drop_up
-                              : Icons.arrow_drop_down,
-                          color: data.sellChange > 0 ? greenColor : redColor,
-                        ),
-                        Text(
-                          '${(data.sellChange).abs()}%',
-                          style: black14BoldTextStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  aboutPortfolioItem(title, value) {
-    double width = MediaQuery.of(context).size.width;
-    return Container(
-      height: 75.0,
-      width: (width - fixPadding * 6.0) / 2,
-      padding: EdgeInsets.all(fixPadding),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: whiteColor,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 4.0,
-            spreadRadius: 1.0,
-            color: blackColor.withOpacity(0.05),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: grey14MediumTextStyle,
-          ),
-          Text(
-            value.toString(),
-            style: black16BoldTextStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  aboutItem(iconPath, title, value) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: fixPadding * 2.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    iconPath,
-                    width: 16.0,
-                    height: 16.0,
-                    fit: BoxFit.cover,
-                  ),
-                  width5Space,
-                  Text(
-                    title,
-                    style: black14RegularTextStyle,
-                  ),
-                ],
-              ),
-              Text(
-                value,
-                style: black14MediumTextStyle,
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          height: 0.7,
-          color: greyColor.withOpacity(0.4),
-        ),
-      ],
-    );
-  }
-
-  sellByValue(double buyprice) {
-    double price;
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // set this to true
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) {
-        double width = MediaQuery.of(context).size.width;
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Wrap(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(fixPadding * 2.0),
-                    decoration: BoxDecoration(
-                      color: scaffoldBgColor,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10.0)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: width,
-                          alignment: Alignment.center,
-                          child: Text(
-                            locale.Buy24KTValue,
-                            style: primaryColor18BoldTextStyle,
-                          ),
-                        ),
-                        height20Space,
-                        Container(
-                          width: double.infinity,
-                          height: 0.7,
-                          color: greyColor.withOpacity(0.4),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: fixPadding * 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 60.0,
-                                width: 60.0,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  'assets/crypto_icon/gold_ingots.png',
-                                  width: 36.0,
-                                  height: 36.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              widthSpace,
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    locale.currentbuy,
-                                    style: grey14BoldTextStyle,
-                                  ),
-                                  height5Space,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'INR ${(buyprice)}',
-                                        style: black18BoldTextStyle,
-                                      ),
-                                      widthSpace,
-                                      Text(
-                                        '(GST 0% INCLUDED)',
-                                        style: black12MediumTextStyle,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Enter Value Textfield
-                        Theme(
-                          data: ThemeData(
-                            primaryColor: greyColor,
-                          ),
-                          child: TextField(
-                            controller: amountController,
-                            keyboardType: TextInputType.number,
-                            style: primaryColor18BoldTextStyle,
-                            decoration: InputDecoration(
-                              labelText: locale.value,
-                              labelStyle: primaryColor18BoldTextStyle,
-                              suffix: Text(
-                                'INR',
-                                style: primaryColor18BoldTextStyle,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: greyColor, width: 0.7),
-                              ),
-                            ),
-                            onChanged: (value) {
-                              var val =
-                                  double.parse('${amountController.text}');
-                              var amount = (val /
-                                  double.parse(
-                                      (buyprice).toStringAsPrecision(3)));
-                              setState(() {
-                                valueController.text = '$amount';
-                              });
-                            },
-                          ),
-                        ),
-
-                        height20Space,
-
-                        // Amount Textfield
-                        Theme(
-                          data: ThemeData(
-                            primaryColor: greyColor,
-                            backgroundColor: whiteColor,
-                          ),
-                          child: TextField(
-                            enabled: false,
-                            controller: valueController,
-                            keyboardType: TextInputType.number,
-                            style: primaryColor18BoldTextStyle,
-                            decoration: InputDecoration(
-                              labelText: locale.weight,
-                              labelStyle: primaryColor18BoldTextStyle,
-                              suffix: Text(
-                                locale.GRAM,
-                                style: primaryColor18BoldTextStyle,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: greyColor, width: 0.7),
-                              ),
-                            ),
-                          ),
-                        ),
-                        height20Space,
-                        // Buy Button
-                        InkWell(
-                          onTap: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BankDetails()));
-                          },
-                          borderRadius: BorderRadius.circular(7.0),
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(fixPadding * 1.7),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.0),
-                              color: primaryColor,
-                            ),
-                            child: Text(
-                              locale.Sell.toUpperCase(),
-                              style: white16MediumTextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  sellByWeight(double buyPrice) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // set this to true
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext bc) {
-        double width = MediaQuery.of(context).size.width;
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Wrap(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(fixPadding * 2.0),
-                    decoration: BoxDecoration(
-                      color: scaffoldBgColor,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10.0)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: width,
-                          alignment: Alignment.center,
-                          child: Text(
-                            locale.Buy24KTWeight,
-                            style: primaryColor18BoldTextStyle,
-                          ),
-                        ),
-                        height20Space,
-                        Container(
-                          width: double.infinity,
-                          height: 0.7,
-                          color: greyColor.withOpacity(0.4),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: fixPadding * 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 60.0,
-                                width: 60.0,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  'assets/crypto_icon/gold_ingots.png',
-                                  width: 36.0,
-                                  height: 36.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              widthSpace,
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    locale.currentsell,
-                                    style: grey14BoldTextStyle,
-                                  ),
-                                  height5Space,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'INR ${buyPrice}',
-                                        style: black18BoldTextStyle,
-                                      ),
-                                      widthSpace,
-                                      Text(
-                                        '(GST 0% INCLUDED)',
-                                        style: black12MediumTextStyle,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Enter Value Textfield
-                        Theme(
-                          data: ThemeData(
-                            primaryColor: greyColor,
-                          ),
-                          child: TextField(
-                            controller: valueController,
-                            keyboardType: TextInputType.number,
-                            style: primaryColor18BoldTextStyle,
-                            decoration: InputDecoration(
-                              labelText: locale.weight,
-                              labelStyle: primaryColor18BoldTextStyle,
-                              suffix: Text(
-                                locale.GRAM,
-                                style: primaryColor18BoldTextStyle,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: greyColor, width: 0.7),
-                              ),
-                            ),
-                            onChanged: (value) {
-                              var val = double.parse('${valueController.text}');
-                              var amount =
-                                  (val * double.parse((buyPrice).toString()));
-                              setState(() {
-                                amountController.text = '$amount';
-                              });
-                            },
-                          ),
-                        ),
-
-                        height20Space,
-
-                        // Amount Textfield
-                        Theme(
-                          data: ThemeData(
-                            primaryColor: greyColor,
-                            backgroundColor: whiteColor,
-                          ),
-                          child: TextField(
-                            enabled: false,
-                            controller: amountController,
-                            keyboardType: TextInputType.number,
-                            style: primaryColor18BoldTextStyle,
-                            decoration: InputDecoration(
-                              labelText: locale.value,
-                              labelStyle: primaryColor18BoldTextStyle,
-                              prefix: Text(
-                                'INR  ',
-                                style: primaryColor18BoldTextStyle,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: greyColor, width: 0.7),
-                              ),
-                            ),
-                          ),
-                        ),
-                        height20Space,
-                        // Buy Button
-                        InkWell(
-                          onTap: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BankDetails()));
-                          },
-                          borderRadius: BorderRadius.circular(7.0),
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(fixPadding * 1.7),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.0),
-                              color: primaryColor,
-                            ),
-                            child: Text(
-                              locale.Sell.toUpperCase(),
-                              style: white16MediumTextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 }
 

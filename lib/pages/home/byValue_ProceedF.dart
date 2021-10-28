@@ -184,6 +184,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     createSubscription(installmentID);
     return showDialog(
@@ -245,6 +246,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -288,6 +290,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,

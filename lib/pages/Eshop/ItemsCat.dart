@@ -114,6 +114,7 @@ class _ItemsCatState extends State<ItemsCat> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
       future: init(),
       initialData: null,

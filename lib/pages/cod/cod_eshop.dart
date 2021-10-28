@@ -120,6 +120,7 @@ class _Adress_Details_Payment_EshopState
   final _formkeyeshop = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
@@ -437,6 +438,7 @@ class Adress_Type extends StatefulWidget {
 class _Adress_TypeState extends State<Adress_Type> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -466,6 +468,7 @@ class Adress_Type_selector extends StatefulWidget {
 class _Adress_Type_selectorState extends State<Adress_Type_selector> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -496,7 +499,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          locale.Work,
+          locale.work,
           style: primaryColor16MediumTextStyle,
         ),
         Radio<adressType>(
@@ -511,7 +514,7 @@ class _Adress_Type_selectorState extends State<Adress_Type_selector> {
         ),
         widthSpace,
         Text(
-          locale.Others,
+          locale.others,
           style: primaryColor16MediumTextStyle,
         ),
       ],

@@ -116,6 +116,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
   int endTime;
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,

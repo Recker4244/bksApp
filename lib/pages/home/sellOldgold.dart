@@ -37,6 +37,7 @@ class _SellOldState extends State<SellOld> {
   bool message;
 
   Future CreatePlans() async {
+    var locale = AppLocalizations.of(context);
     //TODO add url and body
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
@@ -118,7 +119,7 @@ class _SellOldState extends State<SellOld> {
                           heightSpace,
                           Center(
                               child: Text(
-                            locale.ShowThisCode
+                            locale.ShowThisCode,
                             style: black12MediumTextStyle,
                           ))
                         ],

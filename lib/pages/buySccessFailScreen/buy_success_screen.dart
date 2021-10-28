@@ -10,6 +10,7 @@ class BuySuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(

@@ -184,6 +184,7 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     createSubscription(installmentID);
     return showDialog(
@@ -235,7 +236,7 @@ class _Standard_PCState extends State<Standard_PC> {
                     heightSpace,
                     Center(
                         child: Text(
-                     locale.showcode
+                      locale.showcode,
                       style: black12MediumTextStyle,
                     ))
                   ],
@@ -245,6 +246,7 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -288,6 +290,7 @@ class _Standard_PCState extends State<Standard_PC> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -541,7 +544,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                       SizedBox(
                                         width: 150,
                                         child: Text(
-                                          locale.herepayment
+                                          locale.herepayment,
                                           style: black16BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -552,7 +555,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                             MediaQuery.of(context).size.width *
                                                 0.5,
                                         child: Text(
-                                         locale.usePayment,
+                                          locale.usePayment,
                                           style: black14RegularTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
@@ -644,6 +647,7 @@ class _Standard_PCState extends State<Standard_PC> {
 
   Your_Portfolio(
       String saveGold, String BonusC, String Duration, String Saving) {
+    var locale = AppLocalizations.of(context);
     return Container(
       height: 330,
       child: Padding(
@@ -751,6 +755,7 @@ class Payment_Method extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

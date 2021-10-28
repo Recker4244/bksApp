@@ -49,6 +49,7 @@ class _RunningState extends State<Running> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return ListView.builder(
       itemCount: widget.running.length,
       physics: BouncingScrollPhysics(),
@@ -104,7 +105,7 @@ class _RunningState extends State<Running> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                locale.TotalGoldPlans",
+                                locale.TotalGoldPlans,
                                 style: grey14BoldTextStyle,
                               ),
                               SizedBox(
@@ -348,7 +349,7 @@ class _RunningState extends State<Running> {
                                                                           10))),
                                                       child: Center(
                                                         child: Text(
-                                                          locale.proceedToSkip",
+                                                          locale.proceedToSkip,
                                                           style: TextStyle(
                                                             fontFamily: 'Jost',
                                                             fontSize: 14.0,

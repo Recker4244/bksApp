@@ -186,6 +186,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     installmentID = await pay(response.paymentId);
+    var locale = AppLocalizations.of(context);
     createSubscription(installmentID);
     return showDialog(
         context: context,
@@ -246,6 +247,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   }
 
   _handlePaymentError(PaymentFailureResponse response) {
+    var locale = AppLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -289,6 +291,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
         future: init,
         initialData: null,
@@ -598,48 +601,50 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
           }
         });
   }
-}
 
-Your_Portfolio(String saveGold, String BonusC, String Duration, String Saving) {
-  return Container(
-    height: 330,
-    child: Padding(
-      padding: EdgeInsets.all(fixPadding * 2.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            locale.YourPortfolio,
-            style: primaryColor16MediumTextStyle,
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Portfolio_card(locale.Saving, saveGold.toString()),
-                Portfolio_card(
-                  locale.Bonus,
-                  BonusC,
-                ),
-              ],
+  Your_Portfolio(
+      String saveGold, String BonusC, String Duration, String Saving) {
+    var locale = AppLocalizations.of(context);
+    return Container(
+      height: 330,
+      child: Padding(
+        padding: EdgeInsets.all(fixPadding * 2.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              locale.yourPortfolio,
+              style: primaryColor16MediumTextStyle,
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Portfolio_card(locale.duration, Duration.toString()),
-                Portfolio_card(locale.totalSaving, Saving),
-              ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Portfolio_card(locale.Saving, saveGold.toString()),
+                  Portfolio_card(
+                    locale.Bonus,
+                    BonusC,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Portfolio_card(locale.duration, Duration.toString()),
+                  Portfolio_card(locale.totalSaving, Saving),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class Portfolio_card extends StatelessWidget {

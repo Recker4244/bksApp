@@ -28,6 +28,7 @@ class _ForfeitedState extends State<Forfeited> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return (widget.forfeited == null)
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,

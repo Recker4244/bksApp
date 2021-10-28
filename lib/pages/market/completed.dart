@@ -28,6 +28,7 @@ class _CompletedState extends State<Completed> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return (widget.completed == null)
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,

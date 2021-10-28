@@ -90,6 +90,7 @@ class _Adress_Details_Payment_BuygoldState
 
   bool message;
   void addInstallmentSubs() async {
+    var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST',
@@ -193,6 +194,7 @@ class _Adress_Details_Payment_BuygoldState
   final _formkeybuygold = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
@@ -507,6 +509,7 @@ class Adress_Type extends StatefulWidget {
 class _Adress_TypeState extends State<Adress_Type> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -536,6 +539,7 @@ class Adress_Type_selector extends StatefulWidget {
 class _Adress_Type_selectorState extends State<Adress_Type_selector> {
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[

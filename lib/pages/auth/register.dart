@@ -117,6 +117,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       body: ListView(
