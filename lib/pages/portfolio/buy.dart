@@ -164,7 +164,7 @@ class _DepositState extends State<Deposit> {
   void openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': double.parse(amountController.text) * 100.0,
+      'amount': (double.parse(amountController.text)) * 100.0,
       'name': "Flexi Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
