@@ -888,7 +888,7 @@ class _HomeState extends State<Home> {
             width: double.infinity,
             height: 22.h,
             child: ListView.builder(
-              itemCount: Standardplans.length,
+              itemCount: 3,
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
