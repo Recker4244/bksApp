@@ -18,8 +18,7 @@ class VideoDemo2State extends State<VideoDemo2> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network(
-        widget.videolink);
+    _controller = VideoPlayerController.network(widget.videolink);
     //_controller = VideoPlayerController.asset("videos/sample_video.mp4");
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.pause();
@@ -37,15 +36,18 @@ class VideoDemo2State extends State<VideoDemo2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: Colors.transparent,
       body: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
-              child: AspectRatio(
-                aspectRatio: 1/1,
-                child: VideoPlayer(_controller),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AspectRatio(
+                  aspectRatio: 3 / 2,
+                  child: VideoPlayer(_controller),
+                ),
               ),
             );
           } else {
