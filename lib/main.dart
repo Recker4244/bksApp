@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 var deviceToken;
 
@@ -35,23 +36,57 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  FlutterLocalNotificationsPlugin fltrNotification;
   FirebaseMessaging messaging;
   @override
   void initState() {
     super.initState();
+    var androidInitilize = new AndroidInitializationSettings('app_icon');
+    var iOSinitilize = new IOSInitializationSettings();
+    var initilizationsSettings = new InitializationSettings(
+        android: androidInitilize, iOS: iOSinitilize);
+    fltrNotification = new FlutterLocalNotificationsPlugin();
+    fltrNotification.initialize(initilizationsSettings,
+        onSelectNotification: notificationSelected);
+
     messaging = FirebaseMessaging.instance;
+
     messaging.getToken().then((value) {
       print("token" + value);
       deviceToken = value;
 
       FirebaseMessaging.onMessage.listen((RemoteMessage event) {
         print("message recieved");
+        showNotification(
+            title: event.notification.title, body: event.notification.body);
         print(event.notification.body);
       });
       FirebaseMessaging.onMessageOpenedApp.listen((message) {
         print('Message clicked!');
       });
     });
+  }
+
+  Future notificationSelected(String payload) async {
+    //  showDialog(
+    //    context: context,
+    //    builder: (context) => AlertDialog(
+    //      content: Text("Notification : $payload"),
+    //    ),
+    //  );
+  }
+  Future showNotification({String title, String body}) async {
+    var androidDetails = new AndroidNotificationDetails(
+        "Channel ID", "BKS MyGold",
+        channelDescription: "this is BKS MyGold",
+        importance: Importance.max,
+        icon: 'app_icon');
+    var iSODetails = new IOSNotificationDetails();
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails, iOS: iSODetails);
+
+    await fltrNotification.show(0, title, body, generalNotificationDetails,
+        payload: "");
   }
 
   @override

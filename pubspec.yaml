@@ -54,6 +54,7 @@ dependencies:
   showcaseview: ^1.1.1
   tutorial_coach_mark: ^1.1.1
   shimmer: ^2.0.0
+  flutter_local_notifications: ^9.0.1
 
 dev_dependencies:
   flutter_test:
