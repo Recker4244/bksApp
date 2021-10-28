@@ -343,6 +343,18 @@ class _HomeState extends State<Home> {
       );
     }
 
+    dummycontainer1() {
+      return Container(
+        padding: EdgeInsets.all(fixPadding * 2.0),
+        margin: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          color: primaryColor,
+        ),
+        height: 250,
+      );
+    }
+
     dummybalanceContainer() {
       return Container(
         padding: EdgeInsets.all(fixPadding * 2.0),
@@ -533,26 +545,6 @@ class _HomeState extends State<Home> {
                     style: primaryColor16MediumTextStyle,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    dummybuyGold() {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(
-            fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: whiteColor,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 4.0,
-                spreadRadius: 1.0,
-                color: blackColor.withOpacity(0.05),
               ),
             ],
           ),
@@ -1361,11 +1353,13 @@ class _HomeState extends State<Home> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
-                  userdummyGreeting(),
+                  SizedBox(height: 20),
+                  dummycontainer1(),
+                  SizedBox(height: 20),
                   dummybalanceContainer(),
-                  dummybuyGold(),
-                  dummybuyGold(),
-                  dummymyportfolio()
+                  SizedBox(height: 20),
+                  dummybalanceContainer(),
+                  dummymyportfolio(),
                 ],
               ),
             ),
