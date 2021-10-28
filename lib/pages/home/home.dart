@@ -431,15 +431,6 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.size,
-                          alignment: Alignment.bottomCenter,
-                          child: BuyGold()));
-                },
-
                 //TODO : Push to Buy Gold
 
                 borderRadius: BorderRadius.vertical(
@@ -517,6 +508,14 @@ class _HomeState extends State<Home> {
                 ),
               ),
               InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.size,
+                          alignment: Alignment.bottomCenter,
+                          child: BuyGold()));
+                },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),
@@ -582,15 +581,6 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.size,
-                          alignment: Alignment.bottomCenter,
-                          child: SellGold()));
-                },
-
                 //TODO : Push to Buy Gold
 
                 borderRadius: BorderRadius.vertical(
@@ -668,6 +658,14 @@ class _HomeState extends State<Home> {
                 ),
               ),
               InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.size,
+                          alignment: Alignment.bottomCenter,
+                          child: SellGold()));
+                },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),
