@@ -474,7 +474,7 @@ class _GuestHomeState extends State<GuestHome> {
           ),
           Container(
             width: double.infinity,
-            height: 178.0,
+            height: 148.0,
             child: ListView.builder(
               itemCount: howtos.length,
               physics: BouncingScrollPhysics(),
@@ -491,22 +491,14 @@ class _GuestHomeState extends State<GuestHome> {
                   child: Padding(
                     padding: (index != howtos.length - 1)
                         ? EdgeInsets.only(left: fixPadding * 2.0)
-                        : EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+                        : EdgeInsets.symmetric(horizontal: 8),
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: Container(
-                        width: 170.0,
+                        width: 200.0,
                         padding: EdgeInsets.all(fixPadding),
                         decoration: BoxDecoration(
-                          color: primaryColor,
                           borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4.0,
-                              spreadRadius: 1.0,
-                              color: blackColor.withOpacity(0.05),
-                            ),
-                          ],
                         ),
                         child: Stack(
                           children: [
@@ -519,10 +511,10 @@ class _GuestHomeState extends State<GuestHome> {
                                       ? await launch(howtos[index].video)
                                       : throw 'Could not launch ${howtos[index].video}';
                                 },
-                                child: Icon(
-                                  Icons.play_circle_outline_rounded,
-                                  color: scaffoldLightColor,
-                                  size: 80,
+                                child: FaIcon(
+                                  FontAwesomeIcons.youtube,
+                                  color: primaryColor,
+                                  size: 50,
                                 ),
                               ),
                             )
@@ -556,7 +548,7 @@ class _GuestHomeState extends State<GuestHome> {
           ),
           Container(
             width: double.infinity,
-            height: 178.0,
+            height: 148.0,
             child: ListView.builder(
               itemCount: testimonials.length,
               physics: BouncingScrollPhysics(),
@@ -573,18 +565,10 @@ class _GuestHomeState extends State<GuestHome> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: Container(
-                        width: 170.0,
+                        width: 200.0,
                         padding: EdgeInsets.all(fixPadding),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
-                          color: primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4.0,
-                              spreadRadius: 1.0,
-                              color: blackColor.withOpacity(0.05),
-                            ),
-                          ],
                         ),
                         child: Stack(
                           children: [
@@ -597,10 +581,10 @@ class _GuestHomeState extends State<GuestHome> {
                                       ? await launch(howtos[index].video)
                                       : throw 'Could not launch ${howtos[index].video}';
                                 },
-                                child: Icon(
-                                  Icons.play_circle_outline_rounded,
-                                  color: scaffoldLightColor,
-                                  size: 80,
+                                child: FaIcon(
+                                  FontAwesomeIcons.youtube,
+                                  color: primaryColor,
+                                  size: 50,
                                 ),
                               ),
                             )

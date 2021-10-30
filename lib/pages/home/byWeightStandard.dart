@@ -86,7 +86,7 @@ class _Standard_PCState extends State<Standard_PC> {
   openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': "",
+      'amount': (double.parse(valueController.text)) * 100.0,
       'name': "Standard Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -223,7 +223,7 @@ class _Standard_PCState extends State<Standard_PC> {
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('otp'),
+                          child: Text(response.paymentId),
                         )),
                       ),
                     ),
