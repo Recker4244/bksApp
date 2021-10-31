@@ -33,6 +33,18 @@ class _BankDetailsState extends State<BankDetails> {
   FocusNode accountFocus = FocusNode();
   FocusNode ifscFocus = FocusNode();
 
+// Future<bool> verifyBanckAccount(String ifsc,String accntno)async{
+//    final String apiUrl =
+//         "https://api.sandbox.co.in/bank/${ifsc}/accounts/${accntno}/verify?name=${Userdata.fname} DOE&mobile=${Userdata.mobile}";
+//     var url = Uri.parse(apiUrl);
+//     var headers = {
+//   'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1Gd2FWOXJaWGtpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1semN5STZJbUZ3YVM1eGRXbGphMjh1WTI5dElpd2laWGh3SWpveE5Ua3dPVFk1TmpBd0xDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TlRVNU16UTNNakF3ZlEueHNmYkhQTERFRlRvTy1OUWdaUUpLM25OUjFxdlhvWmhaOHRqS3gzSExydjZiVkJaMHpJZEZ5ai1MUTg1YnJZS0xXQnFnZHlzZ1NDSXlDUXNtV2VOYkEiLCJzdWIiOiJqb2huQGRvZS5jb20iLCJhcGlfa2V5Ijoia2V5X2xpdmVfQWRlKioqKioqKioqKioqKioqKioqKioqKioqKipVeHMiLCJpc3MiOiJhcGkucXVpY2tvLmNvbSIsImV4cCI6MTU5MTA1NjAwMCwiaW50ZW50IjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNTkwOTY5NjAwfQ.nH23CR5RHGQ0U19I_vq3vyJ_85A1a2iEMQij5QHgJQdDuS9x7FmTidsr1CQabSFF5ujE40SFxHv1gJM20TauUw',
+//   'x-api-key': 'key_live_Ade**************************Uxs',
+//   'x-api-version': '3.1'
+// };
+// final response = await http.post(url, headers: headers);
+// if(response.statusCode==200){}
+// }
   Future check() async {
     http.Response response = await http.get(
       Uri.parse("${baseurl}/api/bank/${Userdata.sId}"),
@@ -71,7 +83,7 @@ class _BankDetailsState extends State<BankDetails> {
     }
   }
 
-  Future apiCall(String ifsc) async {
+  Future apiCall(String ifsc, String accntno) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -126,7 +138,16 @@ class _BankDetailsState extends State<BankDetails> {
       return FocusScope.of(context).requestFocus(ifscFocus);
     }
     http.Response response;
-    response = await http.get(Uri.parse("https://ifsc.razorpay.com/${ifsc}"));
+    var headers = {
+      'Authorization':
+          'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1Gd2FWOXJaWGtpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1semN5STZJbUZ3YVM1eGRXbGphMjh1WTI5dElpd2laWGh3SWpveE5Ua3dPVFk1TmpBd0xDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TlRVNU16UTNNakF3ZlEueHNmYkhQTERFRlRvTy1OUWdaUUpLM25OUjFxdlhvWmhaOHRqS3gzSExydjZiVkJaMHpJZEZ5ai1MUTg1YnJZS0xXQnFnZHlzZ1NDSXlDUXNtV2VOYkEiLCJzdWIiOiJqb2huQGRvZS5jb20iLCJhcGlfa2V5Ijoia2V5X2xpdmVfQWRlKioqKioqKioqKioqKioqKioqKioqKioqKipVeHMiLCJpc3MiOiJhcGkucXVpY2tvLmNvbSIsImV4cCI6MTU5MTA1NjAwMCwiaW50ZW50IjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNTkwOTY5NjAwfQ.nH23CR5RHGQ0U19I_vq3vyJ_85A1a2iEMQij5QHgJQdDuS9x7FmTidsr1CQabSFF5ujE40SFxHv1gJM20TauUw',
+      'x-api-key': 'key_live_Ade**************************Uxs',
+      'x-api-version': '3.1'
+    };
+    response = await http.get(
+        Uri.parse(
+            "https://api.sandbox.co.in/bank/${ifsc}/accounts/${accntno}/verify?name=${Userdata.fname} DOE&mobile=${Userdata.mobile}"),
+        headers: headers);
     if (response.statusCode == 200) {
       if (value == true) {
         http.Response responseBank = await http.post(
@@ -424,7 +445,8 @@ class _BankDetailsState extends State<BankDetails> {
 
             // Save Button Start
             InkWell(
-              onTap: () => apiCall(ifscCodeController.text),
+              onTap: () => apiCall(
+                  ifscCodeController.text, accountNumberController.text),
               borderRadius: BorderRadius.circular(7.0),
               child: Container(
                 width: double.infinity,
