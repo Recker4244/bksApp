@@ -47,10 +47,8 @@ class _HomeState extends State<Home> {
   String bonusbalance = '0';
 
   Future getportfoliobalance() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/balance/user/${Userdata.sId}'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -65,8 +63,8 @@ class _HomeState extends State<Home> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -83,8 +81,7 @@ class _HomeState extends State<Home> {
 
   Future fetchStandardPlans() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse("https://goldv2.herokuapp.com/api/plan/type/standard/"));
+    response = await http.get(Uri.parse("${baseurl}/api/plan/type/standard/"));
 
     // response code 200 means that the request was successful
     if (response.statusCode == 200) {
@@ -112,7 +109,7 @@ class _HomeState extends State<Home> {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/balance/${Userdata.sId}/${Subscription.sId}'));
+            '${baseurl}/api/subscription/balance/${Userdata.sId}/${Subscription.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -129,10 +126,8 @@ class _HomeState extends State<Home> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -148,8 +143,7 @@ class _HomeState extends State<Home> {
 
   List<MetalGroup> temp = [];
   Future getMetals() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/metal-group'));
 
     http.StreamedResponse response = await request.send();
 
@@ -728,11 +722,11 @@ class _HomeState extends State<Home> {
                                       planname: "${Standardplans[index].name}",
                                       duration: Standardplans[index].duration,
                                       durationString:
-                                          "${Standardplans[index].duration} ${item.cyclePeriod.shortName}",
+                                          "${Standardplans[index].duration} ${item.cyclePeriod.createdAt}",
                                       cycleid:
-                                          Standardplans[index].cyclePeriod.sId,
-                                      shortname: item.cyclePeriod.shortName,
-                                      planID: item.sId)));
+                                          Standardplans[index].cyclePeriod.id,
+                                      shortname: item.cyclePeriod.createdAt,
+                                      planID: item.id)));
                         } else
                           Navigator.push(
                               context,
@@ -746,11 +740,11 @@ class _HomeState extends State<Home> {
                                     planname: "${Standardplans[index].name}",
                                     duration: Standardplans[index].duration,
                                     durationString:
-                                        "${Standardplans[index].duration} ${item.cyclePeriod.shortName}",
+                                        "${Standardplans[index].duration} ${item.cyclePeriod.createdAt}",
                                     cycleid:
-                                        Standardplans[index].cyclePeriod.sId,
-                                    shortname: item.cyclePeriod.shortName,
-                                    planID: item.sId,
+                                        Standardplans[index].cyclePeriod.id,
+                                    shortname: item.cyclePeriod.createdAt,
+                                    planID: item.id,
                                   )));
                       },
                       child: Container(
@@ -817,8 +811,8 @@ class _HomeState extends State<Home> {
                                             ),
                                             Text(
                                               item.mode == "value"
-                                                  ? "${item.cyclePeriod.minValue} INR/${item.cyclePeriod.shortName}"
-                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.shortName}",
+                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.createdAt}"
+                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.createdAt}",
                                               style:
                                                   primaryColor14MediumTextStyle,
                                             ),
@@ -1374,21 +1368,21 @@ class _HomeState extends State<Home> {
                   children: [
                     userGreeting(),
                     balanceContainer(),
-                    buyGold(data.buy.toStringAsFixed(2)),
-                    sellGold(data.sell.toStringAsFixed(2)),
+                    buyGold(data.buy),
+                    sellGold(data.sell),
                     height20Space,
                     myPortfolio(),
                     height20Space,
                     planSelector(),
                     referAfriend(Userdata.refCode.toString()),
                     SellOldGold(
-                        double.parse(data.sell.toStringAsFixed(2)),
-                        double.parse(
-                            (data.sell * temp[1].referenceId.toDouble())
-                                .toStringAsFixed(2)),
-                        double.parse(
-                            (data.sell * temp[2].referenceId.toDouble())
-                                .toStringAsFixed(2)),
+                        double.parse(data.sell),
+                        double.parse((num.parse(data.sell).toDouble() *
+                                temp[1].referenceId.toDouble())
+                            .toStringAsFixed(2)),
+                        double.parse((num.parse(data.sell).toDouble() *
+                                temp[2].referenceId.toDouble())
+                            .toStringAsFixed(2)),
                         width: width),
                   ],
                 ),

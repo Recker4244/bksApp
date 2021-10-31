@@ -48,8 +48,8 @@ class _standardValueState extends State<standardValue> {
   int endTime;
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -66,10 +66,8 @@ class _standardValueState extends State<standardValue> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -125,9 +123,7 @@ class _standardValueState extends State<standardValue> {
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "paymentId": id,
@@ -151,10 +147,8 @@ class _standardValueState extends State<standardValue> {
   }
 
   createSubscription(String installmentid) async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
     request.bodyFields = {
       "userId": Userdata.sId,
       "status": "Running",
@@ -399,7 +393,7 @@ class _standardValueState extends State<standardValue> {
                               ],
                             ),
                             Text(
-                              data.buy.toStringAsFixed(2), //TODO buyprice
+                              data.buy, //TODO buyprice
                               style: black18BoldTextStyle,
                             ),
                           ],
@@ -455,9 +449,10 @@ class _standardValueState extends State<standardValue> {
                                 onChanged: (String value) {
                                   setState(() {
                                     if (value != null) {
-                                      amountController.text =
-                                          (int.parse(value) / data.buy)
-                                              .toStringAsFixed(2);
+                                      amountController.text = (num.parse(value)
+                                                  .toDouble() /
+                                              num.parse(data.buy).toDouble())
+                                          .toStringAsFixed(2);
                                     }
                                   });
                                 },

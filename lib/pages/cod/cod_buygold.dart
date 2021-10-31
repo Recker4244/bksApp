@@ -40,8 +40,7 @@ class _Adress_Details_Payment_BuygoldState
   DataS datas;
   PlanSubscriptions pSubs;
   addAddress() async {
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/address/'));
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
     final body = {
       "user": Userdata.sId,
       "pin": PINcontroller.text,
@@ -63,10 +62,8 @@ class _Adress_Details_Payment_BuygoldState
   Subscription subscription;
   String installmentId;
   void createInstallment() async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${widget.subsId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/installment/create/${widget.subsId}'));
     final body = {
       "paymentId": "",
       "status": "Processing",
@@ -95,7 +92,7 @@ class _Adress_Details_Payment_BuygoldState
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/installments/add/${subscription.sId}'));
+            '${baseurl}/api/subscription/installments/add/${subscription.sId}'));
     final body = {"installmentId": installmentId};
     request.body = json.encode(body);
     request.headers.addAll(headers);
@@ -166,8 +163,8 @@ class _Adress_Details_Payment_BuygoldState
   }
 
   checkPincode(String pincode) async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/pincode/search/$pincode'));
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
 
     http.StreamedResponse response = await request.send();
 

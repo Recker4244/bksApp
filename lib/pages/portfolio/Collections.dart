@@ -25,8 +25,8 @@ class _CollectionsState extends State<Collections> {
   List<Installments> complete = [];
   changeStatus(String id) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/order/status/$id'));
+    var request =
+        http.Request('POST', Uri.parse('${baseurl}/api/order/status/$id'));
     request.body = json.encode({"status": "Cancelled"});
     request.headers.addAll(headers);
 
@@ -52,9 +52,7 @@ class _CollectionsState extends State<Collections> {
   Future getplans() async {
     var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.sId}'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 

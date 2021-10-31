@@ -1,4 +1,5 @@
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/main.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -94,13 +95,14 @@ class _RegisterState extends State<Register> {
       return FocusScope.of(context).requestFocus(thirdFocusNode);
     }
     http.Response response = await http.put(
-      Uri.parse("https://goldv2.herokuapp.com/api/user/" + widget.id),
+      Uri.parse("${baseurl}/api/user/" + widget.id),
       body: {
         "fname": nameController.text,
         "email": emailController.text,
         "dob": dobController.text,
         "refCode": refferController.text,
         "pan": pan.text,
+        "deviceToken": deviceToken
       },
     );
 
@@ -142,7 +144,7 @@ class _RegisterState extends State<Register> {
             children: [
               Image.asset(
                 'assets/Logo.png',
-                width: 150.0,
+                width: 150,
                 height: 150.0,
                 fit: BoxFit.cover,
               ),

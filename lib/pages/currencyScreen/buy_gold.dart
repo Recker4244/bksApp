@@ -38,8 +38,8 @@ class _CurrencyScreenState extends State<BuyGold> {
   bool message;
   double walletbalace = 0.0;
   void getWalletBalanced() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -54,9 +54,7 @@ class _CurrencyScreenState extends State<BuyGold> {
     var headers = {'Content-Type': 'application/json'};
 
     var request = http.Request(
-        'PUT',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/add/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/add/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',
@@ -143,8 +141,8 @@ class _CurrencyScreenState extends State<BuyGold> {
   }
 
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -165,9 +163,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   Future Instalments() async {
     var uuid = Uuid().v1();
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
     request.bodyFields = {
       'paymentId': uuid,
       'amount': amountController.text,
@@ -1046,7 +1042,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      currencyPriceChart(data.buy),
+                      currencyPriceChart(num.parse(data.buy)),
                       aboutPortfolio(),
                     ],
                   ),

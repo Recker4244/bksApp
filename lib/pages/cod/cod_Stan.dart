@@ -54,8 +54,7 @@ class _Adress_Details_Payment_StanState
   bool available = true;
   Future addAddres() async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/address/'));
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
     request.bodyFields = {
       'UserId': Userdata.sId,
       'address': addresscontroller.text,
@@ -74,8 +73,8 @@ class _Adress_Details_Payment_StanState
   }
 
   checkPincode(String pincode) async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/pincode/search/$pincode'));
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
 
     http.StreamedResponse response = await request.send();
 
@@ -105,9 +104,7 @@ class _Adress_Details_Payment_StanState
   pay() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "user": Userdata.sId,
@@ -137,10 +134,8 @@ class _Adress_Details_Payment_StanState
     var headers = {'Content-Type': 'application/json'};
     var locale = AppLocalizations.of(context);
 
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
 
     final body = {
       "userId": Userdata.sId,

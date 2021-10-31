@@ -24,8 +24,7 @@ class ItemsCat extends StatefulWidget {
 class _ItemsCatState extends State<ItemsCat> {
   List<category> categoryList;
   Future getcategories() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/category/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/category/'));
 
     http.StreamedResponse response = await request.send();
 
@@ -43,8 +42,7 @@ class _ItemsCatState extends State<ItemsCat> {
 
   List<product> productList;
   Future getproducts() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/product/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/product/'));
 
     http.StreamedResponse response = await request.send();
 
@@ -62,8 +60,7 @@ class _ItemsCatState extends State<ItemsCat> {
 
   List<variety> varietyList;
   Future getvarieties() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/variety/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/variety/'));
 
     http.StreamedResponse response = await request.send();
 
@@ -81,8 +78,7 @@ class _ItemsCatState extends State<ItemsCat> {
 
   List<collection> collectionList;
   Future getCollections() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/collection/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/collection/'));
 
     http.StreamedResponse response = await request.send();
 

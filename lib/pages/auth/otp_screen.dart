@@ -32,8 +32,7 @@ class _OTPScreenState extends State<OTPScreen> {
   FocusNode fourthFocusNode = FocusNode();
 
   Future getuserdetails(String id) async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/user/$id'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));
 
     http.StreamedResponse response = await request.send();
 
@@ -85,7 +84,7 @@ class _OTPScreenState extends State<OTPScreen> {
     );
 
     http.Response response = await http.post(
-      Uri.parse("https://goldv2.herokuapp.com/api/auth/verify"),
+      Uri.parse("${baseurl}/api/auth/verify"),
       body: {
         "mobile": mobilenumber.phoneNumber,
         "otp": firstController.text +
@@ -186,7 +185,7 @@ class _OTPScreenState extends State<OTPScreen> {
       },
     );
     http.Response response = await http.post(
-      Uri.parse("https://goldv2.herokuapp.com/api/auth/register"),
+      Uri.parse("${baseurl}/api/auth/register"),
       headers: {"Content-Type": "application/json"},
       body: json.encode({
         "mobile": mobilenumber.phoneNumber,

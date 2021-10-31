@@ -22,8 +22,7 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   List<product> temp;
   Future getproducts() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/product/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/product/'));
 
     http.StreamedResponse response = await request.send();
 

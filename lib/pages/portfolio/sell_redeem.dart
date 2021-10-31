@@ -42,8 +42,8 @@ class _WithdrawState extends State<Withdraw> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -188,7 +188,7 @@ class _WithdrawState extends State<Withdraw> {
                                         ],
                                       ),
                                       Text(
-                                        "INR ${data.buy.toDouble().toStringAsFixed(2)}",
+                                        "INR ${num.parse(data.buy).toDouble().toStringAsFixed(2)}",
                                         style: black16BoldTextStyle,
                                       ),
                                     ],
@@ -246,9 +246,10 @@ class _WithdrawState extends State<Withdraw> {
                           ),
                           onChanged: (value) {
                             setState(() {
-                              amountController.text = (data.sell.toDouble() *
-                                      double.parse(weightController.text))
-                                  .toStringAsFixed(2);
+                              amountController.text =
+                                  (num.parse(data.sell).toDouble() *
+                                          double.parse(weightController.text))
+                                      .toStringAsFixed(2);
                             });
                           },
                         ),
@@ -491,7 +492,7 @@ class _WithdrawState extends State<Withdraw> {
                           ],
                         ),
                         Text(
-                          "INR ${data.sell.toDouble().toStringAsFixed(2)}",
+                          "INR ${num.parse(data.sell).toDouble().toStringAsFixed(2)}",
                           style: black16BoldTextStyle,
                         ),
                       ],

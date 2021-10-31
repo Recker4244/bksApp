@@ -41,13 +41,11 @@ class _SellOldState extends State<SellOld> {
     //TODO add url and body
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/appointment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/appointment/create/${Userdata.sId}'));
     request.bodyFields = {
       "weight": valueController.text,
       "metalGroup": karatageID,
-      "buySellPrice": data.sId,
+      "buySellPrice": data.buy,
     };
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -173,8 +171,8 @@ class _SellOldState extends State<SellOld> {
   List<buysellprice> price;
 
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -191,8 +189,7 @@ class _SellOldState extends State<SellOld> {
 
   List<MetalGroup> temp = [];
   Future getMetals() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/metal-group'));
 
     http.StreamedResponse response = await request.send();
 
@@ -211,8 +208,8 @@ class _SellOldState extends State<SellOld> {
 
   MetalGroup parti;
   Future getMetalbyID(String id) async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/metal-group/${id}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/metal-group/${id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -331,7 +328,8 @@ class _SellOldState extends State<SellOld> {
                     children: <Widget>[
                       Gold_Price_bar(
                         karatage: parti.karatage,
-                        buyprice: data.sell * parti.referenceId,
+                        buyprice:
+                            num.parse(data.sell).toDouble() * parti.referenceId,
                       ),
                       heightSpace,
                       height20Space,
@@ -401,7 +399,7 @@ class _SellOldState extends State<SellOld> {
                                         },
                                         items: temp.map((MetalGroup metal) {
                                           return DropdownMenuItem<String>(
-                                            value: metal.sId,
+                                            value: metal.id,
                                             child: Text(metal.karatage),
                                           );
                                         }).toList(),
@@ -426,14 +424,15 @@ class _SellOldState extends State<SellOld> {
                               padding: EdgeInsets.all(fixPadding * 2), //TODO
 
                               child: Text(
-                                  "INR ${(double.parse(valueController.text) * data.sell.toDouble() * parti.referenceId).toStringAsFixed(2)}",
+                                  "INR ${(double.parse(valueController.text) * num.parse(data.sell).toDouble() * parti.referenceId).toStringAsFixed(2)}",
                                   style: primaryColor18BoldTextStyle)),
                           Your_Portfolio(
                               parti.karatage,
-                              data.sell.toDouble() * parti.referenceId,
+                              num.parse(data.sell).toDouble() *
+                                  parti.referenceId,
                               valueController.text,
                               (double.parse(valueController.text) *
-                                      data.sell.toDouble() *
+                                      num.parse(data.sell).toDouble() *
                                       parti.referenceId)
                                   .toStringAsFixed(2)),
                           Center(

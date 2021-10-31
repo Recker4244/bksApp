@@ -33,10 +33,8 @@ class _RunningState extends State<Running> {
   }
 
   skip(String id) async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/skip/${id}/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/skip/${id}/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -208,7 +206,7 @@ class _RunningState extends State<Running> {
                                                   height: 13,
                                                 ),
                                                 Text(
-                                                 locale.forfietwarning
+                                                  locale.forfietwarning
                                                       .toUpperCase(),
                                                   style: black16MediumTextStyle,
                                                 ),
@@ -288,7 +286,7 @@ class _RunningState extends State<Running> {
                                                         // crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           Text(
-                                                          locale.handling,
+                                                            locale.handling,
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Jost',
@@ -323,7 +321,7 @@ class _RunningState extends State<Running> {
 
                                                 SizedBox(height: 13.0),
                                                 Text(
-                                                 locale.still,
+                                                  locale.still,
                                                   style: grey14BoldTextStyle,
                                                 ),
                                                 SizedBox(height: 13.0),

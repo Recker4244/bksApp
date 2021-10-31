@@ -23,8 +23,7 @@ class Varieties extends StatefulWidget {
 class _VarietiesState extends State<Varieties> {
   List<variety> temp;
   Future getvarieties() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/variety/'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/variety/'));
 
     http.StreamedResponse response = await request.send();
 

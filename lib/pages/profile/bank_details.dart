@@ -35,7 +35,7 @@ class _BankDetailsState extends State<BankDetails> {
 
   Future check() async {
     http.Response response = await http.get(
-      Uri.parse("https://goldv2.herokuapp.com/api/bank/${Userdata.sId}"),
+      Uri.parse("${baseurl}/api/bank/${Userdata.sId}"),
     );
     if (response.statusCode == 200) {
       if (json.decode(response.body) != null) {
@@ -59,7 +59,7 @@ class _BankDetailsState extends State<BankDetails> {
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://goldv2.herokuapp.com/api/sell-subscription/${widget.subscriptionId}/${Userdata.sId}'));
+            '${baseurl}/api/sell-subscription/${widget.subscriptionId}/${Userdata.sId}'));
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
@@ -130,7 +130,7 @@ class _BankDetailsState extends State<BankDetails> {
     if (response.statusCode == 200) {
       if (value == true) {
         http.Response responseBank = await http.post(
-          Uri.parse("https://goldv2.herokuapp.com/api/bank/${Userdata.sId}"),
+          Uri.parse("${baseurl}/api/bank/${Userdata.sId}"),
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,
@@ -185,8 +185,7 @@ class _BankDetailsState extends State<BankDetails> {
                 ));
       } else if (value == false) {
         http.Response responseBank = await http.put(
-          Uri.parse(
-              "https://goldv2.herokuapp.com/api/bank/update/${Userdata.sId}"),
+          Uri.parse("${baseurl}/api/bank/update/${Userdata.sId}"),
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,

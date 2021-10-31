@@ -17,8 +17,8 @@ class CryptoChartSyncfusion extends StatefulWidget {
 class _CryptoChartSyncfusionState extends State<CryptoChartSyncfusion> {
   List<BuySellList> buyselllist = [];
   getallbuysell() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price'));
 
     http.StreamedResponse response = await request.send();
 

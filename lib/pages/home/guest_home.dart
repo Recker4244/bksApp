@@ -37,8 +37,8 @@ class _GuestHomeState extends State<GuestHome> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -55,8 +55,7 @@ class _GuestHomeState extends State<GuestHome> {
 
   Future fetchVideos(String language) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/video/sort'));
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/video/sort'));
     request.body = json.encode({"language": language, "category": "How To"});
     request.headers.addAll(headers);
 
@@ -75,8 +74,7 @@ class _GuestHomeState extends State<GuestHome> {
 
   Future fetchtestimonials(String language) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('https://goldv2.herokuapp.com/api/video/sort'));
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/video/sort'));
     request.body =
         json.encode({"language": language, "category": "Testimonial"});
     request.headers.addAll(headers);
@@ -886,8 +884,8 @@ class _GuestHomeState extends State<GuestHome> {
                 children: [
                   userGreeting(),
                   activityContainer(),
-                  buyGold(data.buy.toStringAsFixed(2)),
-                  sellGold(data.sell.toStringAsFixed(2)),
+                  buyGold(data.buy),
+                  sellGold(data.sell),
                   SizedBox(
                     height: 8,
                   ),
