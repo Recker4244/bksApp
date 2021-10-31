@@ -446,11 +446,14 @@ class _standardValueState extends State<standardValue> {
                               child: TextFormField(
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (String value) {
+                                validator: (value) {
                                   if (num.parse(value) < widget.min) {
                                     return "Minimum Amount: ${widget.min.toStringAsFixed(2)}";
-                                  } else
-                                    return "";
+                                  }
+                                  if (value == null || value.isEmpty) {
+                                    return 'This field is required';
+                                  }
+                                  return null;
                                 },
                                 onChanged: (String value) {
                                   setState(() {

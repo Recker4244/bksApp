@@ -93,6 +93,20 @@ class _RegisterState extends State<Register> {
       );
       return FocusScope.of(context).requestFocus(thirdFocusNode);
     }
+    if (pan.text != "") {
+      verifyPan(pan.text) == true
+          ? Fluttertoast.showToast(
+              msg: 'Pan is verified',
+              backgroundColor: Colors.black,
+              textColor: whiteColor,
+            )
+          : Navigator.pop(context, true);
+      Fluttertoast.showToast(
+        msg: 'pan not verified',
+        backgroundColor: Colors.black,
+        textColor: whiteColor,
+      );
+    }
     http.Response response = await http.put(
       Uri.parse("https://goldv2.herokuapp.com/api/user/" + widget.id),
       body: {
@@ -113,6 +127,24 @@ class _RegisterState extends State<Register> {
       Navigator.push(context,
           PageTransition(type: PageTransitionType.fade, child: BottomBar()));
     }
+  }
+
+  Future<bool> verifyPan(String panno) async {
+    final String apiUrl =
+        "https://api.sandbox.co.in/pans/${panno}/verify?consent=Y&reason=For opening Demat account";
+    var url = Uri.parse(apiUrl);
+    var headers = {
+      'Authorization':
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+      'x-api-key': 'key_live_Ade**************************Uxs',
+      'x-api-version': '3.1'
+    };
+    final response = await http.post(url, headers: headers);
+    if (response.statusCode == 200) {
+      final responseString = json.decode(response.body);
+      return true;
+    }
+    return false;
   }
 
   @override
