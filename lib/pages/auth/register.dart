@@ -306,6 +306,7 @@ class _RegisterState extends State<Register> {
                   ),
                   child: TextField(
                     controller: pan,
+                    focusNode: fourthFocusNode,
                     style: black14MediumTextStyle,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
