@@ -105,7 +105,7 @@ class _EditProfileState extends State<EditProfile> {
       return FocusScope.of(context).requestFocus(dobControl);
     }
     http.Response response = await http.put(
-      Uri.parse("https://goldv2.herokuapp.com/api/user/" + Userdata.sId),
+      Uri.parse("${baseurl}/api/user/" + Userdata.sId),
       body: {"name": name, "email": email, "dob": dob},
     );
     if (response.statusCode == 200) {

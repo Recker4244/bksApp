@@ -220,8 +220,7 @@ class _LoginState extends State<Login> {
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
                     http.Response response = await http.post(
-                      Uri.parse(
-                          "https://goldv2.herokuapp.com/api/auth/register"),
+                      Uri.parse("${baseurl}/api/auth/register"),
                       headers: {"Content-Type": "application/json"},
                       body: json.encode(
                           {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),

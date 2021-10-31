@@ -47,8 +47,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   int endTime;
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -65,10 +65,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
   double bonusPercentage;
   Future getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -85,7 +83,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   void openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': (widget.val * data.buy.toDouble()) * 100,
+      'amount': (widget.val * num.parse(data.buy).toDouble()) * 100,
       'name': "Flexi Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -118,9 +116,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
 
     final body = {
       "paymentId": id,
@@ -144,10 +140,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   }
 
   createSubscription(String installmentid) async {
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
 
     final body = {
       "plan": {
@@ -400,7 +394,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                               ],
                             ),
                             Text(
-                              "${data.buy.toStringAsFixed(2)} INR", //TODO buyprice
+                              "${data.buy} INR", //TODO buyprice
                               style: black18BoldTextStyle,
                             ),
                           ],
@@ -450,11 +444,11 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                               padding: EdgeInsets.all(fixPadding * 2),
                               child: widget.mode == 1
                                   ? Text(
-                                      "${(widget.val * data.buy.toDouble()).toStringAsFixed(2)} INR",
+                                      "${(widget.val * num.parse(data.buy).toDouble()).toStringAsFixed(2)} INR",
                                       style: primaryColor16BoldTextStyle,
                                     )
                                   : Text(
-                                      "${(widget.val * data.buy.toDouble()).toStringAsFixed(2)} INR",
+                                      "${(widget.val * num.parse(data.buy).toDouble()).toStringAsFixed(2)} INR",
                                       style: primaryColor16BoldTextStyle,
                                     )),
                           Your_Portfolio(

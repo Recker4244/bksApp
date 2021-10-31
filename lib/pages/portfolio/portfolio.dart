@@ -31,9 +31,7 @@ class _PortfolioState extends State<Portfolio> {
   Future getreferrals(String referralId) async {
     totalbonus = 0.0;
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/referral?refereedBy=${referralId}'));
+        'GET', Uri.parse('${baseurl}/api/referral?refereedBy=${referralId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -53,10 +51,8 @@ class _PortfolioState extends State<Portfolio> {
   }
 
   Future getportfoliobalance() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/balance/user/${Userdata.sId}'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -76,9 +72,7 @@ class _PortfolioState extends State<Portfolio> {
   double totalplanbonusbyvalue = 0.0;
   Future getplans() async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/subscription/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -109,8 +103,8 @@ class _PortfolioState extends State<Portfolio> {
 
   double instantBonus = 0.0;
   getwalletBalance() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -124,10 +118,8 @@ class _PortfolioState extends State<Portfolio> {
   }
 
   getcalculation() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -142,8 +134,8 @@ class _PortfolioState extends State<Portfolio> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -151,7 +143,7 @@ class _PortfolioState extends State<Portfolio> {
       Map det = jsonDecode(responseString);
 
       data = buysellprice.fromJson(det['data']);
-      amount = (gold * data.buy.toDouble()).toStringAsFixed(2);
+      amount = (gold * num.parse(data.buy).toDouble()).toStringAsFixed(2);
     } else {
       print(response.reasonPhrase);
     }

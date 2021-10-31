@@ -33,8 +33,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   double walletbalace;
   void getWalletBalanced() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/wallet/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -47,8 +47,8 @@ class _CurrencyScreenState extends State<SellGold> {
 
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -70,7 +70,7 @@ class _CurrencyScreenState extends State<SellGold> {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           'https://goldv2.herokuapp.com/api/installment/create/6158849d3b5cb8a0c1d96040'));
+  //           '${baseurl}/api/installment/create/6158849d3b5cb8a0c1d96040'));
   //   request.bodyFields = {
   //     'paymentId': uuid,
   //     'amount': amountController.text,
@@ -100,9 +100,7 @@ class _CurrencyScreenState extends State<SellGold> {
     var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'PUT',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/remove/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.sId}'));
 
     final body = {
       "gold": '${valueController.text}',
@@ -188,7 +186,7 @@ class _CurrencyScreenState extends State<SellGold> {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           'https://goldv2.herokuapp.com/api/subscription/create/instant/${Userdata.sId}'));
+  //           '${baseurl}/api/subscription/create/instant/${Userdata.sId}'));
   //   request.bodyFields = {
   //     "userId": Userdata.sId,
   //     "status": "Completed",
@@ -499,8 +497,7 @@ class _CurrencyScreenState extends State<SellGold> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                aboutPortfolioItem(
-                    locale.AvgSellPrice, 'INR ${data.sell.toStringAsFixed(2)}'),
+                aboutPortfolioItem(locale.AvgSellPrice, 'INR ${data.sell}'),
                 Container(
                   height: 75.0,
                   width: (width - fixPadding * 6.0) / 2,
@@ -1050,7 +1047,7 @@ class _CurrencyScreenState extends State<SellGold> {
                     child: Container(
                       child: ListView(
                         children: [
-                          currencyPriceChart(data.sell),
+                          currencyPriceChart(num.parse(data.sell).toInt()),
                           aboutPortfolio(),
                         ],
                       ),

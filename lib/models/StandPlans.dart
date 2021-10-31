@@ -1,109 +1,109 @@
 class standardplan {
-  String mode;
-  int duration;
-  String sId;
-  String planType;
-  String name;
-  CyclePeriod cyclePeriod;
+  int bonus;
   String createdAt;
+  CyclePeriod cyclePeriod;
+  String docType;
+  int duration;
+  String id;
+  String mode;
+  String name;
+  String planType;
   String updatedAt;
-  int iV;
 
   standardplan(
-      {this.mode,
-      this.duration,
-      this.sId,
-      this.planType,
-      this.name,
-      this.cyclePeriod,
+      {this.bonus,
       this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.cyclePeriod,
+      this.docType,
+      this.duration,
+      this.id,
+      this.mode,
+      this.name,
+      this.planType,
+      this.updatedAt});
 
   standardplan.fromJson(Map<String, dynamic> json) {
-    mode = json['mode'];
-    duration = json['duration'];
-    sId = json['_id'];
-    planType = json['planType'];
-    name = json['name'];
+    bonus = json['bonus'];
+    createdAt = json['createdAt'];
     cyclePeriod = json['cyclePeriod'] != null
         ? new CyclePeriod.fromJson(json['cyclePeriod'])
         : null;
-    createdAt = json['createdAt'];
+    docType = json['docType'];
+    duration = json['duration'];
+    id = json['id'];
+    mode = json['mode'];
+    name = json['name'];
+    planType = json['planType'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mode'] = this.mode;
-    data['duration'] = this.duration;
-    data['_id'] = this.sId;
-    data['planType'] = this.planType;
-    data['name'] = this.name;
+    data['bonus'] = this.bonus;
+    data['createdAt'] = this.createdAt;
     if (this.cyclePeriod != null) {
       data['cyclePeriod'] = this.cyclePeriod.toJson();
     }
-    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['duration'] = this.duration;
+    data['id'] = this.id;
+    data['mode'] = this.mode;
+    data['name'] = this.name;
+    data['planType'] = this.planType;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }
 
 class CyclePeriod {
-  String status;
-  String sId;
-  String name;
+  String createdAt;
+  int cycle;
+  String docType;
   int graceperiod;
+  String id;
   int minValue;
   int minWeight;
-  String shortName;
-  int cycle;
-  String createdAt;
+  String name;
+  String status;
   String updatedAt;
-  int iV;
 
   CyclePeriod(
-      {this.status,
-      this.sId,
-      this.name,
+      {this.createdAt,
+      this.cycle,
+      this.docType,
       this.graceperiod,
+      this.id,
       this.minValue,
       this.minWeight,
-      this.shortName,
-      this.cycle,
-      this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.name,
+      this.status,
+      this.updatedAt});
 
   CyclePeriod.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    sId = json['_id'];
-    name = json['name'];
+    createdAt = json['createdAt'];
+    cycle = json['cycle'];
+    docType = json['docType'];
     graceperiod = json['graceperiod'];
+    id = json['id'];
     minValue = json['minValue'];
     minWeight = json['minWeight'];
-    shortName = json['shortName'];
-    cycle = json['cycle'];
-    createdAt = json['createdAt'];
+    name = json['name'];
+    status = json['status'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    data['createdAt'] = this.createdAt;
+    data['cycle'] = this.cycle;
+    data['docType'] = this.docType;
     data['graceperiod'] = this.graceperiod;
+    data['id'] = this.id;
     data['minValue'] = this.minValue;
     data['minWeight'] = this.minWeight;
-    data['shortName'] = this.shortName;
-    data['cycle'] = this.cycle;
-    data['createdAt'] = this.createdAt;
+    data['name'] = this.name;
+    data['status'] = this.status;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }

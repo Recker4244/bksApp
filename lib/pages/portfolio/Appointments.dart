@@ -28,9 +28,7 @@ class _AppointmentsState extends State<Appointments> {
   List<appointment> delivered;
   Future getAppointments() async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/appointment/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/appointment/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 

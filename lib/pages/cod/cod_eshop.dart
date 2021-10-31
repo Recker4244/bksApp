@@ -66,8 +66,8 @@ class _Adress_Details_Payment_EshopState
   }
 
   checkPincode(String pincode) async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/pincode/search/$pincode'));
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
 
     http.StreamedResponse response = await request.send();
 
@@ -93,7 +93,7 @@ class _Adress_Details_Payment_EshopState
 
   Map orderdetail;
   createOrder() async {
-    final url = Uri.parse('https://goldv2.herokuapp.com/api/order/');
+    final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.sId,
       "cart": widget.Cartid,

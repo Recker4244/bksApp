@@ -32,8 +32,8 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
   int buyprice;
   buysellprice data = buysellprice();
   Future fetchData() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -57,8 +57,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
 
   List<cycles> temp = [];
   Future getcycles() async {
-    var request = http.Request(
-        'GET', Uri.parse('https://goldv2.herokuapp.com/api/cycle-period'));
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/cycle-period'));
 
     http.StreamedResponse response = await request.send();
 
@@ -163,7 +162,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                             child: ByValFlexi(
                                 gold: double.parse(valueController.text),
                                 val: (double.parse(valueController.text) /
-                                    data.buy),
+                                    num.parse(data.buy).toDouble()),
                                 duration: int.parse(DurationController.text),
                                 CycleP: CyclePController,
                                 planname:
@@ -298,7 +297,8 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 onChanged: (String value) {
                                   setState(() {
                                     amountController.text =
-                                        (int.parse(value) / data.buy)
+                                        (num.parse(value).toDouble() /
+                                                num.parse(data.buy).toDouble())
                                             .toStringAsFixed(2);
                                   });
                                 },

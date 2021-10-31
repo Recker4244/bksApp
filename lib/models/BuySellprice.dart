@@ -1,15 +1,12 @@
 class buysellprice {
-  String sId;
-  num buy;
-  num sell;
-  num buyChange;
-  num sellChange;
+  String buy;
+  String sell;
+  int buyChange;
+  int sellChange;
 
-  buysellprice(
-      {this.sId, this.buy, this.sell, this.buyChange, this.sellChange});
+  buysellprice({this.buy, this.sell, this.buyChange, this.sellChange});
 
   buysellprice.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
     buy = json['buy'];
     sell = json['sell'];
     buyChange = json['buyChange'];
@@ -18,7 +15,6 @@ class buysellprice {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
     data['buy'] = this.buy;
     data['sell'] = this.sell;
     data['buyChange'] = this.buyChange;

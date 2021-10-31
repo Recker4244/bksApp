@@ -36,7 +36,7 @@ class _CartState extends State<Cart> {
 
   Map create_order_response;
   void createorder() async {
-    final url = Uri.parse('https://goldv2.herokuapp.com/api/order/');
+    final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.sId,
       "cart": det_of_cart['data']['_id'],
@@ -108,9 +108,7 @@ class _CartState extends State<Cart> {
   List<Address> list_of_address = [];
   void getaddress() async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/address/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -126,8 +124,7 @@ class _CartState extends State<Cart> {
 
   Map det_of_transaction;
   void fetchTransactionid(String payid) async {
-    final url = Uri.parse(
-        'https://goldv2.herokuapp.com/api/transaction/create/${Userdata.sId}');
+    final url = Uri.parse('${baseurl}/api/transaction/create/${Userdata.sId}');
     final body = {
       "paymentId": payid,
       "status": "placed",
@@ -148,8 +145,8 @@ class _CartState extends State<Cart> {
   dynamic buy;
   dynamic buysellid;
   Future buysellletest() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/buy-sell-price/letest'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price/letest'));
 
     http.StreamedResponse response = await request.send();
 
@@ -167,9 +164,7 @@ class _CartState extends State<Cart> {
   dynamic instantgold;
   Future getInstantGold() async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/wallet/6158849d3b5cb8a0c1d96040'));
+        'GET', Uri.parse('${baseurl}/api/wallet/6158849d3b5cb8a0c1d96040'));
 
     http.StreamedResponse response = await request.send();
 
@@ -184,10 +179,8 @@ class _CartState extends State<Cart> {
 
   Map deliverycharges;
   Future<String> getDeliveryCharge() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
 
     http.StreamedResponse response = await request.send();
 
@@ -205,8 +198,8 @@ class _CartState extends State<Cart> {
   Map det_of_cart;
   List<CartItems> list_of_cartItems = [];
   Future getCartdetails() async {
-    var request = http.Request('GET',
-        Uri.parse('https://goldv2.herokuapp.com/api/cart/${Userdata.sId}'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/cart/${Userdata.sId}'));
 
     http.StreamedResponse response = await request.send();
 

@@ -22,9 +22,7 @@ class _AddressDetailsState extends State<AddressDetails> {
   void getAddressDetails() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/address/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.sId}'));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 

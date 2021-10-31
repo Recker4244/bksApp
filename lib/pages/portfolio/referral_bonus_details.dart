@@ -19,9 +19,7 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
   Future getreferrals(String referralId) async {
     totalbonus = 0.0;
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/referral?refereedBy=${referralId}'));
+        'GET', Uri.parse('${baseurl}/api/referral?refereedBy=${referralId}'));
 
     http.StreamedResponse response = await request.send();
 
