@@ -95,18 +95,21 @@ class _RegisterState extends State<Register> {
       return FocusScope.of(context).requestFocus(thirdFocusNode);
     }
     if (pan.text != "") {
-      verifyPan(pan.text) == true
-          ? Fluttertoast.showToast(
-              msg: 'Pan is verified',
-              backgroundColor: Colors.black,
-              textColor: whiteColor,
-            )
-          : Navigator.pop(context, true);
-      Fluttertoast.showToast(
-        msg: 'pan not verified',
-        backgroundColor: Colors.black,
-        textColor: whiteColor,
-      );
+      if (verifyPan(pan.text) == true) {
+        Fluttertoast.showToast(
+          msg: 'Pan is verified',
+          backgroundColor: Colors.black,
+          textColor: whiteColor,
+        );
+      } else {
+        Navigator.pop(context, true);
+        Fluttertoast.showToast(
+          msg: 'pan not verified',
+          backgroundColor: Colors.black,
+          textColor: whiteColor,
+        );
+        return FocusScope.of(context).requestFocus(fourthFocusNode);
+      }
     }
     http.Response response = await http.put(
       Uri.parse("${baseurl}/api/user/" + widget.id),
