@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -18,11 +20,11 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  DateTime parseDate =
-      new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(Userdata.dob);
+  // DateTime parseDate =
+  //     new DateFormat("yyyy-mm-dd'T'HH:mm:ss.SSS'Z'").parse(Userdata.dob);
   final nameController = TextEditingController(text: Userdata.fname);
   final emailController = TextEditingController(text: Userdata.email);
-  final dobController = TextEditingController();
+  final dobController = TextEditingController(text: Userdata.dob);
   FocusNode nameControl = FocusNode();
   FocusNode emailControl = FocusNode();
   FocusNode dobControl = FocusNode();
@@ -40,6 +42,49 @@ class _EditProfileState extends State<EditProfile> {
   //     dobController.text = dob;
   //   });
   // }
+  String profile_picture;
+  upload_picture() async {
+    // TODO need api for image upload
+    final String apiUrl = baseurl + "user/upload";
+    var headers = {'Content-Type': 'multipart/form-data'};
+    var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
+    request.files
+        .add(await http.MultipartFile.fromPath('profilePic', file.path));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String s = await response.stream.bytesToString();
+      setState(() {
+        profile_picture = s;
+      });
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Profile picture uploaded")));
+    } else if (response.statusCode == 413) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("File size is too big")));
+    } else {
+      setState(() {
+        profile_picture = "";
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to upload profile picture")));
+    }
+  }
+
+  File file;
+  Future selectprofilepic() async {
+    final _picker = ImagePicker();
+    final imageFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (this.mounted) {
+      setState(() {
+        file = File(imageFile.path);
+      });
+      upload_picture();
+    }
+  }
 
   Future updateUserDetail(String name, String email, String dob) async {
     showDialog(
@@ -126,12 +171,12 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    var inputDate = DateTime.parse(parseDate.toString());
-    var outputFormat = DateFormat('yyyy-MM-dd');
-    var outputDate = outputFormat.format(inputDate);
-    setState(() {
-      dobController.text = outputDate;
-    });
+    // var inputDate = DateTime.parse(parseDate.toString());
+    // var outputFormat = DateFormat('yyyy-MM-dd');
+    // var outputDate = outputFormat.format(inputDate);
+    // setState(() {
+    //   dobController.text = outputDate;
+    // });
   }
 
   @override
@@ -204,21 +249,26 @@ class _EditProfileState extends State<EditProfile> {
                                   color: whiteColor,
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    size: 16.0,
-                                    color: whiteColor,
-                                  ),
-                                  SizedBox(width: 5.0),
-                                  Text(
-                                    'Change',
-                                    style: white12MediumTextStyle,
-                                  ),
-                                ],
+                              child: InkWell(
+                                onTap: () {
+                                  selectprofilepic();
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt,
+                                      size: 16.0,
+                                      color: whiteColor,
+                                    ),
+                                    SizedBox(width: 5.0),
+                                    Text(
+                                      'Change',
+                                      style: white12MediumTextStyle,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -298,24 +348,24 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     child: TextField(
                       readOnly: true,
-                      focusNode: dobControl,
+
                       controller: dobController,
                       keyboardType: TextInputType.number,
                       style: black14MediumTextStyle,
-                      onTap: () async {
-                        final DateTime picked = await showDatePicker(
-                            context: context,
-                            initialDate: selectedDate,
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(2100));
-                        if (picked != null && picked != selectedDate) {
-                          setState(() {
-                            selectedDate = picked;
-                            dobController.text =
-                                new DateFormat("yyyy-MM-dd").format(picked);
-                          });
-                        }
-                      },
+                      // onTap: () async {
+                      //   final DateTime picked = await showDatePicker(
+                      //       context: context,
+                      //       initialDate: selectedDate,
+                      //       firstDate: DateTime(1900),
+                      //       lastDate: DateTime(2100));
+                      //   if (picked != null && picked != selectedDate) {
+                      //     setState(() {
+                      //       selectedDate = picked;
+                      //       dobController.text =
+                      //           new DateFormat("yyyy-MM-dd").format(picked);
+                      //     });
+                      //   }
+                      // },
                       decoration: InputDecoration(
                         labelText: 'Date Of Birth',
                         labelStyle: black14MediumTextStyle,
