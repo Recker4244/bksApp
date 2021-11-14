@@ -57,52 +57,48 @@ class standardplan {
 
 class CyclePeriod {
   String createdAt;
-  int cycle;
   String docType;
   int graceperiod;
   String id;
   int minValue;
   int minWeight;
   String name;
-  String status;
+  String shortName;
   String updatedAt;
 
   CyclePeriod(
       {this.createdAt,
-      this.cycle,
       this.docType,
       this.graceperiod,
       this.id,
       this.minValue,
       this.minWeight,
       this.name,
-      this.status,
+      this.shortName,
       this.updatedAt});
 
   CyclePeriod.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
-    cycle = json['cycle'];
     docType = json['docType'];
     graceperiod = json['graceperiod'];
     id = json['id'];
     minValue = json['minValue'];
     minWeight = json['minWeight'];
     name = json['name'];
-    status = json['status'];
+    shortName = json['shortName'];
     updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['createdAt'] = this.createdAt;
-    data['cycle'] = this.cycle;
     data['docType'] = this.docType;
     data['graceperiod'] = this.graceperiod;
     data['id'] = this.id;
     data['minValue'] = this.minValue;
     data['minWeight'] = this.minWeight;
     data['name'] = this.name;
-    data['status'] = this.status;
+    data['shortName'] = this.shortName;
     data['updatedAt'] = this.updatedAt;
     return data;
   }

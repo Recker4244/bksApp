@@ -167,6 +167,7 @@ class _HomeState extends State<Home> {
     await fetchStandardPlans();
     await fetchData();
     await getMetals();
+
     return true;
   }
 
@@ -722,10 +723,10 @@ class _HomeState extends State<Home> {
                                       planname: "${Standardplans[index].name}",
                                       duration: Standardplans[index].duration,
                                       durationString:
-                                          "${Standardplans[index].duration} ${item.cyclePeriod.createdAt}",
+                                          "${Standardplans[index].duration} ${item.cyclePeriod.shortName}",
                                       cycleid:
                                           Standardplans[index].cyclePeriod.id,
-                                      shortname: item.cyclePeriod.createdAt,
+                                      shortname: item.cyclePeriod.shortName,
                                       planID: item.id)));
                         } else
                           Navigator.push(
@@ -740,10 +741,10 @@ class _HomeState extends State<Home> {
                                     planname: "${Standardplans[index].name}",
                                     duration: Standardplans[index].duration,
                                     durationString:
-                                        "${Standardplans[index].duration} ${item.cyclePeriod.createdAt}",
+                                        "${Standardplans[index].duration} ${item.cyclePeriod.shortName}",
                                     cycleid:
                                         Standardplans[index].cyclePeriod.id,
-                                    shortname: item.cyclePeriod.createdAt,
+                                    shortname: item.cyclePeriod.shortName,
                                     planID: item.id,
                                   )));
                       },
@@ -811,8 +812,8 @@ class _HomeState extends State<Home> {
                                             ),
                                             Text(
                                               item.mode == "value"
-                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.docType}"
-                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.docType}",
+                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.shortName}"
+                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.shortName}",
                                               style:
                                                   primaryColor14MediumTextStyle,
                                             ),

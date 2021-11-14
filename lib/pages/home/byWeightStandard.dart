@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
@@ -40,7 +41,7 @@ class _Standard_PCState extends State<Standard_PC> {
   Razorpay _razorpay;
   String val = "0";
   final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
-  TextEditingController valueController = TextEditingController(text: "0.0");
+  TextEditingController valueController = TextEditingController(text: "");
   TextEditingController amountController = TextEditingController();
 
   List portfolioItem;
@@ -106,6 +107,7 @@ class _Standard_PCState extends State<Standard_PC> {
     await fetchData();
     await getcalculation();
     endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -122,14 +124,15 @@ class _Standard_PCState extends State<Standard_PC> {
 
   String installmentID;
   pay(String id) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
-
+    request.headers.addAll(headers);
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": amountController.text,
-      "gold": valueController.text,
+      "amount": num.parse(valueController.text),
+      "gold": num.parse(amountController.text),
       "mode": "online"
     };
     request.body = jsonEncode(body);
@@ -139,7 +142,7 @@ class _Standard_PCState extends State<Standard_PC> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
     } else {
       print(response.reasonPhrase);
     }
@@ -152,7 +155,7 @@ class _Standard_PCState extends State<Standard_PC> {
     request.bodyFields = {
       "userId": Userdata.id,
       "status": "Running",
-      "amount": amountController.text,
+      "amount": valueController.text,
       "planId": widget.planID, //Todo not in instant
       "installmentId": installmentID
     };
@@ -178,9 +181,51 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
     var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
-    createSubscription(installmentID);
+    await createSubscription(installmentID);
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar()));
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -441,15 +486,16 @@ class _Standard_PCState extends State<Standard_PC> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (String value) {
-                                  if (num.parse(value) < widget.min) {
-                                    return "Minimum Amount: ${widget.min.toStringAsFixed(2)}";
-                                  } else
-                                    return "";
+                                  if (value == null || value.isEmpty)
+                                    return "This field is required";
+                                  if (num.parse(value) < widget.min)
+                                    return "Weight must be greater than ${widget.min}";
+                                  return null;
                                 },
                                 onChanged: (String value) {
                                   setState(() {
                                     valueController.text =
-                                        (num.parse(value).toDouble() /
+                                        (num.parse(value).toDouble() *
                                                 num.parse(data.buy).toDouble())
                                             .toStringAsFixed(2);
                                   });

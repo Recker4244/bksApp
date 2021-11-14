@@ -146,8 +146,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
   createSubscription(String installmentid) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request('POST',
-        Uri.parse('${baseurl}/api/subscription/create/flexi/${Userdata.id}'));
+    var request = http.Request(
+        'POST', Uri.parse('${baseurl}/api/subscription/create/${Userdata.id}'));
     request.headers.addAll(headers);
     final body = {
       "plan": {

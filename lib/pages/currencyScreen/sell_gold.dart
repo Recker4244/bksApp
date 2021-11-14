@@ -907,6 +907,8 @@ class _CurrencyScreenState extends State<SellGold> {
                               validator: (value) {
                                 if (value == null || value.isEmpty)
                                   return 'Enter value to sell';
+                                if (num.parse(value) == 0)
+                                  return 'Weight cannot be zero';
                                 if (num.parse(value) > availableValue)
                                   return 'Insufficient balance';
                                 return null;
@@ -1053,8 +1055,7 @@ class _CurrencyScreenState extends State<SellGold> {
                           InkWell(
                             onTap: () => sellByWeight(
                                 double.parse(data.sell.toString()),
-                                (walletbalace *
-                                    double.parse(data.sell.toString()))),
+                                (walletbalace)),
                             child: Container(
                               height: 50.0,
                               width: (width - 1.0) / 2,
