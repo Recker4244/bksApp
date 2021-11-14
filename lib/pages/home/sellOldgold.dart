@@ -206,6 +206,7 @@ class _SellOldState extends State<SellOld> {
     return temp;
   }
 
+  List<MetalGroup> temp1 = [];
   MetalGroup parti;
   Future getMetalbyID(String id) async {
     var request =
@@ -215,8 +216,11 @@ class _SellOldState extends State<SellOld> {
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-      Map d = jsonDecode(responseString);
-      parti = MetalGroup.fromJson(d);
+      List d = jsonDecode(responseString);
+      Iterable l = d;
+      temp1 =
+          List<MetalGroup>.from(l.map((model) => MetalGroup.fromJson(model)));
+      parti = temp[0];
     } else {
       print(response.reasonPhrase);
     }
