@@ -28,8 +28,8 @@ Map mapResponse;
 class _BankDetailsState extends State<BankDetails> {
   bool value;
   String selectedAccountType = 'Savings';
-  final accountNumberController = TextEditingController();
-  final ifscCodeController = TextEditingController();
+  TextEditingController accountNumberController = TextEditingController();
+  TextEditingController ifscCodeController = TextEditingController();
   FocusNode accountFocus = FocusNode();
   FocusNode ifscFocus = FocusNode();
 
@@ -45,17 +45,17 @@ class _BankDetailsState extends State<BankDetails> {
 // final response = await http.post(url, headers: headers);
 // if(response.statusCode==200){}
 // }
-  Future check() async {
+  Future getBankDetails() async {
     http.Response response = await http.get(
-      Uri.parse("${baseurl}/api/bank/${Userdata.sId}"),
+      Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
     );
     if (response.statusCode == 200) {
-      if (json.decode(response.body) != null) {
+      final responseString = json.decode(response.body);
+      if (responseString != null) {
         setState(() {
+          accountNumberController.text = responseString['data']['Accountnum'];
+          ifscCodeController.text = responseString['data']['IFSC'];
           value = false;
-          accountNumberController.text =
-              json.decode(response.body)['Accountnum'];
-          ifscCodeController.text = json.decode(response.body)['IFSC'];
         });
       } else {
         setState(() {
@@ -71,7 +71,7 @@ class _BankDetailsState extends State<BankDetails> {
     var request = http.Request(
         'POST',
         Uri.parse(
-            '${baseurl}/api/sell-subscription/${widget.subscriptionId}/${Userdata.sId}'));
+            '${baseurl}/api/sell-subscription/${widget.subscriptionId}/${Userdata.id}'));
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
@@ -144,14 +144,15 @@ class _BankDetailsState extends State<BankDetails> {
       'x-api-key': 'key_live_Ade**************************Uxs',
       'x-api-version': '3.1'
     };
-    response = await http.get(
-        Uri.parse(
-            "https://api.sandbox.co.in/bank/${ifsc}/accounts/${accntno}/verify?name=${Userdata.fname} DOE&mobile=${Userdata.mobile}"),
-        headers: headers);
+    final queryParams = {'name': Userdata.fname, 'mobile': Userdata.mobile};
+
+    final uri = Uri.https('api.sandbox.co.in',
+        'bank/${ifsc}/accounts/${accntno}/verify', queryParams);
+    response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       if (value == true) {
         http.Response responseBank = await http.post(
-          Uri.parse("${baseurl}/api/bank/${Userdata.sId}"),
+          Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,
@@ -206,7 +207,7 @@ class _BankDetailsState extends State<BankDetails> {
                 ));
       } else if (value == false) {
         http.Response responseBank = await http.put(
-          Uri.parse("${baseurl}/api/bank/update/${Userdata.sId}"),
+          Uri.parse("${baseurl}/api/bank/update/${Userdata.id}"),
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,
@@ -281,64 +282,64 @@ class _BankDetailsState extends State<BankDetails> {
 
   @override
   void initState() {
-    check();
+    getBankDetails();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context);
-    selectAccountTypeItem(type) {
-      double width = MediaQuery.of(context).size.width;
-      return Expanded(
-        child: InkWell(
-          onTap: () {
-            setState(() {
-              selectedAccountType = type;
-            });
-          },
-          child: Container(
-            width: (width - fixPadding * 4.0) / 2,
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 18.0,
-                  height: 18.0,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.0),
-                    border: Border.all(
-                      width: 0.8,
-                      color: (selectedAccountType == type)
-                          ? primaryColor
-                          : greenColor,
-                    ),
-                  ),
-                  child: Container(
-                    width: 10.0,
-                    height: 10.0,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: (selectedAccountType == type)
-                          ? primaryColor
-                          : whiteColor,
-                    ),
-                  ),
-                ),
-                widthSpace,
-                Text(
-                  type,
-                  style: primaryColor16BoldTextStyle,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+    // selectAccountTypeItem(type) {
+    //   double width = MediaQuery.of(context).size.width;
+    //   return Expanded(
+    //     child: InkWell(
+    //       onTap: () {
+    //         setState(() {
+    //           selectedAccountType = type;
+    //         });
+    //       },
+    //       child: Container(
+    //         width: (width - fixPadding * 4.0) / 2,
+    //         child: Row(
+    //           // mainAxisAlignment: MainAxisAlignment.start,
+    //           // crossAxisAlignment: CrossAxisAlignment.center,
+    //           children: [
+    //             Container(
+    //               width: 18.0,
+    //               height: 18.0,
+    //               alignment: Alignment.center,
+    //               decoration: BoxDecoration(
+    //                 borderRadius: BorderRadius.circular(9.0),
+    //                 border: Border.all(
+    //                   width: 0.8,
+    //                   color: (selectedAccountType == type)
+    //                       ? primaryColor
+    //                       : greenColor,
+    //                 ),
+    //               ),
+    //               child: Container(
+    //                 width: 10.0,
+    //                 height: 10.0,
+    //                 alignment: Alignment.center,
+    //                 decoration: BoxDecoration(
+    //                   borderRadius: BorderRadius.circular(5.0),
+    //                   color: (selectedAccountType == type)
+    //                       ? primaryColor
+    //                       : whiteColor,
+    //                 ),
+    //               ),
+    //             ),
+    //             widthSpace,
+    //             Text(
+    //               type,
+    //               style: primaryColor16BoldTextStyle,
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     bankDetail() {
       return Padding(
@@ -423,21 +424,21 @@ class _BankDetailsState extends State<BankDetails> {
             // IFSC Code Field End
 
             // Select Account Type Start
-            Text(
-              'Select Account Type',
-              style: primaryColor16BoldTextStyle,
-            ),
+            // Text(
+            //   'Select Account Type',
+            //   style: primaryColor16BoldTextStyle,
+            // ),
             heightSpace,
 
-            Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                selectAccountTypeItem('Savings'),
-                selectAccountTypeItem('Current'),
-              ],
-            ),
+            // Row(
+            //   // mainAxisAlignment: MainAxisAlignment.start,
+            //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   // crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     selectAccountTypeItem('Savings'),
+            //     selectAccountTypeItem('Current'),
+            //   ],
+            // ),
 
             // Select Account Type End
 

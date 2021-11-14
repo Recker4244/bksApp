@@ -28,7 +28,7 @@ class _AppointmentsState extends State<Appointments> {
   List<appointment> delivered;
   Future getAppointments() async {
     var request = http.Request(
-        'GET', Uri.parse('${baseurl}/api/appointment/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/appointment/user/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -115,10 +115,7 @@ class _AppointmentsState extends State<Appointments> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Center(child: Text("No data found"))));
+            return errorScreen;
           }
         }
       },

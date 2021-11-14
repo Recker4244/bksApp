@@ -41,7 +41,7 @@ class _SellOldState extends State<SellOld> {
     //TODO add url and body
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/appointment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/appointment/create/${Userdata.id}'));
     request.bodyFields = {
       "weight": valueController.text,
       "metalGroup": karatageID,

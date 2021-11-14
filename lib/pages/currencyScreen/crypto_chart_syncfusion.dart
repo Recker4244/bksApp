@@ -132,10 +132,7 @@ class _CryptoChartSyncfusionState extends State<CryptoChartSyncfusion> {
                 ),
               );
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });

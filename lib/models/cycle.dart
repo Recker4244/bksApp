@@ -1,56 +1,56 @@
 class cycles {
-  String status;
-  String sId;
-  String name;
-  int graceperiod;
-  num minValue;
-  num minWeight;
-  String shortName;
-  int cycle;
   String createdAt;
+  int cycle;
+  String docType;
+  int graceperiod;
+  String id;
+  int minValue;
+  int minWeight;
+  String name;
+  String shortName;
+  String status;
   String updatedAt;
-  int iV;
 
   cycles(
-      {this.status,
-      this.sId,
-      this.name,
+      {this.createdAt,
+      this.cycle,
+      this.docType,
       this.graceperiod,
+      this.id,
       this.minValue,
       this.minWeight,
+      this.name,
       this.shortName,
-      this.cycle,
-      this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.status,
+      this.updatedAt});
 
   cycles.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    sId = json['_id'];
-    name = json['name'];
+    createdAt = json['createdAt'];
+    cycle = json['cycle'];
+    docType = json['docType'];
     graceperiod = json['graceperiod'];
+    id = json['id'];
     minValue = json['minValue'];
     minWeight = json['minWeight'];
+    name = json['name'];
     shortName = json['shortName'];
-    cycle = json['cycle'];
-    createdAt = json['createdAt'];
+    status = json['status'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    data['createdAt'] = this.createdAt;
+    data['cycle'] = this.cycle;
+    data['docType'] = this.docType;
     data['graceperiod'] = this.graceperiod;
+    data['id'] = this.id;
     data['minValue'] = this.minValue;
     data['minWeight'] = this.minWeight;
+    data['name'] = this.name;
     data['shortName'] = this.shortName;
-    data['cycle'] = this.cycle;
-    data['createdAt'] = this.createdAt;
+    data['status'] = this.status;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }

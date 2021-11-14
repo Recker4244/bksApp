@@ -1,8 +1,8 @@
 class buysellprice {
   String buy;
   String sell;
-  int buyChange;
-  int sellChange;
+  num buyChange;
+  num sellChange;
 
   buysellprice({this.buy, this.sell, this.buyChange, this.sellChange});
 

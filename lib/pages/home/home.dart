@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
 
   Future getportfoliobalance() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.sId}'));
+        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${baseurl}/api/subscription/balance/${Userdata.sId}/${Subscription.sId}'));
+            '${baseurl}/api/subscription/balance/${Userdata.id}/${Subscription.sId}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -127,13 +127,13 @@ class _HomeState extends State<Home> {
   double bonusPercentage;
   Future getcalculation() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      num d = responseString['data']['Percentage'];
+      num d = responseString['data'][0]['Percentage'];
       bonusPercentage = (d.toDouble()) / 100;
       return d;
     } else {
@@ -811,8 +811,8 @@ class _HomeState extends State<Home> {
                                             ),
                                             Text(
                                               item.mode == "value"
-                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.createdAt}"
-                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.createdAt}",
+                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.docType}"
+                                                  : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.docType}",
                                               style:
                                                   primaryColor14MediumTextStyle,
                                             ),
@@ -1342,7 +1342,7 @@ class _HomeState extends State<Home> {
               child: Scaffold(
             backgroundColor: scaffoldBgColor,
             body: Shimmer.fromColors(
-              baseColor: Colors.grey[300],
+              baseColor: Color.fromRGBO(255, 253, 228, 1),
               highlightColor: Colors.white,
               child: ListView(
                 physics: BouncingScrollPhysics(),
@@ -1381,7 +1381,7 @@ class _HomeState extends State<Home> {
                                 temp[1].referenceId.toDouble())
                             .toStringAsFixed(2)),
                         double.parse((num.parse(data.sell).toDouble() *
-                                temp[2].referenceId.toDouble())
+                                temp[1].referenceId.toDouble())
                             .toStringAsFixed(2)),
                         width: width),
                   ],

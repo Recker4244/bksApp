@@ -82,35 +82,36 @@ class _OTPScreenState extends State<OTPScreen> {
         );
       },
     );
-
+    var headers = {'Content-Type': 'application/json'};
+    final body = {
+      "mobile": int.parse(mobilenumber.phoneNumber),
+      "otp": int.parse(firstController.text +
+          secondController.text +
+          thirdController.text +
+          fourthController.text),
+      "deviceToken": deviceToken
+    };
     http.Response response = await http.post(
-      Uri.parse("${baseurl}/api/auth/verify"),
-      body: {
-        "mobile": mobilenumber.phoneNumber,
-        "otp": firstController.text +
-            secondController.text +
-            thirdController.text +
-            fourthController.text,
-        "deviceToken": deviceToken
-      },
-    );
+        Uri.parse("${baseurl}/api/auth/verify"),
+        body: jsonEncode(body),
+        headers: headers);
     //print(json.decode(response.body)['token']);
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
 
       token = responseString['token'];
 
-      if (responseString['user']['email'] == "" ||
-          responseString['user'] == null) {
+      if (responseString['user'] == null ||
+          responseString['user']['email'] == "") {
         Timer(
             Duration(seconds: 3),
             () => Navigator.push(
                 context,
                 PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: Register(id: responseString['user']['_id']))));
+                    child: Register(id: responseString['user']['id']))));
       } else {
-        await getuserdetails(responseString['user']['_id']);
+        await getuserdetails(responseString['user']['id']);
         if (Userdata.isInvested) {
           Timer(
               Duration(seconds: 3),

@@ -66,13 +66,13 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   double bonusPercentage;
   Future getcalculation() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      num d = responseString['data']['Percentage'];
+      num d = responseString['data'][0]['Percentage'];
       bonusPercentage = (d.toDouble()) / 100;
       return d;
     } else {
@@ -113,26 +113,31 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
     return true;
   }
 
+  String otp;
   String installmentID;
   pay(String id) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
 
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": widget.val,
-      "gold": widget.gold,
+      "amount": widget.gold,
+      "gold": widget.val,
       "mode": "online"
     };
     request.body = jsonEncode(body);
-
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
+      setState(() {
+        otp = id;
+      });
     } else {
       print(response.reasonPhrase);
     }
@@ -140,16 +145,17 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   }
 
   createSubscription(String installmentid) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST',
-        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
-
+        Uri.parse('${baseurl}/api/subscription/create/flexi/${Userdata.id}'));
+    request.headers.addAll(headers);
     final body = {
       "plan": {
         "mode": "Weight",
         "duration": widget.duration,
         "cyclePeriod": widget.CycleP
       },
-      "userId": Userdata.sId,
+      "userId": Userdata.id,
       "status": "Running",
       "amount": widget.val,
       "installmentId": installmentID
@@ -157,7 +163,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
-
+    final responseString = await response.stream.bytesToString();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
@@ -182,6 +188,12 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
     installmentID = await pay(response.paymentId);
     var locale = AppLocalizations.of(context);
     createSubscription(installmentID);
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar()));
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -218,7 +230,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('otp'),
+                          child: Text(otp),
                         )),
                       ),
                     ),
@@ -429,9 +441,6 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
-                            width: double.infinity,
-                          ),
                           Container(
                               decoration: BoxDecoration(
                                   color: whiteColor,
@@ -456,9 +465,12 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                               "${(widget.val * widget.duration * bonusPercentage).toStringAsFixed(2)} GRAM",
                               "${widget.duration} ${widget.shortName}",
                               "${(widget.val * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM"),
-                          Text(
-                            locale.choosePayment,
-                            style: primaryColor16MediumTextStyle,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                            child: Text(
+                              locale.choosePayment,
+                              style: primaryColor16MediumTextStyle,
+                            ),
                           ),
                           heightSpace,
                           GestureDetector(
@@ -471,10 +483,11 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
                                   )),
-                              width: double.infinity,
+                              width: 95.w,
                               margin: EdgeInsets.symmetric(
                                   horizontal: fixPadding * 2),
-                              padding: EdgeInsets.all(fixPadding * 2),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: fixPadding * 2),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -488,13 +501,18 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(
-                                        child: Text(
-                                          locale.herepayment,
-                                          style: black16BoldTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Wrap(
+                                        children: [
+                                          Text(
+                                            locale.herepayment,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold),
+                                            // softWrap: true,
+                                            // overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
                                       ),
 
                                       // SizedBox(

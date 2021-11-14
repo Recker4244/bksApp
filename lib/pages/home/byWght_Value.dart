@@ -73,7 +73,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
 
   String cyclesname(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         String res = temp[i].name == 'Every Month'
             ? 'Months'
             : temp[i].name == 'Every Day'
@@ -86,7 +86,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
 
   String getcyclename(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         return temp[i].name;
       }
     }
@@ -94,7 +94,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
 
   getShort(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         return temp[i].shortName;
       }
     }
@@ -293,7 +293,16 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                               data: ThemeData(
                                 primaryColor: primaryColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty)
+                                    return "This field is required";
+                                  if (num.parse(value) <= 0)
+                                    return "Weight must be greater than 0";
+                                  return null;
+                                },
                                 onChanged: (String value) {
                                   setState(() {
                                     valueController.text =
@@ -303,7 +312,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                   });
                                 },
                                 controller: amountController,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   suffix: Text(locale.GRAM,
@@ -350,7 +359,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                         },
                                         items: temp.map((cycles period) {
                                           return DropdownMenuItem<String>(
-                                            value: period.sId,
+                                            value: period.id,
                                             child: Text(period.name),
                                           );
                                         }).toList(),

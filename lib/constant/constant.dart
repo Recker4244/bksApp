@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 const Color scaffoldLightColor = const Color(0xFFFFF1E0);
 const Color primaryColor = const Color(0xFF95203D);
@@ -9,9 +10,29 @@ const Color redColor = const Color(0xFFFF0000);
 const Color orangeColor = const Color(0xFFFFA500);
 const Color greenColor = const Color(0xFF006400);
 const Color scaffoldBgColor = const Color(0xFFFFECCF);
-const String baseurl = "http://13.59.57.74:5000/";
+const String baseurl = "http://13.59.57.74:5000";
 const double fixPadding = 10.0;
-
+var errorScreen = SafeArea(
+    child: Scaffold(
+        backgroundColor: scaffoldBgColor,
+        body: Center(
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  " There seems to be an error connecting to the server",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        ))));
 const SizedBox heightSpace = const SizedBox(height: 10.0);
 
 const SizedBox height5Space = const SizedBox(height: 5.0);

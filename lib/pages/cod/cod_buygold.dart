@@ -42,7 +42,7 @@ class _Adress_Details_Payment_BuygoldState
   addAddress() async {
     var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
     final body = {
-      "user": Userdata.sId,
+      "user": Userdata.id,
       "pin": PINcontroller.text,
       "landMark": Landmarkcontroller.text,
       "isDefaultAddress": true
@@ -146,7 +146,7 @@ class _Adress_Details_Payment_BuygoldState
     var request = http.Request(
         'POST', Uri.parse('https://gold-v1.herokuapp.com/InsertUserAddress'));
     request.bodyFields = {
-      'UserId': Userdata.sId,
+      'UserId': Userdata.id,
       'address': addresscontroller.text,
       'addtype': _character.toString(),
       'landmark': Landmarkcontroller.text,

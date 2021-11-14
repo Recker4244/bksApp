@@ -34,7 +34,7 @@ class _RunningState extends State<Running> {
 
   skip(String id) async {
     var request = http.Request('POST',
-        Uri.parse('${baseurl}/api/subscription/skip/${id}/${Userdata.sId}'));
+        Uri.parse('${baseurl}/api/subscription/skip/${id}/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 

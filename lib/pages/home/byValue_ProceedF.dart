@@ -15,6 +15,7 @@ import '../Eshop/COD_address.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:sizer/sizer.dart';
 
 class ByValFlexi extends StatefulWidget {
   double val;
@@ -65,13 +66,13 @@ class _ByValFlexiState extends State<ByValFlexi> {
   double bonusPercentage;
   Future getcalculation() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      num d = responseString['data']['Percentage'];
+      num d = responseString['data'][0]['Percentage'];
       bonusPercentage = (d.toDouble()) / 100;
       return d;
     } else {
@@ -112,10 +113,11 @@ class _ByValFlexiState extends State<ByValFlexi> {
     return true;
   }
 
+  String otp;
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
 
     final body = {
       "paymentId": id,
@@ -131,7 +133,10 @@ class _ByValFlexiState extends State<ByValFlexi> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
+      setState(() {
+        otp = id;
+      });
     } else {
       print(response.reasonPhrase);
     }
@@ -139,16 +144,17 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   createSubscription(String installmentid) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST',
-        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
-
+        Uri.parse('${baseurl}/api/subscription/create/flexi/${Userdata.id}'));
+    request.headers.addAll(headers);
     final body = {
       "plan": {
-        "mode": "Weight",
+        "mode": "Value",
         "duration": widget.duration,
         "cyclePeriod": widget.CycleP
       },
-      "userId": Userdata.sId,
+      "userId": Userdata.id,
       "status": "Running",
       "amount": widget.val,
       "installmentId": installmentID
@@ -156,7 +162,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
-
+    final responseString = await response.stream.bytesToString();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
@@ -180,7 +186,13 @@ class _ByValFlexiState extends State<ByValFlexi> {
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
-    createSubscription(installmentID);
+    await createSubscription(installmentID);
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar()));
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -217,7 +229,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('otp'),
+                          child: Text(otp),
                         )),
                       ),
                     ),
@@ -455,9 +467,12 @@ class _ByValFlexiState extends State<ByValFlexi> {
                               "${(widget.val * widget.duration * bonusPercentage).toStringAsFixed(2)} GRAM",
                               "${widget.duration} ${widget.shortName}",
                               "${(widget.val * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM"),
-                          Text(
-                            locale.choosePayment,
-                            style: primaryColor16MediumTextStyle,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Text(
+                              locale.choosePayment,
+                              style: primaryColor16MediumTextStyle,
+                            ),
                           ),
                           heightSpace,
                           GestureDetector(
@@ -488,18 +503,16 @@ class _ByValFlexiState extends State<ByValFlexi> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       SizedBox(
-                                        width: 150,
+                                        width: 60.w,
                                         child: Text(
                                           locale.herepayment,
-                                          style: black16BoldTextStyle,
+                                          style: black14BoldTextStyle,
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                       SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
+                                        width: 60.w,
                                         child: Text(
                                           locale.usePayment,
                                           style: black14RegularTextStyle,
@@ -586,10 +599,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                 ),
               ));
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });

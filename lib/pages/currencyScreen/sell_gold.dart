@@ -34,7 +34,7 @@ class _CurrencyScreenState extends State<SellGold> {
   double walletbalace;
   void getWalletBalanced() async {
     var request =
-        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.id}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -100,11 +100,15 @@ class _CurrencyScreenState extends State<SellGold> {
     var locale = AppLocalizations.of(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
 
     final body = {
-      "gold": '${valueController.text}',
-      "transaction": {"amount": '${amountController.text}', "status": "Debited"}
+      "gold": num.parse(valueController.text),
+      "transactions": {
+        "paymentId": '$payId',
+        "amount": num.parse(amountController.text),
+        "status": "Debited"
+      }
     };
     request.headers.addAll(headers);
     request.body = jsonEncode(body);
@@ -186,9 +190,9 @@ class _CurrencyScreenState extends State<SellGold> {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           '${baseurl}/api/subscription/create/instant/${Userdata.sId}'));
+  //           '${baseurl}/api/subscription/create/instant/${Userdata.id}'));
   //   request.bodyFields = {
-  //     "userId": Userdata.sId,
+  //     "userId": Userdata.id,
   //     "status": "Completed",
   //     "amount": amountController.text,
   //     "installmentId": InstallID,
@@ -591,7 +595,7 @@ class _CurrencyScreenState extends State<SellGold> {
       );
     }
 
-    sellByValue(double buyprice) {
+    sellByValue(double buyprice, num availableValue) {
       double price;
       showModalBottomSheet(
         context: context,
@@ -621,7 +625,7 @@ class _CurrencyScreenState extends State<SellGold> {
                             width: width,
                             alignment: Alignment.center,
                             child: Text(
-                              locale.Buy24KTValue,
+                              locale.Sell24KTValue,
                               style: primaryColor18BoldTextStyle,
                             ),
                           ),
@@ -694,7 +698,16 @@ class _CurrencyScreenState extends State<SellGold> {
                             data: ThemeData(
                               primaryColor: greyColor,
                             ),
-                            child: TextField(
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return 'Enter value to sell';
+                                if (num.parse(value) > availableValue)
+                                  return 'Insufficient balance';
+                                return null;
+                              },
                               controller: amountController,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
@@ -786,7 +799,7 @@ class _CurrencyScreenState extends State<SellGold> {
       );
     }
 
-    sellByWeight(double buyPrice) {
+    sellByWeight(double buyPrice, num availableValue) {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true, // set this to true
@@ -815,7 +828,7 @@ class _CurrencyScreenState extends State<SellGold> {
                             width: width,
                             alignment: Alignment.center,
                             child: Text(
-                              locale.Buy24KTWeight,
+                              locale.Sell24KTWeight,
                               style: primaryColor18BoldTextStyle,
                             ),
                           ),
@@ -888,7 +901,16 @@ class _CurrencyScreenState extends State<SellGold> {
                             data: ThemeData(
                               primaryColor: greyColor,
                             ),
-                            child: TextField(
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return 'Enter value to sell';
+                                if (num.parse(value) > availableValue)
+                                  return 'Insufficient balance';
+                                return null;
+                              },
                               controller: valueController,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
@@ -1009,8 +1031,10 @@ class _CurrencyScreenState extends State<SellGold> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () =>
-                                sellByValue(double.parse(data.sell.toString())),
+                            onTap: () => sellByValue(
+                                double.parse(data.sell.toString()),
+                                (walletbalace *
+                                    double.parse(data.sell.toString()))),
                             child: Container(
                               height: 50.0,
                               width: (width - 1.0) / 2,
@@ -1028,7 +1052,9 @@ class _CurrencyScreenState extends State<SellGold> {
                           ),
                           InkWell(
                             onTap: () => sellByWeight(
-                                double.parse(data.sell.toString())),
+                                double.parse(data.sell.toString()),
+                                (walletbalace *
+                                    double.parse(data.sell.toString()))),
                             child: Container(
                               height: 50.0,
                               width: (width - 1.0) / 2,
@@ -1056,7 +1082,7 @@ class _CurrencyScreenState extends State<SellGold> {
                 ),
               );
             } else {
-              return Text("No data found");
+              return errorScreen;
             }
           }
         });

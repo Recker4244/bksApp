@@ -52,7 +52,7 @@ class _PortfolioState extends State<Portfolio> {
 
   Future getportfoliobalance() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.sId}'));
+        Uri.parse('${baseurl}/api/subscription/balance/user/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -72,7 +72,7 @@ class _PortfolioState extends State<Portfolio> {
   double totalplanbonusbyvalue = 0.0;
   Future getplans() async {
     var request = http.Request(
-        'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.sId}'));
+        'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -104,7 +104,7 @@ class _PortfolioState extends State<Portfolio> {
   double instantBonus = 0.0;
   getwalletBalance() async {
     var request =
-        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -119,7 +119,7 @@ class _PortfolioState extends State<Portfolio> {
 
   getcalculation() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
 
     http.StreamedResponse response = await request.send();
 
@@ -252,10 +252,7 @@ class _PortfolioState extends State<Portfolio> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },

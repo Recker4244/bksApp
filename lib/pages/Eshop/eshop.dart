@@ -115,12 +115,7 @@ class _EshopState extends State<Eshop> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Center(
-                      child: Text(" Oops !! No Items found "),
-                    )));
+            return errorScreen;
           }
         }
       },

@@ -67,13 +67,13 @@ class _Standard_PCState extends State<Standard_PC> {
   double bonusPercentage;
   Future getcalculation() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/5f3f9e5b5229ec11f804dd5c'));
+        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      num d = responseString['data']['Percentage'];
+      num d = responseString['data'][0]['Percentage'];
       bonusPercentage = (d.toDouble()) / 100;
       return d;
     } else {
@@ -123,7 +123,7 @@ class _Standard_PCState extends State<Standard_PC> {
   String installmentID;
   pay(String id) async {
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
 
     final body = {
       "paymentId": id,
@@ -147,10 +147,10 @@ class _Standard_PCState extends State<Standard_PC> {
   }
 
   createSubscription(String installmentid) async {
-    var request = http.Request('POST',
-        Uri.parse('${baseurl}/api/subscription/create/${Userdata.sId}'));
+    var request = http.Request(
+        'POST', Uri.parse('${baseurl}/api/subscription/create/${Userdata.id}'));
     request.bodyFields = {
-      "userId": Userdata.sId,
+      "userId": Userdata.id,
       "status": "Running",
       "amount": amountController.text,
       "planId": widget.planID, //Todo not in instant

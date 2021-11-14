@@ -1,40 +1,40 @@
 class collection {
-  String sId;
-  String collectionName;
-  String img1;
-  String img2;
-  String img3;
+  String createdAt;
+  String docType;
+  String id;
+  List<String> images;
+  String name;
+  String updatedAt;
   String video;
-  String status;
 
   collection(
-      {this.sId,
-      this.collectionName,
-      this.img1,
-      this.img2,
-      this.img3,
-      this.video,
-      this.status});
+      {this.createdAt,
+      this.docType,
+      this.id,
+      this.images,
+      this.name,
+      this.updatedAt,
+      this.video});
 
   collection.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    collectionName = json['collection_name'];
-    img1 = json['img1'];
-    img2 = json['img2'];
-    img3 = json['img3'];
+    createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
+    images = json['images'].cast<String>();
+    name = json['name'];
+    updatedAt = json['updatedAt'];
     video = json['video'];
-    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['collection_name'] = this.collectionName;
-    data['img1'] = this.img1;
-    data['img2'] = this.img2;
-    data['img3'] = this.img3;
+    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
+    data['images'] = this.images;
+    data['name'] = this.name;
+    data['updatedAt'] = this.updatedAt;
     data['video'] = this.video;
-    data['status'] = this.status;
     return data;
   }
 }

@@ -95,7 +95,7 @@ class _RegisterState extends State<Register> {
       return FocusScope.of(context).requestFocus(thirdFocusNode);
     }
     if (pan.text != "") {
-      if (verifyPan(pan.text) == true) {
+      if (await verifyPan(pan.text) == true) {
         Fluttertoast.showToast(
           msg: 'Pan is verified',
           backgroundColor: Colors.black,
@@ -135,18 +135,21 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> verifyPan(String panno) async {
-    final String apiUrl =
-        "https://api.sandbox.co.in/pans/${panno}/verify?consent=Y&reason=For opening Demat account";
-    var url = Uri.parse(apiUrl);
     var headers = {
       'Authorization':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-      'x-api-key': 'key_live_Ade**************************Uxs',
+          'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKamIyNTBZV04wWW10eloyOXNaSFpoZFd4MFFHZHRZV2xzTG1OdmJTSXNJbUZ3YVY5clpYa2lPaUpyWlhsZmJHbDJaVjlwUWxJd1VrbzFOV2gzWkdGbFJUUmtTbUY0TkdaWE5uSmtZM2RRTjBKM2R5SXNJbWx6Y3lJNkltRndhUzV6WVc1a1ltOTRMbU52TG1sdUlpd2laWGh3SWpveE5qWTNNalV5TlRrekxDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TmpNMU56RTJOVGt6ZlEuaVNxZVZna2MxVHNzVEJ6ZF81emx3NW5lenAzZERXWkJNcXYxSm0wV283bDBNWVFlNlFKTEduYkZUcGlBWXc0YThHWW9TVG5JdTBoX1Q2LWxaQV9GT3ciLCJzdWIiOiJjb250YWN0YmtzZ29sZHZhdWx0QGdtYWlsLmNvbSIsImFwaV9rZXkiOiJrZXlfbGl2ZV9pQlIwUko1NWh3ZGFlRTRkSmF4NGZXNnJkY3dQN0J3dyIsImlzcyI6ImFwaS5zYW5kYm94LmNvLmluIiwiZXhwIjoxNjM1ODAyOTkzLCJpbnRlbnQiOiJBQ0NFU1NfVE9LRU4iLCJpYXQiOjE2MzU3MTY1OTN9.ZCByMKxBMidarqLds7vHEBjiVmsYb2G7J_VjCY_fwWlHyTM9ulUu2VPiAgyEPvjPQjkQPLufDVrePsB5UqoYNQ',
+      'x-api-key': 'key_live_iBR0RJ55hwdaeE4dJax4fW6rdcwP7Bww',
       'x-api-version': '3.1'
     };
-    final response = await http.post(url, headers: headers);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://api.sandbox.co.in/pans/${panno}/verify?consent=Y&reason=Opening an account'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      final responseString = json.decode(response.body);
       return true;
     }
     return false;

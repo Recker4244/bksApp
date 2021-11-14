@@ -49,7 +49,7 @@ class _Adress_Details_Payment_EshopState
     var request = http.Request(
         'POST', Uri.parse('https://gold-v1.herokuapp.com/InsertUserAddress'));
     request.bodyFields = {
-      'UserId': Userdata.sId,
+      'UserId': Userdata.id,
       'address': addresscontroller.text,
       'addtype': _character.toString(),
       'landmark': Landmarkcontroller.text,
@@ -95,7 +95,7 @@ class _Adress_Details_Payment_EshopState
   createOrder() async {
     final url = Uri.parse('${baseurl}/api/order/');
     final body = {
-      "user": Userdata.sId,
+      "user": Userdata.id,
       "cart": widget.Cartid,
       "transactions": "BKS TEST",
       "status": "Processing",

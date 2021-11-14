@@ -1,40 +1,40 @@
 class product {
-  List<String> images;
-  String sId;
-  String name;
-  String video;
   String createdAt;
+  String docType;
+  String id;
+  List<String> images;
+  String name;
   String updatedAt;
-  int iV;
+  String video;
 
   product(
-      {this.images,
-      this.sId,
+      {this.createdAt,
+      this.docType,
+      this.id,
+      this.images,
       this.name,
-      this.video,
-      this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.video});
 
   product.fromJson(Map<String, dynamic> json) {
-    images = json['images'].cast<String>();
-    sId = json['_id'];
-    name = json['name'];
-    video = json['video'];
     createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
+    images = json['images'].cast<String>();
+    name = json['name'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
+    video = json['video'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['images'] = this.images;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['video'] = this.video;
     data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
+    data['images'] = this.images;
+    data['name'] = this.name;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    data['video'] = this.video;
     return data;
   }
 }

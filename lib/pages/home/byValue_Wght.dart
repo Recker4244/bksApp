@@ -73,7 +73,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
 
   String cyclesname(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         String res = temp[i].name == 'Every Month'
             ? 'Months'
             : temp[i].name == 'Every Day'
@@ -86,7 +86,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
 
   String getcyclename(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         return temp[i].name;
       }
     }
@@ -94,7 +94,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
 
   getShort(String id) {
     for (int i = 0; i < temp.length; i++) {
-      if (temp[i].sId == id) {
+      if (temp[i].id == id) {
         return temp[i].shortName;
       }
     }
@@ -293,7 +293,16 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                               data: ThemeData(
                                 primaryColor: whiteColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty)
+                                    return "This field is required";
+                                  if (num.parse(value) <= 0)
+                                    return "Value must be greater than 0";
+                                  return null;
+                                },
                                 onChanged: (String value) {
                                   setState(() {
                                     amountController.text =
@@ -352,7 +361,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                         },
                                         items: temp.map((cycles period) {
                                           return DropdownMenuItem<String>(
-                                            value: period.sId,
+                                            value: period.id,
                                             child: Text(period.name),
                                           );
                                         }).toList(),

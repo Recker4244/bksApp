@@ -46,7 +46,7 @@ class _DepositState extends State<Deposit> {
   ];
 
   // void getsubId()async{
-  //   var request = http.Request('GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.sId}'));
+  //   var request = http.Request('GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
   //
   //
   //   http.StreamedResponse response = await request.send();
@@ -66,7 +66,7 @@ class _DepositState extends State<Deposit> {
   void createInstallment(String payid) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
     final body = {
       "paymentId": payid,
       "status": "Saved",

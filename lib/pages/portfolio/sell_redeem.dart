@@ -414,10 +414,7 @@ class _WithdrawState extends State<Withdraw> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },

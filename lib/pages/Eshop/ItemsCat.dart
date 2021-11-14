@@ -30,8 +30,8 @@ class _ItemsCatState extends State<ItemsCat> {
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-      Map det = jsonDecode(responseString);
-      Iterable l = det['categories'];
+      List det = jsonDecode(responseString);
+      Iterable l = det;
       categoryList =
           List<category>.from(l.map((model) => category.fromJson(model)));
     } else {
@@ -66,8 +66,8 @@ class _ItemsCatState extends State<ItemsCat> {
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-      Map det = jsonDecode(responseString);
-      Iterable l = det['varieties'];
+      List det = jsonDecode(responseString);
+      Iterable l = det;
       varietyList =
           List<variety>.from(l.map((model) => variety.fromJson(model)));
     } else {
@@ -84,8 +84,8 @@ class _ItemsCatState extends State<ItemsCat> {
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-      Map det = jsonDecode(responseString);
-      Iterable l = det['collections'];
+      List det = jsonDecode(responseString);
+      Iterable l = det;
       collectionList =
           List<collection>.from(l.map((model) => collection.fromJson(model)));
     } else {
@@ -159,14 +159,13 @@ class _ItemsCatState extends State<ItemsCat> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) => Eshop(
-                                                      id: productList[index]
-                                                          .sId,
+                                                      id: productList[index].id,
                                                       type: "product",
                                                     )));
                                       },
                                       child: previewCard(
                                         name: productList[index].name,
-                                        id: productList[index].sId,
+                                        id: productList[index].id,
                                         images: productList[index].images,
                                         video: productList[index].video,
                                       ),
@@ -202,17 +201,16 @@ class _ItemsCatState extends State<ItemsCat> {
                                             MaterialPageRoute(
                                                 builder: (context) => Eshop(
                                                       id: collectionList[index]
-                                                          .sId,
+                                                          .id,
                                                       type: "collections",
                                                     )));
                                       },
                                       child: CollectionCard(
-                                        name: collectionList[index]
-                                            .collectionName,
-                                        id: collectionList[index].sId,
-                                        img1: collectionList[index].img1,
-                                        img2: collectionList[index].img2,
-                                        img3: collectionList[index].img3,
+                                        name: collectionList[index].name,
+                                        id: collectionList[index].id,
+                                        img1: collectionList[index].images[0],
+                                        img2: collectionList[index].images[1],
+                                        img3: collectionList[index].images[2],
                                         video: collectionList[index].video,
                                       ),
                                     )),
@@ -247,16 +245,16 @@ class _ItemsCatState extends State<ItemsCat> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Eshop(
-                                                  id: categoryList[index].sId,
+                                                  id: categoryList[index].id,
                                                   type: "category",
                                                 )));
                                   },
                                   child: CategoryCard(
-                                    name: categoryList[index].categoryName,
-                                    id: categoryList[index].sId,
-                                    img1: categoryList[index].img1,
-                                    img2: categoryList[index].img2,
-                                    img3: categoryList[index].img3,
+                                    name: categoryList[index].docType,
+                                    id: categoryList[index].id,
+                                    img1: categoryList[index].images[0],
+                                    img2: categoryList[index].images[1],
+                                    img3: categoryList[index].images[2],
                                     video: categoryList[index].video,
                                   ),
                                 );
@@ -286,16 +284,16 @@ class _ItemsCatState extends State<ItemsCat> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => Eshop(
-                                                    id: varietyList[index].sId,
+                                                    id: varietyList[index].id,
                                                     type: "variety",
                                                   )));
                                     },
                                     child: varietyCard(
-                                      id: varietyList[index].sId,
-                                      name: varietyList[index].varietyName,
-                                      img1: varietyList[index].img1,
-                                      img2: varietyList[index].img2,
-                                      img3: varietyList[index].img3,
+                                      id: varietyList[index].id,
+                                      name: varietyList[index].name,
+                                      img1: varietyList[index].images[0],
+                                      img2: varietyList[index].images[1],
+                                      img3: varietyList[index].images[2],
                                       video: varietyList[index].video,
                                     ));
                               }),
@@ -306,12 +304,7 @@ class _ItemsCatState extends State<ItemsCat> {
                   ))),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Center(
-                      child: Text(" Oops !! No Items found "),
-                    )));
+            return errorScreen;
           }
         }
       },

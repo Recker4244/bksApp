@@ -39,12 +39,14 @@ class _CurrencyScreenState extends State<BuyGold> {
   double walletbalace = 0.0;
   void getWalletBalanced() async {
     var request =
-        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.sId}'));
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.id}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      walletbalace = double.parse(det['data']['gold'].toString());
+      setState(() {
+        walletbalace = double.parse(det['data']['gold'].toString());
+      });
     } else {
       print(response.reasonPhrase);
     }
@@ -54,13 +56,13 @@ class _CurrencyScreenState extends State<BuyGold> {
     var headers = {'Content-Type': 'application/json'};
 
     var request = http.Request(
-        'PUT', Uri.parse('${baseurl}/api/wallet/add/${Userdata.sId}'));
+        'PUT', Uri.parse('${baseurl}/api/wallet/add/${Userdata.id}'));
 
     final body = {
-      "gold": '${valueController.text}',
-      "transaction": {
+      "gold": num.parse(valueController.text),
+      "transactions": {
         "paymentId": '$payId',
-        "amount": '${amountController.text}',
+        "amount": num.parse(amountController.text),
         "status": "Credited"
       }
     };
@@ -134,6 +136,9 @@ class _CurrencyScreenState extends State<BuyGold> {
                   ),
                 ),
               ));
+      setState(() {
+        getWalletBalanced();
+      });
     } else {
       print(response.reasonPhrase);
     }
@@ -163,7 +168,7 @@ class _CurrencyScreenState extends State<BuyGold> {
   Future Instalments() async {
     var uuid = Uuid().v1();
     var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.sId}'));
+        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
     request.bodyFields = {
       'paymentId': uuid,
       'amount': amountController.text,
@@ -1049,7 +1054,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                 ),
               ));
             } else {
-              return Text("No data found");
+              return errorScreen;
             }
           }
         });
