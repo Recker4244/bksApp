@@ -104,25 +104,25 @@ class _HomeState extends State<Home> {
   //   }
   // }
 
-  subscription Subscription = subscription();
-  Future getGoldBalance() async {
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            '${baseurl}/api/subscription/balance/${Userdata.id}/${Subscription.sId}'));
+  // subscription Subscription = subscription();
+  // Future getGoldBalance() async {
+  //   var request = http.Request(
+  //       'GET',
+  //       Uri.parse(
+  //           '${baseurl}/api/subscription/balance/${Userdata.id}/${Subscription.id}'));
 
-    http.StreamedResponse response = await request.send();
+  //   http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      Map det = jsonDecode(responseString);
-      int gold = det['planBalance'];
-      goldbalance = gold.toString();
-      bonusbalance = (gold * 0.1).toString();
-    } else {
-      print(response.reasonPhrase);
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final responseString = await response.stream.bytesToString();
+  //     Map det = jsonDecode(responseString);
+  //     int gold = det['planBalance'];
+  //     goldbalance = gold.toString();
+  //     bonusbalance = (gold * 0.1).toString();
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   double bonusPercentage;
   Future getcalculation() async {

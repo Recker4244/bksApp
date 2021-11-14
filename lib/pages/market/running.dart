@@ -22,12 +22,12 @@ class Running extends StatefulWidget {
 class _RunningState extends State<Running> {
   double compute(subscription cal) {
     double amount = 0;
-    for (int i = 0; i < cal.installments.length; i++) {
-      if (cal.installments[i].status == "Saved" ||
-          cal.installments[i].status == "Released") {
-        amount += double.parse(cal.installments[i].gold.toString());
+    for (int i = 0; i < cal.installments().length; i++) {
+      if (cal.installments()[i].status == "Saved" ||
+          cal.installments()[i].status == "Released") {
+        amount += double.parse(cal.installments()[i].gold.toString());
       } else
-        amount -= double.parse(cal.installments[i].gold.toString());
+        amount -= double.parse(cal.installments()[i].gold.toString());
     }
     return amount;
   }
@@ -330,8 +330,8 @@ class _RunningState extends State<Running> {
                                                       horizontal: 8),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      skip(widget
-                                                          .running[index].sId);
+                                                      skip(widget.running[index]
+                                                          .id());
                                                       Navigator.of(context)
                                                           .pop();
                                                     },

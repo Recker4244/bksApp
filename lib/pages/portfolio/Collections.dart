@@ -1,4 +1,6 @@
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/customSub.dart';
+import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/Eshop/itemdetails.dart';
 import 'dart:convert';
@@ -19,10 +21,10 @@ class Collections extends StatefulWidget {
 
 class _CollectionsState extends State<Collections> {
   List<subscription> temp;
-  List<Installments> res = [];
-  List<Installments> processing = [];
-  List<Installments> cancelled = [];
-  List<Installments> complete = [];
+  List res = [];
+  List processing = [];
+  List cancelled = [];
+  List complete = [];
   changeStatus(String id) async {
     var headers = {'Content-Type': 'application/json'};
     var request =
@@ -50,22 +52,30 @@ class _CollectionsState extends State<Collections> {
   }
 
   Future getplans() async {
-    var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     var request = http.Request(
         'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
-    request.headers.addAll(headers);
+
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      temp = List<subscription>.from(
-          l.map((model) => subscription.fromJson(model)));
+      List dat = det['data'];
+      List<subscription> subs = [];
+      for (int j = 0; j < dat.length; j++) {
+        if (dat[j]['plan'] == null) {
+          customSub sub = customSub.fromJson(dat[j]);
+          subs.add(Custom(sub));
+        } else {
+          standardSub sub = standardSub.fromJson(dat[j]);
+          subs.add(Standard(sub));
+        }
+      }
+      temp = subs;
       for (int i = 0; i < temp.length; i++) {
-        for (int j = 0; j < temp[i].installments.length; j++) {
-          if (temp[i].installments[j].mode == "COD") {
-            res.add(temp[i].installments[j]);
+        for (int j = 0; j < temp[i].installments().length; j++) {
+          if (temp[i].installments()[j].mode == "COD") {
+            res.add(temp[i].installments()[j]);
           }
         }
       }
@@ -83,6 +93,41 @@ class _CollectionsState extends State<Collections> {
 
     return temp;
   }
+
+  // Future getplans() async {
+  //   var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //   var request = http.Request(
+  //       'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
+  //   request.headers.addAll(headers);
+  //   http.StreamedResponse response = await request.send();
+
+  //   if (response.statusCode == 200) {
+  //     final responseString = await response.stream.bytesToString();
+  //     Map det = jsonDecode(responseString);
+  //     Iterable l = det['data'];
+  //     temp = List<subscription>.from(
+  //         l.map((model) => subscription.fromJson(model)));
+  //     for (int i = 0; i < temp.length; i++) {
+  //       for (int j = 0; j < temp[i].installments.length; j++) {
+  //         if (temp[i].installments[j].mode == "COD") {
+  //           res.add(temp[i].installments[j]);
+  //         }
+  //       }
+  //     }
+  //     processing = res
+  //         .where((element) =>
+  //             element.status == "Plan Initiated" ||
+  //             element.status == "Processing")
+  //         .toList();
+  //     cancelled =
+  //         res.where((element) => element.status == "Cancelled").toList();
+  //     complete = res.where((element) => element.status == "Completed").toList();
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+
+  //   return temp;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -157,15 +202,9 @@ class _CollectionsState extends State<Collections> {
     return ListView.builder(
       itemBuilder: (context, index) {
         subscription plan = temp.singleWhere(
-            (element) => element.installments.contains(processing[index]),
+            (element) => element.installments().contains(processing[index]),
             orElse: () => null);
-        String name;
-        if (plan.plan == null) plan.plan.name = "12 Month Saving Plan";
-        if (plan == null) {
-          plan = subscription();
-          name = "";
-        } else
-          name = plan.plan.name.toUpperCase();
+
         return Padding(
           padding: const EdgeInsets.fromLTRB(
               fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
@@ -186,9 +225,7 @@ class _CollectionsState extends State<Collections> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Collectiondetails(
-                              temp: plan,
-                              name: plan.plan.name,
-                            )));
+                                temp: plan, name: plan.planName())));
                   },
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(10.0),
@@ -223,12 +260,12 @@ class _CollectionsState extends State<Collections> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${plan.plan.name}',
+                                  '${plan.planName()}',
                                   style: grey12BoldTextStyle,
                                 ),
                                 height5Space,
                                 Text(
-                                  '${plan.savedAmount}',
+                                  '${plan.savedAmount()}',
                                   style: black16SemiBoldTextStyle,
                                 ),
                               ],
@@ -256,7 +293,7 @@ class _CollectionsState extends State<Collections> {
                                 alignment: Alignment.bottomCenter,
                                 child: Collectiondetails(
                                   temp: plan,
-                                  name: plan.plan.name,
+                                  name: plan.planName(),
                                 )));
                       },
                       borderRadius: BorderRadius.vertical(
@@ -279,7 +316,7 @@ class _CollectionsState extends State<Collections> {
                     ),
                     InkWell(
                       onTap: () {
-                        changeStatus(plan.sId);
+                        changeStatus(plan.id());
                       },
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(10.0),
@@ -342,9 +379,8 @@ class _CollectionsState extends State<Collections> {
       itemBuilder: (context, index) {
         String plan = temp
             .singleWhere((element) =>
-                element.installments.contains(cancelled[index].sId))
-            .plan
-            .name;
+                element.installments().contains(cancelled[index].id))
+            .planName();
         return Choice_Card2(
             '${plan.toUpperCase()}',
             'INR ${cancelled[index].amount}',
@@ -360,10 +396,9 @@ class _CollectionsState extends State<Collections> {
     return ListView.builder(
       itemBuilder: (context, index) {
         String plan = temp
-            .singleWhere(
-                (element) => element.installments.contains(complete[index].sId))
-            .plan
-            .name;
+            .singleWhere((element) =>
+                element.installments().contains(complete[index].id))
+            .planName();
         return Choice_Card1(
             '${plan.toUpperCase()}',
             'INR 4330.0',
@@ -384,7 +419,7 @@ class _CollectionsState extends State<Collections> {
     String bottomText2,
     Widget navigateTo1,
     Widget navigateTo2,
-    Installments inst,
+    final inst,
   ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -517,7 +552,7 @@ class _CollectionsState extends State<Collections> {
     String amount,
     String bottomText,
     Widget navigateTo,
-    Installments inst,
+    final inst,
   ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(

@@ -1,5 +1,7 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:gold247/models/customSub.dart';
+import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/portfolio/total_balance.dart';
 import 'package:page_transition/page_transition.dart';
@@ -30,9 +32,18 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      temp = List<subscription>.from(
-          l.map((model) => subscription.fromJson(model)));
+      List dat = det['data'];
+      List<subscription> subs = [];
+      for (int j = 0; j < dat.length; j++) {
+        if (dat[j]['plan'] == null) {
+          customSub sub = customSub.fromJson(dat[j]);
+          subs.add(Custom(sub));
+        } else {
+          standardSub sub = standardSub.fromJson(dat[j]);
+          subs.add(Standard(sub));
+        }
+      }
+      temp = subs;
     } else {
       print(response.reasonPhrase);
     }
@@ -43,8 +54,8 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
   double compute(List<subscription> cal) {
     double amount = 0;
     for (int i = 0; i < cal.length; i++) {
-      if (cal[i].status == "Completed" || cal[i].status == "Running") {
-        amount += cal[i].planBonus;
+      if (cal[i].status() == "Completed" || cal[i].status() == "Running") {
+        amount += cal[i].planBonus();
       }
     }
     return amount;
@@ -164,8 +175,8 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                                       )));
                             },
                             child: Choice_Card(
-                                temp[index].plan.name,
-                                temp[index].planBonus.toStringAsFixed(2),
+                                temp[index].planName(),
+                                temp[index].planBonus().toStringAsFixed(2),
                                 'Check Detail',
                                 Icons.ac_unit));
                       },

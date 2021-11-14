@@ -64,7 +64,7 @@ class _TotalBalanceState extends State<TotalBalance> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.sub.plan.name,
+          widget.sub.planName(),
           style: primaryColor22BoldTextStyle,
         ),
       ),
@@ -86,7 +86,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                           type: PageTransitionType.size,
                           alignment: Alignment.bottomCenter,
                           child: Deposit(
-                              balance: widget.avail, sub: widget.sub.sId)));
+                              balance: widget.avail, sub: widget.sub.id())));
                 },
                 child: Container(
                   height: 50.0,
@@ -114,7 +114,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Withdraw(
-                              sub: widget.sub.sId,
+                              sub: widget.sub.id(),
                               balance: widget.avail,
                             )));
                 },
@@ -186,7 +186,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                     color: whiteColor,
                   ),
                   depositWithdrawalItem('Bonus Earned',
-                      '${widget.sub.planBonus.toStringAsFixed(2)} GRAM'),
+                      '${widget.sub.planBonus().toStringAsFixed(2)} GRAM'),
                 ],
               ),
             ),
@@ -222,9 +222,9 @@ class _TotalBalanceState extends State<TotalBalance> {
 
   transaction() {
     return ColumnBuilder(
-      itemCount: widget.sub.installments.length,
+      itemCount: widget.sub.installments().length,
       itemBuilder: (context, index) {
-        final item = widget.sub.installments[index];
+        final item = widget.sub.installments()[index];
         return InkWell(
           onTap: () {},
           child: Column(

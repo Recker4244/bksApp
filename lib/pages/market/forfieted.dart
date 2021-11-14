@@ -16,12 +16,12 @@ class Forfeited extends StatefulWidget {
 class _ForfeitedState extends State<Forfeited> {
   double compute(subscription cal) {
     double amount = 0;
-    for (int i = 0; i < cal.installments.length; i++) {
-      if (cal.installments[i].status == "Saved" ||
-          cal.installments[i].status == "Released") {
-        amount += double.parse(cal.installments[i].gold.toString());
+    for (int i = 0; i < cal.installments().length; i++) {
+      if (cal.installments()[i].status == "Saved" ||
+          cal.installments()[i].status == "Released") {
+        amount += double.parse(cal.installments()[i].gold.toString());
       } else
-        amount -= double.parse(cal.installments[i].gold.toString());
+        amount -= double.parse(cal.installments()[i].gold.toString());
     }
     return amount;
   }

@@ -116,7 +116,7 @@ class CollectiondetailsState extends State<Collectiondetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "#${widget.temp.sId}",
+                          "#${widget.temp.id}",
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 12,
@@ -126,7 +126,7 @@ class CollectiondetailsState extends State<Collectiondetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.createdAt,
+                          widget.temp.createdAt(),
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -136,9 +136,7 @@ class CollectiondetailsState extends State<Collectiondetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.status
-                              .replaceAll(RegExp('_'), ' ')
-                              .toUpperCase(),
+                          widget.temp.status().toUpperCase(),
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,

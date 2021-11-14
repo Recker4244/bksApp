@@ -1,6 +1,8 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
+import 'package:gold247/models/customSub.dart';
 import 'package:gold247/models/referral.dart';
+import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/currencyScreen/buy_gold.dart';
 import 'package:gold247/pages/screens.dart';
@@ -79,13 +81,22 @@ class _PortfolioState extends State<Portfolio> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      temp = List<subscription>.from(
-          l.map((model) => subscription.fromJson(model)));
+      List dat = det['data'];
+      List<subscription> subs = [];
+      for (int j = 0; j < dat.length; j++) {
+        if (dat[j]['plan'] == null) {
+          customSub sub = customSub.fromJson(dat[j]);
+          subs.add(Custom(sub));
+        } else {
+          standardSub sub = standardSub.fromJson(dat[j]);
+          subs.add(Standard(sub));
+        }
+      }
+      temp = subs;
       double n = 0.0;
       for (int i = 0; i < temp.length; i++) {
-        for (int j = 0; j < temp[i].installments.length; j++) {
-          n += double.parse(temp[i].installments[j].gold.toStringAsFixed(2));
+        for (int j = 0; j < temp[i].installments().length; j++) {
+          n += double.parse(temp[i].installments()[j].gold.toStringAsFixed(2));
         }
       }
       planBonus = n;

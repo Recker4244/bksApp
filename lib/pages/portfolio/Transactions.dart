@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/customSub.dart';
+import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/language/locale.dart';
@@ -21,8 +23,8 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   List<Transaction> res = [];
   List<subscription> temp;
-  List<Installments> credit = [];
-  List<Installments> debit = [];
+  List credit = [];
+  List debit = [];
   Future getplans() async {
     var request = http.Request(
         'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
@@ -32,18 +34,27 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      temp = List<subscription>.from(
-          l.map((model) => subscription.fromJson(model)));
+      List dat = det['data'];
+      List<subscription> subs = [];
+      for (int j = 0; j < dat.length; j++) {
+        if (dat[j]['plan'] == null) {
+          customSub sub = customSub.fromJson(dat[j]);
+          subs.add(Custom(sub));
+        } else {
+          standardSub sub = standardSub.fromJson(dat[j]);
+          subs.add(Standard(sub));
+        }
+      }
+      temp = subs;
       for (int i = 0; i < temp.length; i++) {
-        for (int j = 0; j < temp[i].installments.length; j++) {
-          if (temp[i].installments[j].status == "Saved" ||
-              temp[i].installments[j].status == "Released") {
-            credit.add(temp[i].installments[j]);
-          } else if (temp[i].installments[j].status == "Hold" ||
-              temp[i].installments[j].status == "Sold" ||
-              temp[i].installments[j].status == "Redeem") {
-            debit.add(temp[i].installments[j]);
+        for (int j = 0; j < temp[i].installments().length; j++) {
+          if (temp[i].installments()[j].status == "Saved" ||
+              temp[i].installments()[j].status == "Released") {
+            credit.add(temp[i].installments()[j]);
+          } else if (temp[i].installments()[j].status == "Hold" ||
+              temp[i].installments()[j].status == "Sold" ||
+              temp[i].installments()[j].status == "Redeem") {
+            debit.add(temp[i].installments()[j]);
           }
         }
       }

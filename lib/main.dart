@@ -24,6 +24,11 @@ void main() async {
   FirebaseMessaging.onMessageOpenedApp.listen((message) {
     print('Message clicked!');
   });
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    // navigation bar color
+    statusBarColor: Color.fromRGBO(255, 253, 228, 1).withOpacity(0.1),
+    statusBarIconBrightness: Brightness.dark, // status bar color
+  ));
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());

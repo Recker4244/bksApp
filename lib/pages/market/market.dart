@@ -1,4 +1,6 @@
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/customSub.dart';
+import 'package:gold247/models/standardSub.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:gold247/models/subscription.dart';
@@ -30,13 +32,22 @@ class _MarketState extends State<Market> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      temp = List<subscription>.from(
-          l.map((model) => subscription.fromJson(model)));
+      List dat = det['data'];
+      List<subscription> subs = [];
+      for (int j = 0; j < dat.length; j++) {
+        if (dat[j]['plan'] == null) {
+          customSub sub = customSub.fromJson(dat[j]);
+          subs.add(Custom(sub));
+        } else {
+          standardSub sub = standardSub.fromJson(dat[j]);
+          subs.add(Standard(sub));
+        }
+      }
+      temp = subs;
 
-      running = temp.where((item) => item.status == "Running").toList();
-      forfeited = temp.where((item) => item.status == "Forfeited").toList();
-      complete = temp.where((item) => item.status == "Completed").toList();
+      running = temp.where((item) => item.status() == "Running").toList();
+      forfeited = temp.where((item) => item.status() == "Forfeited").toList();
+      complete = temp.where((item) => item.status() == "Completed").toList();
     } else {
       print(response.reasonPhrase);
     }
