@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -109,8 +110,11 @@ class _CryptoChartSyncfusionState extends State<CryptoChartSyncfusion> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {

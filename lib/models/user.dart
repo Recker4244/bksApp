@@ -12,7 +12,7 @@ class userdata {
   String image;
   bool isInvested;
   bool isWhatsapp;
-  int joiningBonus;
+  num joiningBonus;
   String level;
   num mobile;
   String pan;

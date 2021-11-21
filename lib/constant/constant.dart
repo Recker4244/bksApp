@@ -11,6 +11,7 @@ const Color orangeColor = const Color(0xFFFFA500);
 const Color greenColor = const Color(0xFF006400);
 const Color scaffoldBgColor = const Color(0xFFFFECCF);
 const String baseurl = "http://13.59.57.74:5000";
+const String patch = "13.59.57.74:5000";
 const double fixPadding = 10.0;
 var errorScreen = SafeArea(
     child: Scaffold(

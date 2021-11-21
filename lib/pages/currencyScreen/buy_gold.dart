@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
@@ -987,8 +988,11 @@ class _CurrencyScreenState extends State<BuyGold> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {

@@ -11,6 +11,7 @@ import 'package:gold247/models/subscription.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Collections extends StatefulWidget {
   const Collections({Key key}) : super(key: key);
@@ -141,8 +142,11 @@ class _CollectionsState extends State<Collections> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {

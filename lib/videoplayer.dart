@@ -4,7 +4,7 @@ import 'package:video_player/video_player.dart';
 
 class VideoDemo extends StatefulWidget {
   VideoDemo({this.videolink});
-final String videolink;
+  final String videolink;
   final String title = "Video Demo";
 
   @override
@@ -18,8 +18,7 @@ class VideoDemoState extends State<VideoDemo> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network(
-        widget.videolink);
+    _controller = VideoPlayerController.network(widget.videolink);
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.play();
     _controller.setLooping(true);
@@ -43,7 +42,7 @@ class VideoDemoState extends State<VideoDemo> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
               child: AspectRatio(
-                aspectRatio: 1/1,
+                aspectRatio: 1 / 1,
                 child: VideoPlayer(_controller),
               ),
             );

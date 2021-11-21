@@ -929,12 +929,17 @@ class _HomeState extends State<Home> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.size,
-                                  alignment: Alignment.bottomCenter,
-                                  child: ByWght_Value(
-                                      'Create Your Own Plan By Weight')));
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.size,
+                                      alignment: Alignment.bottomCenter,
+                                      child: ByWght_Value(
+                                          'Create Your Own Plan By Weight')))
+                              .then((value) {
+                            setState(() {
+                              initialise();
+                            });
+                          });
                         },
                         child: Container(
                           height: 30.h,
@@ -1168,16 +1173,7 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.size,
-                      alignment: Alignment.bottomCenter,
-                      child: SellOld(),
-                    ),
-                  );
-                },
+                onTap: () {},
 
                 //TODO : Push to refer a friend
 
@@ -1308,6 +1304,16 @@ class _HomeState extends State<Home> {
                 ),
               ),
               InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.size,
+                      alignment: Alignment.bottomCenter,
+                      child: SellOld(),
+                    ),
+                  );
+                },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),
@@ -1382,7 +1388,8 @@ class _HomeState extends State<Home> {
                                 temp[1].referenceId.toDouble())
                             .toStringAsFixed(2)),
                         double.parse((num.parse(data.sell).toDouble() *
-                                temp[1].referenceId.toDouble())
+                                temp[1].referenceId.toDouble() *
+                                0.75)
                             .toStringAsFixed(2)),
                         width: width),
                   ],

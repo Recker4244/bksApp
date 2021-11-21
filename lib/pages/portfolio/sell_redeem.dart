@@ -14,6 +14,7 @@ import 'dart:convert';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Withdraw extends StatefulWidget {
   final String balance;
@@ -71,6 +72,7 @@ class _WithdrawState extends State<Withdraw> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
       future: init,
       initialData: null,
@@ -81,8 +83,11 @@ class _WithdrawState extends State<Withdraw> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {
@@ -101,316 +106,384 @@ class _WithdrawState extends State<Withdraw> {
                   ),
                 ),
               ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '${widget.balance} GRAM',
-                    style: black18BoldTextStyle,
-                  ),
-                  height5Space,
-                  Text(
-                    'Available Balance',
-                    style: black12RegularTextStyle,
-                  ),
-                  // SizedBox(height: fixPadding * 3.0),
-                  ColumnBuilder(
-                    itemCount: portfolioItem.length,
-                    itemBuilder: (context, index) {
-                      final item = portfolioItem[index];
-                      return Padding(
-                        padding: (index != portfolioItem.length - 1)
-                            ? EdgeInsets.fromLTRB(fixPadding * 2.0,
-                                fixPadding * 2.0, fixPadding * 2.0, 0.0)
-                            : EdgeInsets.all(fixPadding * 2.0),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Container(
-                            padding: EdgeInsets.all(fixPadding),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: whiteColor,
+              body: SingleChildScrollView(
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      '${widget.balance} GRAM',
+                      style: black18BoldTextStyle,
+                    ),
+                    height5Space,
+                    Text(
+                      'Available Balance',
+                      style: black12RegularTextStyle,
+                    ),
+                    // SizedBox(height: fixPadding * 3.0),
+                    ColumnBuilder(
+                      itemCount: portfolioItem.length,
+                      itemBuilder: (context, index) {
+                        final item = portfolioItem[index];
+                        return Padding(
+                          padding: (index != portfolioItem.length - 1)
+                              ? EdgeInsets.fromLTRB(fixPadding * 2.0,
+                                  fixPadding * 2.0, fixPadding * 2.0, 0.0)
+                              : EdgeInsets.all(fixPadding * 2.0),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Container(
+                              padding: EdgeInsets.all(fixPadding),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: whiteColor,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    item['image'],
+                                    height: 40.0,
+                                    width: 40.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  widthSpace,
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              item['name'],
+                                              style:
+                                                  primaryColor18BoldTextStyle,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Buy Rate',
+                                                  style: black12MediumTextStyle,
+                                                ),
+                                                widthSpace,
+                                                Icon(
+                                                  data.buyChange > 0
+                                                      ? Icons.arrow_drop_up
+                                                      : Icons.arrow_drop_down,
+                                                  color: data.buyChange > 0
+                                                      ? greenColor
+                                                      : redColor,
+                                                ),
+                                                Text(
+                                                  '${data.buyChange}%',
+                                                  style: black12MediumTextStyle,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          "INR ${num.parse(data.buy).toDouble().toStringAsFixed(2)}",
+                                          style: black16BoldTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  item['image'],
-                                  height: 40.0,
-                                  width: 40.0,
-                                  fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                    ),
+                    myPortfolioItems(),
+                    // Amount Textfield Start
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        height: 10.h,
+                        //color: Colors.amber,
+                        // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                        child: Theme(
+                          data: ThemeData(
+                            errorColor: primaryColor,
+                            primaryColor: whiteColor,
+                            textSelectionTheme: TextSelectionThemeData(
+                              cursorColor: primaryColor,
+                            ),
+                          ),
+                          child: TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return "This field is required";
+                              if (num.parse(value) <= 0)
+                                return "Weight must be greater than 0";
+
+                              if (num.parse(value) > num.parse(widget.balance))
+                                return 'Insufficient balance';
+                              return null;
+                            },
+                            onChanged: (String value) {
+                              setState(() {
+                                amountController.text = (double.parse(value) *
+                                        num.parse(data.buy).toDouble())
+                                    .toStringAsFixed(2);
+                              });
+                            },
+                            controller: weightController,
+                            keyboardType: TextInputType.number,
+                            style: primaryColor16MediumTextStyle,
+                            decoration: InputDecoration(
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10.0),
                                 ),
-                                widthSpace,
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item['name'],
-                                            style: primaryColor18BoldTextStyle,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Buy Rate',
-                                                style: black12MediumTextStyle,
-                                              ),
-                                              widthSpace,
-                                              Icon(
-                                                data.buyChange > 0
-                                                    ? Icons.arrow_drop_up
-                                                    : Icons.arrow_drop_down,
-                                                color: data.buyChange > 0
-                                                    ? greenColor
-                                                    : redColor,
-                                              ),
-                                              Text(
-                                                '${data.buyChange}%',
-                                                style: black12MediumTextStyle,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        "INR ${num.parse(data.buy).toDouble().toStringAsFixed(2)}",
-                                        style: black16BoldTextStyle,
-                                      ),
-                                    ],
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 1),
+                              ),
+                              fillColor: whiteColor,
+                              suffix: Text(locale.GRAM,
+                                  style: primaryColor16MediumTextStyle),
+                              labelText: locale.WeightofGold,
+                              labelStyle: primaryColor16MediumTextStyle,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 0.7),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 40),
+                    //   child: Container(
+                    //     color: whiteColor,
+                    //     // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                    //     child: Theme(
+                    //       data: ThemeData(
+                    //         primaryColor: whiteColor,
+                    //         textSelectionTheme: TextSelectionThemeData(
+                    //           cursorColor: primaryColor,
+                    //         ),
+                    //       ),
+                    //       child: TextField(
+                    //         controller: weightController,
+                    //         keyboardType: TextInputType.number,
+                    //         style: primaryColor16MediumTextStyle,
+                    //         decoration: InputDecoration(
+                    //           labelText: 'Weight',
+                    //           labelStyle: TextStyle(
+                    //               color: primaryColor,
+                    //               fontSize: 18,
+                    //               fontWeight: FontWeight.w600),
+                    //           suffix: Text(
+                    //             'GRAM',
+                    //             style: primaryColor16MediumTextStyle,
+                    //           ),
+                    //           enabledBorder: OutlineInputBorder(
+                    //             borderRadius: const BorderRadius.all(
+                    //               const Radius.circular(10.0),
+                    //             ),
+                    //             borderSide:
+                    //                 BorderSide(color: primaryColor, width: 1),
+                    //           ),
+                    //           focusedBorder: OutlineInputBorder(
+                    //             borderRadius: const BorderRadius.all(
+                    //               const Radius.circular(10.0),
+                    //             ),
+                    //             borderSide:
+                    //                 BorderSide(color: primaryColor, width: 1),
+                    //           ),
+                    //         ),
+                    //         onChanged: (value) {
+                    //           setState(() {
+                    //             amountController.text =
+                    //                 (num.parse(data.sell).toDouble() *
+                    //                         double.parse(weightController.text))
+                    //                     .toStringAsFixed(2);
+                    //           });
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    SizedBox(height: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        color: whiteColor,
+                        // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                        child: Theme(
+                          data: ThemeData(
+                            primaryColor: whiteColor,
+                            textSelectionTheme: TextSelectionThemeData(
+                              cursorColor: primaryColor,
+                            ),
+                          ),
+                          child: TextField(
+                            controller: amountController,
+                            keyboardType: TextInputType.number,
+                            style: primaryColor16MediumTextStyle,
+                            decoration: InputDecoration(
+                              labelText: 'Amount',
+                              labelStyle: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                              suffix: Text(
+                                'INR',
+                                style: primaryColor16MediumTextStyle,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 1),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: fixPadding * 3.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: InkWell(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          height: 55,
+
+                          // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.size,
+                                          alignment: Alignment.center,
+                                          child: BankDetails(
+                                            subscriptionId: widget.sub,
+                                            gold: weightController.text,
+                                            buysellId:
+                                                "615b296904b89d0016b7ad9c",
+                                          )));
+                                },
+                                child: Text(
+                                  'sell gold'.toUpperCase(),
+                                  style: TextStyle(
+                                    color: scaffoldBgColor,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              Container(
+                                height: 30.0,
+                                width: 1.0,
+                                color: whiteColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  num b = double.parse(amountController.text);
+                                  redeemBalance = b.toDouble();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.size,
+                                          alignment: Alignment.center,
+                                          child: BottomBar(
+                                            index: 3,
+                                          )));
+                                },
+                                child: Text(
+                                  'redeem gold'.toUpperCase(),
+                                  style: TextStyle(
+                                    color: scaffoldBgColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  myPortfolioItems(),
-                  // Amount Textfield Start
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Container(
-                      color: whiteColor,
-                      // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                      child: Theme(
-                        data: ThemeData(
-                          primaryColor: whiteColor,
-                          textSelectionTheme: TextSelectionThemeData(
-                            cursorColor: primaryColor,
-                          ),
-                        ),
-                        child: TextField(
-                          controller: weightController,
-                          keyboardType: TextInputType.number,
-                          style: primaryColor16MediumTextStyle,
-                          decoration: InputDecoration(
-                            labelText: 'Weight',
-                            labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                            suffix: Text(
-                              'GRAM',
-                              style: primaryColor16MediumTextStyle,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 1),
-                            ),
-                          ),
-                          onChanged: (value) {
+                      ),
+                    ),
+
+                    height5Space,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CountdownTimer(
+                        onEnd: () async {
+                          data = await fetchData();
+                          if (mounted)
                             setState(() {
-                              amountController.text =
-                                  (num.parse(data.sell).toDouble() *
-                                          double.parse(weightController.text))
-                                      .toStringAsFixed(2);
+                              endTime = DateTime.now().millisecondsSinceEpoch +
+                                  1000 * 45;
                             });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 25),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Container(
-                      color: whiteColor,
-                      // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                      child: Theme(
-                        data: ThemeData(
-                          primaryColor: whiteColor,
-                          textSelectionTheme: TextSelectionThemeData(
-                            cursorColor: primaryColor,
-                          ),
-                        ),
-                        child: TextField(
-                          controller: amountController,
-                          keyboardType: TextInputType.number,
-                          style: primaryColor16MediumTextStyle,
-                          decoration: InputDecoration(
-                            labelText: 'Amount',
-                            labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                            suffix: Text(
-                              'INR',
-                              style: primaryColor16MediumTextStyle,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide:
-                                  BorderSide(color: primaryColor, width: 1),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: fixPadding * 3.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: InkWell(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        height: 55,
-
-                        // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.size,
-                                        alignment: Alignment.center,
-                                        child: BankDetails(
-                                          subscriptionId: widget.sub,
-                                          gold: weightController.text,
-                                          buysellId: "615b296904b89d0016b7ad9c",
-                                        )));
-                              },
-                              child: Text(
-                                'sell gold'.toUpperCase(),
-                                style: TextStyle(
-                                  color: scaffoldBgColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 30.0,
-                              width: 1.0,
-                              color: whiteColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                num b = double.parse(amountController.text);
-                                redeemBalance = b.toDouble();
-                                Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.size,
-                                        alignment: Alignment.center,
-                                        child: BottomBar(
-                                          index: 3,
-                                        )));
-                              },
-                              child: Text(
-                                'redeem gold'.toUpperCase(),
-                                style: TextStyle(
-                                  color: scaffoldBgColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  height5Space,
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CountdownTimer(
-                      onEnd: () async {
-                        data = await fetchData();
-                        if (mounted)
-                          setState(() {
-                            endTime = DateTime.now().millisecondsSinceEpoch +
-                                1000 * 45;
-                          });
-                      },
-                      endTime: endTime,
-                      widgetBuilder: (BuildContext context, C) {
-                        if (C == null) {
-                          return Text('Price changing..',
+                        },
+                        endTime: endTime,
+                        widgetBuilder: (BuildContext context, C) {
+                          if (C == null) {
+                            return Text('Price changing..',
+                                style: black18BoldTextStyle);
+                          }
+                          return Text(
+                              "You have ${C.min == null ? 0 : C.min}:${C.sec} minutes",
                               style: black18BoldTextStyle);
-                        }
-                        return Text(
-                            "You have ${C.min == null ? 0 : C.min}:${C.sec} minutes",
-                            style: black18BoldTextStyle);
-                      },
+                        },
+                      ),
                     ),
-                  ),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      children: [
-                        Text(
-                          "You can also prefer to partly sell or redeem by entering your preferred weight",
-                          textAlign: TextAlign.center,
-                          style: black14SemiBoldTextStyle,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        children: [
+                          Text(
+                            "You can also prefer to partly sell or redeem by entering your preferred weight",
+                            textAlign: TextAlign.center,
+                            style: black14SemiBoldTextStyle,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           } else {

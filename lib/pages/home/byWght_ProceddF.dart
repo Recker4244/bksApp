@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
@@ -308,8 +309,11 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {

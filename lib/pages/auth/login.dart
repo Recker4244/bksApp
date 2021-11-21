@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/cupertino.dart';
@@ -217,6 +218,7 @@ class _LoginState extends State<Login> {
                     horizontal: fixPadding * 3.0, vertical: 15.0),
                 child: InkWell(
                   onTap: () async {
+                    HapticFeedback.vibrate();
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
                     http.Response response = await http.post(

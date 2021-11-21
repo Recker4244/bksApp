@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/UserAddress.dart';
 import 'package:gold247/models/user.dart';
@@ -29,9 +30,7 @@ class _AddressDetailsState extends State<AddressDetails> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      Iterable l = det['data'];
-      list_of_address =
-          List<UserAddress>.from(l.map((model) => UserAddress.fromJson(model)));
+      UserAddress temp = UserAddress.fromJson(det['data']);
     } else {
       print(response.reasonPhrase);
     }
@@ -62,8 +61,11 @@ class _AddressDetailsState extends State<AddressDetails> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {
@@ -156,10 +158,7 @@ class _AddressDetailsState extends State<AddressDetails> {
                     }),
               );
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! No data ")));
+              return errorScreen;
             }
           }
         });

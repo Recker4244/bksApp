@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Plan_Bonnus_Details extends StatefulWidget {
   final String byweight;
@@ -51,12 +52,14 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
     return temp;
   }
 
-  double compute(List<subscription> cal) {
+  double compute(subscription cal) {
     double amount = 0;
-    for (int i = 0; i < cal.length; i++) {
-      if (cal[i].status() == "Completed" || cal[i].status() == "Running") {
-        amount += cal[i].planBonus();
-      }
+    for (int i = 0; i < cal.installments().length; i++) {
+      if (cal.installments()[i].status == "Saved" ||
+          cal.installments()[i].status == "Released") {
+        amount += double.parse(cal.installments()[i].gold.toString());
+      } else
+        amount -= double.parse(cal.installments()[i].gold.toString());
     }
     return amount;
   }
@@ -73,8 +76,11 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {
@@ -172,6 +178,8 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                                       alignment: Alignment.bottomCenter,
                                       child: TotalBalance(
                                         sub: temp[index],
+                                        avail: compute(temp[index])
+                                            .toStringAsFixed(2),
                                       )));
                             },
                             child: Choice_Card(

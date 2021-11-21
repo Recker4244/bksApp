@@ -38,7 +38,7 @@ class _ItemdetailsState extends State<Itemdetails> {
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/cart/add/${Userdata.id}'));
     request.body =
-        json.encode({"itemDetail": widget.item.sId, "quantity": count});
+        json.encode({"itemDetail": widget.item.id, "quantity": count});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

@@ -7,6 +7,7 @@ import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Eshop extends StatefulWidget {
   Eshop({this.id, this.type});
@@ -28,8 +29,7 @@ class _EshopState extends State<Eshop> {
     final queryParameters = {
       type: id,
     };
-    final uri =
-        Uri.http('goldv2.herokuapp.com', '/api/itemdetails/', queryParameters);
+    final uri = Uri.http(patch, '/api/itemdetails/', queryParameters);
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
@@ -38,14 +38,14 @@ class _EshopState extends State<Eshop> {
       ItemDetails =
           List<ItemList>.from(l.map((model) => ItemList.fromJson(model)));
       for (int i = 0; i < ItemDetails.length; i++) {
-        items.add(ItemDetails[i].item.sId.toString());
+        items.add(ItemDetails[i].item.id.toString());
       }
       distinctIds = items.toSet().toList();
       item = new List.generate(distinctIds.length, (i) => []);
       for (int i = 0; i < distinctIds.length; i++) {
         List<ItemList> temp = [];
         for (int j = 0; j < ItemDetails.length; j++) {
-          if (ItemDetails[j].item.sId == distinctIds[i]) {
+          if (ItemDetails[j].item.id == distinctIds[i]) {
             temp.add(ItemDetails[j]);
           }
         }
@@ -75,8 +75,11 @@ class _EshopState extends State<Eshop> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {

@@ -1,77 +1,67 @@
 class ItemList {
-  String sId;
-  List<Charges> charges;
-  Item item;
-  List<Composition> composition;
-  Collections collections;
-  Category category;
-  String variety;
-  Item product;
-  int grossweight;
-  String description;
   String sKU;
-  int units;
-  String ringsize;
-  String measurements;
-  int iV;
+  List<Charges> charges;
+  String collections;
+  List<Composition> composition;
   String createdAt;
+  String description;
+  String docType;
+  int grossweight;
+  String id;
+  Item item;
+  String measurements;
+  Product product;
+  String ringsize;
+  int units;
   String updatedAt;
-  double amount;
-  double totalAmount;
+  int amount;
+  int totalAmount;
 
   ItemList(
-      {this.sId,
+      {this.sKU,
       this.charges,
-      this.item,
-      this.composition,
       this.collections,
-      this.category,
-      this.variety,
-      this.product,
-      this.grossweight,
-      this.description,
-      this.sKU,
-      this.units,
-      this.ringsize,
-      this.measurements,
-      this.iV,
+      this.composition,
       this.createdAt,
+      this.description,
+      this.docType,
+      this.grossweight,
+      this.id,
+      this.item,
+      this.measurements,
+      this.product,
+      this.ringsize,
+      this.units,
       this.updatedAt,
       this.amount,
       this.totalAmount});
 
   ItemList.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+    sKU = json['SKU'];
     if (json['charges'] != null) {
       charges = new List<Charges>();
       json['charges'].forEach((v) {
         charges.add(new Charges.fromJson(v));
       });
     }
-    item = json['item'] != null ? new Item.fromJson(json['item']) : null;
+    collections = json['collections'];
     if (json['composition'] != null) {
       composition = new List<Composition>();
       json['composition'].forEach((v) {
         composition.add(new Composition.fromJson(v));
       });
     }
-    collections = json['collections'] != null
-        ? new Collections.fromJson(json['collections'])
-        : null;
-    category = json['category'] != null
-        ? new Category.fromJson(json['category'])
-        : null;
-    variety = json['variety'];
-    product =
-        json['product'] != null ? new Item.fromJson(json['product']) : null;
-    grossweight = json['grossweight'];
-    description = json['description'];
-    sKU = json['SKU'];
-    units = json['units'];
-    ringsize = json['ringsize'];
-    measurements = json['measurements'];
-    iV = json['__v'];
     createdAt = json['createdAt'];
+    description = json['description'];
+    docType = json['docType'];
+    grossweight = json['grossweight'];
+    id = json['id'];
+    item = json['item'] != null ? new Item.fromJson(json['item']) : null;
+    measurements = json['measurements'];
+    product =
+        json['product'] != null ? new Product.fromJson(json['product']) : null;
+    ringsize = json['ringsize'];
+    units = json['units'];
     updatedAt = json['updatedAt'];
     amount = json['amount'];
     totalAmount = json['totalAmount'];
@@ -79,34 +69,28 @@ class ItemList {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
+    data['SKU'] = this.sKU;
     if (this.charges != null) {
       data['charges'] = this.charges.map((v) => v.toJson()).toList();
     }
-    if (this.item != null) {
-      data['item'] = this.item.toJson();
-    }
+    data['collections'] = this.collections;
     if (this.composition != null) {
       data['composition'] = this.composition.map((v) => v.toJson()).toList();
     }
-    if (this.collections != null) {
-      data['collections'] = this.collections.toJson();
+    data['createdAt'] = this.createdAt;
+    data['description'] = this.description;
+    data['docType'] = this.docType;
+    data['grossweight'] = this.grossweight;
+    data['id'] = this.id;
+    if (this.item != null) {
+      data['item'] = this.item.toJson();
     }
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
-    }
-    data['variety'] = this.variety;
+    data['measurements'] = this.measurements;
     if (this.product != null) {
       data['product'] = this.product.toJson();
     }
-    data['grossweight'] = this.grossweight;
-    data['description'] = this.description;
-    data['SKU'] = this.sKU;
-    data['units'] = this.units;
     data['ringsize'] = this.ringsize;
-    data['measurements'] = this.measurements;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
+    data['units'] = this.units;
     data['updatedAt'] = this.updatedAt;
     data['amount'] = this.amount;
     data['totalAmount'] = this.totalAmount;
@@ -115,253 +99,307 @@ class ItemList {
 }
 
 class Charges {
-  String sId;
+  int percentage;
   String status;
   String type;
-  int percentage;
   String createdAt;
+  String docType;
+  String id;
   String updatedAt;
-  int iV;
-  String createdDate;
-  String modifiedDate;
 
   Charges(
-      {this.sId,
+      {this.percentage,
       this.status,
       this.type,
-      this.percentage,
       this.createdAt,
-      this.updatedAt,
-      this.iV,
-      this.createdDate,
-      this.modifiedDate});
+      this.docType,
+      this.id,
+      this.updatedAt});
 
   Charges.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    status = json['status'];
-    type = json['Type'];
     percentage = json['Percentage'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
     status = json['Status'];
-    createdDate = json['CreatedDate'];
-    modifiedDate = json['ModifiedDate'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['status'] = this.status;
-    data['Type'] = this.type;
-    data['Percentage'] = this.percentage;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
-    data['Status'] = this.status;
-    data['CreatedDate'] = this.createdDate;
-    data['ModifiedDate'] = this.modifiedDate;
-    return data;
-  }
-}
-
-class Item {
-  String sId;
-  List<String> images;
-  String name;
-  String createdAt;
-  String updatedAt;
-  int iV;
-
-  Item(
-      {this.sId,
-      this.images,
-      this.name,
-      this.createdAt,
-      this.updatedAt,
-      this.iV});
-
-  Item.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    images = json['images'].cast<String>();
-    name = json['name'];
+    type = json['Type'];
     createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['images'] = this.images;
-    data['name'] = this.name;
+    data['Percentage'] = this.percentage;
+    data['Status'] = this.status;
+    data['Type'] = this.type;
     data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }
 
 class Composition {
-  String sId;
-  double weight;
-  Null diamond;
+  Diamond diamond;
   MetalGroup metalGroup;
+  int weight;
 
-  Composition({this.sId, this.weight, this.diamond, this.metalGroup});
+  Composition({this.diamond, this.metalGroup, this.weight});
 
   Composition.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    weight = json['weight'];
-    diamond = json['diamond'];
+    diamond =
+        json['diamond'] != null ? new Diamond.fromJson(json['diamond']) : null;
     metalGroup = json['metalGroup'] != null
         ? new MetalGroup.fromJson(json['metalGroup'])
         : null;
+    weight = json['weight'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['weight'] = this.weight;
-    data['diamond'] = this.diamond;
+    if (this.diamond != null) {
+      data['diamond'] = this.diamond.toJson();
+    }
     if (this.metalGroup != null) {
       data['metalGroup'] = this.metalGroup.toJson();
     }
+    data['weight'] = this.weight;
+    return data;
+  }
+}
+
+class Diamond {
+  String categoryId;
+  String certifyAuthority;
+  String clarity;
+  String collectionId;
+  String color;
+  String createdAt;
+  String cut;
+  String docType;
+  String gemstones;
+  String id;
+  String shape;
+  String updatedAt;
+  String varietyId;
+
+  Diamond(
+      {this.categoryId,
+      this.certifyAuthority,
+      this.clarity,
+      this.collectionId,
+      this.color,
+      this.createdAt,
+      this.cut,
+      this.docType,
+      this.gemstones,
+      this.id,
+      this.shape,
+      this.updatedAt,
+      this.varietyId});
+
+  Diamond.fromJson(Map<String, dynamic> json) {
+    categoryId = json['category_id'];
+    certifyAuthority = json['certify_authority'];
+    clarity = json['clarity'];
+    collectionId = json['collection_id'];
+    color = json['color'];
+    createdAt = json['createdAt'];
+    cut = json['cut'];
+    docType = json['docType'];
+    gemstones = json['gemstones'];
+    id = json['id'];
+    shape = json['shape'];
+    updatedAt = json['updatedAt'];
+    varietyId = json['variety_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['category_id'] = this.categoryId;
+    data['certify_authority'] = this.certifyAuthority;
+    data['clarity'] = this.clarity;
+    data['collection_id'] = this.collectionId;
+    data['color'] = this.color;
+    data['createdAt'] = this.createdAt;
+    data['cut'] = this.cut;
+    data['docType'] = this.docType;
+    data['gemstones'] = this.gemstones;
+    data['id'] = this.id;
+    data['shape'] = this.shape;
+    data['updatedAt'] = this.updatedAt;
+    data['variety_id'] = this.varietyId;
     return data;
   }
 }
 
 class MetalGroup {
-  List<String> metals;
-  String status;
-  String sId;
-  String karatage;
+  String createdAt;
+  String docType;
   double fineness;
+  String id;
+  String karatage;
+  List<Metals> metals;
   int referenceId;
   String shortName;
-  String createdAt;
   String updatedAt;
-  int iV;
 
   MetalGroup(
-      {this.metals,
-      this.status,
-      this.sId,
-      this.karatage,
+      {this.createdAt,
+      this.docType,
       this.fineness,
+      this.id,
+      this.karatage,
+      this.metals,
       this.referenceId,
       this.shortName,
-      this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.updatedAt});
 
   MetalGroup.fromJson(Map<String, dynamic> json) {
-    metals = json['metals'].cast<String>();
-    status = json['status'];
-    sId = json['_id'];
-    karatage = json['karatage'];
+    createdAt = json['createdAt'];
+    docType = json['docType'];
     fineness = json['fineness'];
+    id = json['id'];
+    karatage = json['karatage'];
+    if (json['metals'] != null) {
+      metals = new List<Metals>();
+      json['metals'].forEach((v) {
+        metals.add(new Metals.fromJson(v));
+      });
+    }
     referenceId = json['referenceId'];
     shortName = json['shortName'];
-    createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['metals'] = this.metals;
-    data['status'] = this.status;
-    data['_id'] = this.sId;
-    data['karatage'] = this.karatage;
+    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
     data['fineness'] = this.fineness;
+    data['id'] = this.id;
+    data['karatage'] = this.karatage;
+    if (this.metals != null) {
+      data['metals'] = this.metals.map((v) => v.toJson()).toList();
+    }
     data['referenceId'] = this.referenceId;
     data['shortName'] = this.shortName;
-    data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }
 
-class Collections {
-  String sId;
-  String collectionName;
-  String img1;
-  String img2;
-  String img3;
-  String video;
-  String status;
+class Metals {
+  String createAt;
+  String docType;
+  String icon;
+  String id;
+  String name;
+  String updateAt;
 
-  Collections(
-      {this.sId,
-      this.collectionName,
-      this.img1,
-      this.img2,
-      this.img3,
-      this.video,
-      this.status});
+  Metals(
+      {this.createAt,
+      this.docType,
+      this.icon,
+      this.id,
+      this.name,
+      this.updateAt});
 
-  Collections.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    collectionName = json['collection_name'];
-    img1 = json['img1'];
-    img2 = json['img2'];
-    img3 = json['img3'];
-    video = json['video'];
-    status = json['status'];
+  Metals.fromJson(Map<String, dynamic> json) {
+    createAt = json['createAt'];
+    docType = json['docType'];
+    icon = json['icon'];
+    id = json['id'];
+    name = json['name'];
+    updateAt = json['updateAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['collection_name'] = this.collectionName;
-    data['img1'] = this.img1;
-    data['img2'] = this.img2;
-    data['img3'] = this.img3;
-    data['video'] = this.video;
-    data['status'] = this.status;
+    data['createAt'] = this.createAt;
+    data['docType'] = this.docType;
+    data['icon'] = this.icon;
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['updateAt'] = this.updateAt;
     return data;
   }
 }
 
-class Category {
-  String sId;
-  String categoryName;
-  String img1;
-  String img2;
-  String img3;
-  String video;
-  String status;
+class Item {
+  String createdAt;
+  String docType;
+  String id;
+  List<String> images;
+  String name;
+  String updatedAt;
 
-  Category(
-      {this.sId,
-      this.categoryName,
-      this.img1,
-      this.img2,
-      this.img3,
-      this.video,
-      this.status});
+  Item(
+      {this.createdAt,
+      this.docType,
+      this.id,
+      this.images,
+      this.name,
+      this.updatedAt});
 
-  Category.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    categoryName = json['category_name'];
-    img1 = json['img1'];
-    img2 = json['img2'];
-    img3 = json['img3'];
-    video = json['video'];
-    status = json['status'];
+  Item.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
+    images = json['images'].cast<String>();
+    name = json['name'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['category_name'] = this.categoryName;
-    data['img1'] = this.img1;
-    data['img2'] = this.img2;
-    data['img3'] = this.img3;
+    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
+    data['images'] = this.images;
+    data['name'] = this.name;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Product {
+  String createdAt;
+  String docType;
+  String id;
+  List<String> images;
+  String name;
+  String updatedAt;
+  String video;
+
+  Product(
+      {this.createdAt,
+      this.docType,
+      this.id,
+      this.images,
+      this.name,
+      this.updatedAt,
+      this.video});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
+    images = json['images'].cast<String>();
+    name = json['name'];
+    updatedAt = json['updatedAt'];
+    video = json['video'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
+    data['images'] = this.images;
+    data['name'] = this.name;
+    data['updatedAt'] = this.updatedAt;
     data['video'] = this.video;
-    data['status'] = this.status;
     return data;
   }
 }

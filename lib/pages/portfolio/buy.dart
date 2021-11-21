@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/models/referral.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
@@ -252,6 +253,7 @@ class _DepositState extends State<Deposit> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
     return FutureBuilder(
       future: init,
       initialData: null,
@@ -262,8 +264,11 @@ class _DepositState extends State<Deposit> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {
@@ -387,32 +392,43 @@ class _DepositState extends State<Deposit> {
                     ),
                     myPortfolioItems(),
                     // Amount Textfield Start
+
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
-                        color: whiteColor,
+                        height: 10.h,
+                        //color: Colors.amber,
                         // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
                         child: Theme(
                           data: ThemeData(
+                            errorColor: primaryColor,
                             primaryColor: whiteColor,
                             textSelectionTheme: TextSelectionThemeData(
                               cursorColor: primaryColor,
                             ),
                           ),
-                          child: TextField(
+                          child: TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return "This field is required";
+                              if (num.parse(value) <= 0)
+                                return "Weight must be greater than 0";
+                              return null;
+                            },
+                            onChanged: (String value) {
+                              setState(() {
+                                amountController.text = (double.parse(value) *
+                                        num.parse(data.buy).toDouble())
+                                    .toStringAsFixed(2);
+                              });
+                            },
                             controller: weightController,
                             keyboardType: TextInputType.number,
-                            style: primaryColor16MediumTextStyle,
+                            style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
-                              labelText: 'Weight',
-                              labelStyle: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                              suffix: Text(
-                                'GRAM',
-                                style: primaryColor16MediumTextStyle,
-                              ),
+                              filled: true,
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
                                   const Radius.circular(10.0),
@@ -420,28 +436,22 @@ class _DepositState extends State<Deposit> {
                                 borderSide:
                                     BorderSide(color: primaryColor, width: 1),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
+                              fillColor: whiteColor,
+                              suffix: Text(locale.GRAM,
+                                  style: primaryColor18BoldTextStyle),
+                              labelText: locale.WeightofGold,
+                              labelStyle: primaryColor18BoldTextStyle,
+                              border: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: primaryColor, width: 1),
+                                    BorderSide(color: primaryColor, width: 0.7),
                               ),
                             ),
-                            onChanged: (value) {
-                              setState(() {
-                                amountController.text =
-                                    (num.parse(data.sell).toDouble() *
-                                            double.parse(weightController.text))
-                                        .toStringAsFixed(2);
-                              });
-                            },
                           ),
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 25),
+                    SizedBox(height: 3.h),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(

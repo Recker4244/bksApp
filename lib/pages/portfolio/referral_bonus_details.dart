@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:gold247/models/referral.dart';
@@ -57,8 +58,11 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {

@@ -1,3 +1,4 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/customSub.dart';
@@ -209,9 +210,13 @@ class _PortfolioState extends State<Portfolio> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
-                  color: primaryColor,
-                ))),
+                  child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
+                    color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
+                  ),
+                )),
           );
         } else {
           if (snapshot.hasData) {
@@ -259,6 +264,7 @@ class _PortfolioState extends State<Portfolio> {
                         byvalue: totalplanbonusbyvalue.toStringAsFixed(2),
                       )),
                   // myPortfolioItems(),
+                  SizedBox(height: 2.h),
                 ],
               ),
             );

@@ -8,6 +8,7 @@ import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 ////TODO     market
 
 class Market extends StatefulWidget {
@@ -67,8 +68,11 @@ class _MarketState extends State<Market> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
                   color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
                 ))),
           );
         } else {

@@ -13,6 +13,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/language/locale.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sizer/sizer.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -42,25 +43,41 @@ class _EditProfileState extends State<EditProfile> {
   //     dobController.text = dob;
   //   });
   // }
+  Future getuserdetails(String id) async {
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = json.decode(await response.stream.bytesToString());
+
+      Userdata = userdata.fromJson(responseString);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   String profile_picture;
-  upload_picture() async {
+  upload_picture(String path) async {
     // TODO need api for image upload
     final String apiUrl = baseurl + "user/upload";
     var headers = {'Content-Type': 'multipart/form-data'};
-    var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
-    request.files
-        .add(await http.MultipartFile.fromPath('profilePic', file.path));
+    var request = http.MultipartRequest(
+        'PUT', Uri.parse('${baseurl}/api/user/image/${Userdata.id}'));
+    request.files.add(await http.MultipartFile.fromPath('image', path));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       String s = await response.stream.bytesToString();
+      await getuserdetails(Userdata.id);
       setState(() {
         profile_picture = s;
       });
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Profile picture uploaded")));
+          .showSnackBar(SnackBar(content: Text("Profile picture updated")));
+      Navigator.of(context).pop();
     } else if (response.statusCode == 413) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("File size is too big")));
@@ -75,14 +92,14 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   File file;
-  Future selectprofilepic() async {
+  Future selectprofilepic(ImageSource source) async {
     final _picker = ImagePicker();
-    final imageFile = await _picker.pickImage(source: ImageSource.gallery);
+    final imageFile = await _picker.pickImage(source: source);
     if (this.mounted) {
       setState(() {
         file = File(imageFile.path);
       });
-      upload_picture();
+      upload_picture(file.path);
     }
   }
 
@@ -140,15 +157,7 @@ class _EditProfileState extends State<EditProfile> {
       );
       return FocusScope.of(context).requestFocus(emailControl);
     }
-    if (dob == "") {
-      Navigator.pop(context, true);
-      Fluttertoast.showToast(
-        msg: 'Date Of Birth Not Specified.',
-        backgroundColor: Colors.black,
-        textColor: whiteColor,
-      );
-      return FocusScope.of(context).requestFocus(dobControl);
-    }
+
     http.Response response = await http.put(
       Uri.parse("${baseurl}/api/user/" + Userdata.id),
       body: {"name": name, "email": email, "dob": dob},
@@ -208,7 +217,7 @@ class _EditProfileState extends State<EditProfile> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 160.0,
+                  height: 20.h,
                   alignment: Alignment.center,
                   child: Stack(
                     children: [
@@ -216,14 +225,16 @@ class _EditProfileState extends State<EditProfile> {
                         width: width - fixPadding * 4.0,
                         alignment: Alignment.center,
                         child: Container(
-                          width: 140.0,
-                          height: 140.0,
+                          width: 40.w,
+                          height: 50.h,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(70.0),
                             image: DecorationImage(
-                              image: AssetImage(
-                                'assets/user/default.jpeg',
-                              ),
+                              image: Userdata.image == null
+                                  ? AssetImage(
+                                      'assets/user/default.jpeg',
+                                    )
+                                  : NetworkImage(Userdata.image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -235,15 +246,15 @@ class _EditProfileState extends State<EditProfile> {
                           width: width - fixPadding * 4.0,
                           alignment: Alignment.center,
                           child: InkWell(
-                            onTap: () => _selectOptionBottomSheet(),
-                            borderRadius: BorderRadius.circular(20.0),
+                            onTap: () {},
+                            //borderRadius: BorderRadius.circular(20.0),
                             child: Container(
-                              width: 140.0,
+                              width: 40.w,
                               padding: EdgeInsets.symmetric(
                                   vertical: fixPadding * 0.6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.0),
-                                color: Colors.orange,
+                                color: primaryColor,
                                 border: Border.all(
                                   width: 2.0,
                                   color: whiteColor,
@@ -251,7 +262,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               child: InkWell(
                                 onTap: () {
-                                  selectprofilepic();
+                                  _selectOptionBottomSheet();
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -336,74 +347,6 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 // Email Field End
 
-                // Phone Number Field Start
-                Container(
-                  padding: EdgeInsets.only(top: fixPadding, bottom: fixPadding),
-                  child: Theme(
-                    data: ThemeData(
-                      primaryColor: primaryColor,
-                      textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: primaryColor,
-                      ),
-                    ),
-                    child: TextField(
-                      readOnly: true,
-
-                      controller: dobController,
-                      keyboardType: TextInputType.number,
-                      style: black14MediumTextStyle,
-                      // onTap: () async {
-                      //   final DateTime picked = await showDatePicker(
-                      //       context: context,
-                      //       initialDate: selectedDate,
-                      //       firstDate: DateTime(1900),
-                      //       lastDate: DateTime(2100));
-                      //   if (picked != null && picked != selectedDate) {
-                      //     setState(() {
-                      //       selectedDate = picked;
-                      //       dobController.text =
-                      //           new DateFormat("yyyy-MM-dd").format(picked);
-                      //     });
-                      //   }
-                      // },
-                      decoration: InputDecoration(
-                        labelText: 'Date Of Birth',
-                        labelStyle: black14MediumTextStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: greyColor, width: 0.7),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                // Phone Number Field End
-
-                // Password Field Start
-                // Container(
-                //   padding: EdgeInsets.only(top: fixPadding, bottom: fixPadding),
-                //   child: Theme(
-                //     data: ThemeData(
-                //       primaryColor: primaryColor,
-                //       textSelectionTheme: TextSelectionThemeData(
-                //         cursorColor: primaryColor,
-                //       ),
-                //     ),
-                //     child: TextField(
-                //       controller: passwordController,
-                //       keyboardType: TextInputType.number,
-                //       style: black14MediumTextStyle,
-                //       decoration: InputDecoration(
-                //         labelText: 'Password',
-                //         labelStyle: black14MediumTextStyle,
-                //         border: OutlineInputBorder(
-                //           borderSide: BorderSide(color: greyColor, width: 0.7),
-                //         ),
-                //       ),
-                //       obscureText: true,
-                //     ),
-                //   ),
-                // ),
-                // Password Field End
                 heightSpace,
                 // Save Button Start
                 InkWell(
@@ -466,6 +409,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         InkWell(
                           onTap: () {
+                            selectprofilepic(ImageSource.camera);
                             Navigator.pop(context);
                           },
                           child: Container(
@@ -490,7 +434,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pop(context);
+                            selectprofilepic(ImageSource.gallery);
                           },
                           child: Container(
                             width: width,

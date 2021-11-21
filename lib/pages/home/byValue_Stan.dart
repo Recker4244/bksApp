@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
@@ -73,7 +74,7 @@ class _standardValueState extends State<standardValue> {
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      num d = responseString['data']['Percentage'];
+      num d = responseString['data'][0]['Percentage'];
       bonusPercentage = (d.toDouble()) / 100;
       return d;
     } else {
@@ -295,8 +296,11 @@ class _standardValueState extends State<standardValue> {
               child: Scaffold(
                   backgroundColor: scaffoldBgColor,
                   body: Center(
-                      child: CircularProgressIndicator(
+                      child: SpinKitRing(
+                    duration: Duration(milliseconds: 500),
                     color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
                   ))),
             );
           } else {
@@ -636,10 +640,7 @@ class _standardValueState extends State<standardValue> {
                 ),
               ));
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });

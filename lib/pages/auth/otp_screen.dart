@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/main.dart';
+import 'package:gold247/pages/auth/Strategy.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,6 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/models/bankDetails.dart';
 import 'package:gold247/pages/auth/login.dart';
+import 'package:otp_autofill/otp_autofill.dart';
 
 var token;
 
@@ -30,6 +32,26 @@ class _OTPScreenState extends State<OTPScreen> {
   FocusNode secondFocusNode = FocusNode();
   FocusNode thirdFocusNode = FocusNode();
   FocusNode fourthFocusNode = FocusNode();
+  OTPTextEditController controller;
+  final scaffoldKey = GlobalKey();
+  OTPInteractor temp = OTPInteractor();
+  @override
+  void initState() {
+    super.initState();
+    //temp.getAppSignature().then((value) => print('signature - $value'));
+    controller = OTPTextEditController(
+      codeLength: 5,
+      onCodeReceive: (code) => print('Your Application receive code - $code'),
+    )..startListenUserConsent(
+        (code) {
+          final exp = RegExp(r'(\d{5})');
+          return exp.stringMatch(code ?? '') ?? '';
+        },
+        strategies: [
+          SampleStrategy(),
+        ],
+      );
+  }
 
   Future getuserdetails(String id) async {
     var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));

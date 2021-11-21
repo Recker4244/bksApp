@@ -24,14 +24,14 @@ class _TotalBalanceState extends State<TotalBalance> {
   num handling = 0;
   gethandlingcharges() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/6003c895e1c432d4c7fb8b27'));
+        Uri.parse('${baseurl}/api/calculation/61862567d3e8b73c2dc54fd4'));
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
       setState(() {
-        handling = responseString['data']['Percentage'] / 100;
+        handling = responseString['data'][0]['Percentage'] / 100;
       });
     } else {
       print(response.reasonPhrase);

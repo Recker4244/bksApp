@@ -12,6 +12,7 @@ import 'package:gold247/pages/portfolio/Appointments.dart';
 import 'package:gold247/pages/portfolio/Collections.dart';
 import 'dart:convert';
 import 'package:gold247/language/locale.dart';
+import 'package:sizer/sizer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -124,14 +125,15 @@ class _ProfileState extends State<Profile> {
                 child: Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.asset(
-                        'assets/user/default.jpeg',
-                        height: 100.0,
-                        width: 100.0,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Image(
+                          image: Userdata.image == null
+                              ? AssetImage(
+                                  'assets/user/default.jpeg',
+                                )
+                              : NetworkImage(Userdata.image),
+                          width: 20.w,
+                        )),
                     Positioned(
                       bottom: 0.0,
                       right: 0.0,
