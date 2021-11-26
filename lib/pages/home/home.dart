@@ -815,7 +815,9 @@ class _HomeState extends State<Home> {
                                                   ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.shortName}"
                                                   : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.shortName}",
                                               style:
-                                                  primaryColor14MediumTextStyle,
+                                                  primaryColor14MediumTextStyle
+                                                      .copyWith(
+                                                          color: Colors.black),
                                             ),
                                           ],
                                         ),
@@ -835,7 +837,9 @@ class _HomeState extends State<Home> {
                                             Text(
                                               "${(item.cyclePeriod.minWeight * item.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM",
                                               style:
-                                                  primaryColor14MediumTextStyle,
+                                                  primaryColor14MediumTextStyle
+                                                      .copyWith(
+                                                          color: Colors.black),
                                             ),
                                           ],
                                         ),

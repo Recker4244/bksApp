@@ -486,7 +486,18 @@ class _BankDetailsState extends State<BankDetails> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: bankDetail(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.account_balance,
+            color: primaryColor,
+            size: 120,
+          ),
+          bankDetail(),
+        ],
+      ),
     );
   }
 
