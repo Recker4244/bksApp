@@ -276,7 +276,32 @@ class _LoginState extends State<Login> {
                           language: "Hindi",
                         ),
                       ),
-                    );
+                    ).then((value) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => new AlertDialog(
+                          title: new Text('Register',
+                              style: TextStyle(color: primaryColor)),
+
+                          // Are you sure?
+
+                          content: Text('Please Register to proceed ',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+
+                          // Do you want to go back?
+
+                          actions: <Widget>[
+                            new MaterialButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: new Text('Ok',
+                                  style: TextStyle(color: primaryColor)),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
                   else
                     Navigator.push<void>(
                       context,

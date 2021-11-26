@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: width,
         height: height,
-        child:Image.asset(
+        child: Image.asset(
           'assets/gif_file/GIF_Med.gif',
           width: 70.w,
           height: 25.h,
