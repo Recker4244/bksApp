@@ -473,57 +473,61 @@ class _GuestHomeState extends State<GuestHome> {
           Container(
             width: double.infinity,
             height: 148.0,
-            child: ListView.builder(
-              itemCount: howtos.length,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                // final item = howToVideo[index];
+            child: howtos.isEmpty
+                ? Center(
+                    child: Text("No Videos Posted Yet"),
+                  )
+                : ListView.builder(
+                    itemCount: howtos.length,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      // final item = howToVideo[index];
 
-                return GestureDetector(
-                  onTap: () async {
-                    await canLaunch(howtos[index].video)
-                        ? await launch(howtos[index].video)
-                        : throw 'Could not launch ${howtos[index].video}';
-                  },
-                  child: Padding(
-                    padding: (index != howtos.length - 1)
-                        ? EdgeInsets.only(left: fixPadding * 2.0)
-                        : EdgeInsets.symmetric(horizontal: 8),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                      child: Container(
-                        width: 200.0,
-                        padding: EdgeInsets.all(fixPadding),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Stack(
-                          children: [
-                            VideoDemo2(videolink: howtos[index].video),
-                            Align(
-                              alignment: Alignment.center,
-                              child: InkWell(
-                                onTap: () async {
-                                  await canLaunch(howtos[index].video)
-                                      ? await launch(howtos[index].video)
-                                      : throw 'Could not launch ${howtos[index].video}';
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.youtube,
-                                  color: primaryColor,
-                                  size: 50,
-                                ),
+                      return GestureDetector(
+                        onTap: () async {
+                          await canLaunch(howtos[index].video)
+                              ? await launch(howtos[index].video)
+                              : throw 'Could not launch ${howtos[index].video}';
+                        },
+                        child: Padding(
+                          padding: (index != howtos.length - 1)
+                              ? EdgeInsets.only(left: fixPadding * 2.0)
+                              : EdgeInsets.symmetric(horizontal: 8),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4.0),
+                            child: Container(
+                              width: 200.0,
+                              padding: EdgeInsets.all(fixPadding),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                            )
-                          ],
+                              child: Stack(
+                                children: [
+                                  VideoDemo2(videolink: howtos[index].video),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await canLaunch(howtos[index].video)
+                                            ? await launch(howtos[index].video)
+                                            : throw 'Could not launch ${howtos[index].video}';
+                                      },
+                                      child: FaIcon(
+                                        FontAwesomeIcons.youtube,
+                                        color: primaryColor,
+                                        size: 50,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       );
@@ -547,53 +551,59 @@ class _GuestHomeState extends State<GuestHome> {
           Container(
             width: double.infinity,
             height: 148.0,
-            child: ListView.builder(
-              itemCount: testimonials.length,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                // final item = howToVideo[index];
+            child: testimonials.isEmpty
+                ? Center(
+                    child: Text("No Videos Posted Yet"),
+                  )
+                : ListView.builder(
+                    itemCount: testimonials.length,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      // final item = howToVideo[index];
 
-                return GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: (index != testimonials.length - 1)
-                        ? EdgeInsets.only(left: fixPadding * 2.0)
-                        : EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                      child: Container(
-                        width: 200.0,
-                        padding: EdgeInsets.all(fixPadding),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Stack(
-                          children: [
-                            VideoDemo2(videolink: testimonials[index].video),
-                            Align(
-                              alignment: Alignment.center,
-                              child: InkWell(
-                                onTap: () async {
-                                  await canLaunch(howtos[index].video)
-                                      ? await launch(howtos[index].video)
-                                      : throw 'Could not launch ${howtos[index].video}';
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.youtube,
-                                  color: primaryColor,
-                                  size: 50,
-                                ),
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: (index != testimonials.length - 1)
+                              ? EdgeInsets.only(left: fixPadding * 2.0)
+                              : EdgeInsets.symmetric(
+                                  horizontal: fixPadding * 2.0),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4.0),
+                            child: Container(
+                              width: 200.0,
+                              padding: EdgeInsets.all(fixPadding),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                            )
-                          ],
+                              child: Stack(
+                                children: [
+                                  VideoDemo2(
+                                      videolink: testimonials[index].video),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await canLaunch(howtos[index].video)
+                                            ? await launch(howtos[index].video)
+                                            : throw 'Could not launch ${howtos[index].video}';
+                                      },
+                                      child: FaIcon(
+                                        FontAwesomeIcons.youtube,
+                                        color: primaryColor,
+                                        size: 50,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       );
@@ -896,10 +906,7 @@ class _GuestHomeState extends State<GuestHome> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! Something went wrong ")));
+            return errorScreen;
           }
         }
       },

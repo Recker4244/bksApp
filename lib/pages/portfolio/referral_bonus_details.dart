@@ -192,10 +192,7 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
               //   ),
               // );
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! No data ")));
+              return errorScreen;
             }
           }
         });

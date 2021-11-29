@@ -312,7 +312,7 @@ class _standardValueState extends State<standardValue> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.close,
+                      Icons.arrow_back_ios_new_rounded,
                       color: whiteColor,
                       size: 30,
                     ),
@@ -445,17 +445,18 @@ class _standardValueState extends State<standardValue> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter the amount you want to save';
+                                  }
                                   if (num.parse(value) < widget.min) {
                                     return "Minimum Amount: ${widget.min.toStringAsFixed(2)}";
                                   }
-                                  if (value == null || value.isEmpty) {
-                                    return 'This field is required';
-                                  }
+
                                   return null;
                                 },
                                 onChanged: (String value) {
                                   setState(() {
-                                    if (value != null) {
+                                    if (value != null && value.isNotEmpty) {
                                       amountController.text = (num.parse(value)
                                                   .toDouble() /
                                               num.parse(data.buy).toDouble())

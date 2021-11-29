@@ -6,6 +6,7 @@ import 'package:gold247/models/referral.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/home/byWeightStandard.dart';
+import 'package:gold247/pages/portfolio/referral_bonus_details.dart';
 
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/pages/currencyScreen/buy_gold.dart';
@@ -1109,9 +1110,16 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 5.w,
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.size,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Referal_Bonus_Detials()));
+                        },
+                        icon: Icon(Icons.arrow_forward_ios_rounded, size: 5.w),
                         color: primaryColor,
                       ),
                     ],
@@ -1374,14 +1382,99 @@ class _HomeState extends State<Home> {
                   physics: BouncingScrollPhysics(),
                   children: [
                     userGreeting(),
-                    balanceContainer(),
+                    Container(
+                      height: 20.h,
+                      width: 60.w,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Image.asset(
+                          'assets/user/bksmain.png',
+                          width: 80.w,
+                          // height: 80.0,
+                          // fit: BoxFit.cover,
+                        ),
+                      ),
+                      //decoration: BoxDecoration(color: Colors.red),
+                    ),
+                    //balanceContainer(),
+
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(color: Colors.red),
+                              child: Center(child: Text("Hello")),
+                            ),
+                            Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(color: Colors.green),
+                              child: Center(child: Text("Hello")),
+                            ),
+                          ],
+                        ),
+                        Column(mainAxisSize: MainAxisSize.max, children: [
+                          Expanded(
+                            child: Container(
+                              //height: 200,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    width: 200,
+                                    decoration:
+                                        BoxDecoration(color: Colors.red),
+                                    child: Center(child: Text("Hello")),
+                                  ),
+                                  Container(
+                                    height: 200,
+                                    width: 200,
+                                    decoration:
+                                        BoxDecoration(color: Colors.green),
+                                    child: Center(child: Text("Hello")),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 200,
+                            width: 100,
+                            decoration: BoxDecoration(color: Colors.amber),
+                            child: Center(child: Text("Hello")),
+                          ),
+                        ]),
+                      ],
+                    ),
+
                     buyGold(data.buy),
                     sellGold(data.sell),
                     height20Space,
                     myPortfolio(),
                     height20Space,
                     planSelector(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Text(
+                        locale.refer,
+                        style: primaryColor16MediumTextStyle,
+                      ),
+                    ),
                     referAfriend(Userdata.refCode.toString()),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Text(
+                        locale.sellgoldtitle,
+                        style: primaryColor16MediumTextStyle,
+                      ),
+                    ),
                     SellOldGold(
                         double.parse(data.sell),
                         double.parse((num.parse(data.sell).toDouble() *

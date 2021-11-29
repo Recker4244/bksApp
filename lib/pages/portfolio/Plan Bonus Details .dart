@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gold247/models/customSub.dart';
 import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/models/subscription.dart';
+import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/portfolio/total_balance.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
@@ -169,6 +170,28 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
+                        if (temp.isEmpty) {
+                          return Center(
+                              child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.size,
+                                      alignment: Alignment.bottomCenter,
+                                      child: BottomBar()));
+                            },
+                            child: Container(
+                                child: Text(
+                                  "Invest Now to earn additional bonus",
+                                  style: white18MediumTextStyle,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)))),
+                          ));
+                        }
                         return GestureDetector(
                             onTap: () {
                               Navigator.push(

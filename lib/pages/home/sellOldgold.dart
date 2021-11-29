@@ -317,7 +317,7 @@ class _SellOldState extends State<SellOld> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.close,
+                      Icons.arrow_back_ios_new_rounded,
                       color: whiteColor,
                       size: 30,
                     ),

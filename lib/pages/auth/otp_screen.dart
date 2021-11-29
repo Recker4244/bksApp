@@ -14,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/models/bankDetails.dart';
 import 'package:gold247/pages/auth/login.dart';
-import 'package:otp_autofill/otp_autofill.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 var token;
 
@@ -23,7 +23,7 @@ class OTPScreen extends StatefulWidget {
   _OTPScreenState createState() => _OTPScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class _OTPScreenState extends State<OTPScreen> with CodeAutoFill {
   final firstController = TextEditingController();
   final secondController = TextEditingController();
   final thirdController = TextEditingController();
@@ -32,26 +32,32 @@ class _OTPScreenState extends State<OTPScreen> {
   FocusNode secondFocusNode = FocusNode();
   FocusNode thirdFocusNode = FocusNode();
   FocusNode fourthFocusNode = FocusNode();
-  OTPTextEditController controller;
-  final scaffoldKey = GlobalKey();
-  OTPInteractor temp = OTPInteractor();
+  String appSignature;
+  String otpCode;
+  @override
+  void codeUpdated() {
+    setState(() {
+      otpCode = code;
+    });
+    loadingDialog();
+  }
+
+  listenforotp() async {
+    await SmsAutoFill().listenForCode;
+  }
+
   @override
   void initState() {
     super.initState();
-    //temp.getAppSignature().then((value) => print('signature - $value'));
-    controller = OTPTextEditController(
-      codeLength: 5,
-      onCodeReceive: (code) => print('Your Application receive code - $code'),
-    )..startListenUserConsent(
-        (code) {
-          final exp = RegExp(r'(\d{5})');
-          return exp.stringMatch(code ?? '') ?? '';
-        },
-        strategies: [
-          SampleStrategy(),
-        ],
-      );
+    SmsAutoFill().getAppSignature.then((signature) {
+      setState(() {
+        appSignature = signature;
+      });
+    });
+    listenForCode();
   }
+
+  String _code = "";
 
   Future getuserdetails(String id) async {
     var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));
@@ -222,7 +228,22 @@ class _OTPScreenState extends State<OTPScreen> {
         backgroundColor: Colors.black,
         textColor: whiteColor,
       );
-    }
+    } else
+      Fluttertoast.showToast(
+        msg: 'Invalid OTP entered',
+        backgroundColor: Colors.black,
+        textColor: Colors.red,
+      );
+  }
+
+  MaterialStateProperty<Color> getColor(Color white, Color pressed) {
+    final getColor = (Set<MaterialState> states) {
+      if (states.contains(MaterialState.pressed)) {
+        return pressed;
+      } else
+        return white;
+    };
+    return MaterialStateProperty.resolveWith(getColor);
   }
 
   @override
@@ -267,6 +288,10 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
               ),
               SizedBox(height: 50.0),
+              // TextFieldPinAutoFill(
+              //   codeLength: 4,
+              //   currentCode: _code,
+              // ),
               // OTP Box Start
               Padding(
                 padding: EdgeInsets.all(20.0),
@@ -429,6 +454,17 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
               ),
               height20Space,
+              // ElevatedButton(
+              //     style: ButtonStyle(
+              //         foregroundColor: getColor(whiteColor, primaryColor),
+              //         backgroundColor: getColor(primaryColor, whiteColor)),
+              //     onPressed: () {
+              //       loadingDialog();
+              //     },
+              //     child: Text(
+              //       locale.continuebutton,
+              //       style: white14BoldTextStyle,
+              //     )),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),

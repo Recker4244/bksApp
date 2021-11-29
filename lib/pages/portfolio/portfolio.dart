@@ -291,7 +291,7 @@ class _PortfolioState extends State<Portfolio> {
             children: [
               Text(
                 title,
-                style: grey12BoldTextStyle,
+                style: grey14BoldTextStyle,
               ),
               SizedBox(
                 height: 1.h,

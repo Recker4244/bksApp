@@ -356,7 +356,7 @@ class _Standard_PCState extends State<Standard_PC> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.close,
+                      Icons.arrow_back_ios_new_rounded,
                       color: whiteColor,
                       size: 30,
                     ),
@@ -490,18 +490,19 @@ class _Standard_PCState extends State<Standard_PC> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (String value) {
                                   if (value == null || value.isEmpty)
-                                    return "This field is required";
+                                    return "Please enter the weight you want to save";
                                   if (num.parse(value) < widget.min)
                                     return "Weight must be greater than ${widget.min}";
                                   return null;
                                 },
                                 onChanged: (String value) {
-                                  setState(() {
-                                    valueController.text =
-                                        (num.parse(value).toDouble() *
-                                                num.parse(data.buy).toDouble())
-                                            .toStringAsFixed(2);
-                                  });
+                                  if (value != null && value.isNotEmpty)
+                                    setState(() {
+                                      valueController.text = (num.parse(value)
+                                                  .toDouble() *
+                                              num.parse(data.buy).toDouble())
+                                          .toStringAsFixed(2);
+                                    });
                                 },
                                 controller: amountController,
                                 keyboardType: TextInputType.text,

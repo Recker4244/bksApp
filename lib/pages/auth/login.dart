@@ -149,6 +149,16 @@ class _LoginState extends State<Login> {
       );
     }
 
+    MaterialStateProperty<Color> getColor(Color white, Color pressed) {
+      final getColor = (Set<MaterialState> states) {
+        if (states.contains(MaterialState.pressed)) {
+          return pressed;
+        } else
+          return white;
+      };
+      return MaterialStateProperty.resolveWith(getColor);
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: scaffoldBgColor,
@@ -180,6 +190,7 @@ class _LoginState extends State<Login> {
                 ),
                 child: Container(
                   width: 70.w,
+                  // height: 8.h,
                   padding: EdgeInsets.only(left: fixPadding * 2.0),
                   decoration: BoxDecoration(
                     color: whiteColor,
@@ -193,19 +204,34 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   child: InternationalPhoneNumberInput(
-                    textStyle: black14RegularTextStyle,
-                    autoValidate: false,
-                    selectorTextStyle: black16MediumTextStyle,
+                    onInputChanged: (PhoneNumber number) {
+                      print(number.phoneNumber);
+                    },
+                    validator: (String value) {
+                      if (value.startsWith("0")) return 'Invalid Input';
+                      return null;
+                    },
+                    maxLength: 10,
+                    textStyle: TextStyle(),
+                    onInputValidated: (bool value) {
+                      print(value);
+                    },
+                    spaceBetweenSelectorAndTextField: 0,
+                    countries: ["IN"],
+                    selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                    ),
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    selectorTextStyle: TextStyle(color: Colors.black),
                     initialValue: number,
                     textFieldController: numberController,
-                    inputBorder: InputBorder.none,
-                    inputDecoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 0.0),
-                      hintText: locale.PhoneNumber,
-                      hintStyle: black16SemiBoldTextStyle,
-                      border: InputBorder.none,
-                    ),
-                    selectorType: PhoneInputSelectorType.DIALOG,
+                    formatInput: false,
+                    keyboardType: TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    inputBorder: OutlineInputBorder(),
+                    onSaved: (PhoneNumber number) {
+                      print('On Saved: $number');
+                    },
                   ),
                 ),
               ),
@@ -213,12 +239,69 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 2.h,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: fixPadding * 3.0, vertical: 15.0),
-                child: InkWell(
-                  onTap: () async {
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //       horizontal: fixPadding * 3.0, vertical: 15.0),
+              //   child: InkWell(
+              //     onTap: () async {
+              //       HapticFeedback.vibrate();
+              //       final PhoneNumberOb = numberController.text;
+              //       final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+              //       http.Response response = await http.post(
+              //         Uri.parse("${baseurl}/api/auth/register"),
+              //         headers: {"Content-Type": "application/json"},
+              //         body: json.encode(
+              //             {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+              //       );
+              //       print(response.body);
+              //       if (response.statusCode == 200) {
+              //         mobilenumber.phoneNumber = PhoneReplace;
+              //         mobilenumber.whatsapp = whatsapp;
+              //       }
+              //       Navigator.push(
+              //         context,
+              //         PageTransition(
+              //           type: PageTransitionType.leftToRightWithFade,
+              //           child: OTPScreen(),
+              //         ),
+              //       );
+              //     },
+              //     borderRadius: BorderRadius.circular(10.0),
+              //     child: Container(
+              //       width: double.infinity,
+              //       height: 6.h,
+              //       alignment: Alignment.center,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10.0),
+              //         color: primaryColor,
+              //       ),
+              //       child: Text(
+              //         locale.continuebutton,
+              //         style: white18BoldTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+
+              ElevatedButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                          horizontal: 25.w, vertical: 1.h)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      )),
+                      foregroundColor: getColor(whiteColor, primaryColor),
+                      backgroundColor: getColor(primaryColor, whiteColor)),
+                  onPressed: () async {
                     HapticFeedback.vibrate();
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.leftToRightWithFade,
+                        child: OTPScreen(),
+                      ),
+                    );
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
                     http.Response response = await http.post(
@@ -232,30 +315,15 @@ class _LoginState extends State<Login> {
                       mobilenumber.phoneNumber = PhoneReplace;
                       mobilenumber.whatsapp = whatsapp;
                     }
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.leftToRightWithFade,
-                        child: OTPScreen(),
-                      ),
-                    );
                   },
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 6.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: primaryColor,
+                  child: Text(
+                    locale.continuebutton,
+                    style: TextStyle(
+                      fontFamily: 'Jost',
+                      fontSize: 18.0.sp,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: Text(
-                      locale.continuebutton,
-                      style: white18BoldTextStyle,
-                    ),
-                  ),
-                ),
-              ),
+                  )),
               SizedBox(
                 height: 2.h,
               ),
