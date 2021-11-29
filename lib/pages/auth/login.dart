@@ -14,6 +14,8 @@ import 'package:sizer/sizer.dart';
 import 'package:gold247/language/languageCubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+enum ButtonSate { init, loading, done }
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -27,6 +29,7 @@ class mobileNumber {
 mobileNumber mobilenumber = mobileNumber();
 
 class _LoginState extends State<Login> {
+  ButtonSate state = ButtonSate.init;
   DateTime currentBackPressTime;
   String phoneIsoCode;
   final numberController = TextEditingController();
@@ -46,11 +49,14 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  bool isAnimated = true;
   bool value = true;
   bool whatsapp = true;
-
+  bool isloading = false;
   @override
   Widget build(BuildContext context) {
+    final isDone = state == ButtonSate.done;
+    final isStretch = isAnimated || state == ButtonSate.init;
     var locale = AppLocalizations.of(context);
     Widget buildCheckbox() {
       return Row(
@@ -294,36 +300,54 @@ class _LoginState extends State<Login> {
                       foregroundColor: getColor(whiteColor, primaryColor),
                       backgroundColor: getColor(primaryColor, whiteColor)),
                   onPressed: () async {
-                    HapticFeedback.vibrate();
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.leftToRightWithFade,
-                        child: OTPScreen(),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: fixPadding * 3.0, vertical: 15.0),
+                      child: InkWell(
+                          onTap: () async {
+                            setState(() {
+                              state = ButtonSate.loading;
+                            });
+                            await Future.delayed(Duration(seconds: 2));
+                            setState(() {
+                              state = ButtonSate.done;
+                            });
+
+                            HapticFeedback.vibrate();
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.leftToRightWithFade,
+                                child: OTPScreen(),
+                              ),
+                            );
+                            final PhoneNumberOb = numberController.text;
+                            final PhoneReplace =
+                                PhoneNumberOb.replaceAll(" ", "");
+                            http.Response response = await http.post(
+                              Uri.parse("${baseurl}/api/auth/register"),
+                              headers: {"Content-Type": "application/json"},
+                              body: json.encode({
+                                "mobile": PhoneReplace,
+                                "isWhatsapp": whatsapp
+                              }),
+                            );
+                            print(response.body);
+                            if (response.statusCode == 200) {
+                              mobilenumber.phoneNumber = PhoneReplace;
+                              mobilenumber.whatsapp = whatsapp;
+                            }
+                          },
+                          child: Text(
+                            locale.continuebutton,
+                            style: TextStyle(
+                              fontFamily: 'Jost',
+                              fontSize: 18.0.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
                     );
-                    final PhoneNumberOb = numberController.text;
-                    final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
-                    http.Response response = await http.post(
-                      Uri.parse("${baseurl}/api/auth/register"),
-                      headers: {"Content-Type": "application/json"},
-                      body: json.encode(
-                          {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
-                    );
-                    print(response.body);
-                    if (response.statusCode == 200) {
-                      mobilenumber.phoneNumber = PhoneReplace;
-                      mobilenumber.whatsapp = whatsapp;
-                    }
-                  },
-                  child: Text(
-                    locale.continuebutton,
-                    style: TextStyle(
-                      fontFamily: 'Jost',
-                      fontSize: 18.0.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
+                  }),
               SizedBox(
                 height: 2.h,
               ),
@@ -344,7 +368,32 @@ class _LoginState extends State<Login> {
                           language: "Hindi",
                         ),
                       ),
-                    );
+                    ).then((value) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => new AlertDialog(
+                          title: new Text('Register',
+                              style: TextStyle(color: primaryColor)),
+
+                          // Are you sure?
+
+                          content: Text('Please Register to proceed ',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+
+                          // Do you want to go back?
+
+                          actions: <Widget>[
+                            new MaterialButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: new Text('Ok',
+                                  style: TextStyle(color: primaryColor)),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
                   else
                     Navigator.push<void>(
                       context,
@@ -387,6 +436,24 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Container buildButton(AppLocalizations locale) {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: primaryColor,
+      ),
+      child: FittedBox(
+        child: Text(
+          locale.continuebutton,
+          style: white18BoldTextStyle,
+        ),
+      ),
+    );
+  }
+
   onWillPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
@@ -401,6 +468,20 @@ class _LoginState extends State<Login> {
     } else {
       return true;
     }
+  }
+
+  Widget buildSmallButton(bool isDone) {
+    return Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+        child: Center(
+          child: isDone
+              ? Icon(Icons.done, size: 52, color: scaffoldBgColor)
+              : CircularProgressIndicator(
+                  color: scaffoldBgColor,
+                ),
+        ));
   }
 }
 

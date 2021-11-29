@@ -356,7 +356,7 @@ class _Standard_PCState extends State<Standard_PC> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.arrow_back_ios_new_rounded,
+                      Icons.arrow_back,
                       color: whiteColor,
                       size: 30,
                     ),
@@ -486,6 +486,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextFormField(
+                                cursorColor: primaryColor,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (String value) {
@@ -508,6 +509,10 @@ class _Standard_PCState extends State<Standard_PC> {
                                 keyboardType: TextInputType.text,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0),
+                                  ),
                                   labelText: locale.WeightofGold,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -540,6 +545,10 @@ class _Standard_PCState extends State<Standard_PC> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0),
+                                  ),
                                   labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -554,9 +563,13 @@ class _Standard_PCState extends State<Standard_PC> {
                               ),
                             ),
                           ),
-                          Text(
-                            locale.choosePayment,
-                            style: primaryColor16MediumTextStyle,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: fixPadding * 2),
+                            child: Text(
+                              locale.choosePayment,
+                              style: primaryColor16MediumTextStyle,
+                            ),
                           ),
                           heightSpace,
                           GestureDetector(
@@ -769,7 +782,8 @@ class Portfolio_card extends StatelessWidget {
                 ),
                 Text(
                   text,
-                  style: primaryColor16MediumTextStyle,
+                  style: primaryColor16MediumTextStyle.copyWith(
+                      color: Colors.black),
                 ),
               ],
             ),

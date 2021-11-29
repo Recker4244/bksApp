@@ -79,16 +79,16 @@ class _CryptoChartSyncfusionState extends State<CryptoChartSyncfusion> {
   Widget build(BuildContext context) {
     final List<Color> color = <Color>[];
     final List<double> stops = <double>[];
-    color.add(Colors.blue[50]);
-    color.add(Colors.blue[100]);
-    color.add(Colors.blue[200]);
-    color.add(Colors.blue[300]);
-    color.add(Colors.blue[400]);
-    color.add(Colors.blue[500]);
-    color.add(Colors.blue[600]);
-    color.add(Colors.blue[700]);
-    color.add(Colors.blue[800]);
-    color.add(Colors.blue[900]);
+    color.add(Colors.green[50]);
+    color.add(Colors.green[100]);
+    color.add(Colors.green[200]);
+    color.add(Colors.green[300]);
+    color.add(Colors.green[400]);
+    color.add(Colors.green[500]);
+    color.add(Colors.green[600]);
+    color.add(Colors.green[700]);
+    color.add(Colors.green[800]);
+    color.add(Colors.green[900]);
 
     stops.add(0.1);
     stops.add(0.2);

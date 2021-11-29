@@ -57,6 +57,9 @@ dependencies:
   image_picker: ^0.8.4+1
   sms_autofill: ^2.2.0
   intl_phone_number_input: ^0.7.0+2
+  otp_autofill: ^2.0.0
+  top_snackbar_flutter: ^1.0.2
+  another_flushbar: ^1.10.26
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/video.dart';
+import 'package:gold247/pages/currencyScreen/buy_gold.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/videoplayer.dart';
 import 'package:gold247/widget/column_builder.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gold247/widget/vdo.dart';
 import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:convert';
 import '../bottom_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +17,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:sizer/sizer.dart';
 import 'package:gold247/language/locale.dart';
+
+import 'package:another_flushbar/flushbar.dart';
 
 //A Map variable to store the complete response
 
@@ -285,11 +290,11 @@ class _GuestHomeState extends State<GuestHome> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 35.0,
-              height: 35.0,
+              width: 50.0,
+              height: 50.0,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
+                shape: BoxShape.circle,
                 color: scaffoldBgColor,
               ),
               child: Icon(
@@ -310,15 +315,6 @@ class _GuestHomeState extends State<GuestHome> {
                         '$title',
                         style: white14BoldTextStyle,
                       ),
-                      Spacer(),
-                      RotatedBox(
-                        quarterTurns: 3,
-                        child: Image(
-                          height: 20.sp,
-                          width: 20.sp,
-                          image: AssetImage('assets/key.png'),
-                        ),
-                      )
                     ],
                   ),
                   height5Space,
@@ -329,6 +325,37 @@ class _GuestHomeState extends State<GuestHome> {
                 ],
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                Flushbar(
+                  padding: EdgeInsets.all(16),
+                  flushbarPosition: FlushbarPosition.TOP,
+                  message: "Please register to proceed",
+                  icon: Icon(
+                    Icons.info_outline,
+                    size: 28.0,
+                    color: Colors.blue[300],
+                  ),
+                  duration: Duration(seconds: 3),
+                  leftBarIndicatorColor: Colors.blue[300],
+                )..show(context).then((value) {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.size,
+                            alignment: Alignment.bottomCenter,
+                            child: Login()));
+                  });
+              },
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Image(
+                  height: 20.sp,
+                  width: 20.sp,
+                  image: AssetImage('assets/key.png'),
+                ),
+              ),
+            )
           ],
         ),
       );
@@ -475,7 +502,7 @@ class _GuestHomeState extends State<GuestHome> {
             height: 148.0,
             child: howtos.isEmpty
                 ? Center(
-                    child: Text("No Videos Posted Yet"),
+                    child: Text("No Videos posted yet"),
                   )
                 : ListView.builder(
                     itemCount: howtos.length,
@@ -553,7 +580,7 @@ class _GuestHomeState extends State<GuestHome> {
             height: 148.0,
             child: testimonials.isEmpty
                 ? Center(
-                    child: Text("No Videos Posted Yet"),
+                    child: Text("No Testimonials posted yet"),
                   )
                 : ListView.builder(
                     itemCount: testimonials.length,
@@ -631,12 +658,12 @@ class _GuestHomeState extends State<GuestHome> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.size,
-                          alignment: Alignment.bottomCenter,
-                          child: Login()));
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         type: PageTransitionType.size,
+                  //         alignment: Alignment.bottomCenter,
+                  //         child: Login()));
                 },
 
                 //TODO : Push to Buy Gold
@@ -716,6 +743,41 @@ class _GuestHomeState extends State<GuestHome> {
                 ),
               ),
               InkWell(
+                onTap: () {
+                  Flushbar(
+                    padding: EdgeInsets.all(16),
+                    mainButton: MaterialButton(
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.size,
+                                alignment: Alignment.bottomCenter,
+                                child: Login()));
+                      },
+                    ),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    message: "Please register to proceed",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context).then((value) {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.size,
+                              alignment: Alignment.bottomCenter,
+                              child: BuyGold()));
+                    });
+                },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),
@@ -847,6 +909,41 @@ class _GuestHomeState extends State<GuestHome> {
                 ),
               ),
               InkWell(
+                onTap: () {
+                  Flushbar(
+                    padding: EdgeInsets.all(16),
+                    mainButton: MaterialButton(
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.size,
+                                alignment: Alignment.bottomCenter,
+                                child: Login()));
+                      },
+                    ),
+                    flushbarPosition: FlushbarPosition.TOP,
+                    message: "Please register to proceed",
+                    icon: Icon(
+                      Icons.info_outline,
+                      size: 28.0,
+                      color: Colors.blue[300],
+                    ),
+                    duration: Duration(seconds: 3),
+                    leftBarIndicatorColor: Colors.blue[300],
+                  )..show(context).then((value) {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.size,
+                              alignment: Alignment.bottomCenter,
+                              child: Login()));
+                    });
+                },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
                 ),

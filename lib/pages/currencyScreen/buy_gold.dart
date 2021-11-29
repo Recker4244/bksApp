@@ -500,7 +500,7 @@ class _CurrencyScreenState extends State<BuyGold> {
               children: [
                 aboutPortfolioItem(locale.AvgBuyPrice, 'INR ${data.buy}'),
                 Container(
-                  height: 75.0,
+                  height: 10.h,
                   width: (width - fixPadding * 6.0) / 2,
                   padding: EdgeInsets.all(fixPadding),
                   decoration: BoxDecoration(
@@ -640,7 +640,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 8.h,
+                                  height: 10.h,
                                   width: 16.w,
                                   decoration: BoxDecoration(
                                     color: whiteColor,
@@ -698,9 +698,13 @@ class _CurrencyScreenState extends State<BuyGold> {
                             ),
                             child: TextField(
                               controller: amountController,
+                              cursorColor: primaryColor,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0)),
                                 labelText: locale.value,
                                 labelStyle: primaryColor18BoldTextStyle,
                                 suffix: Text(
@@ -734,11 +738,15 @@ class _CurrencyScreenState extends State<BuyGold> {
                               backgroundColor: whiteColor,
                             ),
                             child: TextField(
+                              cursorColor: primaryColor,
                               enabled: false,
                               controller: valueController,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0)),
                                 labelText: locale.weight,
                                 labelStyle: primaryColor18BoldTextStyle,
                                 suffix: Text(
@@ -889,10 +897,14 @@ class _CurrencyScreenState extends State<BuyGold> {
                               primaryColor: greyColor,
                             ),
                             child: TextField(
+                              cursorColor: primaryColor,
                               controller: valueController,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0)),
                                 labelText: locale.weight,
                                 labelStyle: primaryColor18BoldTextStyle,
                                 suffix: Text(
@@ -984,21 +996,18 @@ class _CurrencyScreenState extends State<BuyGold> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.none ||
               snapshot.connectionState == ConnectionState.waiting) {
-            return SafeArea(
-              child: Scaffold(
-                  backgroundColor: scaffoldBgColor,
-                  body: Center(
-                      child: SpinKitRing(
-                    duration: Duration(milliseconds: 500),
-                    color: primaryColor,
-                    size: 40.0,
-                    lineWidth: 1.2,
-                  ))),
-            );
+            return Scaffold(
+                backgroundColor: scaffoldBgColor,
+                body: Center(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 500),
+                  color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
+                )));
           } else {
             if (snapshot.hasData) {
-              return SafeArea(
-                  child: Scaffold(
+              return Scaffold(
                 backgroundColor: scaffoldBgColor,
                 bottomNavigationBar: Material(
                   elevation: 2.0,
@@ -1056,7 +1065,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                     ],
                   ),
                 ),
-              ));
+              );
             } else {
               return errorScreen;
             }

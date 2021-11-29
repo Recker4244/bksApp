@@ -14,7 +14,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'dart:convert';
-
+import 'package:sizer/sizer.dart';
 import 'package:uuid/uuid.dart';
 
 class SellGold extends StatefulWidget {
@@ -443,7 +443,7 @@ class _CurrencyScreenState extends State<SellGold> {
     aboutPortfolioItem(title, value) {
       double width = MediaQuery.of(context).size.width;
       return Container(
-        height: 75.0,
+        height: 10.h,
         width: (width - fixPadding * 6.0) / 2,
         padding: EdgeInsets.all(fixPadding),
         decoration: BoxDecoration(
@@ -486,7 +486,9 @@ class _CurrencyScreenState extends State<SellGold> {
               locale.yourInstant,
               style: primaryColor16BoldTextStyle,
             ),
-            heightSpace,
+            SizedBox(
+              height: 3.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -497,14 +499,16 @@ class _CurrencyScreenState extends State<SellGold> {
                     'INR ${(walletbalace * double.parse(data.sell.toString())).toStringAsFixed(2)}'),
               ],
             ),
-            heightSpace,
+            SizedBox(
+              height: 3.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 aboutPortfolioItem(locale.AvgSellPrice, 'INR ${data.sell}'),
                 Container(
-                  height: 75.0,
+                  height: 10.h,
                   width: (width - fixPadding * 6.0) / 2,
                   padding: EdgeInsets.all(fixPadding),
                   decoration: BoxDecoration(
@@ -700,6 +704,7 @@ class _CurrencyScreenState extends State<SellGold> {
                               primaryColor: greyColor,
                             ),
                             child: TextFormField(
+                              cursorColor: primaryColor,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -713,6 +718,9 @@ class _CurrencyScreenState extends State<SellGold> {
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 2.0)),
                                 labelText: locale.value,
                                 labelStyle: primaryColor18BoldTextStyle,
                                 suffix: Text(
@@ -1010,78 +1018,74 @@ class _CurrencyScreenState extends State<SellGold> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.none ||
               snapshot.connectionState == ConnectionState.waiting) {
-            return SafeArea(
-              child: Scaffold(
-                  backgroundColor: scaffoldBgColor,
-                  body: Center(
-                      child: SpinKitRing(
-                    duration: Duration(milliseconds: 500),
-                    color: primaryColor,
-                    size: 40.0,
-                    lineWidth: 1.2,
-                  ))),
-            );
+            return Scaffold(
+                backgroundColor: scaffoldBgColor,
+                body: Center(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 500),
+                  color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
+                )));
           } else {
             if (snapshot.hasData) {
-              return SafeArea(
-                child: Scaffold(
-                  backgroundColor: scaffoldBgColor,
-                  bottomNavigationBar: Material(
-                    elevation: 2.0,
-                    child: Container(
-                      height: 50.0,
-                      width: width,
-                      color: primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () => sellByValue(
-                                double.parse(data.sell.toString()),
-                                (walletbalace *
-                                    double.parse(data.sell.toString()))),
-                            child: Container(
-                              height: 50.0,
-                              width: (width - 1.0) / 2,
-                              alignment: Alignment.center,
-                              child: Text(
-                                locale.SellValue.toUpperCase(),
-                                style: white16BoldTextStyle,
-                              ),
+              return Scaffold(
+                backgroundColor: scaffoldBgColor,
+                bottomNavigationBar: Material(
+                  elevation: 2.0,
+                  child: Container(
+                    height: 50.0,
+                    width: width,
+                    color: primaryColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () => sellByValue(
+                              double.parse(data.sell.toString()),
+                              (walletbalace *
+                                  double.parse(data.sell.toString()))),
+                          child: Container(
+                            height: 50.0,
+                            width: (width - 1.0) / 2,
+                            alignment: Alignment.center,
+                            child: Text(
+                              locale.SellValue.toUpperCase(),
+                              style: white16BoldTextStyle,
                             ),
                           ),
-                          Container(
-                            height: 30.0,
-                            width: 1.0,
-                            color: whiteColor.withOpacity(0.5),
-                          ),
-                          InkWell(
-                            onTap: () => sellByWeight(
-                                double.parse(data.sell.toString()),
-                                (walletbalace)),
-                            child: Container(
-                              height: 50.0,
-                              width: (width - 1.0) / 2,
-                              alignment: Alignment.center,
-                              child: Text(
-                                locale.SellWeight.toUpperCase(),
-                                style: white16BoldTextStyle,
-                              ),
+                        ),
+                        Container(
+                          height: 30.0,
+                          width: 1.0,
+                          color: whiteColor.withOpacity(0.5),
+                        ),
+                        InkWell(
+                          onTap: () => sellByWeight(
+                              double.parse(data.sell.toString()),
+                              (walletbalace)),
+                          child: Container(
+                            height: 50.0,
+                            width: (width - 1.0) / 2,
+                            alignment: Alignment.center,
+                            child: Text(
+                              locale.SellWeight.toUpperCase(),
+                              style: white16BoldTextStyle,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  body: SafeArea(
-                    child: Container(
-                      child: ListView(
-                        children: [
-                          currencyPriceChart(num.parse(data.sell).toInt()),
-                          aboutPortfolio(),
-                        ],
-                      ),
+                ),
+                body: SafeArea(
+                  child: Container(
+                    child: ListView(
+                      children: [
+                        currencyPriceChart(num.parse(data.sell).toInt()),
+                        aboutPortfolio(),
+                      ],
                     ),
                   ),
                 ),
