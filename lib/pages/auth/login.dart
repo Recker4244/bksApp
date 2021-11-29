@@ -14,6 +14,8 @@ import 'package:sizer/sizer.dart';
 import 'package:gold247/language/languageCubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+enum ButtonSate { init, loading, done }
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -27,6 +29,7 @@ class mobileNumber {
 mobileNumber mobilenumber = mobileNumber();
 
 class _LoginState extends State<Login> {
+  ButtonSate state = ButtonSate.init;
   DateTime currentBackPressTime;
   String phoneIsoCode;
   final numberController = TextEditingController();
@@ -46,11 +49,14 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  bool isAnimated = true;
   bool value = true;
   bool whatsapp = true;
-
+  bool isloading = false;
   @override
   Widget build(BuildContext context) {
+    final isDone = state == ButtonSate.done;
+    final isStretch = isAnimated || state == ButtonSate.init;
     var locale = AppLocalizations.of(context);
     Widget buildCheckbox() {
       return Row(
@@ -218,6 +224,14 @@ class _LoginState extends State<Login> {
                     horizontal: fixPadding * 3.0, vertical: 15.0),
                 child: InkWell(
                   onTap: () async {
+                    setState(() {
+                      state = ButtonSate.loading;
+                    });
+                    await Future.delayed(Duration(seconds: 2));
+                    setState(() {
+                      state = ButtonSate.done;
+                    });
+
                     HapticFeedback.vibrate();
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
@@ -239,21 +253,25 @@ class _LoginState extends State<Login> {
                         child: OTPScreen(),
                       ),
                     );
+                    setState(() {
+                      state = ButtonSate.init;
+                    });
                   },
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 6.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: primaryColor,
-                    ),
-                    child: Text(
-                      locale.continuebutton,
-                      style: white18BoldTextStyle,
-                    ),
-                  ),
+                  child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      width: state == ButtonSate.init
+                          ? MediaQuery.of(context).size.width
+                          : 60,
+                      curve: Curves.easeIn,
+                      onEnd: () {
+                        setState(() {
+                          isAnimated = !isAnimated;
+                        });
+                      },
+                      child: isStretch
+                          ? buildButton(locale)
+                          : buildSmallButton(isDone)),
                 ),
               ),
               SizedBox(
@@ -344,6 +362,24 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Container buildButton(AppLocalizations locale) {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: primaryColor,
+      ),
+      child: FittedBox(
+        child: Text(
+          locale.continuebutton,
+          style: white18BoldTextStyle,
+        ),
+      ),
+    );
+  }
+
   onWillPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
@@ -358,6 +394,20 @@ class _LoginState extends State<Login> {
     } else {
       return true;
     }
+  }
+
+  Widget buildSmallButton(bool isDone) {
+    return Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+        child: Center(
+          child: isDone
+              ? Icon(Icons.done, size: 52, color: scaffoldBgColor)
+              : CircularProgressIndicator(
+                  color: scaffoldBgColor,
+                ),
+        ));
   }
 }
 

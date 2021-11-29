@@ -15,8 +15,10 @@ import 'package:gold247/models/user.dart';
 import 'package:gold247/models/bankDetails.dart';
 import 'package:gold247/pages/auth/login.dart';
 import 'package:otp_autofill/otp_autofill.dart';
+import 'package:sizer/sizer.dart';
 
 var token;
+enum ButtonSate1 { init, loading, done }
 
 class OTPScreen extends StatefulWidget {
   @override
@@ -53,6 +55,7 @@ class _OTPScreenState extends State<OTPScreen> {
       );
   }
 
+  bool isAnimated = true;
   Future getuserdetails(String id) async {
     var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));
 
@@ -69,41 +72,44 @@ class _OTPScreenState extends State<OTPScreen> {
 
 //Prince - To-Do
   loadingDialog() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return Dialog(
-          elevation: 0.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SpinKitRing(
-                      color: primaryColor,
-                      size: 40.0,
-                      lineWidth: 1.2,
-                    ),
-                    SizedBox(height: 25.0),
-                    Text(
-                      'Please Wait..',
-                      style: grey14MediumTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (BuildContext context) {
+    //     // return object of type Dialog
+    //     return Dialog(
+    //       elevation: 0.0,
+    //       shape:
+    //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    //       child: Wrap(
+    //         children: [
+    //           Container(
+    //             padding: EdgeInsets.all(20.0),
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               crossAxisAlignment: CrossAxisAlignment.center,
+    //               children: <Widget>[
+    //                 SpinKitRing(
+    //                   color: primaryColor,
+    //                   size: 40.0,
+    //                   lineWidth: 1.2,
+    //                 ),
+    //                 SizedBox(height: 25.0),
+    //                 Text(
+    //                   'Please Wait..',
+    //                   style: grey14MediumTextStyle,
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
+    setState(() {
+      state = ButtonSate1.loading;
+    });
     var headers = {'Content-Type': 'application/json'};
     final body = {
       "mobile": int.parse(mobilenumber.phoneNumber),
@@ -125,25 +131,31 @@ class _OTPScreenState extends State<OTPScreen> {
 
       if (responseString['user'] == null ||
           responseString['user']['email'] == "") {
-        Timer(
-            Duration(seconds: 3),
-            () => Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: Register(id: responseString['user']['id']))));
+        Timer(Duration(seconds: 3), () {
+          setState(() {
+            state = ButtonSate1.done;
+          });
+          Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: Register(id: responseString['user']['id'])));
+        });
       } else {
         await getuserdetails(responseString['user']['id']);
         if (Userdata.isInvested) {
-          Timer(
-              Duration(seconds: 3),
-              () => Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: BottomBar(
-                        index: 2,
-                      ))));
+          Timer(Duration(seconds: 3), () {
+            setState(() {
+              state = ButtonSate1.done;
+            });
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: BottomBar(
+                      index: 2,
+                    )));
+          });
         } else {
           Timer(
               Duration(seconds: 3),
@@ -225,8 +237,11 @@ class _OTPScreenState extends State<OTPScreen> {
     }
   }
 
+  ButtonSate1 state = ButtonSate1.init;
   @override
   Widget build(BuildContext context) {
+    final isDone = state == ButtonSate1.done;
+    final isStretch = isAnimated || state == ButtonSate1.init;
     var locale = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: scaffoldBgColor,
@@ -433,24 +448,24 @@ class _OTPScreenState extends State<OTPScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
                 child: InkWell(
-                  onTap: () => loadingDialog(),
+                  onTap: () {
+                    loadingDialog();
+                  },
                   borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 50.0,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: primaryColor,
-                    ),
-                    child: Text(
-                      locale.continuebutton,
-                      style: white14BoldTextStyle,
-                    ),
-//                    floatingActionButton: FloatingActionButton(
-//                      onPressed: otpCheck,
-//                    ),
-                  ),
+                  child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      width: state == ButtonSate1.init
+                          ? MediaQuery.of(context).size.width
+                          : 60,
+                      curve: Curves.easeIn,
+                      onEnd: () {
+                        setState(() {
+                          isAnimated = !isAnimated;
+                        });
+                      },
+                      child: isStretch
+                          ? buildButton(locale)
+                          : buildSmallButton(isDone)),
                 ),
               ),
               height20Space,
@@ -459,5 +474,37 @@ class _OTPScreenState extends State<OTPScreen> {
         ],
       ),
     );
+  }
+
+  Container buildButton(AppLocalizations locale) {
+    return Container(
+      width: double.infinity,
+      height: 6.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: primaryColor,
+      ),
+      child: FittedBox(
+        child: Text(
+          locale.continuebutton,
+          style: white18BoldTextStyle,
+        ),
+      ),
+    );
+  }
+
+  Widget buildSmallButton(bool isDone) {
+    return Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+        child: Center(
+          child: isDone
+              ? Icon(Icons.done, size: 52, color: scaffoldBgColor)
+              : CircularProgressIndicator(
+                  color: scaffoldBgColor,
+                ),
+        ));
   }
 }
