@@ -696,15 +696,28 @@ class _CurrencyScreenState extends State<BuyGold> {
                             data: ThemeData(
                               primaryColor: greyColor,
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               controller: amountController,
                               cursorColor: primaryColor,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0)),
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                fillColor: whiteColor,
                                 labelText: locale.value,
                                 labelStyle: primaryColor18BoldTextStyle,
                                 suffix: Text(
@@ -712,10 +725,25 @@ class _CurrencyScreenState extends State<BuyGold> {
                                   style: primaryColor18BoldTextStyle,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: greyColor, width: 0.7),
+                                  borderSide: BorderSide(
+                                      color: primaryColor, width: 0.7),
                                 ),
                               ),
+                              // InputDecoration(
+                              //   focusedBorder: OutlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //           color: primaryColor, width: 2.0)),
+                              //   labelText: locale.value,
+                              //   labelStyle: primaryColor18BoldTextStyle,
+                              //   suffix: Text(
+                              //     'INR',
+                              //     style: primaryColor18BoldTextStyle,
+                              //   ),
+                              //   border: OutlineInputBorder(
+                              //     borderSide:
+                              //         BorderSide(color: greyColor, width: 0.7),
+                              //   ),
+                              // ),
                               onChanged: (value) {
                                 var val =
                                     double.parse('${amountController.text}');
@@ -745,17 +773,35 @@ class _CurrencyScreenState extends State<BuyGold> {
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0)),
-                                labelText: locale.weight,
-                                labelStyle: primaryColor18BoldTextStyle,
-                                suffix: Text(
-                                  locale.GRAM,
-                                  style: primaryColor18BoldTextStyle,
-                                ),
-                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
                                   borderSide:
-                                      BorderSide(color: greyColor, width: 0.7),
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                filled: true,
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                fillColor: whiteColor,
+                                suffix: Text(locale.GRAM,
+                                    style: primaryColor18BoldTextStyle),
+                                labelText: locale.WeightofGold,
+                                labelStyle: primaryColor18BoldTextStyle,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: primaryColor, width: 0.7),
                                 ),
                               ),
                             ),
@@ -896,26 +942,60 @@ class _CurrencyScreenState extends State<BuyGold> {
                             data: ThemeData(
                               primaryColor: greyColor,
                             ),
-                            child: TextField(
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String value) {
+                                if (value == null || value.isEmpty)
+                                  return "Please enter the weight you want to save";
+
+                                return null;
+                              },
                               cursorColor: primaryColor,
                               controller: valueController,
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                filled: true,
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0)),
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                fillColor: whiteColor,
+                                suffix: Text(locale.GRAM,
+                                    style: primaryColor18BoldTextStyle),
                                 labelText: locale.weight,
                                 labelStyle: primaryColor18BoldTextStyle,
-                                suffix: Text(
-                                  locale.GRAM,
-                                  style: primaryColor18BoldTextStyle,
-                                ),
                                 border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: greyColor, width: 0.7),
+                                  borderSide: BorderSide(
+                                      color: primaryColor, width: 0.7),
                                 ),
                               ),
+                              // InputDecoration(
+                              //   focusedBorder: OutlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //           color: primaryColor, width: 2.0)),
+                              //   labelText: locale.weight,
+                              //   labelStyle: primaryColor18BoldTextStyle,
+                              //   suffix: Text(
+                              //     locale.GRAM,
+                              //     style: primaryColor18BoldTextStyle,
+                              //   ),
+                              //   border: OutlineInputBorder(
+                              //     borderSide:
+                              //         BorderSide(color: greyColor, width: 0.7),
+                              //   ),
+                              // ),
                               onChanged: (value) {
                                 var val =
                                     double.parse('${valueController.text}');
@@ -943,15 +1023,32 @@ class _CurrencyScreenState extends State<BuyGold> {
                               keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
+                                filled: true,
+                                // enabledBorder:
+                                // OutlineInputBorder(
+                                //   borderRadius: const BorderRadius.all(
+                                //     const Radius.circular(10.0),
+                                //   ),
+                                //   borderSide: BorderSide(
+                                //       color: primaryColor, width: 1),
+                                // ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 1),
+                                ),
+                                fillColor: whiteColor,
                                 labelText: locale.value,
                                 labelStyle: primaryColor18BoldTextStyle,
-                                prefix: Text(
-                                  'INR  ',
+                                suffix: Text(
+                                  'INR',
                                   style: primaryColor18BoldTextStyle,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: greyColor, width: 0.7),
+                                  borderSide: BorderSide(
+                                      color: primaryColor, width: 0.7),
                                 ),
                               ),
                             ),

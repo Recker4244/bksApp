@@ -353,18 +353,40 @@ class _SellOldState extends State<SellOld> {
                               data: ThemeData(
                                 primaryColor: primaryColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty)
+                                    return "Please enter the weight you want to sell";
+                                  if (num.parse(value) <= 0)
+                                    return "Weight must be greater than 0";
+                                  return null;
+                                },
                                 controller: valueController,
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  labelText: locale.weight,
-                                  fillColor: whiteColor,
-                                  labelStyle: primaryColor18BoldTextStyle,
-                                  suffix: Text(
-                                    locale.GRAM,
-                                    style: primaryColor18BoldTextStyle,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
                                   ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
+                                  suffix: Text(locale.GRAM,
+                                      style: primaryColor18BoldTextStyle),
+                                  labelText: locale.WeightofGold,
+                                  labelStyle: primaryColor18BoldTextStyle,
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: primaryColor, width: 0.7),
@@ -383,12 +405,21 @@ class _SellOldState extends State<SellOld> {
                                 builder: (FormFieldState<String> state) {
                                   return InputDecorator(
                                     decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: whiteColor,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: primaryColor, width: 1),
+                                      ),
                                       labelText:
                                           locale.selectKarat.toUpperCase(),
                                       labelStyle: primaryColor18BoldTextStyle,
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: primaryColor, width: 0.7),
+                                            color: whiteColor, width: 0.7),
                                       ),
                                     ),
                                     isEmpty: CyclePController == '',
@@ -420,7 +451,7 @@ class _SellOldState extends State<SellOld> {
                           ),
                           Container(
                               decoration: BoxDecoration(
-                                  color: scaffoldBgColor,
+                                  color: whiteColor,
                                   border: Border.all(
                                       color: primaryColor, width: 0.7),
                                   borderRadius: BorderRadius.all(
@@ -432,7 +463,7 @@ class _SellOldState extends State<SellOld> {
                               padding: EdgeInsets.all(fixPadding * 2), //TODO
 
                               child: Text(
-                                  "INR ${(double.parse(valueController.text) * num.parse(data.sell).toDouble() * parti.referenceId).toStringAsFixed(2)}",
+                                  "${(double.parse(valueController.text) * num.parse(data.sell).toDouble() * parti.referenceId).toStringAsFixed(2)} INR",
                                   style: primaryColor18BoldTextStyle)),
                           Your_Portfolio(
                               parti.karatage,

@@ -319,6 +319,22 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -330,6 +346,18 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                         color: primaryColor, width: 0.7),
                                   ),
                                 ),
+                                // InputDecoration(
+                                //   labelText: locale.value,
+                                //   labelStyle: primaryColor18BoldTextStyle,
+                                //   suffix: Text(
+                                //     'INR',
+                                //     style: primaryColor18BoldTextStyle,
+                                //   ),
+                                //   border: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 0.7),
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),
@@ -343,6 +371,22 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 builder: (FormFieldState<String> state) {
                                   return InputDecorator(
                                     decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: primaryColor, width: 1),
+                                      ),
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: primaryColor, width: 1),
+                                      ),
+                                      fillColor: whiteColor,
                                       labelText: locale.cyclePeriod,
                                       labelStyle: primaryColor18BoldTextStyle,
                                       border: OutlineInputBorder(
@@ -382,11 +426,36 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                               data: ThemeData(
                                 primaryColor: primaryColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty)
+                                    return "Please enter the duration of plan";
+                                  if (num.parse(value) <= 0)
+                                    return "Duration must be greater than 0";
+                                  return null;
+                                },
                                 controller: DurationController,
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   labelText: locale.duration,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -414,23 +483,52 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextField(
-                                enabled: false,
-                                controller: amountController,
-                                keyboardType: TextInputType.text,
-                                style: primaryColor18BoldTextStyle,
-                                decoration: InputDecoration(
-                                  suffix: Text(
-                                    locale.GRAM,
-                                    style: primaryColor18BoldTextStyle,
+                                  enabled: false,
+                                  controller: amountController,
+                                  keyboardType: TextInputType.text,
+                                  style: primaryColor18BoldTextStyle,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    // enabledBorder:
+                                    // OutlineInputBorder(
+                                    //   borderRadius: const BorderRadius.all(
+                                    //     const Radius.circular(10.0),
+                                    //   ),
+                                    //   borderSide: BorderSide(
+                                    //       color: primaryColor, width: 1),
+                                    // ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 1),
+                                    ),
+                                    fillColor: whiteColor,
+                                    suffix: Text(
+                                      locale.GRAM,
+                                      style: primaryColor18BoldTextStyle,
+                                    ),
+                                    labelText: locale.WeightofGold,
+                                    labelStyle: primaryColor18BoldTextStyle,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 0.7),
+                                    ),
+                                  )
+                                  // InputDecoration(
+                                  //   suffix: Text(
+                                  //     locale.GRAM,
+                                  //     style: primaryColor18BoldTextStyle,
+                                  //   ),
+                                  //   labelText: locale.WeightofGold,
+                                  //   labelStyle: primaryColor18BoldTextStyle,
+                                  //   border: OutlineInputBorder(
+                                  //     borderSide: BorderSide(
+                                  //         color: primaryColor, width: 0.7),
+                                  //   ),
+                                  // ),
                                   ),
-                                  labelText: locale.WeightofGold,
-                                  labelStyle: primaryColor18BoldTextStyle,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: primaryColor, width: 0.7),
-                                  ),
-                                ),
-                              ),
                             ),
                           ),
                         ],

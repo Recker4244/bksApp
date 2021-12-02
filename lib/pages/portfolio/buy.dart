@@ -412,7 +412,7 @@ class _DepositState extends State<Deposit> {
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value == null || value.isEmpty)
-                                return "This field is required";
+                                return "Please enter the weight you want to save";
                               if (num.parse(value) <= 0)
                                 return "Weight must be greater than 0";
                               return null;

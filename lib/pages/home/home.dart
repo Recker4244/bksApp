@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/StandPlans.dart';
@@ -1403,55 +1405,203 @@ class _HomeState extends State<Home> {
                     //balanceContainer(),
 
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //mainAxisSize: MainAxisSize.max,
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 200,
-                              width: 200,
-                              decoration: BoxDecoration(color: Colors.red),
-                              child: Center(child: Text("Hello")),
-                            ),
-                            Container(
-                              height: 200,
-                              width: 200,
-                              decoration: BoxDecoration(color: Colors.green),
-                              child: Center(child: Text("Hello")),
-                            ),
-                          ],
-                        ),
-                        Column(mainAxisSize: MainAxisSize.max, children: [
-                          Expanded(
-                            child: Container(
-                              //height: 200,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  Container(
-                                    height: 200,
-                                    width: 200,
-                                    decoration:
-                                        BoxDecoration(color: Colors.red),
-                                    child: Center(child: Text("Hello")),
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    width: 200,
-                                    decoration:
-                                        BoxDecoration(color: Colors.green),
-                                    child: Center(child: Text("Hello")),
-                                  ),
-                                ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 150,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    color: scaffoldLightColor,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.ac_unit)),
+                                        Text(
+                                          "Buy and Save",
+                                          style: TextStyle(
+                                              color: primaryColor, fontSize: 8),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.ac_unit)),
+                                        Text(
+                                          "Buy Instant Gold",
+                                          style: TextStyle(
+                                              color: primaryColor, fontSize: 8),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.ac_unit)),
+                                        Text(
+                                          "Buy Token Gold",
+                                          style: TextStyle(
+                                              color: primaryColor, fontSize: 8),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(Icons.ac_unit)),
+                                        Text(
+                                          "Shop Gold",
+                                          style: TextStyle(
+                                              color: primaryColor, fontSize: 8),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                              Container(
+                                height: 20.h,
+                                width: 30.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.asset(
+                                    'assets/user/bksmain.png',
+                                    width: 80.w,
+                                    // height: 80.0,
+                                    // fit: BoxFit.cover,
+                                  ),
+                                ),
+                                //decoration: BoxDecoration(color: Colors.red),
+                              ),
+                            ],
                           ),
-                          Container(
-                            height: 200,
-                            width: 100,
-                            decoration: BoxDecoration(color: Colors.amber),
-                            child: Center(child: Text("Hello")),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 20.h,
+                                width: 30.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.asset(
+                                    'assets/user/bksmain.png',
+                                    width: 80.w,
+                                    // height: 80.0,
+                                    // fit: BoxFit.cover,
+                                  ),
+                                ),
+                                //decoration: BoxDecoration(color: Colors.red),
+                              ),
+                              Container(
+                                height: 20.h,
+                                width: 30.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.asset(
+                                    'assets/user/bksmain.png',
+                                    width: 80.w,
+                                    // height: 80.0,
+                                    // fit: BoxFit.cover,
+                                  ),
+                                ),
+                                //decoration: BoxDecoration(color: Colors.red),
+                              ),
+                            ],
                           ),
-                        ]),
+                        ),
+
+                        //     // Column(
+                        //     //   children: [
+                        //     //     Flexible(
+                        //     //       child: Container(
+                        //     //         height: 300,
+                        //     //         child: ListView(
+                        //     //           shrinkWrap: true,
+                        //     //           scrollDirection: Axis.horizontal,
+                        //     //           children: [
+                        //     //             Container(
+                        //     //               height: 200,
+                        //     //               width: 200,
+                        //     //               decoration:
+                        //     //                   BoxDecoration(color: Colors.green),
+                        //     //               child: Center(child: Text("Hello")),
+                        //     //             ),
+                        //     //             Container(
+                        //     //               child: Text("Hello friend"),
+                        //     //             )
+                        //     //           ],
+                        //     //         ),
+                        //     //       ),
+                        //     //     ),
+                        //     //     Flexible(
+                        //     //       child: Container(
+                        //     //         height: 200,
+                        //     //         width: 200,
+                        //     //         decoration: BoxDecoration(color: Colors.green),
+                        //     //         child: Center(child: Text("Hello")),
+                        //     //       ),
+                        //     //     ),
+                        //     //   ],
+                        //     // )
+
+                        //     // ListView(
+                        //     //   scrollDirection: Axis.horizontal,
+                        //     //   children: [
+                        //     //     Container(
+                        //     //       height: 200,
+                        //     //       width: 200,
+                        //     //       decoration: BoxDecoration(color: Colors.red),
+                        //     //       child: Center(child: Text("Hello")),
+                        //     //     ),
+                        //     //     Container(
+                        //     //       height: 200,
+                        //     //       width: 200,
+                        //     //       decoration: BoxDecoration(color: Colors.green),
+                        //     //       child: Center(child: Text("Hello")),
+                        //     //     ),
+                        //     //   ],
+                        //     // ),
+                        //     // Column(mainAxisSize: MainAxisSize.max, children: [
+                        //     //   Expanded(
+                        //     //     child: Container(
+                        //     //       //height: 200,
+                        //     //       child: ListView(
+                        //     //         scrollDirection: Axis.horizontal,
+                        //     //         children: [
+                        //     //           Container(
+                        //     //             height: 200,
+                        //     //             width: 200,
+                        //     //             decoration:
+                        //     //                 BoxDecoration(color: Colors.red),
+                        //     //             child: Center(child: Text("Hello")),
+                        //     //           ),
+                        //     //           Container(
+                        //     //             height: 200,
+                        //     //             width: 200,
+                        //     //             decoration:
+                        //     //                 BoxDecoration(color: Colors.green),
+                        //     //             child: Center(child: Text("Hello")),
+                        //     //           ),
+                        //     //         ],
+                        //     //       ),
+                        //     //     ),
+                        //     //   ),
+                        //     //   Container(
+                        //     //     height: 200,
+                        //     //     width: 100,
+                        //     //     decoration: BoxDecoration(color: Colors.amber),
+                        //     //     child: Center(child: Text("Hello")),
+                        //     //   ),
+                        //     // ]),
                       ],
                     ),
 

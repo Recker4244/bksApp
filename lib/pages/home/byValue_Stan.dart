@@ -468,11 +468,24 @@ class _standardValueState extends State<standardValue> {
                                 cursorColor: primaryColor,
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
+
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
                                     borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0),
+                                        color: primaryColor, width: 1),
                                   ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -484,6 +497,22 @@ class _standardValueState extends State<standardValue> {
                                         color: primaryColor, width: 0.7),
                                   ),
                                 ),
+                                //  InputDecoration(
+                                //   focusedBorder: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 2.0),
+                                //   ),
+                                //   labelText: locale.value,
+                                //   labelStyle: primaryColor18BoldTextStyle,
+                                //   suffix: Text(
+                                //     'INR',
+                                //     style: primaryColor18BoldTextStyle,
+                                //   ),
+                                //   border: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 0.7),
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),

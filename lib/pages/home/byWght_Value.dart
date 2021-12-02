@@ -302,7 +302,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value == null || value.isEmpty)
-                                    return "This field is required";
+                                    return "Please enter the weight you want to save";
                                   if (num.parse(value) <= 0)
                                     return "Weight must be greater than 0";
                                   return null;
@@ -319,6 +319,22 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   suffix: Text(locale.GRAM,
                                       style: primaryColor18BoldTextStyle),
                                   labelText: locale.WeightofGold,
@@ -341,6 +357,22 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 builder: (FormFieldState<String> state) {
                                   return InputDecorator(
                                     decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: primaryColor, width: 1),
+                                      ),
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                            color: primaryColor, width: 1),
+                                      ),
+                                      fillColor: whiteColor,
                                       labelText: locale.cyclePeriod,
                                       labelStyle: primaryColor18BoldTextStyle,
                                       border: OutlineInputBorder(
@@ -348,6 +380,13 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                             color: primaryColor, width: 0.7),
                                       ),
                                     ),
+                                    // InputDecoration(
+
+                                    //   border: OutlineInputBorder(
+                                    //     borderSide: BorderSide(
+                                    //         color: primaryColor, width: 0.7),
+                                    //   ),
+                                    // ),
                                     isEmpty: CyclePController == '',
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton<String>(
@@ -380,11 +419,36 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                               data: ThemeData(
                                 primaryColor: primaryColor,
                               ),
-                              child: TextField(
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty)
+                                    return "Please enter the duration of plan";
+                                  if (num.parse(value) <= 0)
+                                    return "Duration must be greater than 0";
+                                  return null;
+                                },
                                 controller: DurationController,
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   labelText: locale.duration,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -402,6 +466,13 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                         color: primaryColor, width: 0.7),
                                   ),
                                 ),
+                                // InputDecoration(
+
+                                //   border: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 0.7),
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),
@@ -417,6 +488,23 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
+                                  filled: true,
+                                  // enabledBorder:
+                                  // OutlineInputBorder(
+                                  //   borderRadius: const BorderRadius.all(
+                                  //     const Radius.circular(10.0),
+                                  //   ),
+                                  //   borderSide: BorderSide(
+                                  //       color: primaryColor, width: 1),
+                                  // ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
                                   labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(

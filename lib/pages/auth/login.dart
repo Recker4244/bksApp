@@ -213,6 +213,20 @@ class _LoginState extends State<Login> {
                     onInputChanged: (PhoneNumber number) {
                       print(number.phoneNumber);
                     },
+                    inputDecoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                        borderSide: BorderSide(color: Colors.black, width: 0.5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                        borderSide: BorderSide(color: primaryColor, width: 1),
+                      ),
+                    ),
                     validator: (String value) {
                       if (value.startsWith("0")) return 'Invalid Input';
                       return null;
@@ -288,8 +302,59 @@ class _LoginState extends State<Login> {
               //     ),
               //   ),
               // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //       horizontal: fixPadding * 3.0, vertical: 15.0),
+              //   child: InkWell(
+              //       onTap: () async {
+              //         setState(() {
+              //           state = ButtonSate.loading;
+              //         });
+              //         await Future.delayed(Duration(seconds: 2));
+              //         setState(() {
+              //           state = ButtonSate.done;
+              //         });
 
+              //         HapticFeedback.vibrate();
+              //         Navigator.push(
+              //           context,
+              //           PageTransition(
+              //             type: PageTransitionType.leftToRightWithFade,
+              //             child: OTPScreen(),
+              //           ),
+              //         );
+              //         final PhoneNumberOb = numberController.text;
+              //         final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+              //         http.Response response = await http.post(
+              //           Uri.parse("${baseurl}/api/auth/register"),
+              //           headers: {"Content-Type": "application/json"},
+              //           body: json.encode(
+              //               {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+              //         );
+              //         print(response.body);
+              //         if (response.statusCode == 200) {
+              //           mobilenumber.phoneNumber = PhoneReplace;
+              //           mobilenumber.whatsapp = whatsapp;
+              //         }
+              //       },
+              //       child: Text(
+              //         locale.continuebutton,
+              //         style: TextStyle(
+              //           fontFamily: 'Jost',
+              //           fontSize: 18.0.sp,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       )),
+              // ),
               ElevatedButton(
+                  child: Text(
+                    locale.continuebutton,
+                    style: TextStyle(
+                      fontFamily: 'Jost',
+                      fontSize: 18.0.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.symmetric(
                           horizontal: 25.w, vertical: 1.h)),
@@ -300,53 +365,75 @@ class _LoginState extends State<Login> {
                       foregroundColor: getColor(whiteColor, primaryColor),
                       backgroundColor: getColor(primaryColor, whiteColor)),
                   onPressed: () async {
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: fixPadding * 3.0, vertical: 15.0),
-                      child: InkWell(
-                          onTap: () async {
-                            setState(() {
-                              state = ButtonSate.loading;
-                            });
-                            await Future.delayed(Duration(seconds: 2));
-                            setState(() {
-                              state = ButtonSate.done;
-                            });
-
-                            HapticFeedback.vibrate();
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.leftToRightWithFade,
-                                child: OTPScreen(),
-                              ),
-                            );
-                            final PhoneNumberOb = numberController.text;
-                            final PhoneReplace =
-                                PhoneNumberOb.replaceAll(" ", "");
-                            http.Response response = await http.post(
-                              Uri.parse("${baseurl}/api/auth/register"),
-                              headers: {"Content-Type": "application/json"},
-                              body: json.encode({
-                                "mobile": PhoneReplace,
-                                "isWhatsapp": whatsapp
-                              }),
-                            );
-                            print(response.body);
-                            if (response.statusCode == 200) {
-                              mobilenumber.phoneNumber = PhoneReplace;
-                              mobilenumber.whatsapp = whatsapp;
-                            }
-                          },
-                          child: Text(
-                            locale.continuebutton,
-                            style: TextStyle(
-                              fontFamily: 'Jost',
-                              fontSize: 18.0.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                    HapticFeedback.vibrate();
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.leftToRightWithFade,
+                        child: OTPScreen(),
+                      ),
                     );
+                    final PhoneNumberOb = numberController.text;
+                    final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+                    http.Response response = await http.post(
+                      Uri.parse("${baseurl}/api/auth/register"),
+                      headers: {"Content-Type": "application/json"},
+                      body: json.encode(
+                          {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+                    );
+                    print(response.body);
+                    if (response.statusCode == 200) {
+                      mobilenumber.phoneNumber = PhoneReplace;
+                      mobilenumber.whatsapp = whatsapp;
+                    }
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: fixPadding * 3.0, vertical: 15.0),
+                    //   child: InkWell(
+                    //       onTap: () async {
+                    //         setState(() {
+                    //           state = ButtonSate.loading;
+                    //         });
+                    //         await Future.delayed(Duration(seconds: 2));
+                    //         setState(() {
+                    //           state = ButtonSate.done;
+                    //         });
+
+                    //         HapticFeedback.vibrate();
+                    //         Navigator.push(
+                    //           context,
+                    //           PageTransition(
+                    //             type: PageTransitionType.leftToRightWithFade,
+                    //             child: OTPScreen(),
+                    //           ),
+                    //         );
+                    //         final PhoneNumberOb = numberController.text;
+                    //         final PhoneReplace =
+                    //             PhoneNumberOb.replaceAll(" ", "");
+                    //         http.Response response = await http.post(
+                    //           Uri.parse("${baseurl}/api/auth/register"),
+                    //           headers: {"Content-Type": "application/json"},
+                    //           body: json.encode({
+                    //             "mobile": PhoneReplace,
+                    //             "isWhatsapp": whatsapp
+                    //           }),
+
+                    //         );
+                    //         print(response.body);
+                    //         if (response.statusCode == 200) {
+                    //           mobilenumber.phoneNumber = PhoneReplace;
+                    //           mobilenumber.whatsapp = whatsapp;
+                    //         }
+                    //       },
+                    //       child: Text(
+                    //         locale.continuebutton,
+                    //         style: TextStyle(
+                    //           fontFamily: 'Jost',
+                    //           fontSize: 18.0.sp,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       )),
+                    // );
                   }),
               SizedBox(
                 height: 2.h,

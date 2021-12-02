@@ -483,7 +483,11 @@ class _Standard_PCState extends State<Standard_PC> {
                             padding: const EdgeInsets.all(fixPadding * 2),
                             child: Theme(
                               data: ThemeData(
-                                primaryColor: primaryColor,
+                                errorColor: primaryColor,
+                                primaryColor: whiteColor,
+                                textSelectionTheme: TextSelectionThemeData(
+                                  cursorColor: primaryColor,
+                                ),
                               ),
                               child: TextFormField(
                                 cursorColor: primaryColor,
@@ -510,20 +514,46 @@ class _Standard_PCState extends State<Standard_PC> {
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
                                     borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0),
+                                        color: primaryColor, width: 1),
                                   ),
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: primaryColor, width: 1),
+                                  ),
+                                  fillColor: whiteColor,
+                                  suffix: Text(locale.GRAM,
+                                      style: primaryColor18BoldTextStyle),
                                   labelText: locale.WeightofGold,
                                   labelStyle: primaryColor18BoldTextStyle,
-                                  suffix: Text(
-                                    locale.GRAM,
-                                    style: primaryColor18BoldTextStyle,
-                                  ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: primaryColor, width: 0.7),
                                   ),
                                 ),
+                                //  InputDecoration(
+                                //   focusedBorder: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 2.0),
+                                //   ),
+                                //   labelText: locale.WeightofGold,
+                                //   labelStyle: primaryColor18BoldTextStyle,
+                                //   suffix: Text(
+                                //     locale.GRAM,
+                                //     style: primaryColor18BoldTextStyle,
+                                //   ),
+                                //   border: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 0.7),
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),
@@ -545,10 +575,23 @@ class _Standard_PCState extends State<Standard_PC> {
                                 keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
+                                  filled: true,
+                                  // enabledBorder:
+                                  // OutlineInputBorder(
+                                  //   borderRadius: const BorderRadius.all(
+                                  //     const Radius.circular(10.0),
+                                  //   ),
+                                  //   borderSide: BorderSide(
+                                  //       color: primaryColor, width: 1),
+                                  // ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
                                     borderSide: BorderSide(
-                                        color: primaryColor, width: 2.0),
+                                        color: primaryColor, width: 1),
                                   ),
+                                  fillColor: whiteColor,
                                   labelText: locale.value,
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
@@ -560,6 +603,22 @@ class _Standard_PCState extends State<Standard_PC> {
                                         color: primaryColor, width: 0.7),
                                   ),
                                 ),
+                                // InputDecoration(
+                                //   focusedBorder: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 2.0),
+                                //   ),
+                                //   labelText: locale.value,
+                                //   labelStyle: primaryColor18BoldTextStyle,
+                                //   suffix: Text(
+                                //     'INR',
+                                //     style: primaryColor18BoldTextStyle,
+                                //   ),
+                                //   border: OutlineInputBorder(
+                                //     borderSide: BorderSide(
+                                //         color: primaryColor, width: 0.7),
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),
