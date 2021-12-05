@@ -60,6 +60,7 @@ dependencies:
   otp_autofill: ^2.0.0
   top_snackbar_flutter: ^1.0.2
   another_flushbar: ^1.10.26
+  just_audio: ^0.9.18
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/audio/splash.mp3
     - assets/icon/
     - assets/icon/primary-color/
     - assets/icon/grey/

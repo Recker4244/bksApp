@@ -442,6 +442,7 @@ class _OTPScreenState extends State<OTPScreen> with CodeAutoFill {
                         ),
                         textAlign: TextAlign.center,
                         onChanged: (v) {
+                          fourthFocusNode.unfocus();
                           loadingDialog();
                         },
                       ),

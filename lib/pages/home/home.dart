@@ -1408,202 +1408,124 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       //mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        Container(
+                          height: 150,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              color: scaffoldLightColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                height: 150,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                    color: scaffoldLightColor,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.ac_unit)),
-                                        Text(
-                                          "Buy and Save",
-                                          style: TextStyle(
-                                              color: primaryColor, fontSize: 8),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.ac_unit)),
-                                        Text(
-                                          "Buy Instant Gold",
-                                          style: TextStyle(
-                                              color: primaryColor, fontSize: 8),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.ac_unit)),
-                                        Text(
-                                          "Buy Token Gold",
-                                          style: TextStyle(
-                                              color: primaryColor, fontSize: 8),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(Icons.ac_unit)),
-                                        Text(
-                                          "Shop Gold",
-                                          style: TextStyle(
-                                              color: primaryColor, fontSize: 8),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 20.h,
-                                width: 30.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.asset(
-                                    'assets/user/bksmain.png',
-                                    width: 80.w,
-                                    // height: 80.0,
-                                    // fit: BoxFit.cover,
+                              Column(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.ac_unit)),
+                                  Text(
+                                    "Buy and Save",
+                                    style: TextStyle(
+                                        color: primaryColor, fontSize: 8),
                                   ),
-                                ),
-                                //decoration: BoxDecoration(color: Colors.red),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.ac_unit)),
+                                  Text(
+                                    "Buy Instant Gold",
+                                    style: TextStyle(
+                                        color: primaryColor, fontSize: 8),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.ac_unit)),
+                                  Text(
+                                    "Buy Token Gold",
+                                    style: TextStyle(
+                                        color: primaryColor, fontSize: 8),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.ac_unit)),
+                                  Text(
+                                    "Shop Gold",
+                                    style: TextStyle(
+                                        color: primaryColor, fontSize: 8),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 20.h,
-                                width: 30.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.asset(
-                                    'assets/user/bksmain.png',
-                                    width: 80.w,
-                                    // height: 80.0,
-                                    // fit: BoxFit.cover,
-                                  ),
-                                ),
-                                //decoration: BoxDecoration(color: Colors.red),
-                              ),
-                              Container(
-                                height: 20.h,
-                                width: 30.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.asset(
-                                    'assets/user/bksmain.png',
-                                    width: 80.w,
-                                    // height: 80.0,
-                                    // fit: BoxFit.cover,
-                                  ),
-                                ),
-                                //decoration: BoxDecoration(color: Colors.red),
-                              ),
-                            ],
+                        Container(
+                          height: 20.h,
+                          width: 30.w,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              'assets/user/bksmain.png',
+                              width: 80.w,
+                              // height: 80.0,
+                              // fit: BoxFit.cover,
+                            ),
                           ),
+                          //decoration: BoxDecoration(color: Colors.red),
                         ),
-
-                        //     // Column(
-                        //     //   children: [
-                        //     //     Flexible(
-                        //     //       child: Container(
-                        //     //         height: 300,
-                        //     //         child: ListView(
-                        //     //           shrinkWrap: true,
-                        //     //           scrollDirection: Axis.horizontal,
-                        //     //           children: [
-                        //     //             Container(
-                        //     //               height: 200,
-                        //     //               width: 200,
-                        //     //               decoration:
-                        //     //                   BoxDecoration(color: Colors.green),
-                        //     //               child: Center(child: Text("Hello")),
-                        //     //             ),
-                        //     //             Container(
-                        //     //               child: Text("Hello friend"),
-                        //     //             )
-                        //     //           ],
-                        //     //         ),
-                        //     //       ),
-                        //     //     ),
-                        //     //     Flexible(
-                        //     //       child: Container(
-                        //     //         height: 200,
-                        //     //         width: 200,
-                        //     //         decoration: BoxDecoration(color: Colors.green),
-                        //     //         child: Center(child: Text("Hello")),
-                        //     //       ),
-                        //     //     ),
-                        //     //   ],
-                        //     // )
-
-                        //     // ListView(
-                        //     //   scrollDirection: Axis.horizontal,
-                        //     //   children: [
-                        //     //     Container(
-                        //     //       height: 200,
-                        //     //       width: 200,
-                        //     //       decoration: BoxDecoration(color: Colors.red),
-                        //     //       child: Center(child: Text("Hello")),
-                        //     //     ),
-                        //     //     Container(
-                        //     //       height: 200,
-                        //     //       width: 200,
-                        //     //       decoration: BoxDecoration(color: Colors.green),
-                        //     //       child: Center(child: Text("Hello")),
-                        //     //     ),
-                        //     //   ],
-                        //     // ),
-                        //     // Column(mainAxisSize: MainAxisSize.max, children: [
-                        //     //   Expanded(
-                        //     //     child: Container(
-                        //     //       //height: 200,
-                        //     //       child: ListView(
-                        //     //         scrollDirection: Axis.horizontal,
-                        //     //         children: [
-                        //     //           Container(
-                        //     //             height: 200,
-                        //     //             width: 200,
-                        //     //             decoration:
-                        //     //                 BoxDecoration(color: Colors.red),
-                        //     //             child: Center(child: Text("Hello")),
-                        //     //           ),
-                        //     //           Container(
-                        //     //             height: 200,
-                        //     //             width: 200,
-                        //     //             decoration:
-                        //     //                 BoxDecoration(color: Colors.green),
-                        //     //             child: Center(child: Text("Hello")),
-                        //     //           ),
-                        //     //         ],
-                        //     //       ),
-                        //     //     ),
-                        //     //   ),
-                        //     //   Container(
-                        //     //     height: 200,
-                        //     //     width: 100,
-                        //     //     decoration: BoxDecoration(color: Colors.amber),
-                        //     //     child: Center(child: Text("Hello")),
-                        //     //   ),
-                        //     // ]),
                       ],
                     ),
+                    Container(
+                        height: 300,
+                        child: ListView(
+                          padding: EdgeInsets.all(9),
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Container(
+                              height: 20.h,
+                              width: 30.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.asset(
+                                  'assets/user/bksmain.png',
+                                  width: 80.w,
+                                  // height: 80.0,
+                                  // fit: BoxFit.cover,
+                                ),
+                              ),
+                              //decoration: BoxDecoration(color: Colors.red),
+                            ),
+                            Container(
+                              height: 20.h,
+                              width: 30.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.asset(
+                                  'assets/user/bksmain.png',
+                                  width: 80.w,
+                                  // height: 80.0,
+                                  // fit: BoxFit.cover,
+                                ),
+                              ),
+                              //decoration: BoxDecoration(color: Colors.red),
+                            ),
+                            Container(
+                              height: 20.h,
+                              width: 30.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.asset(
+                                  'assets/user/bksmain.png',
+                                  width: 80.w,
+                                  // height: 80.0,
+                                  // fit: BoxFit.cover,
+                                ),
+                              ),
+                              //decoration: BoxDecoration(color: Colors.red),
+                            ),
+                          ],
+                        )),
 
                     buyGold(data.buy),
                     sellGold(data.sell),
@@ -1618,7 +1540,139 @@ class _HomeState extends State<Home> {
                         style: primaryColor16MediumTextStyle,
                       ),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(fixPadding * 2.0,
+                          fixPadding * 2.0, fixPadding * 2.0, 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: whiteColor,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 4.0,
+                              spreadRadius: 1.0,
+                              color: blackColor.withOpacity(0.05),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              //TODO : Push to refer a friend
+
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.0),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(fixPadding * 1.5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(10.0),
+                                  ),
+                                  color: scaffoldBgColor.withOpacity(0.5),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 12.w,
+                                          height: 6.h,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            color: scaffoldBgColor,
+                                          ),
+                                          child: Icon(
+                                            Icons.shopping_bag_rounded,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 2.w,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Buy Token Gold",
+                                              style: black12RegularTextStyle,
+                                            ),
+                                            SizedBox(
+                                              height: 0.5.h,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType.size,
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child:
+                                                    Referal_Bonus_Detials()));
+                                      },
+                                      icon: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 5.w),
+                                      color: primaryColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(10.0),
+                              ),
+                              onTap: () {
+                                // Share.share("$Code", subject: "Referal Code");
+                                // Navigator.push(
+                                //     context,
+                                //     PageTransition(
+                                //         type: PageTransitionType.size,
+                                //         alignment: Alignment.bottomCenter,
+                                //         child: TotalBalance()));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(fixPadding),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.vertical(
+                                    bottom: Radius.circular(10.0),
+                                  ),
+                                  color: whiteColor,
+                                ),
+                                child: Text(
+                                  locale.refer.toUpperCase(),
+                                  style: primaryColor16MediumTextStyle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     referAfriend(Userdata.refCode.toString()),
+
                     SizedBox(
                       height: 2.h,
                     ),

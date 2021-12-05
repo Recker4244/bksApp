@@ -6,9 +6,14 @@ import 'package:gold247/pages/portfolio/Cart.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:sizer/sizer.dart';
 
 double screenw;
+AudioPlayer player = AudioPlayer();
+playSound() {
+  player.play();
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);
@@ -21,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    player.setAsset("assets/audio/splash.mp3");
+    playSound();
     Timer(
         Duration(seconds: 5),
         () => Navigator.push(
