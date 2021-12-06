@@ -1,11 +1,11 @@
 class MetalGroup {
   String createdAt;
   String docType;
-  double fineness;
+  num fineness;
   String id;
   String karatage;
   List<Metals> metals;
-  int referenceId;
+  num referenceId;
   String shortName;
   String updatedAt;
 

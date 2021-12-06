@@ -3,9 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/StandPlans.dart';
-import 'package:gold247/models/appointment.dart';
-import 'package:gold247/models/referral.dart';
-import 'package:gold247/models/subscription.dart';
+
+import 'package:gold247/models/Metalgroup.dart';
 import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/home/byWeightStandard.dart';
 import 'package:gold247/pages/portfolio/referral_bonus_details.dart';
@@ -15,7 +14,6 @@ import 'package:gold247/pages/currencyScreen/buy_gold.dart';
 import 'package:gold247/pages/currencyScreen/sell_gold.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -172,6 +170,30 @@ class _HomeState extends State<Home> {
     await getMetals();
 
     return true;
+  }
+
+  String amount;
+  TextEditingController weight = TextEditingController(text: "1");
+  String CyclePController;
+  List<MetalGroup> temp1 = [];
+  MetalGroup parti;
+  Future getMetalbyID(String id) async {
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/metal-group/${id}'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      List d = jsonDecode(responseString);
+      Iterable l = d;
+      temp1 =
+          List<MetalGroup>.from(l.map((model) => MetalGroup.fromJson(model)));
+      parti = temp[0];
+    } else {
+      print(response.reasonPhrase);
+    }
+    return parti;
   }
 
   @override
@@ -1392,14 +1414,21 @@ class _HomeState extends State<Home> {
                       height: 20.h,
                       width: 60.w,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: Image.asset(
-                          'assets/user/bksmain.png',
-                          width: 80.w,
-                          // height: 80.0,
-                          // fit: BoxFit.cover,
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.network(
+                              "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg")
+                          // Image(
+                          //   image: Image.network(
+                          //       "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg"),
+                          //   height: 200,
+                          // ),
+                          // Image.asset(
+                          //   'assets/user/bksmain.png',
+                          //   width: 80.w,
+                          //   // height: 80.0,
+                          //   // fit: BoxFit.cover,
+                          // ),
+                          ),
                       //decoration: BoxDecoration(color: Colors.red),
                     ),
                     //balanceContainer(),
@@ -1536,18 +1565,17 @@ class _HomeState extends State<Home> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Text(
-                        locale.refer,
+                        "Book Your Gold Now! Pay only 10%",
                         style: primaryColor16MediumTextStyle,
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.fromLTRB(fixPadding * 2.0,
                           fixPadding * 2.0, fixPadding * 2.0, 0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: whiteColor,
+                          color: scaffoldLightColor,
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 4.0,
@@ -1560,82 +1588,130 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                              //TODO : Push to refer a friend
-
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10.0),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.all(fixPadding * 1.5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10.0),
+                            Padding(
+                              padding: const EdgeInsets.all(fixPadding * 2),
+                              child: Theme(
+                                data: ThemeData(
+                                  errorColor: primaryColor,
+                                  primaryColor: whiteColor,
+                                  textSelectionTheme: TextSelectionThemeData(
+                                    cursorColor: primaryColor,
                                   ),
-                                  color: scaffoldBgColor.withOpacity(0.5),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 12.w,
-                                          height: 6.h,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            color: scaffoldBgColor,
-                                          ),
-                                          child: Icon(
-                                            Icons.shopping_bag_rounded,
-                                            color: primaryColor,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 2.w,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Buy Token Gold",
-                                              style: black12RegularTextStyle,
-                                            ),
-                                            SizedBox(
-                                              height: 0.5.h,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                child: TextFormField(
+                                  cursorColor: primaryColor,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (String value) {
+                                    if (value == null || value.isEmpty)
+                                      return "Please enter the weight you want to save";
+                                    if (num.parse(value) < 1)
+                                      return "Weight must be greater than 1";
+                                    return null;
+                                  },
+                                  onChanged: (String value) {
+                                    if (value != null && value.isNotEmpty)
+                                      setState(() {
+                                        amount = (num.parse(value).toDouble() *
+                                                num.parse(data.buy).toDouble())
+                                            .toStringAsFixed(2);
+                                      });
+                                  },
+                                  controller: weight,
+                                  keyboardType: TextInputType.text,
+                                  style: primaryColor18BoldTextStyle,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 1),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            PageTransition(
-                                                type: PageTransitionType.size,
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                child:
-                                                    Referal_Bonus_Detials()));
-                                      },
-                                      icon: Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          size: 5.w),
-                                      color: primaryColor,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 1),
                                     ),
-                                  ],
+                                    fillColor: whiteColor,
+                                    suffix: Text(locale.GRAM,
+                                        style: primaryColor18BoldTextStyle),
+                                    labelText: locale.WeightofGold,
+                                    labelStyle: primaryColor18BoldTextStyle,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 0.7),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(fixPadding * 2),
+                              child: Theme(
+                                data: ThemeData(
+                                  primaryColor: primaryColor,
+                                ),
+                                child: FormField<String>(
+                                  builder: (FormFieldState<String> state) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: primaryColor,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(10.0),
+                                          ),
+                                          borderSide: BorderSide(
+                                              color: primaryColor, width: 1),
+                                        ),
+                                        // labelText:
+                                        //     locale.selectKarat.toUpperCase(),
+                                        // labelStyle: TextStyle(
+                                        //     color: Colors.white,
+                                        //     fontWeight: FontWeight.bold,
+                                        //     fontSize: 18.sp),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: whiteColor, width: 0.7),
+                                        ),
+                                      ),
+                                      isEmpty: CyclePController == '',
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          iconEnabledColor: Colors.white,
+                                          value: CyclePController,
+                                          isDense: true,
+                                          dropdownColor: primaryColor,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14.sp),
+                                          //primaryColor16MediumTextStyle,
+                                          onChanged: (String newValue) async {
+                                            parti =
+                                                await getMetalbyID(newValue);
+                                            setState(() {
+                                              CyclePController = newValue;
+
+//state.didChange(newValue);
+                                            });
+                                          },
+                                          items: temp.map((MetalGroup metal) {
+                                            return DropdownMenuItem<String>(
+                                              value: metal.id,
+                                              child: Text(
+                                                metal.karatage,
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
@@ -1643,15 +1719,7 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.vertical(
                                 bottom: Radius.circular(10.0),
                               ),
-                              onTap: () {
-                                // Share.share("$Code", subject: "Referal Code");
-                                // Navigator.push(
-                                //     context,
-                                //     PageTransition(
-                                //         type: PageTransitionType.size,
-                                //         alignment: Alignment.bottomCenter,
-                                //         child: TotalBalance()));
-                              },
+                              onTap: () {},
                               child: Container(
                                 padding: EdgeInsets.all(fixPadding),
                                 alignment: Alignment.center,
@@ -1662,8 +1730,8 @@ class _HomeState extends State<Home> {
                                   color: whiteColor,
                                 ),
                                 child: Text(
-                                  locale.refer.toUpperCase(),
-                                  style: primaryColor16MediumTextStyle,
+                                  "Pay only 4500 to book your ${weight.text} grams of 24 KT Gold",
+                                  style: primaryColor14MediumTextStyle,
                                 ),
                               ),
                             ),
@@ -1671,10 +1739,20 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Text(
+                        locale.refer,
+                        style: primaryColor16MediumTextStyle,
+                      ),
+                    ),
                     referAfriend(Userdata.refCode.toString()),
 
                     SizedBox(
-                      height: 2.h,
+                      height: 1.h,
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),

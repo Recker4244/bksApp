@@ -93,44 +93,44 @@ class _BottomBarState extends State<BottomBar> {
     return Scaffold(
       bottomNavigationBar: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(color: Colors.amber),
-            height: 8.h,
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: SizedBox(
-                        key: keyBottomNavigation1,
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: SizedBox(
-                        key: keyBottomNavigation2,
-                      ),
-                    )),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: SizedBox(
-                      key: keyBottomNavigation3,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: SizedBox(
-                      key: keyBottomNavigation4,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(color: Colors.amber),
+          //   height: 8.h,
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //           flex: 1,
+          //           child: Center(
+          //             child: SizedBox(
+          //               key: keyBottomNavigation1,
+          //             ),
+          //           )),
+          //       Expanded(
+          //           flex: 1,
+          //           child: Center(
+          //             child: SizedBox(
+          //               key: keyBottomNavigation2,
+          //             ),
+          //           )),
+          //       Expanded(
+          //         flex: 1,
+          //         child: Center(
+          //           child: SizedBox(
+          //             key: keyBottomNavigation3,
+          //           ),
+          //         ),
+          //       ),
+          //       Expanded(
+          //         flex: 1,
+          //         child: Center(
+          //           child: SizedBox(
+          //             key: keyBottomNavigation4,
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Material(
             elevation: 3.0,
             child: Container(
@@ -142,14 +142,14 @@ class _BottomBarState extends State<BottomBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  bottomBarItem(
-                      FontAwesomeIcons.home, 'assets/icon/grey/user.png', 1),
+                  bottomBarItem(FontAwesomeIcons.home,
+                      'assets/icon/grey/user.png', 1, keyBottomNavigation1),
                   bottomBarItem(FontAwesomeIcons.piggyBank,
-                      'assets/icon/grey/user.png', 2),
-                  bottomBarItem(
-                      FontAwesomeIcons.store, 'assets/icon/grey/user.png', 3),
-                  bottomBarItem(
-                      FontAwesomeIcons.user, 'assets/icon/grey/user.png', 4),
+                      'assets/icon/grey/user.png', 2, keyBottomNavigation2),
+                  bottomBarItem(FontAwesomeIcons.store,
+                      'assets/icon/grey/user.png', 3, keyBottomNavigation3),
+                  bottomBarItem(FontAwesomeIcons.user,
+                      'assets/icon/grey/user.png', 4, keyBottomNavigation4),
                 ],
               ),
             ),
@@ -191,8 +191,9 @@ class _BottomBarState extends State<BottomBar> {
     }
   }
 
-  bottomBarItem(icon, nonActiveIconPath, index) {
+  bottomBarItem(icon, nonActiveIconPath, index, Key k) {
     return InkWell(
+      key: k,
       onTap: () => changeIndex(index),
       child: Padding(
         padding: const EdgeInsets.all(fixPadding * 0.6),
