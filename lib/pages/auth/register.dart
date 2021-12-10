@@ -134,12 +134,34 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  Future<bool> verifyPan(String panno) async {
+  Future<String> getAccessToken() async {
     var headers = {
-      'Authorization':
-          'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKamIyNTBZV04wWW10eloyOXNaSFpoZFd4MFFHZHRZV2xzTG1OdmJTSXNJbUZ3YVY5clpYa2lPaUpyWlhsZmJHbDJaVjlwUWxJd1VrbzFOV2gzWkdGbFJUUmtTbUY0TkdaWE5uSmtZM2RRTjBKM2R5SXNJbWx6Y3lJNkltRndhUzV6WVc1a1ltOTRMbU52TG1sdUlpd2laWGh3SWpveE5qWTNNalV5TlRrekxDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TmpNMU56RTJOVGt6ZlEuaVNxZVZna2MxVHNzVEJ6ZF81emx3NW5lenAzZERXWkJNcXYxSm0wV283bDBNWVFlNlFKTEduYkZUcGlBWXc0YThHWW9TVG5JdTBoX1Q2LWxaQV9GT3ciLCJzdWIiOiJjb250YWN0YmtzZ29sZHZhdWx0QGdtYWlsLmNvbSIsImFwaV9rZXkiOiJrZXlfbGl2ZV9pQlIwUko1NWh3ZGFlRTRkSmF4NGZXNnJkY3dQN0J3dyIsImlzcyI6ImFwaS5zYW5kYm94LmNvLmluIiwiZXhwIjoxNjM1ODAyOTkzLCJpbnRlbnQiOiJBQ0NFU1NfVE9LRU4iLCJpYXQiOjE2MzU3MTY1OTN9.ZCByMKxBMidarqLds7vHEBjiVmsYb2G7J_VjCY_fwWlHyTM9ulUu2VPiAgyEPvjPQjkQPLufDVrePsB5UqoYNQ',
       'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
-      'x-api-version': '3.1'
+      'x-api-secret': 'secret_live_x9NUTRidCJAidEDRj4JT9VyMwgcttZ2x',
+      'x-api-version': '1.0'
+    };
+    var request = http.Request(
+        'POST', Uri.parse('https://api.sandbox.co.in/authenticate'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      return det['access_token'];
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future<bool> verifyPan(String panno) async {
+    var token = await getAccessToken();
+    var headers = {
+      'Authorization': token,
+      'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
+      'x-api-version': '1.0'
     };
     var request = http.Request(
         'GET',
