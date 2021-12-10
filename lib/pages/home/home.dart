@@ -1851,10 +1851,7 @@ class _HomeState extends State<Home> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! Something went wrong ")));
+            return errorScreen;
           }
         }
       },

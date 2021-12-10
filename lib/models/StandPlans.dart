@@ -1,5 +1,5 @@
 class standardplan {
-  int bonus;
+  num bonus;
   String createdAt;
   CyclePeriod cyclePeriod;
   String docType;
