@@ -17,6 +17,7 @@ import 'package:gold247/pages/auth/login.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:otp_autofill/otp_autofill.dart';
 import 'package:sizer/sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var token;
 enum ButtonSate1 { init, loading, done }
@@ -149,12 +150,17 @@ class _OTPScreenState extends State<OTPScreen> with CodeAutoFill {
                   child: Register(id: responseString['user']['id'])));
         });
       } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
         await getuserdetails(responseString['user']['id']);
+        String userDetails = jsonEncode(Userdata);
+        prefs.setString('user', userDetails);
+        prefs?.setBool("isLoggedIn", true);
         if (Userdata.isInvested) {
           Timer(Duration(seconds: 3), () {
             setState(() {
               state = ButtonSate1.done;
             });
+
             Navigator.push(
                 context,
                 PageTransition(

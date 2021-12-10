@@ -169,6 +169,11 @@ class _HomeState extends State<Home> {
     await fetchData();
     await getMetals();
 
+    if (temp != null) {
+      CyclePController = temp.first.id;
+      parti = temp.first;
+    }
+
     return true;
   }
 
@@ -178,6 +183,7 @@ class _HomeState extends State<Home> {
   List<MetalGroup> temp1 = [];
   MetalGroup parti;
   Future getMetalbyID(String id) async {
+    MetalGroup metal = MetalGroup();
     var request =
         http.Request('GET', Uri.parse('${baseurl}/api/metal-group/${id}'));
 
@@ -189,11 +195,11 @@ class _HomeState extends State<Home> {
       Iterable l = d;
       temp1 =
           List<MetalGroup>.from(l.map((model) => MetalGroup.fromJson(model)));
-      parti = temp[0];
+      metal = temp[0];
     } else {
       print(response.reasonPhrase);
     }
-    return parti;
+    return metal;
   }
 
   @override
@@ -1410,36 +1416,106 @@ class _HomeState extends State<Home> {
                   physics: BouncingScrollPhysics(),
                   children: [
                     userGreeting(),
-                    Container(
-                      height: 20.h,
-                      width: 60.w,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.network(
-                              "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg")
-                          // Image(
-                          //   image: Image.network(
-                          //       "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg"),
-                          //   height: 200,
-                          // ),
-                          // Image.asset(
-                          //   'assets/user/bksmain.png',
-                          //   width: 80.w,
-                          //   // height: 80.0,
-                          //   // fit: BoxFit.cover,
-                          // ),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                          //aspectRatio: 1.8,
+                          viewportFraction: 0.9,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 5),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 1000),
+                          autoPlayCurve: Curves.easeInCubic,
+                          //enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (index, reason) {
+                            // setState(() {
+                            //   _current_slider = index;
+                            // });
+                          }),
+                      items: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                height: 40.h,
+                                width: 80.w,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                        "https://iide.co/wp-content/uploads/2018/01/Caratlane-Digital-Marketing-Strategy.jpg")
+                                    // Image(
+                                    //   image: Image.network(
+                                    //       "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg"),
+                                    //   height: 200,
+                                    // ),
+                                    // Image.asset(
+                                    //   'assets/user/bksmain.png',
+                                    //   width: 80.w,
+                                    //   // height: 80.0,
+                                    //   // fit: BoxFit.cover,
+                                    // ),
+                                    ),
+                                //decoration: BoxDecoration(color: Colors.red),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 7.0,
+                                      height: 7.0,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 4.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            Color.fromRGBO(112, 112, 112, .3),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                      //decoration: BoxDecoration(color: Colors.red),
+                        ),
+                        // Container(
+                        //             height: 40.h,
+                        //             //width: 60.w,
+                        //             child: ClipRRect(
+                        //                 borderRadius: BorderRadius.circular(15.0),
+                        //                 child: Image.network(
+                        //                     "https://iide.co/wp-content/uploads/2018/01/Caratlane-Digital-Marketing-Strategy.jpg")
+                        //                 // Image(
+                        //                 //   image: Image.network(
+                        //                 //       "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg"),
+                        //                 //   height: 200,
+                        //                 // ),
+                        //                 // Image.asset(
+                        //                 //   'assets/user/bksmain.png',
+                        //                 //   width: 80.w,
+                        //                 //   // height: 80.0,
+                        //                 //   // fit: BoxFit.cover,
+                        //                 // ),
+                        //                 ),
+                        //             //decoration: BoxDecoration(color: Colors.red),
+                        //           )
+                      ],
                     ),
+
                     //balanceContainer(),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       //mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
-                          height: 150,
-                          width: 200,
+                          height: 20.h,
+                          width: 40.w,
                           decoration: BoxDecoration(
                               color: scaffoldLightColor,
                               borderRadius: BorderRadius.circular(10)),
@@ -1450,7 +1526,10 @@ class _HomeState extends State<Home> {
                                 children: [
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.ac_unit)),
+                                      icon: Icon(
+                                        Icons.shop,
+                                        color: primaryColor,
+                                      )),
                                   Text(
                                     "Buy and Save",
                                     style: TextStyle(
@@ -1458,7 +1537,10 @@ class _HomeState extends State<Home> {
                                   ),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.ac_unit)),
+                                      icon: Icon(
+                                        Icons.shop_2_rounded,
+                                        color: primaryColor,
+                                      )),
                                   Text(
                                     "Buy Instant Gold",
                                     style: TextStyle(
@@ -1490,16 +1572,12 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Container(
-                          height: 20.h,
-                          width: 30.w,
+                          height: 25.h,
+                          width: 40.w,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset(
-                              'assets/user/bksmain.png',
-                              width: 80.w,
-                              // height: 80.0,
-                              // fit: BoxFit.cover,
-                            ),
+                            child: Image.network(
+                                "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
                           ),
                           //decoration: BoxDecoration(color: Colors.red),
                         ),
@@ -1511,47 +1589,44 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.all(9),
                           scrollDirection: Axis.horizontal,
                           children: [
-                            Container(
-                              height: 20.h,
-                              width: 30.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: Image.asset(
-                                  'assets/user/bksmain.png',
-                                  width: 80.w,
-                                  // height: 80.0,
-                                  // fit: BoxFit.cover,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 30.h,
+                                width: 40.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.network(
+                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
                                 ),
+                                //decoration: BoxDecoration(color: Colors.red),
                               ),
-                              //decoration: BoxDecoration(color: Colors.red),
                             ),
-                            Container(
-                              height: 20.h,
-                              width: 30.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: Image.asset(
-                                  'assets/user/bksmain.png',
-                                  width: 80.w,
-                                  // height: 80.0,
-                                  // fit: BoxFit.cover,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 30.h,
+                                width: 40.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.network(
+                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
                                 ),
+                                //decoration: BoxDecoration(color: Colors.red),
                               ),
-                              //decoration: BoxDecoration(color: Colors.red),
                             ),
-                            Container(
-                              height: 20.h,
-                              width: 30.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: Image.asset(
-                                  'assets/user/bksmain.png',
-                                  width: 80.w,
-                                  // height: 80.0,
-                                  // fit: BoxFit.cover,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 30.h,
+                                width: 40.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.network(
+                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
                                 ),
+                                //decoration: BoxDecoration(color: Colors.red),
                               ),
-                              //decoration: BoxDecoration(color: Colors.red),
                             ),
                           ],
                         )),
@@ -1692,11 +1767,11 @@ class _HomeState extends State<Home> {
                                               fontSize: 14.sp),
                                           //primaryColor16MediumTextStyle,
                                           onChanged: (String newValue) async {
-                                            parti =
+                                            MetalGroup newmetal =
                                                 await getMetalbyID(newValue);
                                             setState(() {
                                               CyclePController = newValue;
-
+                                              parti = newmetal;
 //state.didChange(newValue);
                                             });
                                           },
@@ -1730,7 +1805,7 @@ class _HomeState extends State<Home> {
                                   color: whiteColor,
                                 ),
                                 child: Text(
-                                  "Pay only 4500 to book your ${weight.text} grams of 24 KT Gold",
+                                  "Pay only ${num.parse(weight.text) * 0.1 * num.parse(data.buy) * parti.referenceId} to book your ${weight.text} grams of 24 KT Gold",
                                   style: primaryColor14MediumTextStyle,
                                 ),
                               ),

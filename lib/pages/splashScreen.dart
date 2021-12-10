@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/AddressDetail.dart';
+import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/portfolio/Cart.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sizer/sizer.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 double screenw;
 AudioPlayer player = AudioPlayer();
@@ -26,12 +30,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     player.setAsset("assets/audio/splash.mp3");
     playSound();
     Timer(
         Duration(seconds: 5),
         () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => Login())));
+  }
+
+  getUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var status = prefs.getBool('isLoggedIn') ?? false;
+
+    if (status) {
+      token = prefs.getString('token');
+      Map userMap = jsonDecode(prefs.getString('user'));
+
+      Userdata = userdata.fromJson(userMap);
+
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => BottomBar(),
+        ),
+      );
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Login()));
+    }
   }
 
   @override

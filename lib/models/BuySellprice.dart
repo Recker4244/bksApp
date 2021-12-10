@@ -7,8 +7,8 @@ class buysellprice {
   buysellprice({this.buy, this.sell, this.buyChange, this.sellChange});
 
   buysellprice.fromJson(Map<String, dynamic> json) {
-    buy = json['buy'];
-    sell = json['sell'];
+    buy = json['buy'].toString();
+    sell = json['sell'].toString();
     buyChange = json['buyChange'];
     sellChange = json['sellChange'];
   }

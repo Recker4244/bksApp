@@ -496,9 +496,12 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
+                                  SizedBox(
+                                    width: 1.5.w,
+                                  ),
                                   Icon(
                                     FontAwesomeIcons.creditCard,
-                                    size: 40,
+                                    size: 30,
                                   ),
                                   width20Space,
                                   Column(
@@ -562,10 +565,11 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
                                   )),
-                              width: double.infinity,
+                              width: 90.w,
                               margin: EdgeInsets.symmetric(
                                   horizontal: fixPadding * 2),
-                              padding: EdgeInsets.all(fixPadding * 2),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: fixPadding * 2),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
