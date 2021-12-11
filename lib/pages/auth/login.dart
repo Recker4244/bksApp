@@ -221,11 +221,10 @@ class _LoginState extends State<Login> {
                         borderSide: BorderSide(color: Colors.black, width: 0.5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
-                        ),
-                        borderSide: BorderSide(color: primaryColor, width: 1),
-                      ),
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide.none),
                     ),
                     validator: (String value) {
                       if (value.startsWith("0")) return 'Invalid Input';
