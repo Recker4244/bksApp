@@ -229,12 +229,11 @@ class _HomeState extends State<Home> {
                   style: grey16MediumTextStyle,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 0.5.h,
                 ),
-                Text(
-                  Userdata.fname ?? "Unknown User" + ' To BKS',
-                  style: black22BoldTextStyle,
-                ),
+                Text(Userdata.fname ?? "Unknown User" + ' To BKS',
+                    style: black22BoldTextStyle.copyWith(
+                        fontSize: 30, fontWeight: FontWeight.w600)),
               ],
             ),
             InkWell(
@@ -451,7 +450,7 @@ class _HomeState extends State<Home> {
     buyGold(String Byprice) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(
-            fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+            fixPadding * 2.0, fixPadding * 2.0 - 12, fixPadding * 2.0, 0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -1418,8 +1417,7 @@ class _HomeState extends State<Home> {
                     userGreeting(),
                     CarouselSlider(
                       options: CarouselOptions(
-                          //aspectRatio: 1.8,
-                          viewportFraction: 0.9,
+                          viewportFraction: 1,
                           initialPage: 0,
                           enableInfiniteScroll: true,
                           reverse: false,
@@ -1437,16 +1435,19 @@ class _HomeState extends State<Home> {
                           }),
                       items: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 0),
                           child: Stack(
                             children: <Widget>[
                               Container(
-                                height: 40.h,
-                                width: 80.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20)),
+                                width: 100.w,
                                 child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
+                                    borderRadius: BorderRadius.circular(20.0),
                                     child: Image.network(
-                                        "https://iide.co/wp-content/uploads/2018/01/Caratlane-Digital-Marketing-Strategy.jpg")
+                                        "https://thejewellerydiaries.com/wp-content/uploads/2019/11/dsc4607.jpg",
+                                        fit: BoxFit.fitWidth)
                                     // Image(
                                     //   image: Image.network(
                                     //       "https://www.khazanajewellery.com/wp-content/uploads/2018/11/B.jpg"),
@@ -1461,25 +1462,25 @@ class _HomeState extends State<Home> {
                                     ),
                                 //decoration: BoxDecoration(color: Colors.red),
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 7.0,
-                                      height: 7.0,
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 10.0, horizontal: 4.0),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color:
-                                            Color.fromRGBO(112, 112, 112, .3),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              // Align(
+                              //   alignment: Alignment.bottomCenter,
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.center,
+                              //     children: [
+                              //       Container(
+                              //         width: 7.0,
+                              //         height: 7.0,
+                              //         margin: EdgeInsets.symmetric(
+                              //             vertical: 10.0, horizontal: 4.0),
+                              //         decoration: BoxDecoration(
+                              //           shape: BoxShape.circle,
+                              //           color:
+                              //               Color.fromRGBO(112, 112, 112, .3),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -1507,64 +1508,84 @@ class _HomeState extends State<Home> {
                       ],
                     ),
 
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("BUY TODAY, SAVE FOR TOMORROW",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                        ],
+                      ),
+                    ),
+
                     //balanceContainer(),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       //mainAxisSize: MainAxisSize.max,
                       children: [
+                        SizedBox(
+                          width: 2.w,
+                        ),
                         Container(
-                          height: 20.h,
-                          width: 40.w,
+                          height: 25.h,
+                          width: 50.w,
                           decoration: BoxDecoration(
-                              color: scaffoldLightColor,
+                              color: whiteColor,
                               borderRadius: BorderRadius.circular(10)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(
-                                        Icons.shop,
-                                        color: primaryColor,
-                                      )),
-                                  Text(
-                                    "Buy and Save",
-                                    style: TextStyle(
-                                        color: primaryColor, fontSize: 8),
-                                  ),
+                                      icon: Icon(Icons.shop,
+                                          color: primaryColor, size: 10.w)),
+                                  Text("Buy and Save",
+                                      style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 8.sp,
+                                          fontWeight: FontWeight.bold)),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(
-                                        Icons.shop_2_rounded,
-                                        color: primaryColor,
-                                      )),
+                                      icon: Icon(Icons.shop_2_rounded,
+                                          color: primaryColor, size: 10.w)),
                                   Text(
                                     "Buy Instant Gold",
                                     style: TextStyle(
-                                        color: primaryColor, fontSize: 8),
+                                        color: primaryColor,
+                                        fontSize: 8.sp,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
                               Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.ac_unit)),
+                                      icon: Icon(Icons.ac_unit, size: 10.w)),
                                   Text(
                                     "Buy Token Gold",
                                     style: TextStyle(
-                                        color: primaryColor, fontSize: 8),
+                                        color: primaryColor,
+                                        fontSize: 8.sp,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.ac_unit)),
+                                      icon: Icon(Icons.ac_unit, size: 10.w)),
                                   Text(
                                     "Shop Gold",
                                     style: TextStyle(
-                                        color: primaryColor, fontSize: 8),
+                                        color: primaryColor,
+                                        fontSize: 8.sp,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -1572,58 +1593,101 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Container(
-                          height: 25.h,
-                          width: 40.w,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                                "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
-                          ),
-                          //decoration: BoxDecoration(color: Colors.red),
-                        ),
+                            height: 25.h,
+                            width: 48.w,
+                            child: ListView(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Container(
+                                    width: 40.w,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    //decoration: BoxDecoration(color: Colors.red),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Container(
+                                    width: 40.w,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://mir-s3-cdn-cf.behance.net/project_modules/1400/f56f6932790573.56940c8b64c93.jpg",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    //decoration: BoxDecoration(color: Colors.red),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Container(
+                                    width: 40.w,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    //decoration: BoxDecoration(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            )
+                            //decoration: BoxDecoration(color: Colors.red),
+                            ),
                       ],
                     ),
                     Container(
-                        height: 300,
+                        height: 55.w,
                         child: ListView(
-                          padding: EdgeInsets.all(9),
+                          padding: EdgeInsets.all(8),
                           scrollDirection: Axis.horizontal,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: Container(
-                                height: 30.h,
-                                width: 40.w,
+                                width: 50.w,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
-                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
+                                      fit: BoxFit.fitWidth),
                                 ),
                                 //decoration: BoxDecoration(color: Colors.red),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: Container(
-                                height: 30.h,
-                                width: 40.w,
+                                width: 50.w,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
-                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
+                                      "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
+                                      fit: BoxFit.fitWidth),
                                 ),
                                 //decoration: BoxDecoration(color: Colors.red),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: Container(
-                                height: 30.h,
-                                width: 40.w,
+                                width: 50.w,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
-                                      "https://newspaperads.ads2publish.com/wp-content/uploads/2018/12/ima-jewels-gold-and-diamond-jewellery-ad-times-of-india-bangalore-29-11-2018.png"),
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
+                                      fit: BoxFit.fitWidth),
                                 ),
                                 //decoration: BoxDecoration(color: Colors.red),
                               ),
