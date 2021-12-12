@@ -102,38 +102,39 @@ class _TransactionScreenState extends State<TransactionScreen> {
         } else {
           if (snapshot.hasData) {
             return DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                backgroundColor: scaffoldBgColor,
-                appBar: AppBar(
+                length: 2,
+                child: Scaffold(
                   backgroundColor: scaffoldBgColor,
-                  automaticallyImplyLeading: false,
-                  title: Text('Your Transactions',
-                      style: primaryColor22BoldTextStyle),
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xFF95203D),
-                      size: 32.0,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  bottom: TabBar(
-                    labelColor: primaryColor,
-                    isScrollable: true,
-                    tabs: [
-                      Tab(
-                        text: 'Credit',
+                  appBar: AppBar(
+                    backgroundColor: whiteColor,
+                    automaticallyImplyLeading: false,
+                    title: Text('Your Transactions',
+                        style: primaryColor22BoldTextStyle),
+                    leading: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFF95203D),
+                        size: 32.0,
                       ),
-                      Tab(text: 'Debit'),
-                    ],
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    bottom: const TabBar(
+                      labelColor: Colors.grey,
+                      labelStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      indicatorColor: primaryColor,
+                      tabs: <Widget>[
+                        Tab(
+                          text: 'Credit',
+                        ),
+                        Tab(text: 'Debit'),
+                      ],
+                    ),
                   ),
-                ),
-                body: TabBarView(
-                  children: [Credit(), Debit()],
-                ),
-              ),
-            );
+                  body: TabBarView(
+                    children: [Credit(), Debit()],
+                  ),
+                ));
           } else {
             return SafeArea(
                 child: Scaffold(

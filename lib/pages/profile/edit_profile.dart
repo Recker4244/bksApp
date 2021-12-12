@@ -295,7 +295,7 @@ class _EditProfileState extends State<EditProfile> {
                   padding: EdgeInsets.only(top: fixPadding, bottom: fixPadding),
                   child: Theme(
                     data: ThemeData(
-                      primaryColor: primaryColor,
+                      primaryColor: whiteColor,
                       textSelectionTheme: TextSelectionThemeData(
                         cursorColor: primaryColor,
                       ),
@@ -304,15 +304,21 @@ class _EditProfileState extends State<EditProfile> {
                       focusNode: nameControl,
                       controller: nameController,
                       keyboardType: TextInputType.text,
-                      style: black14MediumTextStyle,
+                      style: primaryColor16BoldTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Name',
-                        labelStyle: black14MediumTextStyle,
-                        border: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
                             const Radius.circular(10.0),
                           ),
-                          borderSide: BorderSide(color: greyColor, width: 0.7),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
+                        labelText: 'Full Name',
+                        labelStyle: primaryColor16BoldTextStyle,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
                         ),
                       ),
                     ),
@@ -325,7 +331,7 @@ class _EditProfileState extends State<EditProfile> {
                   padding: EdgeInsets.only(top: fixPadding, bottom: fixPadding),
                   child: Theme(
                     data: ThemeData(
-                      primaryColor: primaryColor,
+                      primaryColor: whiteColor,
                       textSelectionTheme: TextSelectionThemeData(
                         cursorColor: primaryColor,
                       ),
@@ -334,12 +340,21 @@ class _EditProfileState extends State<EditProfile> {
                       focusNode: emailControl,
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      style: black14MediumTextStyle,
+                      style: primaryColor16BoldTextStyle,
                       decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
+                        ),
                         labelText: 'Email',
-                        labelStyle: black14MediumTextStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: greyColor, width: 0.7),
+                        labelStyle: primaryColor16BoldTextStyle,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                          borderSide: BorderSide(color: primaryColor, width: 1),
                         ),
                       ),
                     ),

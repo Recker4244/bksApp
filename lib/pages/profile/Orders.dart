@@ -92,7 +92,7 @@ class _OrdersState extends State<Orders> {
               child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 appBar: AppBar(
-                  backgroundColor: scaffoldBgColor,
+                  backgroundColor: whiteColor,
                   automaticallyImplyLeading: false,
                   title:
                       Text('Your Orders', style: primaryColor22BoldTextStyle),
@@ -104,9 +104,11 @@ class _OrdersState extends State<Orders> {
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  bottom: TabBar(
-                    labelColor: primaryColor,
-                    isScrollable: true,
+                  bottom: const TabBar(
+                    labelColor: Colors.grey,
+                    labelStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    indicatorColor: primaryColor,
                     tabs: [
                       Tab(
                         text: 'Processing',

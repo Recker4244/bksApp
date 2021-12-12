@@ -91,7 +91,7 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                 elevation: 0,
                 leading: IconButton(
                   icon: Icon(
-                    Icons.close,
+                    Icons.arrow_back,
                     color: primaryColor,
                     size: 30,
                   ),
