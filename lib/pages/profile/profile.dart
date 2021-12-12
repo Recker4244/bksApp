@@ -75,11 +75,10 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => Navigator.push(
+                          onTap: () => Navigator.pushReplacement(
                               context,
-                              PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: Login())),
+                              new MaterialPageRoute(
+                                  builder: (BuildContext context) => Login())),
                           borderRadius: BorderRadius.circular(10.0),
                           child: Container(
                             width: (width - fixPadding * 14.0) / 2,

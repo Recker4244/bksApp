@@ -237,7 +237,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: locale.username,
+                      hintText: "Full Name",
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),

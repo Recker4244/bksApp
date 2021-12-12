@@ -14,6 +14,8 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+int initScreen;
+
 class BottomBar extends StatefulWidget {
   final int index;
 
@@ -33,13 +35,21 @@ class _BottomBarState extends State<BottomBar> {
   int currentIndex;
   @override
   checkFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool firstTime = prefs.getBool('first_time');
-    if (firstTime != null && !firstTime) {
-    } else {
-      prefs.setBool('first_time', true);
-      Future.delayed(Duration(seconds: 2), showTutorial);
-    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    initScreen = preferences.getInt('initScreen');
+    await preferences.setInt(
+        'initScreen', 1); //already we have launch app return 1
+    initScreen == 0 || initScreen == null
+        ? null
+        : Future.delayed(Duration(seconds: 2), showTutorial);
+
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool firstTime = prefs.getBool('first_time');
+    // if (firstTime != null && !firstTime) {
+    // } else {
+    //   prefs.setBool('first_time', true);
+    //   Future.delayed(Duration(seconds: 2), showTutorial);
+    // }
   }
 
   void initState() {
@@ -70,7 +80,7 @@ class _BottomBarState extends State<BottomBar> {
       context,
       targets: targets,
       colorShadow: Colors.black,
-      textSkip: "Next",
+      textSkip: "Skip",
       paddingFocus: 20,
       opacityShadow: 0.8,
       onFinish: () {
@@ -137,9 +147,8 @@ class _BottomBarState extends State<BottomBar> {
               height: 8.h,
               width: double.infinity,
               color: whiteColor,
-              padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   bottomBarItem(FontAwesomeIcons.home,
@@ -239,6 +248,7 @@ class _BottomBarState extends State<BottomBar> {
     // );
     targets.add(
       TargetFocus(
+        paddingFocus: 3,
         identify: "keyBottomNavigation1",
         keyTarget: keyBottomNavigation1,
         alignSkip: Alignment.topRight,
@@ -267,6 +277,7 @@ class _BottomBarState extends State<BottomBar> {
     );
     targets.add(
       TargetFocus(
+        paddingFocus: 3,
         identify: "keyBottomNavigation2",
         keyTarget: keyBottomNavigation2,
         alignSkip: Alignment.topRight,
@@ -296,6 +307,7 @@ class _BottomBarState extends State<BottomBar> {
 
     targets.add(
       TargetFocus(
+        paddingFocus: 3,
         identify: "keyBottomNavigation3",
         keyTarget: keyBottomNavigation3,
         alignSkip: Alignment.topRight,
@@ -324,6 +336,7 @@ class _BottomBarState extends State<BottomBar> {
     );
     targets.add(
       TargetFocus(
+        paddingFocus: 3,
         identify: "keyBottomNavigation4",
         keyTarget: keyBottomNavigation4,
         alignSkip: Alignment.topRight,
