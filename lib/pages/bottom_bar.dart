@@ -35,21 +35,21 @@ class _BottomBarState extends State<BottomBar> {
   int currentIndex;
   @override
   checkFirstTime() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    initScreen = preferences.getInt('initScreen');
-    await preferences.setInt(
-        'initScreen', 1); //already we have launch app return 1
-    initScreen == 0 || initScreen == null
-        ? null
-        : Future.delayed(Duration(seconds: 2), showTutorial);
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // initScreen = preferences.getInt('initScreen');
+    // await preferences.setInt(
+    //     'initScreen', 1); //already we have launch app return 1
+    // initScreen == 0 || initScreen == null
+    //     ? null
+    //     : Future.delayed(Duration(seconds: 2), showTutorial);
 
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // bool firstTime = prefs.getBool('first_time');
-    // if (firstTime != null && !firstTime) {
-    // } else {
-    //   prefs.setBool('first_time', true);
-    //   Future.delayed(Duration(seconds: 2), showTutorial);
-    // }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool firstTime = prefs.getBool('first_time');
+    if (firstTime != null && !firstTime) {
+    } else {
+      prefs.setBool('first_time', true);
+      Future.delayed(Duration(seconds: 2), showTutorial);
+    }
   }
 
   void initState() {
