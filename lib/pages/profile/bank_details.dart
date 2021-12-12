@@ -51,7 +51,7 @@ class _BankDetailsState extends State<BankDetails> {
     );
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
-      if (responseString != null) {
+      if (responseString['data'] != null) {
         setState(() {
           accountNumberController.text = responseString['data']['Accountnum'];
           ifscCodeController.text = responseString['data']['IFSC'];
@@ -78,6 +78,28 @@ class _BankDetailsState extends State<BankDetails> {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future<String> getAccessToken() async {
+    var headers = {
+      'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
+      'x-api-secret': 'secret_live_x9NUTRidCJAidEDRj4JT9VyMwgcttZ2x',
+      'x-api-version': '1.0'
+    };
+    var request = http.Request(
+        'POST', Uri.parse('https://api.sandbox.co.in/authenticate'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      return det['access_token'];
     } else {
       print(response.reasonPhrase);
     }
@@ -137,19 +159,24 @@ class _BankDetailsState extends State<BankDetails> {
       );
       return FocusScope.of(context).requestFocus(ifscFocus);
     }
+    String token = await getAccessToken();
     http.Response response;
     var headers = {
-      'Authorization':
-          'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1Gd2FWOXJaWGtpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1semN5STZJbUZ3YVM1eGRXbGphMjh1WTI5dElpd2laWGh3SWpveE5Ua3dPVFk1TmpBd0xDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TlRVNU16UTNNakF3ZlEueHNmYkhQTERFRlRvTy1OUWdaUUpLM25OUjFxdlhvWmhaOHRqS3gzSExydjZiVkJaMHpJZEZ5ai1MUTg1YnJZS0xXQnFnZHlzZ1NDSXlDUXNtV2VOYkEiLCJzdWIiOiJqb2huQGRvZS5jb20iLCJhcGlfa2V5Ijoia2V5X2xpdmVfQWRlKioqKioqKioqKioqKioqKioqKioqKioqKipVeHMiLCJpc3MiOiJhcGkucXVpY2tvLmNvbSIsImV4cCI6MTU5MTA1NjAwMCwiaW50ZW50IjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNTkwOTY5NjAwfQ.nH23CR5RHGQ0U19I_vq3vyJ_85A1a2iEMQij5QHgJQdDuS9x7FmTidsr1CQabSFF5ujE40SFxHv1gJM20TauUw',
-      'x-api-key': 'key_live_Ade**************************Uxs',
-      'x-api-version': '3.1'
+      'Authorization': token,
+      'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
+      'x-api-version': '1.0'
     };
-    final queryParams = {'name': Userdata.fname, 'mobile': Userdata.mobile};
+    final queryParams = {
+      'name': Userdata.fname,
+      'mobile': Userdata.mobile.toString()
+    };
 
     final uri = Uri.https('api.sandbox.co.in',
         'bank/${ifsc}/accounts/${accntno}/verify', queryParams);
     response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+
       if (value == true) {
         http.Response responseBank = await http.post(
           Uri.parse("${baseurl}/api/bank/${Userdata.id}"),

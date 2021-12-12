@@ -30,9 +30,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    player.setAsset("assets/audio/splash.mp3");
+    playSound();
+
     getUserDetails();
-    // player.setAsset("assets/audio/splash.mp3");
-    // playSound();
   }
 
   getUserDetails() async {
