@@ -30,18 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    getUserDetails();
     player.setAsset("assets/audio/splash.mp3");
     playSound();
-    Timer(
-        Duration(seconds: 5),
-        () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Login())));
   }
 
   getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
+    var status = prefs.getBool('isLoggedIn');
 
     if (status) {
       token = prefs.getString('token');
