@@ -991,8 +991,8 @@ class _GuestHomeState extends State<GuestHome> {
                 children: [
                   userGreeting(),
                   activityContainer(),
-                  buyGold(data.buy),
-                  sellGold(data.sell),
+                  buyGold(data.buy.toStringAsFixed(2)),
+                  sellGold(data.sell.toStringAsFixed(2)),
                   SizedBox(
                     height: 8,
                   ),

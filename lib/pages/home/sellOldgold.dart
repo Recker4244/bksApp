@@ -46,7 +46,7 @@ class _SellOldState extends State<SellOld> {
     request.bodyFields = {
       "weight": valueController.text,
       "metalGroup": karatageID,
-      "buySellPrice": data.buy,
+      "buySellPrice": data.buy.toStringAsFixed(2),
     };
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -336,8 +336,7 @@ class _SellOldState extends State<SellOld> {
                     children: <Widget>[
                       Gold_Price_bar(
                         karatage: parti.karatage,
-                        buyprice:
-                            num.parse(data.sell).toDouble() * parti.referenceId,
+                        buyprice: data.sell * parti.referenceId,
                       ),
                       heightSpace,
                       height20Space,
@@ -463,15 +462,14 @@ class _SellOldState extends State<SellOld> {
                               padding: EdgeInsets.all(fixPadding * 2), //TODO
 
                               child: Text(
-                                  "${(double.parse(valueController.text) * num.parse(data.sell).toDouble() * parti.referenceId).toStringAsFixed(2)} INR",
+                                  "${(double.parse(valueController.text) * data.sell * parti.referenceId).toStringAsFixed(2)} INR",
                                   style: primaryColor18BoldTextStyle)),
                           Your_Portfolio(
                               parti.karatage,
-                              num.parse(data.sell).toDouble() *
-                                  parti.referenceId,
+                              data.sell * parti.referenceId,
                               valueController.text,
                               (double.parse(valueController.text) *
-                                      num.parse(data.sell).toDouble() *
+                                      data.sell *
                                       parti.referenceId)
                                   .toStringAsFixed(2)),
                           Center(

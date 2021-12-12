@@ -227,8 +227,8 @@ class _LoginState extends State<Login> {
                           borderSide: BorderSide.none),
                     ),
                     validator: (String value) {
-                      if (!value.startsWith("9") ||
-                          !value.startsWith("8") ||
+                      if (!value.startsWith("9") &&
+                          !value.startsWith("8") &&
                           !value.startsWith("6")) return 'Invalid Input';
                       return null;
                     },

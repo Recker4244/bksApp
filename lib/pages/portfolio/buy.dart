@@ -377,7 +377,7 @@ class _DepositState extends State<Deposit> {
                                           ],
                                         ),
                                         Text(
-                                          "INR ${num.parse(data.buy).toDouble().toStringAsFixed(2)}",
+                                          "INR ${data.buy.toStringAsFixed(2)}",
                                           style: black16BoldTextStyle,
                                         ),
                                       ],
@@ -419,9 +419,9 @@ class _DepositState extends State<Deposit> {
                             },
                             onChanged: (String value) {
                               setState(() {
-                                amountController.text = (double.parse(value) *
-                                        num.parse(data.buy).toDouble())
-                                    .toStringAsFixed(2);
+                                amountController.text =
+                                    (double.parse(value) * data.buy)
+                                        .toStringAsFixed(2);
                               });
                             },
                             controller: weightController,
@@ -734,7 +734,7 @@ class _DepositState extends State<Deposit> {
                           ],
                         ),
                         Text(
-                          "INR ${num.parse(data.sell).toDouble().toStringAsFixed(2)}",
+                          "INR ${data.sell.toStringAsFixed(2)}",
                           style: black16BoldTextStyle,
                         ),
                       ],

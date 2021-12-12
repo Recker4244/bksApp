@@ -84,7 +84,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   void openCheckout() async {
     var options = {
       'key': Rkey,
-      'amount': (widget.val * num.parse(data.buy).toDouble()) * 100,
+      'amount': (widget.val * data.buy) * 100,
       'name': "Flexi Plan",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
@@ -457,11 +457,11 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                               padding: EdgeInsets.all(fixPadding * 2),
                               child: widget.mode == 1
                                   ? Text(
-                                      "${(widget.val * num.parse(data.buy).toDouble()).toStringAsFixed(2)} INR",
+                                      "${(widget.val * data.buy).toStringAsFixed(2)} INR",
                                       style: primaryColor16BoldTextStyle,
                                     )
                                   : Text(
-                                      "${(widget.val * num.parse(data.buy).toDouble()).toStringAsFixed(2)} INR",
+                                      "${(widget.val * data.buy).toStringAsFixed(2)} INR",
                                       style: primaryColor16BoldTextStyle,
                                     )),
                           Your_Portfolio(

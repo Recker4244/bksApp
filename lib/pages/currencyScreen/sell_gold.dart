@@ -1168,7 +1168,7 @@ class _CurrencyScreenState extends State<SellGold> {
                   child: Container(
                     child: ListView(
                       children: [
-                        currencyPriceChart(num.parse(data.sell).toInt()),
+                        currencyPriceChart(data.sell),
                         aboutPortfolio(),
                       ],
                     ),

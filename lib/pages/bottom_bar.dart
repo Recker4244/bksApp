@@ -71,7 +71,7 @@ class _BottomBarState extends State<BottomBar> {
       targets: targets,
       colorShadow: Colors.black,
       textSkip: "Next",
-      paddingFocus: 20,
+      paddingFocus: 5,
       opacityShadow: 0.8,
       onFinish: () {
         print("finish");
@@ -88,47 +88,36 @@ class _BottomBarState extends State<BottomBar> {
     )..show();
   }
 
+  Key place1 = Key("");
+  Key place2 = Key("");
+  Key place3 = Key("");
+  Key place4 = Key("");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Stack(
         children: [
-          // Container(
-          //   decoration: BoxDecoration(color: Colors.amber),
-          //   height: 8.h,
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //           flex: 1,
-          //           child: Center(
-          //             child: SizedBox(
-          //               key: keyBottomNavigation1,
-          //             ),
-          //           )),
-          //       Expanded(
-          //           flex: 1,
-          //           child: Center(
-          //             child: SizedBox(
-          //               key: keyBottomNavigation2,
-          //             ),
-          //           )),
-          //       Expanded(
-          //         flex: 1,
-          //         child: Center(
-          //           child: SizedBox(
-          //             key: keyBottomNavigation3,
-          //           ),
-          //         ),
-          //       ),
-          //       Expanded(
-          //         flex: 1,
-          //         child: Center(
-          //           child: SizedBox(
-          //             key: keyBottomNavigation4,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
+          // Material(
+          //   elevation: 3.0,
+          //   child: Container(
+          //     height: 8.h,
+          //     width: double.infinity,
+          //     color: whiteColor,
+          //     padding: EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         bottomBarItem(FontAwesomeIcons.home, 1,
+          //             'assets/icon/grey/user.png', keyBottomNavigation1),
+          //         bottomBarItem(FontAwesomeIcons.piggyBank,
+          //             'assets/icon/grey/user.png', 2, keyBottomNavigation2),
+          //         bottomBarItem(FontAwesomeIcons.store,
+          //             'assets/icon/grey/user.png', 3, keyBottomNavigation3),
+          //         bottomBarItem(FontAwesomeIcons.user,
+          //             'assets/icon/grey/user.png', 4, keyBottomNavigation4),
+          //       ],
+          //     ),
           //   ),
           // ),
           Material(
@@ -142,14 +131,26 @@ class _BottomBarState extends State<BottomBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  bottomBarItem(FontAwesomeIcons.home,
-                      'assets/icon/grey/user.png', 1, keyBottomNavigation1),
-                  bottomBarItem(FontAwesomeIcons.piggyBank,
-                      'assets/icon/grey/user.png', 2, keyBottomNavigation2),
-                  bottomBarItem(FontAwesomeIcons.store,
-                      'assets/icon/grey/user.png', 3, keyBottomNavigation3),
-                  bottomBarItem(FontAwesomeIcons.user,
-                      'assets/icon/grey/user.png', 4, keyBottomNavigation4),
+                  bottomBarItem(
+                      FontAwesomeIcons.home,
+                      'assets/icon/grey/user.png',
+                      place1,
+                      keyBottomNavigation1),
+                  bottomBarItem(
+                      FontAwesomeIcons.piggyBank,
+                      'assets/icon/grey/user.png',
+                      place2,
+                      keyBottomNavigation2),
+                  bottomBarItem(
+                      FontAwesomeIcons.store,
+                      'assets/icon/grey/user.png',
+                      place3,
+                      keyBottomNavigation3),
+                  bottomBarItem(
+                      FontAwesomeIcons.user,
+                      'assets/icon/grey/user.png',
+                      place4,
+                      keyBottomNavigation4),
                 ],
               ),
             ),

@@ -31,15 +31,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getUserDetails();
-    player.setAsset("assets/audio/splash.mp3");
-    playSound();
+    // player.setAsset("assets/audio/splash.mp3");
+    // playSound();
   }
 
   getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn');
 
-    if (status) {
+    if (status != null && status == true) {
       token = prefs.getString('token');
       Map userMap = jsonDecode(prefs.getString('user'));
 

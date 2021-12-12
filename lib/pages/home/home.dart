@@ -18,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'byValue_Wght.dart';
 import 'byWght_Value.dart';
@@ -29,6 +30,7 @@ import 'package:share/share.dart';
 import 'byWeightStandard.dart';
 import 'package:gold247/language/locale.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 Map MapVal;
 
@@ -96,34 +98,21 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // String calVal(int mode, int weight, int duration, int bonus, int value) {
-  //   if (mode == 1) {
-  //     return ((weight * duration) * (1 + bonus * 0.01)).toStringAsPrecision(3);
-  //   } else {
-  //     return (((value / int.parse(data.kt24.buy) * duration) * (1 + bonus * 0.01))
-  //         .toStringAsPrecision(3);
-  //   }
-  // }
+  num tokenGoldPercentage;
+  Future getTokengoldCalculation() async {
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/61b3a8add59d6bacdd6ef5a2'));
 
-  // subscription Subscription = subscription();
-  // Future getGoldBalance() async {
-  //   var request = http.Request(
-  //       'GET',
-  //       Uri.parse(
-  //           '${baseurl}/api/subscription/balance/${Userdata.id}/${Subscription.id}'));
+    http.StreamedResponse response = await request.send();
 
-  //   http.StreamedResponse response = await request.send();
-
-  //   if (response.statusCode == 200) {
-  //     final responseString = await response.stream.bytesToString();
-  //     Map det = jsonDecode(responseString);
-  //     int gold = det['planBalance'];
-  //     goldbalance = gold.toString();
-  //     bonusbalance = (gold * 0.1).toString();
-  //   } else {
-  //     print(response.reasonPhrase);
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(await response.stream.bytesToString());
+      num d = responseString['data'][0]['Percentage'];
+      tokenGoldPercentage = d / 100;
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   double bonusPercentage;
   Future getcalculation() async {
@@ -164,6 +153,7 @@ class _HomeState extends State<Home> {
   Future<bool> initialise() async {
     await getportfoliobalance();
     await getcalculation();
+    await getTokengoldCalculation();
     //await getGoldBalance();
     await fetchStandardPlans();
     await fetchData();
@@ -195,11 +185,33 @@ class _HomeState extends State<Home> {
       Iterable l = d;
       temp1 =
           List<MetalGroup>.from(l.map((model) => MetalGroup.fromJson(model)));
-      metal = temp[0];
+      metal = temp1[0];
     } else {
       print(response.reasonPhrase);
     }
     return metal;
+  }
+
+  Razorpay _razorpay;
+  final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
+  openCheckout(String amount) async {
+    var options = {
+      'key': Rkey,
+      'amount': (double.parse(amount)) * 100.0,
+      'name': "Standard Plan",
+      'retry': {'enabled': true, 'max_count': 1},
+      'send_sms_hash': true,
+      'prefill': {'contact': Userdata.mobile, 'email': Userdata.email},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
   }
 
   @override
@@ -1193,7 +1205,7 @@ class _HomeState extends State<Home> {
       );
     }
 
-    SellOldGold(double sell24, double sell22, double sell18, {width}) {
+    SellOldGold(num sell24, num sell22, num sell18, {width}) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(
             fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
@@ -1695,8 +1707,8 @@ class _HomeState extends State<Home> {
                           ],
                         )),
 
-                    buyGold(data.buy),
-                    sellGold(data.sell),
+                    buyGold(data.buy.toStringAsFixed(2)),
+                    sellGold(data.sell.toStringAsFixed(2)),
                     height20Space,
                     myPortfolio(),
                     height20Space,
@@ -1704,7 +1716,7 @@ class _HomeState extends State<Home> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Text(
-                        "Book Your Gold Now! Pay only 10%",
+                        "Book Your Gold Now! Pay only ${tokenGoldPercentage * 100}%",
                         style: primaryColor16MediumTextStyle,
                       ),
                     ),
@@ -1752,7 +1764,9 @@ class _HomeState extends State<Home> {
                                     if (value != null && value.isNotEmpty)
                                       setState(() {
                                         amount = (num.parse(value).toDouble() *
-                                                num.parse(data.buy).toDouble())
+                                                data.buy *
+                                                tokenGoldPercentage *
+                                                parti.referenceId)
                                             .toStringAsFixed(2);
                                       });
                                   },
@@ -1832,7 +1846,11 @@ class _HomeState extends State<Home> {
                                           //primaryColor16MediumTextStyle,
                                           onChanged: (String newValue) async {
                                             MetalGroup newmetal =
-                                                await getMetalbyID(newValue);
+                                                temp.firstWhere((MetalGroup i) {
+                                              if (i.id == newValue) return true;
+                                              return false;
+                                            });
+                                            // await getMetalbyID(newValue);
                                             setState(() {
                                               CyclePController = newValue;
                                               parti = newmetal;
@@ -1858,7 +1876,20 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.vertical(
                                 bottom: Radius.circular(10.0),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                createtokenGoldRequest(
+                                    parti.id,
+                                    Userdata.id,
+                                    data.id,
+                                    weight.text,
+                                    "61b3a8add59d6bacdd6ef5a2",
+                                    "",
+                                    (num.parse(weight.text) *
+                                            tokenGoldPercentage *
+                                            data.buy *
+                                            parti.referenceId)
+                                        .toStringAsFixed(2));
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(fixPadding),
                                 alignment: Alignment.center,
@@ -1869,7 +1900,7 @@ class _HomeState extends State<Home> {
                                   color: whiteColor,
                                 ),
                                 child: Text(
-                                  "Pay only ${num.parse(weight.text) * 0.1 * num.parse(data.buy) * parti.referenceId} to book your ${weight.text} grams of 24 KT Gold",
+                                  "Pay only ${num.parse(weight.text) * tokenGoldPercentage * data.buy * parti.referenceId} INR to book your ${weight.text} grams of 24 KT Gold",
                                   style: primaryColor14MediumTextStyle,
                                 ),
                               ),
@@ -1901,14 +1932,13 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     SellOldGold(
-                        double.parse(data.sell),
-                        double.parse((num.parse(data.sell).toDouble() *
-                                temp[1].referenceId.toDouble())
-                            .toStringAsFixed(2)),
-                        double.parse((num.parse(data.sell).toDouble() *
-                                temp[1].referenceId.toDouble() *
-                                0.75)
-                            .toStringAsFixed(2)),
+                        data.sell,
+                        double.parse(
+                            (data.sell * temp[1].referenceId.toDouble())
+                                .toStringAsFixed(2)),
+                        double.parse(
+                            (data.sell * temp[2].referenceId.toDouble())
+                                .toStringAsFixed(2)),
                         width: width),
                   ],
                 ),
@@ -1920,5 +1950,37 @@ class _HomeState extends State<Home> {
         }
       },
     );
+  }
+}
+
+void createtokenGoldRequest(
+    String metalgroupId,
+    String userId,
+    String buysellId,
+    String weightEntered,
+    String calculationId,
+    String paymentId,
+    String amount) async {
+  var headers = {'Content-Type': 'application/json'};
+  var request = http.Request('POST', Uri.parse('${baseurl}/token-gold'));
+  request.body = json.encode({
+    "metalGroup": metalgroupId,
+    "user": userId,
+    "buySell": buysellId,
+    "weightEntered": weightEntered,
+    "calculation": calculationId,
+    "paymentId": paymentId,
+    "amountPaid": amount,
+    "status": "Completed",
+    "returnReason": null
+  });
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    print(await response.stream.bytesToString());
+  } else {
+    print(response.reasonPhrase);
   }
 }

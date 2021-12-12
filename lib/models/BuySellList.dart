@@ -1,9 +1,9 @@
 class BuySellList {
-  String buy;
+  num buy;
   String createdAt;
   String docType;
   String id;
-  String sell;
+  num sell;
   String updatedAt;
 
   BuySellList(

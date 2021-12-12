@@ -172,7 +172,11 @@ class _RegisterState extends State<Register> {
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      return true;
+      final responseString = jsonDecode(await response.stream.bytesToString());
+      if (responseString['data']['full_name'] == nameController.text)
+        return true;
+      else
+        return false;
     }
     return false;
   }

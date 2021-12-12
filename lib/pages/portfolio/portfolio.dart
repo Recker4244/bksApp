@@ -155,7 +155,7 @@ class _PortfolioState extends State<Portfolio> {
       Map det = jsonDecode(responseString);
 
       data = buysellprice.fromJson(det['data']);
-      amount = (gold * num.parse(data.buy).toDouble()).toStringAsFixed(2);
+      amount = (gold * data.buy).toStringAsFixed(2);
     } else {
       print(response.reasonPhrase);
     }

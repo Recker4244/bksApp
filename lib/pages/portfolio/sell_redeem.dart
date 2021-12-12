@@ -198,7 +198,7 @@ class _WithdrawState extends State<Withdraw> {
                                           ],
                                         ),
                                         Text(
-                                          "INR ${num.parse(data.buy).toDouble().toStringAsFixed(2)}",
+                                          "INR ${data.buy.toStringAsFixed(2)}",
                                           style: black16BoldTextStyle,
                                         ),
                                       ],
@@ -242,9 +242,9 @@ class _WithdrawState extends State<Withdraw> {
                             },
                             onChanged: (String value) {
                               setState(() {
-                                amountController.text = (double.parse(value) *
-                                        num.parse(data.buy).toDouble())
-                                    .toStringAsFixed(2);
+                                amountController.text =
+                                    (double.parse(value) * data.buy)
+                                        .toStringAsFixed(2);
                               });
                             },
                             controller: weightController,
@@ -318,7 +318,7 @@ class _WithdrawState extends State<Withdraw> {
                     //         onChanged: (value) {
                     //           setState(() {
                     //             amountController.text =
-                    //                 (num.parse(data.sell).toDouble() *
+                    //                 (data.sell *
                     //                         double.parse(weightController.text))
                     //                     .toStringAsFixed(2);
                     //           });
@@ -562,7 +562,7 @@ class _WithdrawState extends State<Withdraw> {
                           ],
                         ),
                         Text(
-                          "INR ${num.parse(data.sell).toDouble().toStringAsFixed(2)}",
+                          "INR ${data.sell.toStringAsFixed(2)}",
                           style: black16BoldTextStyle,
                         ),
                       ],

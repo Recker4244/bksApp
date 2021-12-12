@@ -1157,7 +1157,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                   child: ListView(
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      currencyPriceChart(num.parse(data.buy)),
+                      currencyPriceChart(data.buy),
                       aboutPortfolio(),
                     ],
                   ),

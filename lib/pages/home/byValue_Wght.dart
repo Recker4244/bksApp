@@ -166,7 +166,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                             child: ByValFlexi(
                                 gold: double.parse(valueController.text),
                                 val: (double.parse(valueController.text) /
-                                    num.parse(data.buy).toDouble()),
+                                    data.buy),
                                 duration: int.parse(DurationController.text),
                                 CycleP: CyclePController,
                                 planname:
@@ -310,8 +310,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 onChanged: (String value) {
                                   setState(() {
                                     amountController.text =
-                                        (num.parse(value).toDouble() /
-                                                num.parse(data.buy).toDouble())
+                                        (num.parse(value).toDouble() / data.buy)
                                             .toStringAsFixed(2);
                                   });
                                 },

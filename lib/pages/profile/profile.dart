@@ -13,6 +13,7 @@ import 'package:gold247/pages/portfolio/Collections.dart';
 import 'dart:convert';
 import 'package:gold247/language/locale.dart';
 import 'package:sizer/sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -22,7 +23,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  logout() async {
+    Userdata = userdata();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLoggedIn", false);
+    prefs.clear();
+  }
+
   logoutDialog() {
+    logout();
     showDialog(
       context: context,
       barrierDismissible: false,

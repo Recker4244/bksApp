@@ -397,7 +397,7 @@ class _standardValueState extends State<standardValue> {
                               ],
                             ),
                             Text(
-                              data.buy, //TODO buyprice
+                              data.buy.toStringAsFixed(2), //TODO buyprice
                               style: black18BoldTextStyle,
                             ),
                           ],
@@ -457,10 +457,10 @@ class _standardValueState extends State<standardValue> {
                                 onChanged: (String value) {
                                   setState(() {
                                     if (value != null && value.isNotEmpty) {
-                                      amountController.text = (num.parse(value)
-                                                  .toDouble() /
-                                              num.parse(data.buy).toDouble())
-                                          .toStringAsFixed(2);
+                                      amountController.text =
+                                          (num.parse(value).toDouble() /
+                                                  data.buy)
+                                              .toStringAsFixed(2);
                                     }
                                   });
                                 },

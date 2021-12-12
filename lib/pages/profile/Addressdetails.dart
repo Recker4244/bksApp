@@ -20,7 +20,7 @@ class AddressDetails extends StatefulWidget {
 
 class _AddressDetailsState extends State<AddressDetails> {
   List<UserAddress> list_of_address = [];
-  void getAddressDetails() async {
+  Future getAddressDetails() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.id}'));

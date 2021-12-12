@@ -441,7 +441,7 @@ class _Standard_PCState extends State<Standard_PC> {
                               ],
                             ),
                             Text(
-                              data.buy, //TODO buyprice
+                              data.buy.toStringAsFixed(2), //TODO buyprice
                               style: black18BoldTextStyle,
                             ),
                           ],
@@ -503,10 +503,10 @@ class _Standard_PCState extends State<Standard_PC> {
                                 onChanged: (String value) {
                                   if (value != null && value.isNotEmpty)
                                     setState(() {
-                                      valueController.text = (num.parse(value)
-                                                  .toDouble() *
-                                              num.parse(data.buy).toDouble())
-                                          .toStringAsFixed(2);
+                                      valueController.text =
+                                          (num.parse(value).toDouble() *
+                                                  data.buy)
+                                              .toStringAsFixed(2);
                                     });
                                 },
                                 controller: amountController,
