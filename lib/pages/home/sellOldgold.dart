@@ -317,14 +317,13 @@ class _SellOldState extends State<SellOld> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.arrow_back_ios_new_rounded,
+                      Icons.arrow_back,
                       color: whiteColor,
                       size: 30,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   backgroundColor: primaryColor,
-                  centerTitle: true,
                   title: Text(
                     locale.sellgoldtitle,
                     style: white18MediumTextStyle,
@@ -513,7 +512,7 @@ class _SellOldState extends State<SellOld> {
                               color: primaryColor,
                               width: MediaQuery.of(context).size.width,
                               alignment: Alignment.center,
-                              height: 60.0,
+                              height: 70.0,
                               padding: EdgeInsets.all(fixPadding * 1.5),
                               child: Text(
                                 locale.PlaceRequest,
@@ -521,10 +520,6 @@ class _SellOldState extends State<SellOld> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 2.0,
-                          ),
-                          height20Space,
                         ],
                       ),
                     ],
@@ -582,14 +577,15 @@ class _Gold_Price_barState extends State<Gold_Price_bar> {
                   image: AssetImage(goldIngotsPath),
                 ),
               ),
-              widthSpace,
+              width20Space,
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     ' Current ${widget.karatage} GOLD Sell Price',
-                    style: primaryColor18BoldTextStyle,
+                    style: primaryColor18BoldTextStyle.copyWith(
+                        color: Colors.grey, fontSize: 16),
                   ),
                   height5Space,
                   Row(
@@ -597,11 +593,12 @@ class _Gold_Price_barState extends State<Gold_Price_bar> {
                     children: <Widget>[
                       Text(
                         'INR ${widget.buyprice.toStringAsFixed(2)}',
-                        style: black14BoldTextStyle,
+                        style: black18BoldTextStyle,
                       ),
                       Icon(
                         Icons.arrow_drop_up,
                         color: greenColor,
+                        size: 40,
                       ),
                       Text(
                         '24%',
@@ -649,14 +646,16 @@ class Portfolio_card extends StatelessWidget {
               children: <Widget>[
                 Text(
                   tag,
-                  style: grey14BoldTextStyle,
+                  style:
+                      primaryColor16BoldTextStyle.copyWith(color: Colors.grey),
                 ),
                 SizedBox(
                   height: 3.0,
                 ),
                 Text(
                   text,
-                  style: black14MediumTextStyle,
+                  style: primaryColor16MediumTextStyle.copyWith(
+                      color: Colors.black),
                 ),
               ],
             ),

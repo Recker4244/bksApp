@@ -228,12 +228,16 @@ class _HomeState extends State<Home> {
                   locale.welcome,
                   style: grey16MediumTextStyle,
                 ),
-                SizedBox(
-                  height: 0.5.h,
+                Container(
+                  width: 70.w,
+                  child: Wrap(
+                    children: [
+                      Text(Userdata.fname ?? "Unknown User" + ' To BKS',
+                          style: black22BoldTextStyle.copyWith(
+                              fontSize: 30, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
                 ),
-                Text(Userdata.fname ?? "Unknown User" + ' To BKS',
-                    style: black22BoldTextStyle.copyWith(
-                        fontSize: 30, fontWeight: FontWeight.w600)),
               ],
             ),
             InkWell(
@@ -724,7 +728,7 @@ class _HomeState extends State<Home> {
           ),
           Container(
             width: double.infinity,
-            height: 22.h,
+            height: 18.h,
             child: ListView.builder(
               itemCount: Standardplans.length,
               physics: BouncingScrollPhysics(),
@@ -737,7 +741,7 @@ class _HomeState extends State<Home> {
                       ? EdgeInsets.only(left: fixPadding * 2.0)
                       : EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    padding: EdgeInsets.symmetric(vertical: 2.0),
                     child: GestureDetector(
                       onTap: () {
                         if (item.mode == "value") {
@@ -798,6 +802,9 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                height: 1.w,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -943,18 +950,25 @@ class _HomeState extends State<Home> {
 
     planSelector() {
       return Container(
-        height: 25.h,
-        child: Padding(
-          padding: EdgeInsets.all(fixPadding * 2.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                locale.create,
-                style: primaryColor16MediumTextStyle,
+        height: 20.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                left: fixPadding * 2.0,
+                bottom: fixPadding,
               ),
-              Expanded(
+              child: Text(
+                locale.create,
+                style: primaryColor16BoldTextStyle,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: fixPadding * 2.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -976,8 +990,7 @@ class _HomeState extends State<Home> {
                           });
                         },
                         child: Container(
-                          height: 30.h,
-                          margin: EdgeInsets.all(5),
+                          margin: EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             color: whiteColor,
                             borderRadius: BorderRadius.circular(15.0),
@@ -1016,10 +1029,17 @@ class _HomeState extends State<Home> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ByValue_Wght(
-                                      'Create Your Own Plan By Value')));
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.size,
+                                      alignment: Alignment.bottomCenter,
+                                      child: ByValue_Wght(
+                                          'Create Your Own Plan By Value')))
+                              .then((value) {
+                            setState(() {
+                              initialise();
+                            });
+                          });
                         },
                         child: Container(
                           child: Padding(
@@ -1042,7 +1062,7 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
-                          margin: EdgeInsets.all(5),
+                          margin: EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             color: whiteColor,
                             borderRadius: BorderRadius.circular(15.0),
@@ -1060,16 +1080,16 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }
 
     referAfriend(String Code) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(
-            fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+        padding:
+            const EdgeInsets.fromLTRB(fixPadding * 2.0, 0, fixPadding * 2.0, 0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -1196,7 +1216,7 @@ class _HomeState extends State<Home> {
     SellOldGold(double sell24, double sell22, double sell18, {width}) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(
-            fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+            fixPadding * 2.0, 0, fixPadding * 2.0, fixPadding * 2.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -1397,6 +1417,10 @@ class _HomeState extends State<Home> {
                 children: [
                   SizedBox(height: 20),
                   dummycontainer1(),
+                  SizedBox(height: 20),
+                  dummymyportfolio(),
+                  SizedBox(height: 10),
+                  dummymyportfolio(),
                   SizedBox(height: 20),
                   dummybalanceContainer(),
                   SizedBox(height: 20),
@@ -1698,19 +1722,19 @@ class _HomeState extends State<Home> {
                     buyGold(data.buy),
                     sellGold(data.sell),
                     height20Space,
-                    myPortfolio(),
-                    height20Space,
-                    planSelector(),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      padding: EdgeInsets.only(
+                        left: fixPadding * 2.0,
+                        bottom: fixPadding,
+                      ),
                       child: Text(
                         "Book Your Gold Now! Pay only 10%",
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(fixPadding * 2.0,
-                          fixPadding * 2.0, fixPadding * 2.0, 0),
+                      padding: const EdgeInsets.fromLTRB(
+                          fixPadding * 2.0, 0, fixPadding * 2.0, 0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -1869,7 +1893,7 @@ class _HomeState extends State<Home> {
                                   color: whiteColor,
                                 ),
                                 child: Text(
-                                  "Pay only ${num.parse(weight.text) * 0.1 * num.parse(data.buy) * parti.referenceId} to book your ${weight.text} grams of 24 KT Gold",
+                                  "Pay only ${(num.parse(weight.text) * 0.1 * num.parse(data.buy) * parti.referenceId).toStringAsFixed(2)} to book your ${weight.text} grams of 24 KT Gold",
                                   style: primaryColor14MediumTextStyle,
                                 ),
                               ),
@@ -1878,28 +1902,34 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
+                    height20Space,
+                    myPortfolio(),
+                    height20Space,
+                    planSelector(),
+                    height20Space,
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      padding: EdgeInsets.only(
+                        left: fixPadding * 2.0,
+                        bottom: fixPadding,
+                      ),
                       child: Text(
                         locale.refer,
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                     ),
                     referAfriend(Userdata.refCode.toString()),
-
-                    SizedBox(
-                      height: 1.h,
-                    ),
+                    height20Space,
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      padding: EdgeInsets.only(
+                        left: fixPadding * 2.0,
+                        bottom: fixPadding,
+                      ),
                       child: Text(
                         locale.sellgoldtitle,
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                     ),
+
                     SellOldGold(
                         double.parse(data.sell),
                         double.parse((num.parse(data.sell).toDouble() *

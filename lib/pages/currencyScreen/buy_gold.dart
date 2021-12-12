@@ -319,44 +319,45 @@ class _CurrencyScreenState extends State<BuyGold> {
                       widthSpace,
                       Text(
                         locale.Buy24KT,
-                        style: primaryColor16BoldTextStyle,
+                        style: primaryColor16BoldTextStyle.copyWith(
+                            color: Colors.black),
                       ),
                     ],
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        watchlist = !watchlist;
-                      });
-                      if (watchlist) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Added to watchlist'),
-                        ));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Remove from watchlist'),
-                        ));
-                      }
-                    },
-                    borderRadius: BorderRadius.circular(18.0),
-                    child: Container(
-                      width: 12.w,
-                      height: 6.h,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18.0),
-                        border: Border.all(
-                          width: 0.6,
-                          color: primaryColor.withOpacity(0.6),
-                        ),
-                      ),
-                      child: Icon(
-                        (watchlist) ? Icons.star : Icons.star_border,
-                        size: 6.w,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ), //TODO Study this inkWell !!!
+                  // InkWell(
+                  //   onTap: () {
+                  //     setState(() {
+                  //       watchlist = !watchlist;
+                  //     });
+                  //     if (watchlist) {
+                  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //         content: Text('Added to watchlist'),
+                  //       ));
+                  //     } else {
+                  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //         content: Text('Remove from watchlist'),
+                  //       ));
+                  //     }
+                  //   },
+                  //   borderRadius: BorderRadius.circular(18.0),
+                  //   child: Container(
+                  //     width: 12.w,
+                  //     height: 6.h,
+                  //     alignment: Alignment.center,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(18.0),
+                  //       border: Border.all(
+                  //         width: 0.6,
+                  //         color: primaryColor.withOpacity(0.6),
+                  //       ),
+                  //     ),
+                  //     child: Icon(
+                  //       (watchlist) ? Icons.star : Icons.star_border,
+                  //       size: 6.w,
+                  //       color: primaryColor,
+                  //     ),
+                  //   ),
+                  // ), //TODO Study this inkWell !!!
                 ],
               ),
             ),

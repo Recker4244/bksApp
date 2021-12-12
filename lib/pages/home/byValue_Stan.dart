@@ -319,7 +319,6 @@ class _standardValueState extends State<standardValue> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   backgroundColor: primaryColor,
-                  centerTitle: true,
                   title: Text(
                     widget.planname,
                     style: white18MediumTextStyle,
@@ -366,8 +365,10 @@ class _standardValueState extends State<standardValue> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '24 KT GOLD',
-                                      style: primaryColor18BoldTextStyle,
+                                      'Current 24 KT GOLD Buy Price',
+                                      style:
+                                          primaryColor18BoldTextStyle.copyWith(
+                                              color: Colors.grey, fontSize: 16),
                                     ),
                                     height5Space,
                                     Row(
@@ -375,8 +376,8 @@ class _standardValueState extends State<standardValue> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          locale.BuyRate,
-                                          style: grey14BoldTextStyle,
+                                          "INR ${data.buy}", //TODO buyprice
+                                          style: black18BoldTextStyle,
                                         ),
                                         Icon(
                                           data.buyChange > 0
@@ -385,6 +386,7 @@ class _standardValueState extends State<standardValue> {
                                           color: data.buyChange > 0
                                               ? greenColor
                                               : redColor,
+                                          size: 40,
                                         ),
                                         Text(
                                           '${data.buyChange}%',
@@ -396,10 +398,10 @@ class _standardValueState extends State<standardValue> {
                                 ),
                               ],
                             ),
-                            Text(
-                              data.buy, //TODO buyprice
-                              style: black18BoldTextStyle,
-                            ),
+                            // Text(
+                            //   data.buy, //TODO buyprice
+                            //   style: black18BoldTextStyle,
+                            // ),
                           ],
                         ),
                       ),
@@ -517,7 +519,7 @@ class _standardValueState extends State<standardValue> {
                             ),
                           ),
                           Your_Portfolio(
-                            "${amountController.text}GM/${widget.shortname}",
+                            "${amountController.text}GRAM/${widget.shortname}",
                             "${(double.parse(amountController.text) * widget.duration * bonusPercentage).toStringAsFixed(2)} GRAM",
                             "${widget.durationString}",
                             "${(double.parse(amountController.text) * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM",
@@ -577,33 +579,24 @@ class _standardValueState extends State<standardValue> {
                                 children: <Widget>[
                                   Icon(
                                     FontAwesomeIcons.creditCard,
-                                    size: 40,
+                                    size: 30,
                                   ),
                                   width20Space,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 150,
-                                        child: Text(
-                                          locale.herepayment,
-                                          style: black16BoldTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        "Online Payment",
+                                        style: black16BoldTextStyle.copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        child: Text(
-                                          locale.usePayment,
-                                          style: black14RegularTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
+                                      Text(
+                                          "Use Payment Gateway Service to pay instantly",
+                                          style: black14RegularTextStyle),
                                     ],
                                   ),
                                 ],
@@ -639,39 +632,34 @@ class _standardValueState extends State<standardValue> {
                                 children: <Widget>[
                                   Icon(
                                     Icons.add_location,
-                                    size: 40,
+                                    size: 30,
                                   ),
                                   width20Space,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 150,
-                                        child: Text(
-                                          locale.useCOC,
-                                          style: black16BoldTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        "Collect From Your Location",
+                                        style: black16BoldTextStyle.copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        child: Text(
-                                          locale.hereCOC,
-                                          style: black14RegularTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        locale.hereCOC,
+                                        style: black14RegularTextStyle,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                          )
+                          ),
+                          height20Space,
                         ],
                       ),
                     ],
@@ -697,7 +685,7 @@ class _standardValueState extends State<standardValue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              locale.yourPortfolio,
+              "Plan Details",
               style: primaryColor16MediumTextStyle,
             ),
             Expanded(
