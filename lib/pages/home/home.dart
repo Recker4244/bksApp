@@ -1872,7 +1872,7 @@ class _HomeState extends State<Home> {
                                 });
                             },
                             controller: weight,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.number,
                             style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
