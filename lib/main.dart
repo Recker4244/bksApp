@@ -3,6 +3,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gold247/language/languageCubit.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/screens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ Future<void> _messageHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
   FirebaseMessaging.onMessageOpenedApp.listen((message) {

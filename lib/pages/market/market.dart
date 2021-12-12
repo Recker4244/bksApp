@@ -83,9 +83,22 @@ class _MarketState extends State<Market> {
                 backgroundColor: scaffoldBgColor,
                 appBar: AppBar(
                   backgroundColor: whiteColor,
-                  automaticallyImplyLeading: true,
-                  bottom: TabBar(
-                    isScrollable: true,
+                  automaticallyImplyLeading: false,
+                  title: Text('Total gold saved in plans',
+                      style: primaryColor22BoldTextStyle),
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Color(0xFF95203D),
+                      size: 32.0,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  bottom: const TabBar(
+                    labelColor: Colors.grey,
+                    labelStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    indicatorColor: primaryColor,
                     tabs: [
                       Tab(text: 'Running'),
                       Tab(text: 'Forfieted'),

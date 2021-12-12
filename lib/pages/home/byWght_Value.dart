@@ -143,14 +143,13 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                   elevation: 0,
                   leading: IconButton(
                     icon: Icon(
-                      Icons.close,
+                      Icons.arrow_back,
                       color: whiteColor,
                       size: 30,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   backgroundColor: primaryColor,
-                  centerTitle: true,
                   title: Text(
                     widget.plantype,
                     style: white18MediumTextStyle,
@@ -221,14 +220,16 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                     image: AssetImage(goldIngotsPath),
                                   ),
                                 ),
-                                widthSpace,
+                                width20Space,
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '24 KT GOLD',
-                                      style: primaryColor18BoldTextStyle,
+                                      'Current 24 KT GOLD Buy Price',
+                                      style:
+                                          primaryColor18BoldTextStyle.copyWith(
+                                              color: Colors.grey, fontSize: 16),
                                     ),
                                     height5Space,
                                     Row(
@@ -236,8 +237,8 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          locale.BuyRate,
-                                          style: grey14BoldTextStyle,
+                                          "INR ${data.buy}", //TODO buyprice
+                                          style: black18BoldTextStyle,
                                         ),
                                         Icon(
                                           data.buyChange > 0
@@ -246,6 +247,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                           color: data.buyChange > 0
                                               ? greenColor
                                               : redColor,
+                                          size: 40,
                                         ),
                                         Text(
                                           '${data.buyChange.abs()}%',
@@ -257,10 +259,10 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 ),
                               ],
                             ),
-                            Text(
-                              'INR ${data.buy}',
-                              style: black18BoldTextStyle,
-                            ),
+                            // Text(
+                            //   'INR ${data.buy}',
+                            //   style: black18BoldTextStyle,
+                            // ),
                           ],
                         ),
                       ),

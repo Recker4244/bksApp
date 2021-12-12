@@ -339,40 +339,40 @@ class _CurrencyScreenState extends State<SellGold> {
                       ),
                     ],
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        watchlist = !watchlist;
-                      });
-                      if (watchlist) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Added to watchlist'),
-                        ));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Remove from watchlist'),
-                        ));
-                      }
-                    },
-                    borderRadius: BorderRadius.circular(18.0),
-                    child: Container(
-                      width: 36.0,
-                      height: 36.0,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18.0),
-                        border: Border.all(
-                          width: 0.6,
-                          color: primaryColor.withOpacity(0.6),
-                        ),
-                      ),
-                      child: Icon(
-                        (watchlist) ? Icons.star : Icons.star_border,
-                        size: 24.0,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     setState(() {
+                  //       watchlist = !watchlist;
+                  //     });
+                  //     if (watchlist) {
+                  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //         content: Text('Added to watchlist'),
+                  //       ));
+                  //     } else {
+                  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //         content: Text('Remove from watchlist'),
+                  //       ));
+                  //     }
+                  //   },
+                  //   borderRadius: BorderRadius.circular(18.0),
+                  //   child: Container(
+                  //     width: 36.0,
+                  //     height: 36.0,
+                  //     alignment: Alignment.center,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(18.0),
+                  //       border: Border.all(
+                  //         width: 0.6,
+                  //         color: primaryColor.withOpacity(0.6),
+                  //       ),
+                  //     ),
+                  //     child: Icon(
+                  //       (watchlist) ? Icons.star : Icons.star_border,
+                  //       size: 24.0,
+                  //       color: primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

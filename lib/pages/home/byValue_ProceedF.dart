@@ -166,6 +166,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
     final responseString = await response.stream.bytesToString();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
+
       Map s = jsonDecode(responseString);
     } else {
       print(response.reasonPhrase);

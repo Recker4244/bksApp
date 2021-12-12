@@ -82,7 +82,7 @@ class _AppointmentsState extends State<Appointments> {
               child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 appBar: AppBar(
-                  backgroundColor: scaffoldBgColor,
+                  backgroundColor: whiteColor,
                   automaticallyImplyLeading: false,
                   title: Text('Your Appointments',
                       style: primaryColor22BoldTextStyle),
@@ -90,13 +90,15 @@ class _AppointmentsState extends State<Appointments> {
                     icon: Icon(
                       Icons.arrow_back,
                       color: Color(0xFF95203D),
-                      size: 32.0,
+                      size: 30.0,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  bottom: TabBar(
-                    labelColor: primaryColor,
-                    isScrollable: true,
+                  bottom: const TabBar(
+                    labelColor: Colors.grey,
+                    labelStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    indicatorColor: primaryColor,
                     tabs: [
                       Tab(
                         text: 'Processing',

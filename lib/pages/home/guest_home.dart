@@ -1,3 +1,4 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/video.dart';
 import 'package:gold247/pages/currencyScreen/buy_gold.dart';
@@ -327,25 +328,15 @@ class _GuestHomeState extends State<GuestHome> {
             ),
             GestureDetector(
               onTap: () {
-                Flushbar(
-                  padding: EdgeInsets.all(16),
-                  flushbarPosition: FlushbarPosition.TOP,
-                  message: "Please register to proceed",
-                  icon: Icon(
-                    Icons.info_outline,
-                    size: 28.0,
-                    color: Colors.blue[300],
+                showTopSnackBar(
+                  context,
+                  CustomSnackBar.info(
+                    message: "Please Register to proceed",
+                    backgroundColor: primaryColor,
+                    textStyle: TextStyle(color: scaffoldBgColor),
                   ),
-                  duration: Duration(seconds: 3),
-                  leftBarIndicatorColor: Colors.blue[300],
-                )..show(context).then((value) {
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.size,
-                            alignment: Alignment.bottomCenter,
-                            child: Login()));
-                  });
+                );
+                Navigator.pop(context);
               },
               child: RotatedBox(
                 quarterTurns: 3,
@@ -744,39 +735,15 @@ class _GuestHomeState extends State<GuestHome> {
               ),
               InkWell(
                 onTap: () {
-                  Flushbar(
-                    padding: EdgeInsets.all(16),
-                    mainButton: MaterialButton(
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(color: Colors.amber),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.size,
-                                alignment: Alignment.bottomCenter,
-                                child: Login()));
-                      },
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.info(
+                      message: "Please Register to proceed",
+                      backgroundColor: primaryColor,
+                      textStyle: TextStyle(color: scaffoldBgColor),
                     ),
-                    flushbarPosition: FlushbarPosition.TOP,
-                    message: "Please register to proceed",
-                    icon: Icon(
-                      Icons.info_outline,
-                      size: 28.0,
-                      color: Colors.blue[300],
-                    ),
-                    duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
-                  )..show(context).then((value) {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.size,
-                              alignment: Alignment.bottomCenter,
-                              child: BuyGold()));
-                    });
+                  );
+                  Navigator.pop(context);
                 },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
@@ -910,39 +877,15 @@ class _GuestHomeState extends State<GuestHome> {
               ),
               InkWell(
                 onTap: () {
-                  Flushbar(
-                    padding: EdgeInsets.all(16),
-                    mainButton: MaterialButton(
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(color: Colors.amber),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.size,
-                                alignment: Alignment.bottomCenter,
-                                child: Login()));
-                      },
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.info(
+                      message: "Please Register to proceed",
+                      backgroundColor: primaryColor,
+                      textStyle: TextStyle(color: scaffoldBgColor),
                     ),
-                    flushbarPosition: FlushbarPosition.TOP,
-                    message: "Please register to proceed",
-                    icon: Icon(
-                      Icons.info_outline,
-                      size: 28.0,
-                      color: Colors.blue[300],
-                    ),
-                    duration: Duration(seconds: 3),
-                    leftBarIndicatorColor: Colors.blue[300],
-                  )..show(context).then((value) {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.size,
-                              alignment: Alignment.bottomCenter,
-                              child: Login()));
-                    });
+                  );
+                  Navigator.pop(context);
                 },
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(10.0),
@@ -978,9 +921,12 @@ class _GuestHomeState extends State<GuestHome> {
             child: Scaffold(
                 backgroundColor: scaffoldBgColor,
                 body: Center(
-                    child: CircularProgressIndicator(
-                  backgroundColor: primaryColor,
-                ))),
+                  child: SpinKitRing(
+                    color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
+                  ),
+                )),
           );
         } else {
           if (snapshot.hasData) {

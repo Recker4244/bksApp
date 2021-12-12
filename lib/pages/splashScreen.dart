@@ -41,7 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (status != null && status == true) {
       token = prefs.getString('token');
-      Map userMap = jsonDecode(prefs.getString('user'));
+
+      final userMap = jsonDecode(prefs.getString('user'));
 
       Userdata = userdata.fromJson(userMap);
 

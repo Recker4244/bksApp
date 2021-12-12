@@ -363,7 +363,6 @@ class _Standard_PCState extends State<Standard_PC> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   backgroundColor: primaryColor,
-                  centerTitle: true,
                   title: Text(
                     widget.planname,
                     style: white18MediumTextStyle,
@@ -404,23 +403,29 @@ class _Standard_PCState extends State<Standard_PC> {
                                     image: AssetImage(goldIngotsPath),
                                   ),
                                 ),
-                                widthSpace,
+                                width20Space,
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '24 KT GOLD',
-                                      style: primaryColor18BoldTextStyle,
+                                      'Current 24 KT GOLD Buy Price',
+                                      style:
+                                          primaryColor18BoldTextStyle.copyWith(
+                                              color: Colors.grey, fontSize: 16),
                                     ),
                                     height5Space,
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: <Widget>[
+                                        // Text(
+                                        //   locale.BuyRate,
+                                        //   style: grey14BoldTextStyle,
+                                        // ),
                                         Text(
-                                          locale.BuyRate,
-                                          style: grey14BoldTextStyle,
+                                          "INR ${data.buy}", //TODO buyprice
+                                          style: black18BoldTextStyle,
                                         ),
                                         Icon(
                                           data.buyChange > 0
@@ -429,6 +434,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                           color: data.buyChange > 0
                                               ? greenColor
                                               : redColor,
+                                          size: 40,
                                         ),
                                         Text(
                                           '${data.buyChange}%',
@@ -439,10 +445,6 @@ class _Standard_PCState extends State<Standard_PC> {
                                   ],
                                 ),
                               ],
-                            ),
-                            Text(
-                              data.buy.toStringAsFixed(2), //TODO buyprice
-                              style: black18BoldTextStyle,
                             ),
                           ],
                         ),
@@ -558,7 +560,7 @@ class _Standard_PCState extends State<Standard_PC> {
                             ),
                           ),
                           Your_Portfolio(
-                            "${amountController.text}GM/${widget.shortname}",
+                            "${amountController.text}GRAM/${widget.shortname}",
                             "${(double.parse(amountController.text) * widget.duration * bonusPercentage).toStringAsFixed(2)} GRAM",
                             "${widget.durationString}",
                             "${(double.parse(amountController.text) * widget.duration * (1 + bonusPercentage)).toStringAsFixed(2)} GRAM",
@@ -592,7 +594,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                         color: primaryColor, width: 1),
                                   ),
                                   fillColor: whiteColor,
-                                  labelText: locale.value,
+                                  labelText: "Amount To Be Paid",
                                   labelStyle: primaryColor18BoldTextStyle,
                                   suffix: Text(
                                     'INR',
@@ -651,33 +653,24 @@ class _Standard_PCState extends State<Standard_PC> {
                                 children: <Widget>[
                                   Icon(
                                     FontAwesomeIcons.creditCard,
-                                    size: 40,
+                                    size: 30,
                                   ),
                                   width20Space,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 150,
-                                        child: Text(
-                                          locale.herepayment,
-                                          style: black16BoldTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        "Online Payment",
+                                        style: black16BoldTextStyle.copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        child: Text(
-                                          locale.usePayment,
-                                          style: black14RegularTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
+                                      Text(
+                                          "Use Payment Gateway Service to pay instantly",
+                                          style: black14RegularTextStyle),
                                     ],
                                   ),
                                 ],
@@ -713,39 +706,34 @@ class _Standard_PCState extends State<Standard_PC> {
                                 children: <Widget>[
                                   Icon(
                                     Icons.add_location,
-                                    size: 40,
+                                    size: 30,
                                   ),
                                   width20Space,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 150,
-                                        child: Text(
-                                          locale.useCOC,
-                                          style: black16BoldTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        "Collect From Your Location",
+                                        style: black16BoldTextStyle.copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        child: Text(
-                                          locale.hereCOC,
-                                          style: black14RegularTextStyle,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                      Text(
+                                        locale.hereCOC,
+                                        style: black14RegularTextStyle,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                          )
+                          ),
+                          height20Space,
                         ],
                       ),
                     ],
@@ -774,7 +762,7 @@ class _Standard_PCState extends State<Standard_PC> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              locale.yourPortfolio,
+              "Plan Details",
               style: primaryColor16MediumTextStyle,
             ),
             Expanded(
@@ -837,7 +825,8 @@ class Portfolio_card extends StatelessWidget {
               children: <Widget>[
                 Text(
                   tag,
-                  style: primaryColor16BoldTextStyle,
+                  style:
+                      primaryColor16BoldTextStyle.copyWith(color: Colors.grey),
                 ),
                 Text(
                   text,

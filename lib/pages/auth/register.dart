@@ -70,13 +70,15 @@ class _RegisterState extends State<Register> {
     if (nameController.text == "") {
       Navigator.pop(context, true);
       Fluttertoast.showToast(
-        msg: 'UserName Not Specified.',
+        msg: 'Full Name Not Specified.',
         backgroundColor: Colors.black,
         textColor: whiteColor,
       );
       return FocusScope.of(context).requestFocus(firstFocusNode);
     }
-    if (emailController.text == "") {
+    if (emailController.text == "" ||
+        !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(emailController.text)) {
       Navigator.pop(context, true);
       Fluttertoast.showToast(
         msg: 'Email Not Specified.',
@@ -118,7 +120,7 @@ class _RegisterState extends State<Register> {
         "email": emailController.text,
         "dob": dobController.text,
         "refCode": refferController.text,
-        "pan": pan.text,
+        "pan": pan.text.toUpperCase(),
         "deviceToken": deviceToken
       },
     );
@@ -239,7 +241,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: locale.username,
+                      hintText: "Full Name",
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),

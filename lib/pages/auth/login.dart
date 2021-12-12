@@ -29,6 +29,7 @@ class mobileNumber {
 mobileNumber mobilenumber = mobileNumber();
 
 class _LoginState extends State<Login> {
+  Color colorofbox = Colors.transparent;
   ButtonSate state = ButtonSate.init;
   DateTime currentBackPressTime;
   String phoneIsoCode;
@@ -46,9 +47,14 @@ class _LoginState extends State<Login> {
   // }
   @override
   void initState() {
+    setState(() {
+      colorofbox = Colors.transparent;
+      isCorrect = false;
+    });
     super.initState();
   }
 
+  bool isCorrect = false;
   bool isAnimated = true;
   bool value = true;
   bool whatsapp = true;
@@ -199,6 +205,8 @@ class _LoginState extends State<Login> {
                   // height: 8.h,
                   padding: EdgeInsets.only(left: fixPadding * 2.0),
                   decoration: BoxDecoration(
+                    border:
+                        Border.all(color: isCorrect ? colorofbox : colorofbox),
                     color: whiteColor,
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: [
@@ -235,6 +243,18 @@ class _LoginState extends State<Login> {
                     maxLength: 10,
                     textStyle: TextStyle(),
                     onInputValidated: (bool value) {
+                      setState(() {
+                        isCorrect = value;
+                        if (isCorrect) {
+                          setState(() {
+                            colorofbox = Colors.green;
+                          });
+                        } else {
+                          setState(() {
+                            colorofbox = Colors.red;
+                          });
+                        }
+                      });
                       print(value);
                     },
                     spaceBetweenSelectorAndTextField: 0,
@@ -242,7 +262,7 @@ class _LoginState extends State<Login> {
                     selectorConfig: SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                     ),
-                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    // autoValidateMode: AutovalidateMode.onUserInteraction,
                     selectorTextStyle: TextStyle(color: Colors.black),
                     initialValue: number,
                     textFieldController: numberController,
@@ -367,13 +387,16 @@ class _LoginState extends State<Login> {
                       backgroundColor: getColor(primaryColor, whiteColor)),
                   onPressed: () async {
                     HapticFeedback.vibrate();
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.leftToRightWithFade,
-                        child: OTPScreen(),
-                      ),
-                    );
+                    if (isCorrect) {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.leftToRightWithFade,
+                          child: OTPScreen(),
+                        ),
+                      );
+                    }
+
                     final PhoneNumberOb = numberController.text;
                     final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
                     http.Response response = await http.post(
@@ -456,32 +479,7 @@ class _LoginState extends State<Login> {
                           language: "Hindi",
                         ),
                       ),
-                    ).then((value) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => new AlertDialog(
-                          title: new Text('Register',
-                              style: TextStyle(color: primaryColor)),
-
-                          // Are you sure?
-
-                          content: Text('Please Register to proceed ',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-
-                          // Do you want to go back?
-
-                          actions: <Widget>[
-                            new MaterialButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(true);
-                              },
-                              child: new Text('Ok',
-                                  style: TextStyle(color: primaryColor)),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
+                    );
                   else
                     Navigator.push<void>(
                       context,
