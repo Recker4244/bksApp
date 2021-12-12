@@ -5,6 +5,7 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/StandPlans.dart';
 
 import 'package:gold247/models/Metalgroup.dart';
+import 'package:gold247/models/offerList.dart';
 import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/home/byWeightStandard.dart';
 import 'package:gold247/pages/portfolio/referral_bonus_details.dart';
@@ -60,6 +61,23 @@ class _HomeState extends State<Home> {
       final responseString = jsonDecode(await response.stream.bytesToString());
       num b = responseString['data']['totalBalance'];
       goldbalance = b.toStringAsFixed(2);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  List<offerList> offers = [];
+  Future getoffers() async {
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/offer'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+
+      Iterable l = json.decode(responseString);
+      offers =
+          List<offerList>.from(l.map((model) => offerList.fromJson(model)));
     } else {
       print(response.reasonPhrase);
     }
@@ -273,6 +291,7 @@ class _HomeState extends State<Home> {
 
   Future<bool> init;
   Future<bool> initialise() async {
+    await getoffers();
     await getportfoliobalance();
     await getcalculation();
     await getTokengoldCalculation();
@@ -1627,8 +1646,12 @@ class _HomeState extends State<Home> {
                                       index: 10,
                                       duration: Duration(seconds: 1));
                                 },
-                                icon: Icon(Icons.shop,
-                                    color: primaryColor, size: 10.w)),
+                                icon: ImageIcon(
+                                  AssetImage(
+                                    "assets/icon/icon1.png",
+                                  ),
+                                  size: 60,
+                                )),
                             Text("Buy and Save",
                                 style: TextStyle(
                                     color: primaryColor,
@@ -1639,8 +1662,9 @@ class _HomeState extends State<Home> {
                                   _scrollController.scrollTo(
                                       index: 5, duration: Duration(seconds: 1));
                                 },
-                                icon: Icon(Icons.shop_2_rounded,
-                                    color: primaryColor, size: 10.w)),
+                                icon: ImageIcon(
+                                    AssetImage("assets/icon/icon3.png"),
+                                    size: 60)),
                             Text(
                               "Buy Instant Gold",
                               style: TextStyle(
@@ -1655,7 +1679,9 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.ac_unit, size: 10.w)),
+                                icon: ImageIcon(
+                                    AssetImage("assets/icon/icon2.png"),
+                                    size: 60)),
                             Text(
                               "Buy Token Gold",
                               style: TextStyle(
@@ -1665,7 +1691,9 @@ class _HomeState extends State<Home> {
                             ),
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.ac_unit, size: 10.w)),
+                                icon: ImageIcon(
+                                    AssetImage("assets/icon/icon4.png"),
+                                    size: 60)),
                             Text(
                               "Shop Gold",
                               style: TextStyle(
@@ -1836,9 +1864,11 @@ class _HomeState extends State<Home> {
                             onChanged: (String value) {
                               if (value != null && value.isNotEmpty)
                                 setState(() {
-                                  amount =
-                                      (num.parse(value).toDouble() * data.buy)
-                                          .toStringAsFixed(2);
+                                  amount = (num.parse(value).toDouble() *
+                                          data.buy *
+                                          tokenGoldPercentage *
+                                          parti.referenceId)
+                                      .toStringAsFixed(2);
                                 });
                             },
                             controller: weight,
@@ -1917,7 +1947,11 @@ class _HomeState extends State<Home> {
                                     //primaryColor16MediumTextStyle,
                                     onChanged: (String newValue) async {
                                       MetalGroup newmetal =
-                                          await getMetalbyID(newValue);
+                                          temp.firstWhere((MetalGroup i) {
+                                        if (i.id == newValue) return true;
+                                        return false;
+                                      });
+                                      // await getMetalbyID(newValue);
                                       setState(() {
                                         CyclePController = newValue;
                                         parti = newmetal;

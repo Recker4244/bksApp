@@ -512,7 +512,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                     });
                                 },
                                 controller: amountController,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
@@ -741,10 +741,7 @@ class _Standard_PCState extends State<Standard_PC> {
                 ),
               ));
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });

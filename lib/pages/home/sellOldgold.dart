@@ -334,6 +334,7 @@ class _SellOldState extends State<SellOld> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Gold_Price_bar(
+                        change: data.sellChange,
                         karatage: parti.karatage,
                         buyprice: data.sell * parti.referenceId,
                       ),
@@ -427,9 +428,14 @@ class _SellOldState extends State<SellOld> {
                                         isDense: true,
                                         style: primaryColor16MediumTextStyle,
                                         onChanged: (String newValue) async {
-                                          parti = await getMetalbyID(newValue);
+                                          MetalGroup newmetal =
+                                              temp.firstWhere((MetalGroup i) {
+                                            if (i.id == newValue) return true;
+                                            return false;
+                                          });
                                           setState(() {
                                             CyclePController = newValue;
+                                            parti = newmetal;
 
 //state.didChange(newValue);
                                           });
@@ -465,7 +471,7 @@ class _SellOldState extends State<SellOld> {
                                   style: primaryColor18BoldTextStyle)),
                           Your_Portfolio(
                               parti.karatage,
-                              data.sell * parti.referenceId,
+                              data.sell * parti.referenceId.toDouble(),
                               valueController.text,
                               (double.parse(valueController.text) *
                                       data.sell *
@@ -535,7 +541,9 @@ class _SellOldState extends State<SellOld> {
 class Gold_Price_bar extends StatefulWidget {
   num buyprice;
   String karatage;
-  Gold_Price_bar({Key key, this.buyprice, this.karatage}) : super(key: key);
+  num change;
+  Gold_Price_bar({Key key, this.buyprice, this.karatage, this.change})
+      : super(key: key);
 
   @override
   _Gold_Price_barState createState() => _Gold_Price_barState();
@@ -594,12 +602,13 @@ class _Gold_Price_barState extends State<Gold_Price_bar> {
                         style: black18BoldTextStyle,
                       ),
                       Icon(
-                        Icons.arrow_drop_up,
-                        color: greenColor,
-                        size: 40,
+                        widget.change > 0
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down,
+                        color: widget.change > 0 ? greenColor : redColor,
                       ),
                       Text(
-                        '24%',
+                        '${(widget.change).abs()}%',
                         style: black14BoldTextStyle,
                       ),
                     ],

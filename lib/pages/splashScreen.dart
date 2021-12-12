@@ -33,8 +33,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     player.setAsset("assets/audio/splash.mp3");
     playSound();
-
-    getUserDetails();
+    Future.delayed(Duration(seconds: 5), () {
+      getUserDetails();
+      // Do something
+    });
   }
 
   getUserDetails() async {
