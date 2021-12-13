@@ -160,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
 
     http.Response response = await http.put(
       Uri.parse("${baseurl}/api/user/" + Userdata.id),
-      body: {"name": name, "email": email},
+      body: {"fname": name, "email": email},
     );
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
