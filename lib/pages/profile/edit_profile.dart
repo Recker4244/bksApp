@@ -103,7 +103,7 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  Future updateUserDetail(String name, String email, String dob) async {
+  Future updateUserDetail(String name, String email) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -160,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
 
     http.Response response = await http.put(
       Uri.parse("${baseurl}/api/user/" + Userdata.id),
-      body: {"name": name, "email": email, "dob": dob},
+      body: {"name": name, "email": email},
     );
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
@@ -365,8 +365,8 @@ class _EditProfileState extends State<EditProfile> {
                 heightSpace,
                 // Save Button Start
                 InkWell(
-                  onTap: () => updateUserDetail(nameController.text,
-                      emailController.text, dobController.text),
+                  onTap: () => updateUserDetail(
+                      nameController.text, emailController.text),
                   borderRadius: BorderRadius.circular(7.0),
                   child: Container(
                     width: width,
