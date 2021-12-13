@@ -1977,7 +1977,13 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(10.0),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          openCheckout((num.parse(weight.text) *
+                                  tokenGoldPercentage *
+                                  data.buy *
+                                  parti.referenceId)
+                              .toStringAsFixed(2));
+                        },
                         child: Container(
                           padding: EdgeInsets.all(fixPadding),
                           alignment: Alignment.center,
