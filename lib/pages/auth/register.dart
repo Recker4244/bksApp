@@ -116,7 +116,7 @@ class _RegisterState extends State<Register> {
     http.Response response = await http.put(
       Uri.parse("${baseurl}/api/user/" + widget.id),
       body: {
-        "fname": nameController.text,
+        "fname": nameController.text.toUpperCase(),
         "email": emailController.text,
         "dob": dobController.text,
         "refCode": refferController.text,
@@ -175,7 +175,8 @@ class _RegisterState extends State<Register> {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = jsonDecode(await response.stream.bytesToString());
-      if (responseString['data']['full_name'] == nameController.text)
+      if (responseString['data']['full_name'] ==
+          nameController.text.toUpperCase())
         return true;
       else
         return false;
@@ -241,7 +242,7 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20.0),
-                      hintText: "Full Name",
+                      hintText: "Full Name as per PAN",
                       hintStyle: black14MediumTextStyle,
                       border: InputBorder.none,
                     ),

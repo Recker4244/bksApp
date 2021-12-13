@@ -342,7 +342,7 @@ class _HomeState extends State<Home> {
     var options = {
       'key': Rkey,
       'amount': (double.parse(amount)) * 100.0,
-      'name': "Token Gold",
+      'name': "Book Your Gold",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
       'prefill': {'contact': Userdata.mobile, 'email': Userdata.email},
@@ -1678,12 +1678,17 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  print('clicked');
+                                  _scrollController.scrollTo(
+                                      index: 10,
+                                      duration: Duration(seconds: 1));
+                                },
                                 icon: ImageIcon(
                                     AssetImage("assets/icon/icon2.png"),
                                     size: 60)),
                             Text(
-                              "Buy Token Gold",
+                              "Book Your Gold",
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 8.sp,
@@ -1695,7 +1700,7 @@ class _HomeState extends State<Home> {
                                     AssetImage("assets/icon/icon4.png"),
                                     size: 60)),
                             Text(
-                              "Shop Gold",
+                              "E-Shop",
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 8.sp,
@@ -1817,7 +1822,7 @@ class _HomeState extends State<Home> {
                   bottom: fixPadding,
                 ),
                 child: Text(
-                  "Book Your Gold Now! Pay only 10%",
+                  "Book Your Gold Now! Pay only ${tokenGoldPercentage * 100}%",
                   style: primaryColor16BoldTextStyle,
                 ),
               ),
@@ -1994,7 +1999,7 @@ class _HomeState extends State<Home> {
                             color: whiteColor,
                           ),
                           child: Text(
-                            "Pay only ${(num.parse(weight.text) * tokenGoldPercentage * data.buy * parti.referenceId).toStringAsFixed(2)} INR to book your ${weight.text} grams of ${parti.karatage} Gold",
+                            "Pay only ${(num.parse(weight.text) * tokenGoldPercentage * data.buy * parti.referenceId).toStringAsFixed(2)} INR to book your ${weight.text} GRAM of ${parti.karatage} Gold",
                             style: primaryColor14MediumTextStyle,
                           ),
                         ),
