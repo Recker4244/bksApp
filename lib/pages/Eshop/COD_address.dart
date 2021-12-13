@@ -46,7 +46,7 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
 
   checkPincode(String pincode) async {
     var request = http.Request(
-        'GET', Uri.parse('${baseurl}/api/pincode/search/$pincode'));
+        'GET', Uri.parse('${baseurl}/api/pincode/search/${pincode}'));
 
     http.StreamedResponse response = await request.send();
 
