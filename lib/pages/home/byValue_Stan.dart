@@ -112,6 +112,9 @@ class _standardValueState extends State<standardValue> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     valueController = TextEditingController(text: widget.min.toString());
+    amountController =
+        TextEditingController(text: (widget.min * data.buy).toStringAsFixed(2));
+
     return true;
   }
 

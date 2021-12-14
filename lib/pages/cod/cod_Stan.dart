@@ -82,7 +82,7 @@ class _Adress_Details_Payment_StanState
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
       final status = det['msg'];
-      if (status == "success") {
+      if (status == "pincode found") {
         setState(() {
           available = true;
         });

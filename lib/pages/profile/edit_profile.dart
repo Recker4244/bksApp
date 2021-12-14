@@ -59,6 +59,41 @@ class _EditProfileState extends State<EditProfile> {
 
   String profile_picture;
   upload_picture(String path) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
     // TODO need api for image upload
     final String apiUrl = baseurl + "user/upload";
     var headers = {'Content-Type': 'multipart/form-data'};
@@ -77,6 +112,7 @@ class _EditProfileState extends State<EditProfile> {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Profile picture updated")));
+      Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else if (response.statusCode == 413) {
       ScaffoldMessenger.of(context)
@@ -165,9 +201,8 @@ class _EditProfileState extends State<EditProfile> {
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
       Map datas = responseString;
-      setState(() {
-        Userdata = userdata.fromJson(datas);
-      });
+      await getuserdetails(Userdata.id);
+      setState(() {});
       Navigator.pop(context, true);
       Fluttertoast.showToast(
         msg: 'Changes Saved Successfully.',

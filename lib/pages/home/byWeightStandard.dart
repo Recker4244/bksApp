@@ -41,7 +41,7 @@ class _Standard_PCState extends State<Standard_PC> {
   Razorpay _razorpay;
   String val = "0";
   final Rkey = 'rzp_test_wVVGuz2rxyrfFd';
-  TextEditingController valueController = TextEditingController(text: "");
+  TextEditingController valueController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
   List portfolioItem;
@@ -113,6 +113,8 @@ class _Standard_PCState extends State<Standard_PC> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     amountController = TextEditingController(text: widget.min.toString());
+    valueController =
+        TextEditingController(text: (widget.min * data.buy).toStringAsFixed(2));
     return true;
   }
 
@@ -246,7 +248,7 @@ class _Standard_PCState extends State<Standard_PC> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      locale.REQUESTPLACED,
+                      "${num.parse(amountController.text)} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(

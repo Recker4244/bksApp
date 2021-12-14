@@ -44,12 +44,14 @@ class _BottomBarState extends State<BottomBar> {
     //     : Future.delayed(Duration(seconds: 2), showTutorial);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool firstTime = prefs.getBool('first_time');
-    if (firstTime != null && !firstTime) {
-    } else {
-      prefs.setBool('first_time', true);
-      Future.delayed(Duration(seconds: 2), showTutorial);
-    }
+    bool firstTime = !Userdata.isInvested ? false : true;
+    Future.delayed(Duration(seconds: 2), showTutorial);
+    //prefs.getBool('first_time');
+    // if (firstTime != null && !firstTime) {
+    // } else {
+    //   prefs.setBool('first_time', true);
+    //   Future.delayed(Duration(seconds: 2), showTutorial);
+    // }
   }
 
   void initState() {
@@ -90,7 +92,9 @@ class _BottomBarState extends State<BottomBar> {
         print('onClickTarget: $target');
       },
       onSkip: () {
-        print("skip");
+        setState(() {
+          tutorialCoachMark.next();
+        });
       },
       onClickOverlay: (target) {
         print('onClickOverlay: $target');
@@ -237,6 +241,7 @@ class _BottomBarState extends State<BottomBar> {
     // );
     targets.add(
       TargetFocus(
+        enableOverlayTab: true,
         paddingFocus: 3,
         identify: "keyBottomNavigation1",
         keyTarget: keyBottomNavigation1,
@@ -266,6 +271,7 @@ class _BottomBarState extends State<BottomBar> {
     );
     targets.add(
       TargetFocus(
+        enableOverlayTab: true,
         paddingFocus: 3,
         identify: "keyBottomNavigation2",
         keyTarget: keyBottomNavigation2,
@@ -296,6 +302,7 @@ class _BottomBarState extends State<BottomBar> {
 
     targets.add(
       TargetFocus(
+        enableOverlayTab: true,
         paddingFocus: 3,
         identify: "keyBottomNavigation3",
         keyTarget: keyBottomNavigation3,
@@ -325,6 +332,7 @@ class _BottomBarState extends State<BottomBar> {
     );
     targets.add(
       TargetFocus(
+        enableOverlayTab: true,
         paddingFocus: 3,
         identify: "keyBottomNavigation4",
         keyTarget: keyBottomNavigation4,

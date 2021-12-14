@@ -116,7 +116,7 @@ class _Adress_Details_PaymentState extends State<Adress_Details_Payment> {
                       keyboardType: TextInputType.streetAddress,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(
-                        labelText: 'Adress',
+                        labelText: 'Address',
                         labelStyle: TextStyle(
                             color: primaryColor,
                             fontSize: 18,

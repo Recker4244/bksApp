@@ -215,7 +215,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      locale.REQUESTPLACED,
+                      "${widget.gold} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(

@@ -99,14 +99,14 @@ class _RegisterState extends State<Register> {
     if (pan.text != "") {
       if (await verifyPan(pan.text) == true) {
         Fluttertoast.showToast(
-          msg: 'Pan is verified',
+          msg: 'PAN NUMBER VERIFIED',
           backgroundColor: Colors.black,
           textColor: whiteColor,
         );
       } else {
         Navigator.pop(context, true);
         Fluttertoast.showToast(
-          msg: 'pan not verified',
+          msg: 'PAN NUMBER INVALID',
           backgroundColor: Colors.black,
           textColor: whiteColor,
         );

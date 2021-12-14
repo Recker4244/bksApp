@@ -821,7 +821,9 @@ class _CurrencyScreenState extends State<SellGold> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => BankDetails()));
+                                      builder: (context) => BankDetails(
+                                            gold: valueController.text,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(7.0),
                             child: Container(
@@ -1068,7 +1070,9 @@ class _CurrencyScreenState extends State<SellGold> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => BankDetails()));
+                                      builder: (context) => BankDetails(
+                                            gold: valueController.text,
+                                          )));
                             },
                             borderRadius: BorderRadius.circular(7.0),
                             child: Container(

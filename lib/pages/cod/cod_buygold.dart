@@ -140,27 +140,6 @@ class _Adress_Details_Payment_BuygoldState
   }
 
   bool available = true;
-  Future addAddres() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('UserId') ?? "0";
-    var request = http.Request(
-        'POST', Uri.parse('https://gold-v1.herokuapp.com/InsertUserAddress'));
-    request.bodyFields = {
-      'UserId': Userdata.id,
-      'address': addresscontroller.text,
-      'addtype': _character.toString(),
-      'landmark': Landmarkcontroller.text,
-      'plotno': PINcontroller.text,
-    };
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
-    }
-  }
 
   checkPincode(String pincode) async {
     var request = http.Request(
@@ -252,6 +231,7 @@ class _Adress_Details_Payment_BuygoldState
                           borderSide: BorderSide(color: primaryColor, width: 1),
                         ),
                       ),
+                      onFieldSubmitted: (value) {},
                       onChanged: (value) {},
                     ),
                   ),
@@ -272,8 +252,11 @@ class _Adress_Details_Payment_BuygoldState
                     ),
                     child: TextFormField(
                       controller: PINcontroller,
-                      validator: (value) =>
-                          value.isEmpty ? "Field cannot be empty" : null,
+                      validator: (value) {
+                        if (value.isEmpty) return "Field cannot be empty";
+                        if (value.length != 6) return "Invalid PIN";
+                        return null;
+                      },
                       keyboardType: TextInputType.number,
                       style: primaryColor16MediumTextStyle,
                       decoration: InputDecoration(

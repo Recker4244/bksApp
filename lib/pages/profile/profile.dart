@@ -117,6 +117,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     var locale = AppLocalizations.of(context);
     aboutUser() {
       if (Userdata.pan == '' || Userdata.pan == null) {
@@ -132,16 +133,35 @@ class _ProfileState extends State<Profile> {
                 width: 100.0,
                 child: Stack(
                   children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Image(
-                          image: Userdata.image == null
-                              ? AssetImage(
-                                  'assets/user/default.jpeg',
-                                )
-                              : NetworkImage(Userdata.image),
-                          width: 20.w,
-                        )),
+                    Container(
+                      width: width - fixPadding * 4.0,
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 40.w,
+                        height: 50.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(70.0),
+                          image: DecorationImage(
+                            image: Userdata.image == null
+                                ? AssetImage(
+                                    'assets/user/default.jpeg',
+                                  )
+                                : NetworkImage(Userdata.image),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // ClipRRect(
+                    //     borderRadius: BorderRadius.circular(50.0),
+                    //     child: Image(
+                    //       image: Userdata.image == null
+                    //           ? AssetImage(
+                    //               'assets/user/default.jpeg',
+                    //             )
+                    //           : NetworkImage(Userdata.image),
+                    //       width: 20.w,
+                    //     )),
                     Positioned(
                       bottom: 0.0,
                       right: 0.0,

@@ -24,7 +24,7 @@ class _TotalBalanceState extends State<TotalBalance> {
   num handling = 0;
   gethandlingcharges() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/61862567d3e8b73c2dc54fd4'));
+        Uri.parse('${baseurl}/api/calculation/61b3a896d59d6bacdd6ef5a1'));
 
     http.StreamedResponse response = await request.send();
 

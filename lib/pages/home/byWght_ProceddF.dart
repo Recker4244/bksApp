@@ -215,7 +215,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      locale.REQUESTPLACED,
+                      "${widget.gold} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(

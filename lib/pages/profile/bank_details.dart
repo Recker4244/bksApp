@@ -183,8 +183,6 @@ class _BankDetailsState extends State<BankDetails> {
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,
-            "Bank": json.decode(response.body)['BANK'],
-            "Branch": json.decode(response.body)['BRANCH']
           },
         );
         final responseString = json.decode(responseBank.body);
@@ -238,16 +236,22 @@ class _BankDetailsState extends State<BankDetails> {
           body: {
             "Accountnum": accountNumberController.text,
             "IFSC": ifscCodeController.text,
-            "Bank": json.decode(response.body)['BANK'],
-            "Branch": json.decode(response.body)['BRANCH']
           },
         );
         final responseString = json.decode(responseBank.body);
         Map datas = responseString['data'];
-        setState(() {
-          bankdetail = bankDetails.fromJson(datas);
-        });
+        // setState(() {
+        //   bankdetail = bankDetails.fromJson(datas);
+        // });
         Navigator.pop(context, true);
+        Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => BottomBar(
+              index: 1,
+            ),
+          ),
+        );
         showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -386,25 +390,30 @@ class _BankDetailsState extends State<BankDetails> {
                     cursorColor: primaryColor,
                   ),
                 ),
-                child: TextField(
+                child: TextFormField(
                   focusNode: accountFocus,
                   controller: accountNumberController,
                   keyboardType: TextInputType.number,
                   style: primaryColor16BoldTextStyle,
                   decoration: InputDecoration(
-                    labelText: locale.AcctNum,
-                    labelStyle: primaryColor16BoldTextStyle,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                    filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.all(
                         const Radius.circular(10.0),
                       ),
                       borderSide: BorderSide(color: primaryColor, width: 1),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(10.0),
-                      ),
-                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    fillColor: whiteColor,
+                    labelText: locale.AcctNum,
+                    labelStyle: primaryColor18BoldTextStyle,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor, width: 0.7),
                     ),
                   ),
                   onChanged: (value) {},
@@ -423,25 +432,30 @@ class _BankDetailsState extends State<BankDetails> {
                     cursorColor: primaryColor,
                   ),
                 ),
-                child: TextField(
+                child: TextFormField(
                   focusNode: ifscFocus,
                   controller: ifscCodeController,
                   keyboardType: TextInputType.text,
                   style: primaryColor16BoldTextStyle,
                   decoration: InputDecoration(
-                    labelText: locale.ifsc,
-                    labelStyle: primaryColor16BoldTextStyle,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    ),
+                    filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.all(
                         const Radius.circular(10.0),
                       ),
                       borderSide: BorderSide(color: primaryColor, width: 1),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(10.0),
-                      ),
-                      borderSide: BorderSide(color: primaryColor, width: 1),
+                    fillColor: whiteColor,
+                    labelText: locale.ifsc,
+                    labelStyle: primaryColor18BoldTextStyle,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor, width: 0.7),
                     ),
                   ),
                   onChanged: (value) {},
