@@ -84,10 +84,14 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => Navigator.pushReplacement(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (BuildContext context) => Login())),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        Login()));
+                          },
                           borderRadius: BorderRadius.circular(10.0),
                           child: Container(
                             width: (width - fixPadding * 14.0) / 2,
@@ -142,11 +146,12 @@ class _ProfileState extends State<Profile> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(70.0),
                           image: DecorationImage(
-                            image: Userdata.image == null
-                                ? AssetImage(
-                                    'assets/user/default.jpeg',
-                                  )
-                                : NetworkImage(Userdata.image),
+                            image:
+                                Userdata.image == null || Userdata.image.isEmpty
+                                    ? AssetImage(
+                                        'assets/user/default.jpeg',
+                                      )
+                                    : NetworkImage(Userdata.image),
                             fit: BoxFit.cover,
                           ),
                         ),

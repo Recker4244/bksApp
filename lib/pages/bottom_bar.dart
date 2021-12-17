@@ -45,13 +45,13 @@ class _BottomBarState extends State<BottomBar> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = !Userdata.isInvested ? false : true;
-    Future.delayed(Duration(seconds: 2), showTutorial);
+
     //prefs.getBool('first_time');
-    // if (firstTime != null && !firstTime) {
-    // } else {
-    //   prefs.setBool('first_time', true);
-    //   Future.delayed(Duration(seconds: 2), showTutorial);
-    // }
+    if (firstTime != null && !firstTime) {
+    } else {
+      prefs.setBool('first_time', true);
+      Future.delayed(Duration(seconds: 2), showTutorial);
+    }
   }
 
   void initState() {
