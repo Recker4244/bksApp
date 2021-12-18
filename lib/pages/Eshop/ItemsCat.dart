@@ -240,7 +240,9 @@ class _ItemsCatState extends State<ItemsCat> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      childAspectRatio: 2 / 3),
+                                      mainAxisSpacing: 8,
+                                      crossAxisSpacing: 8,
+                                      childAspectRatio: 5 / 2),
                               itemCount: categoryList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
@@ -279,7 +281,9 @@ class _ItemsCatState extends State<ItemsCat> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      childAspectRatio: 2 / 3),
+                                      mainAxisSpacing: 8,
+                                      crossAxisSpacing: 8,
+                                      childAspectRatio: 3 / 3),
                               itemCount: varietyList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
@@ -334,86 +338,103 @@ class varietyCard extends StatefulWidget {
 class _varietyCardState extends State<varietyCard> {
   @override
   Widget build(BuildContext context) {
-    List<String> images = [widget.img1, widget.img2, widget.img3];
-    return Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 4,
-                spreadRadius: 1,
-                color: blackColor.withOpacity(0.05),
-              ),
-            ],
+    return Stack(
+      children: [
+        Container(
+            decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                    image: NetworkImage(widget.img1), fit: BoxFit.cover))),
+        Container(
+          decoration: BoxDecoration(color: Colors.black38),
+          child: Center(
+            child: Text(widget.name,
+                style: TextStyle(color: Colors.white, fontSize: 10.sp)),
           ),
-          child: Column(
-            children: [
-              CarouselSlider.builder(
-                itemCount: 4,
-                itemBuilder: (context, Index, realIndex) {
-                  if (Index <= 2) {
-                    return Container(
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              images[Index] != null
-                                  ? images[Index]
-                                  : Placeholder(),
-                            ),
-                          )),
-                    );
-                  }
-                  return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: VideoDemo(
-                        videolink: widget.video,
-                      ));
-                },
-                options: CarouselOptions(
-                  height: 30.h,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 1,
-                  initialPage: 0,
-                  enableInfiniteScroll: false,
-                  reverse: false,
-                  autoPlay: false,
-                  enlargeCenterPage: false,
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(fixPadding),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(
-                      width: double.infinity,
-                    ),
-                    Text(
-                      widget.name,
-                      style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                    ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
+        )
+      ],
+    );
+    //   List<String> images = [widget.img1, widget.img2, widget.img3];
+    //   return Padding(
+    //       padding: const EdgeInsets.all(4.0),
+    //       child: Container(
+    //         decoration: BoxDecoration(
+    //           color: primaryColor,
+    //           borderRadius: BorderRadius.circular(10.0),
+    //           boxShadow: [
+    //             BoxShadow(
+    //               blurRadius: 4,
+    //               spreadRadius: 1,
+    //               color: blackColor.withOpacity(0.05),
+    //             ),
+    //           ],
+    //         ),
+    //         child: Column(
+    //           children: [
+    //             CarouselSlider.builder(
+    //               itemCount: 4,
+    //               itemBuilder: (context, Index, realIndex) {
+    //                 if (Index <= 2) {
+    //                   return Container(
+    //                     height: 30.h,
+    //                     decoration: BoxDecoration(
+    //                         color: primaryColor,
+    //                         borderRadius: BorderRadius.circular(10.0),
+    //                         image: DecorationImage(
+    //                           fit: BoxFit.cover,
+    //                           image: NetworkImage(
+    //                             images[Index] != null
+    //                                 ? images[Index]
+    //                                 : Placeholder(),
+    //                           ),
+    //                         )),
+    //                   );
+    //                 }
+    //                 return Container(
+    //                     decoration: BoxDecoration(
+    //                       borderRadius: BorderRadius.circular(10.0),
+    //                     ),
+    //                     child: VideoDemo(
+    //                       videolink: widget.video,
+    //                     ));
+    //               },
+    //               options: CarouselOptions(
+    //                 height: 30.h,
+    //                 aspectRatio: 16 / 9,
+    //                 viewportFraction: 1,
+    //                 initialPage: 0,
+    //                 enableInfiniteScroll: false,
+    //                 reverse: false,
+    //                 autoPlay: false,
+    //                 enlargeCenterPage: false,
+    //                 scrollDirection: Axis.horizontal,
+    //               ),
+    //             ),
+    //             Container(
+    //               padding: EdgeInsets.all(fixPadding),
+    //               child: Column(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: <Widget>[
+    //                   SizedBox(
+    //                     width: double.infinity,
+    //                   ),
+    //                   Text(
+    //                     widget.name,
+    //                     style: TextStyle(color: Colors.white, fontSize: 10.sp),
+    //                   ),
+    //                 ],
+    //               ),
+    //               decoration: BoxDecoration(
+    //                 color: primaryColor,
+    //                 borderRadius: BorderRadius.vertical(
+    //                   bottom: Radius.circular(20),
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ));
   }
 }
 
@@ -435,82 +456,99 @@ class CategoryCard extends StatefulWidget {
 class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
-    List<String> images = [widget.img1, widget.img2, widget.img3];
-    return Container(
-      height: 20.h,
-      decoration: BoxDecoration(
-        color: primaryColor,
-        borderRadius: BorderRadius.circular(25.0),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 4,
-            spreadRadius: 1,
-            color: blackColor.withOpacity(0.05),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          CarouselSlider.builder(
-            itemCount: 4,
-            itemBuilder: (context, Index, realIndex) {
-              if (Index <= 2) {
-                return Container(
-                  width: 55.w,
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          images[Index] != null ? images[Index] : Placeholder(),
-                        ),
-                      )),
-                );
-              }
-              return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: VideoDemo(
-                    videolink: widget.video,
-                  ));
-            },
-            options: CarouselOptions(
-              height: 30.h,
-              aspectRatio: 16 / 9,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              enlargeCenterPage: false,
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(fixPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                ),
-                Text(
-                  widget.name,
-                  style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                ),
-              ],
-            ),
+    return Stack(
+      children: [
+        Container(
             decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
-              ),
-            ),
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                    image: NetworkImage(widget.img1), fit: BoxFit.cover))),
+        Container(
+          decoration: BoxDecoration(color: Colors.black38),
+          child: Center(
+            child: Text(widget.name,
+                style: TextStyle(color: Colors.white, fontSize: 10.sp)),
           ),
-        ],
-      ),
+        )
+      ],
     );
+    //   List<String> images = [widget.img1, widget.img2, widget.img3];
+    //   return Container(
+    //     height: 20.h,
+    //     decoration: BoxDecoration(
+    //       color: primaryColor,
+    //       borderRadius: BorderRadius.circular(25.0),
+    //       boxShadow: [
+    //         BoxShadow(
+    //           blurRadius: 4,
+    //           spreadRadius: 1,
+    //           color: blackColor.withOpacity(0.05),
+    //         ),
+    //       ],
+    //     ),
+    //     child: Column(
+    //       children: [
+    //         CarouselSlider.builder(
+    //           itemCount: 4,
+    //           itemBuilder: (context, Index, realIndex) {
+    //             if (Index <= 2) {
+    //               return Container(
+    //                 width: 55.w,
+    //                 decoration: BoxDecoration(
+    //                     color: primaryColor,
+    //                     borderRadius: BorderRadius.circular(10.0),
+    //                     image: DecorationImage(
+    //                       image: NetworkImage(
+    //                         images[Index] != null ? images[Index] : Placeholder(),
+    //                       ),
+    //                     )),
+    //               );
+    //             }
+    //             return Container(
+    //                 decoration: BoxDecoration(
+    //                   borderRadius: BorderRadius.circular(10.0),
+    //                 ),
+    //                 child: VideoDemo(
+    //                   videolink: widget.video,
+    //                 ));
+    //           },
+    //           options: CarouselOptions(
+    //             height: 30.h,
+    //             aspectRatio: 16 / 9,
+    //             viewportFraction: 1,
+    //             initialPage: 0,
+    //             enableInfiniteScroll: false,
+    //             reverse: false,
+    //             autoPlay: false,
+    //             enlargeCenterPage: false,
+    //             scrollDirection: Axis.horizontal,
+    //           ),
+    //         ),
+    //         Container(
+    //           padding: EdgeInsets.all(fixPadding),
+    //           child: Column(
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: <Widget>[
+    //               SizedBox(
+    //                 width: double.infinity,
+    //               ),
+    //               Text(
+    //                 widget.name,
+    //                 style: TextStyle(color: Colors.white, fontSize: 10.sp),
+    //               ),
+    //             ],
+    //           ),
+    //           decoration: BoxDecoration(
+    //             color: primaryColor,
+    //             borderRadius: BorderRadius.vertical(
+    //               bottom: Radius.circular(20),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
   }
 }
 

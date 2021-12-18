@@ -168,7 +168,7 @@ class _CustomTabsState extends State<CustomTabView>
     controller = TabController(
       length: widget.itemCount,
       vsync: this,
-      initialIndex: _currentPosition,
+      initialIndex: 0,
     );
     controller.addListener(onPositionChange);
     controller.animation.addListener(onScroll);
@@ -204,7 +204,7 @@ class _CustomTabsState extends State<CustomTabView>
         controller = TabController(
           length: widget.itemCount,
           vsync: this,
-          initialIndex: _currentPosition,
+          initialIndex: 0,
         );
         controller.addListener(onPositionChange);
         controller.animation.addListener(onScroll);
