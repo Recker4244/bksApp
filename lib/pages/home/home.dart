@@ -407,14 +407,14 @@ class _HomeState extends State<Home> {
                   style: grey16MediumTextStyle,
                 ),
                 SizedBox(
-                  height: 0.5.h,
-                ),
-                Wrap(
-                  children: [
-                    Text(Userdata.fname ?? "Unknown User" + ' To BKS',
-                        style: black22BoldTextStyle.copyWith(
-                            fontSize: 30, fontWeight: FontWeight.w600)),
-                  ],
+                  width: 70.w,
+                  child: Wrap(
+                    children: [
+                      Text(Userdata.fname ?? "Unknown User" + ' To BKS',
+                          style: black22BoldTextStyle.copyWith(
+                              fontSize: 25, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
                 )
               ],
             ),
