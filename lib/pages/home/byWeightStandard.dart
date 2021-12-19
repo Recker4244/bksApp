@@ -140,9 +140,9 @@ class _Standard_PCState extends State<Standard_PC> {
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
-
+    final responseString = await response.stream.bytesToString();
     if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
+      //final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
       installmentID = s['data']['id'];
     } else {

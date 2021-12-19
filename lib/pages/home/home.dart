@@ -7,6 +7,7 @@ import 'package:gold247/models/StandPlans.dart';
 import 'package:gold247/models/Metalgroup.dart';
 import 'package:gold247/models/offerList.dart';
 import 'package:gold247/models/slider.dart';
+import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/home/byWeightStandard.dart';
 import 'package:gold247/pages/portfolio/referral_bonus_details.dart';
@@ -88,6 +89,7 @@ class _HomeState extends State<Home> {
   }
 
   List<offerList> offers = [];
+  List<offerList> reverselist = [];
   Future getoffers() async {
     var request = http.Request('GET', Uri.parse('${baseurl}/api/offer'));
 
@@ -99,6 +101,7 @@ class _HomeState extends State<Home> {
       Iterable l = json.decode(responseString);
       offers =
           List<offerList>.from(l.map((model) => offerList.fromJson(model)));
+      reverselist = new List.from(offers.reversed);
     } else {
       print(response.reasonPhrase);
     }
@@ -1749,106 +1752,144 @@ class _HomeState extends State<Home> {
                         scrollDirection: Axis.horizontal,
                         itemCount: offers.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(
-                              width: 40.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network(
-                                  "${offers[index].image}",
-                                  fit: BoxFit.cover,
+                          return GestureDetector(
+                            onTap: () {
+                              if (offers[index].type.toLowerCase() ==
+                                  "collection")
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Eshop(
+                                              id: offers[index].typeId,
+                                              type: offers[index]
+                                                      .type
+                                                      .toLowerCase() +
+                                                  "s",
+                                            )));
+                              else
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Eshop(
+                                              id: offers[index].typeId,
+                                              type: offers[index]
+                                                  .type
+                                                  .toLowerCase(),
+                                            )));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: Container(
+                                width: 40.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.network(
+                                    "${offers[index].image}",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
+                                //decoration: BoxDecoration(color: Colors.red),
                               ),
-                              //decoration: BoxDecoration(color: Colors.red),
                             ),
                           );
                         }),
-                    //  ListView(
-
-                    //   children: [
-                    //     ,
-                    //     Padding(
-                    //       padding: EdgeInsets.symmetric(horizontal: 8),
-                    //       child: Container(
-                    //         width: 40.w,
-                    //         child: ClipRRect(
-                    //           borderRadius: BorderRadius.circular(15.0),
-                    //           child: Image.network(
-                    //             "https://mir-s3-cdn-cf.behance.net/project_modules/1400/f56f6932790573.56940c8b64c93.jpg",
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //         //decoration: BoxDecoration(color: Colors.red),
-                    //       ),
-                    //     ),
-                    //     Padding(
-                    //       padding: EdgeInsets.symmetric(horizontal: 8),
-                    //       child: Container(
-                    //         width: 40.w,
-                    //         child: ClipRRect(
-                    //           borderRadius: BorderRadius.circular(15.0),
-                    //           child: Image.network(
-                    //             "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //         //decoration: BoxDecoration(color: Colors.red),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // )
-                    //decoration: BoxDecoration(color: Colors.red),
                   ),
                 ],
               ),
               Container(
-                  height: 55.w,
-                  child: ListView(
-                    padding: EdgeInsets.all(8),
+                height: 55.w,
+                child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          width: 50.w,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
-                                fit: BoxFit.fitWidth),
+                    itemCount: reverselist.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (reverselist[index].type.toLowerCase() ==
+                              "collection")
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Eshop(
+                                          id: reverselist[index].typeId,
+                                          type: reverselist[index]
+                                                  .type
+                                                  .toLowerCase() +
+                                              "s",
+                                        )));
+                          else
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Eshop(
+                                          id: reverselist[index].typeId,
+                                          type: reverselist[index]
+                                              .type
+                                              .toLowerCase(),
+                                        )));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Container(
+                            width: 40.w,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.network(
+                                "${reverselist[index].image}",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            //decoration: BoxDecoration(color: Colors.red),
                           ),
-                          //decoration: BoxDecoration(color: Colors.red),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          width: 50.w,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                                "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
-                                fit: BoxFit.fitWidth),
-                          ),
-                          //decoration: BoxDecoration(color: Colors.red),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          width: 50.w,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.network(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
-                                fit: BoxFit.fitWidth),
-                          ),
-                          //decoration: BoxDecoration(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  )),
+                      );
+                    }),
+                // ListView(
+                //   padding: EdgeInsets.all(8),
+                //   scrollDirection: Axis.horizontal,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.all(4.0),
+                //       child: Container(
+                //         width: 50.w,
+                //         child: ClipRRect(
+                //           borderRadius: BorderRadius.circular(15.0),
+                //           child: Image.network(
+                //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
+                //               fit: BoxFit.fitWidth),
+                //         ),
+                //         //decoration: BoxDecoration(color: Colors.red),
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.all(4.0),
+                //       child: Container(
+                //         width: 50.w,
+                //         child: ClipRRect(
+                //           borderRadius: BorderRadius.circular(15.0),
+                //           child: Image.network(
+                //               "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
+                //               fit: BoxFit.fitWidth),
+                //         ),
+                //         //decoration: BoxDecoration(color: Colors.red),
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.all(4.0),
+                //       child: Container(
+                //         width: 50.w,
+                //         child: ClipRRect(
+                //           borderRadius: BorderRadius.circular(15.0),
+                //           child: Image.network(
+                //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
+                //               fit: BoxFit.fitWidth),
+                //         ),
+                //         //decoration: BoxDecoration(color: Colors.red),
+                //       ),
+                //     ),
+                //   ],
+                // )
+              ),
               buyGold(data.buy.toStringAsFixed(2)),
               sellGold(data.sell.toStringAsFixed(2)),
               height20Space,

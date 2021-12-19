@@ -65,7 +65,7 @@ class _GoldcoinsState extends State<Goldcoins> {
                               Image(
                                 fit: BoxFit.fitHeight,
                                 image: NetworkImage(
-                                    widget.item[index].item.images[0]),
+                                    "https://bks-gold.s3.ap-south-1.amazonaws.com/${widget.item[index].item.images[0]}"),
                               ),
                             ],
                           ),
