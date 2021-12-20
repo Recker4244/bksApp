@@ -163,7 +163,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
     request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
-    final responseString = await response.stream.bytesToString();
+
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
 
@@ -186,9 +186,46 @@ class _ByValFlexiState extends State<ByValFlexi> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
     var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     await createSubscription(installmentID);
+    Navigator.of(context).pop();
     Navigator.pushReplacement(
         context,
         PageTransition(

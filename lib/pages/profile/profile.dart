@@ -146,12 +146,14 @@ class _ProfileState extends State<Profile> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(70.0),
                           image: DecorationImage(
-                            image:
-                                Userdata.image == null || Userdata.image.isEmpty
-                                    ? AssetImage(
-                                        'assets/user/default.jpeg',
-                                      )
-                                    : NetworkImage(Userdata.image),
+                            image: Userdata.image == null ||
+                                    Userdata.image.isEmpty ||
+                                    Userdata.image ==
+                                        "https://bks-gold.s3.ap-south-1.amazonaws.com/"
+                                ? AssetImage(
+                                    'assets/user/default.jpeg',
+                                  )
+                                : NetworkImage(Userdata.image),
                             fit: BoxFit.cover,
                           ),
                         ),

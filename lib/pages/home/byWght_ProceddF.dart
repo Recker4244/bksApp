@@ -147,8 +147,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
 
   createSubscription(String installmentid) async {
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/subscription/create/${Userdata.id}'));
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/subscription/create/flexi/${Userdata.id}'));
     request.headers.addAll(headers);
     final body = {
       "plan": {
@@ -186,9 +186,45 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
     installmentID = await pay(response.paymentId);
     var locale = AppLocalizations.of(context);
     createSubscription(installmentID);
+    Navigator.of(context).pop();
     Navigator.pushReplacement(
         context,
         PageTransition(
