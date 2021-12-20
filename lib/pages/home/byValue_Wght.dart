@@ -163,8 +163,8 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: ByValFlexi(
-                                val: double.parse(valueController.text),
-                                gold: (double.parse(valueController.text) /
+                                gold: double.parse(valueController.text),
+                                val: (double.parse(valueController.text) /
                                     data.buy),
                                 duration: int.parse(DurationController.text),
                                 CycleP: CyclePController,

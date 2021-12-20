@@ -123,8 +123,8 @@ class _ByValFlexiState extends State<ByValFlexi> {
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": widget.val,
-      "gold": widget.gold,
+      "amount": widget.gold.toStringAsFixed(2),
+      "gold": widget.val.toStringAsFixed(2),
       "mode": "online"
     };
     request.body = jsonEncode(body);
@@ -157,7 +157,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
       },
       "userId": Userdata.id,
       "status": "Running",
-      "amount": widget.val,
+      "amount": widget.gold,
       "installmentId": installmentID
     };
     request.body = jsonEncode(body);
@@ -252,7 +252,7 @@ class _ByValFlexiState extends State<ByValFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "${widget.gold} ${locale.GRAM}",
+                      "${widget.val.toStringAsFixed(2)} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(
