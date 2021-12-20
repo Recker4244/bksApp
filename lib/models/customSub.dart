@@ -5,7 +5,7 @@ class customSub {
   String id;
   List<Installments> installments;
   String maturityDate;
-  double planBonus;
+  num planBonus;
   int skipCount;
   String status;
   String trackingId;
