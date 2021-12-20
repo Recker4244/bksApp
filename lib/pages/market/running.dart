@@ -54,6 +54,9 @@ class _RunningState extends State<Running> {
       itemBuilder: (context, index) {
         double gold = compute(widget.running[index]);
         final item = widget.running[index];
+        DateTime updatedAt = DateTime.parse(widget.running[index].updatedAt());
+
+        //  bool skippable=
         return Padding(
           padding: (index != widget.running.length - 1)
               ? EdgeInsets.fromLTRB(

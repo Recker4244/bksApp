@@ -92,6 +92,7 @@ class standardSub {
 
 class Installments {
   int amount;
+  String collector;
   String createdAt;
   String docType;
   int gold;
@@ -105,6 +106,7 @@ class Installments {
 
   Installments(
       {this.amount,
+      this.collector,
       this.createdAt,
       this.docType,
       this.gold,
@@ -118,6 +120,7 @@ class Installments {
 
   Installments.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
+    collector = json['collector'];
     createdAt = json['createdAt'];
     docType = json['docType'];
     gold = json['gold'];
@@ -133,6 +136,7 @@ class Installments {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
+    data['collector'] = this.collector;
     data['createdAt'] = this.createdAt;
     data['docType'] = this.docType;
     data['gold'] = this.gold;
@@ -206,6 +210,7 @@ class Plan {
 
 class CyclePeriod {
   String createdAt;
+  int cycle;
   String docType;
   int graceperiod;
   String id;
@@ -213,10 +218,12 @@ class CyclePeriod {
   int minWeight;
   String name;
   String shortName;
+  String status;
   String updatedAt;
 
   CyclePeriod(
       {this.createdAt,
+      this.cycle,
       this.docType,
       this.graceperiod,
       this.id,
@@ -224,10 +231,12 @@ class CyclePeriod {
       this.minWeight,
       this.name,
       this.shortName,
+      this.status,
       this.updatedAt});
 
   CyclePeriod.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
+    cycle = json['cycle'];
     docType = json['docType'];
     graceperiod = json['graceperiod'];
     id = json['id'];
@@ -235,12 +244,14 @@ class CyclePeriod {
     minWeight = json['minWeight'];
     name = json['name'];
     shortName = json['shortName'];
+    status = json['status'];
     updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['createdAt'] = this.createdAt;
+    data['cycle'] = this.cycle;
     data['docType'] = this.docType;
     data['graceperiod'] = this.graceperiod;
     data['id'] = this.id;
@@ -248,6 +259,7 @@ class CyclePeriod {
     data['minWeight'] = this.minWeight;
     data['name'] = this.name;
     data['shortName'] = this.shortName;
+    data['status'] = this.status;
     data['updatedAt'] = this.updatedAt;
     return data;
   }

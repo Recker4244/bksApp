@@ -3,6 +3,8 @@ import 'package:gold247/models/standardSub.dart' as standard;
 
 abstract class subscription {
   List installments();
+  int cycleDays();
+  int gracePeriod();
   String planName();
   int savedAmount();
   String id();
@@ -11,10 +13,23 @@ abstract class subscription {
   int skipCount();
   int unpaidSkips();
   String createdAt();
+  String updatedAt();
 }
 
 class Custom implements subscription {
   final custom.customSub plan;
+  cycleDays() {
+    return plan.customPlan.cyclePeriod[0].cycle;
+  }
+
+  gracePeriod() {
+    return plan.customPlan.cyclePeriod[0].graceperiod;
+  }
+
+  updatedAt() {
+    return plan.updatedAt;
+  }
+
   createdAt() {
     return plan.createdAt;
   }
@@ -56,6 +71,18 @@ class Custom implements subscription {
 
 class Standard implements subscription {
   final standard.standardSub plan;
+  cycleDays() {
+    return plan.plan.cyclePeriod.cycle;
+  }
+
+  gracePeriod() {
+    return plan.plan.cyclePeriod.graceperiod;
+  }
+
+  updatedAt() {
+    return plan.updatedAt;
+  }
+
   createdAt() {
     return plan.createdAt;
   }
