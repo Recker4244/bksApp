@@ -237,6 +237,7 @@ class _ItemsCatState extends State<ItemsCat> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
@@ -278,6 +279,7 @@ class _ItemsCatState extends State<ItemsCat> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
@@ -345,7 +347,7 @@ class _varietyCardState extends State<varietyCard> {
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
-                    image: NetworkImage(widget.img1), fit: BoxFit.cover))),
+                    image: NetworkImage(widget.img2), fit: BoxFit.cover))),
         Container(
           decoration: BoxDecoration(color: Colors.black38),
           child: Center(
@@ -569,61 +571,35 @@ class _previewCardState extends State<previewCard> {
   Widget build(BuildContext context) {
     return Container(
       width: 90.w,
-      height: 27.h,
       decoration: BoxDecoration(
           color: primaryColor, borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: [
-          CarouselSlider.builder(
-            itemCount: widget.images.length,
-            itemBuilder: (context, Index, realIndex) {
-              return Container(
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: NetworkImage(
-                        widget.images[Index] != null
-                            ? widget.images[Index]
-                            : Placeholder(),
-                      ),
-                    )),
-              );
-            },
-            options: CarouselOptions(
-              aspectRatio: 16 / 9,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              enlargeCenterPage: false,
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(fixPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                ),
-                Text(
-                  widget.name,
-                  style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                ),
-              ],
-            ),
+      child: CarouselSlider.builder(
+        itemCount: widget.images.length,
+        itemBuilder: (context, Index, realIndex) {
+          return Container(
             decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
-              ),
-            ),
-          ),
-        ],
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(
+                    widget.images[Index] != null
+                        ? widget.images[Index]
+                        : Placeholder(),
+                  ),
+                )),
+          );
+        },
+        options: CarouselOptions(
+          aspectRatio: 5 / 4,
+          viewportFraction: 1,
+          initialPage: 0,
+          enableInfiniteScroll: false,
+          reverse: false,
+          autoPlay: false,
+          enlargeCenterPage: false,
+          scrollDirection: Axis.horizontal,
+        ),
       ),
     );
   }
@@ -652,66 +628,41 @@ class _CollectionCardState extends State<CollectionCard> {
       width: 80.w,
       decoration: BoxDecoration(
           color: primaryColor, borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: [
-          CarouselSlider.builder(
-            itemCount: 4,
-            itemBuilder: (context, Index, realIndex) {
-              if (Index <= 2) {
-                return Container(
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          images[Index] != null ? images[Index] : Placeholder(),
-                        ),
-                      )),
-                );
-              }
-              return Container(
-                  width: 80.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: VideoDemo(
-                    videolink: widget.video,
-                  ));
-            },
-            options: CarouselOptions(
-              aspectRatio: 16 / 9,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              enlargeCenterPage: false,
-              scrollDirection: Axis.horizontal,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(fixPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                ),
-                Text(
-                  widget.name,
-                  style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
+      child: CarouselSlider.builder(
+        itemCount: 4,
+        itemBuilder: (context, Index, realIndex) {
+          if (Index <= 2) {
+            return Container(
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      images[Index] != null ? images[Index] : Placeholder(),
+                    ),
+                  )),
+            );
+          }
+          return Container(
+              width: 80.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
               ),
-            ),
-          ),
-        ],
+              child: VideoDemo(
+                videolink: widget.video,
+              ));
+        },
+        options: CarouselOptions(
+          aspectRatio: 5 / 3,
+          viewportFraction: 1,
+          initialPage: 0,
+          enableInfiniteScroll: false,
+          reverse: false,
+          autoPlay: false,
+          enlargeCenterPage: false,
+          scrollDirection: Axis.horizontal,
+        ),
       ),
     );
   }
