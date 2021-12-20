@@ -111,9 +111,10 @@ class _standardValueState extends State<standardValue> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
     valueController = TextEditingController(text: widget.min.toString());
     amountController =
-        TextEditingController(text: (widget.min * data.buy).toStringAsFixed(2));
+        TextEditingController(text: (widget.min / data.buy).toStringAsFixed(2));
 
     return true;
   }
@@ -143,7 +144,7 @@ class _standardValueState extends State<standardValue> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
     } else {
       print(response.reasonPhrase);
     }
@@ -182,9 +183,51 @@ class _standardValueState extends State<standardValue> {
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
     var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
-    createSubscription(installmentID);
+    await createSubscription(installmentID);
+    Navigator.of(context).pop();
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar()));
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -205,7 +248,7 @@ class _standardValueState extends State<standardValue> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      locale.REQUESTPLACED,
+                      "${num.parse(amountController.text)} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(
@@ -534,23 +577,39 @@ class _standardValueState extends State<standardValue> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextField(
-                                enabled: false,
-                                controller: amountController,
-                                keyboardType: TextInputType.text,
-                                style: primaryColor18BoldTextStyle,
-                                decoration: InputDecoration(
-                                  labelText: 'Weight of Gold',
-                                  labelStyle: primaryColor18BoldTextStyle,
-                                  suffix: Text(
-                                    locale.GRAM,
-                                    style: primaryColor18BoldTextStyle,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: primaryColor, width: 0.7),
-                                  ),
-                                ),
-                              ),
+                                  enabled: false,
+                                  controller: amountController,
+                                  keyboardType: TextInputType.text,
+                                  style: primaryColor18BoldTextStyle,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    // enabledBorder:
+                                    // OutlineInputBorder(
+                                    //   borderRadius: const BorderRadius.all(
+                                    //     const Radius.circular(10.0),
+                                    //   ),
+                                    //   borderSide: BorderSide(
+                                    //       color: primaryColor, width: 1),
+                                    // ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 1),
+                                    ),
+                                    fillColor: whiteColor,
+                                    labelText: 'Weight of Gold',
+                                    labelStyle: primaryColor18BoldTextStyle,
+                                    suffix: Text(
+                                      locale.GRAM,
+                                      style: primaryColor18BoldTextStyle,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: primaryColor, width: 0.7),
+                                    ),
+                                  )),
                             ),
                           ),
                           Padding(
