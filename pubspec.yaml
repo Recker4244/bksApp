@@ -63,6 +63,8 @@ dependencies:
   just_audio: ^0.9.18
   scroll_to_index: ^2.1.1
   scrollable_positioned_list: ^0.2.3
+  push_notification: ^1.1.1
+  overlay_support: ^1.2.1
 
 dev_dependencies:
   flutter_test:
