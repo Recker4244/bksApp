@@ -12,6 +12,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:sizer/sizer.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 double screenw;
 AudioPlayer player = AudioPlayer();
@@ -39,27 +40,43 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  Future getuserdetails(String id) async {
+    var request = http.Request('GET', Uri.parse('${baseurl}/api/user/$id'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = json.decode(await response.stream.bytesToString());
+
+      Userdata = userdata.fromJson(responseString);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn');
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Login()));
+    // if (status != null && status == true) {
+    //   token = prefs.getString('token');
 
-    if (status != null && status == true) {
-      token = prefs.getString('token');
+    //   final userMap = jsonDecode(prefs.getString('user'));
 
-      final userMap = jsonDecode(prefs.getString('user'));
+    //   await getuserdetails(userMap['id']);
+    //   //Userdata = userdata.fromJson(userMap);
 
-      Userdata = userdata.fromJson(userMap);
-
-      Navigator.pushReplacement<void, void>(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => BottomBar(),
-        ),
-      );
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
-    }
+    //   Navigator.pushReplacement<void, void>(
+    //     context,
+    //     MaterialPageRoute<void>(
+    //       builder: (BuildContext context) => BottomBar(),
+    //     ),
+    //   );
+    // } else {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => Login()));
+    // }
   }
 
   @override

@@ -4,8 +4,8 @@ class cycles {
   String docType;
   int graceperiod;
   String id;
-  int minValue;
-  int minWeight;
+  num minValue;
+  num minWeight;
   String name;
   String shortName;
   String status;

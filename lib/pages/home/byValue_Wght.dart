@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
@@ -10,7 +10,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'byWght_ProceddF.dart';
+import 'dart:math' as math;
 import 'package:gold247/language/locale.dart';
 
 class ByValue_Wght extends StatefulWidget {
@@ -296,6 +296,11 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 primaryColor: whiteColor,
                               ),
                               child: TextFormField(
+                                inputFormatters: [
+                                  DecimalTextInputFormatter(decimalRange: 2)
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -313,7 +318,7 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                   });
                                 },
                                 controller: valueController,
-                                keyboardType: TextInputType.number,
+                                //keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
@@ -424,6 +429,9 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextFormField(
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -535,12 +543,49 @@ class _ByValue_WghtState extends State<ByValue_Wght> {
                 ),
               ));
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });
+  }
+}
+
+class DecimalTextInputFormatter extends TextInputFormatter {
+  DecimalTextInputFormatter({this.decimalRange})
+      : assert(decimalRange == null || decimalRange > 0);
+
+  final int decimalRange;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue, // unused.
+    TextEditingValue newValue,
+  ) {
+    TextSelection newSelection = newValue.selection;
+    String truncated = newValue.text;
+
+    if (decimalRange != null) {
+      String value = newValue.text;
+
+      if (value.contains(".") &&
+          value.substring(value.indexOf(".") + 1).length > decimalRange) {
+        truncated = oldValue.text;
+        newSelection = oldValue.selection;
+      } else if (value == ".") {
+        truncated = "0.";
+
+        newSelection = newValue.selection.copyWith(
+          baseOffset: math.min(truncated.length, truncated.length + 1),
+          extentOffset: math.min(truncated.length, truncated.length + 1),
+        );
+      }
+
+      return TextEditingValue(
+        text: truncated,
+        selection: newSelection,
+        composing: TextRange.empty,
+      );
+    }
+    return newValue;
   }
 }

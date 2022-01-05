@@ -6,6 +6,7 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 
@@ -698,9 +699,14 @@ class _CurrencyScreenState extends State<BuyGold> {
                               primaryColor: greyColor,
                             ),
                             child: TextFormField(
+                              inputFormatters: [
+                                DecimalTextInputFormatter(decimalRange: 2)
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                               controller: amountController,
                               cursorColor: primaryColor,
-                              keyboardType: TextInputType.number,
+
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
@@ -752,7 +758,8 @@ class _CurrencyScreenState extends State<BuyGold> {
                                     double.parse((buyprice + (buyprice * 0.03))
                                         .toString()));
                                 setState(() {
-                                  valueController.text = '$amount';
+                                  valueController.text =
+                                      amount.toStringAsFixed(2);
                                 });
                               },
                             ),
@@ -944,6 +951,11 @@ class _CurrencyScreenState extends State<BuyGold> {
                               primaryColor: greyColor,
                             ),
                             child: TextFormField(
+                              inputFormatters: [
+                                DecimalTextInputFormatter(decimalRange: 2)
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (String value) {
@@ -954,7 +966,7 @@ class _CurrencyScreenState extends State<BuyGold> {
                               },
                               cursorColor: primaryColor,
                               controller: valueController,
-                              keyboardType: TextInputType.number,
+                              // keyboardType: TextInputType.number,
                               style: primaryColor18BoldTextStyle,
                               decoration: InputDecoration(
                                 filled: true,
@@ -1004,7 +1016,8 @@ class _CurrencyScreenState extends State<BuyGold> {
                                     double.parse((buyPrice + (buyPrice * 0.03))
                                         .toString()));
                                 setState(() {
-                                  amountController.text = '$amount';
+                                  amountController.text =
+                                      amount.toStringAsFixed(2);
                                 });
                               },
                             ),

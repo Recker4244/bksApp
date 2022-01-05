@@ -110,7 +110,7 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(30),
-                    height: 220,
+                    height: 230,
                     decoration: BoxDecoration(
                       color: whiteColor,
                       boxShadow: [
@@ -134,6 +134,20 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                         ),
                         SizedBox(
                           height: 4.h,
+                        ),
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Weight',
+                              style: black18MediumTextStyle,
+                            ),
+                            Spacer(),
+                            Text(
+                              'Value',
+                              style: black18MediumTextStyle,
+                            ),
+                          ],
                         ),
                         Container(
                           padding: EdgeInsets.all(20),

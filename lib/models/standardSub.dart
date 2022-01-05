@@ -5,7 +5,7 @@ class standardSub {
   List<Installments> installments;
   String maturityDate;
   Plan plan;
-  double planBonus;
+  num planBonus;
   int skipCount;
   String status;
   String trackingId;
@@ -13,9 +13,9 @@ class standardSub {
   int unpaidSkips;
   String updatedAt;
   User user;
-  int savedAmount;
-  int savedWeight;
-  int totalBonus;
+  num savedAmount;
+  num savedWeight;
+  num totalBonus;
 
   standardSub(
       {this.createdAt,
@@ -95,7 +95,7 @@ class Installments {
   String collector;
   String createdAt;
   String docType;
-  int gold;
+  num gold;
   String id;
   String mode;
   String otp;

@@ -34,13 +34,10 @@ class _GoldcoinsState extends State<Goldcoins> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Itemdetails(item: widget.item[index]);
-                        },
-                      ),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Itemdetails(item: widget.item[index])));
                   },
                   child: Container(
                     decoration: BoxDecoration(

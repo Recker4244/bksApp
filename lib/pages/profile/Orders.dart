@@ -53,13 +53,16 @@ class _OrdersState extends State<Orders> {
       Map det = jsonDecode(responseString);
       Iterable l = det['data'];
       temp = List<order>.from(l.map((model) => order.fromJson(model)));
-      processing = temp
-          .where((item) =>
-              item.status == "Processing" ||
-              item.status == "Delivery Boy Assigned")
-          .toList();
-      delivered = temp.where((item) => item.status == "Delivered").toList();
-      cancelled = temp.where((item) => item.status == "Cancelled").toList();
+      processing = temp.where((element) {
+        if (element.status == "Order Placed" ||
+            element.status == "Delivery Boy Assigned" ||
+            element.status == "Order In Transit") return true;
+        return false;
+      }).toList();
+      cancelled =
+          temp.where((element) => element.status == "Order Cancelled").toList();
+      delivered =
+          temp.where((element) => element.status == "Order Completed").toList();
     } else {
       print(response.reasonPhrase);
     }
@@ -130,10 +133,7 @@ class _OrdersState extends State<Orders> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },
@@ -144,13 +144,13 @@ class _OrdersState extends State<Orders> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return ProcessingCard(
-          processing[index].sId,
+          processing[index].id,
           "",
           //processing[index].item.productName.toUpperCase(),
           "INR ${processing[index].amount.toStringAsFixed(2)}",
           'TRACK ORDER',
           'CANCEL ORDER',
-          Yourorderdetails(id: processing[index].sId),
+          Yourorderdetails(id: processing[index].id),
         );
       },
       itemCount: processing.length,
@@ -161,13 +161,13 @@ class _OrdersState extends State<Orders> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return Choice_Card2(
-            cancelled[index].sId,
+            cancelled[index].id,
             "",
             //cancelled[index].item.productName.toUpperCase(),
             "INR ${cancelled[index].amount.toStringAsFixed(2)}",
             'ORDER DETAIL',
             Yourorderdetails(
-              id: cancelled[index].sId,
+              id: cancelled[index].id,
             ));
       },
       itemCount: cancelled.length,
@@ -178,13 +178,13 @@ class _OrdersState extends State<Orders> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return Choice_Card2(
-            delivered[index].sId,
+            delivered[index].id,
             "",
             //delivered[index].item.productName.toUpperCase(),
             "INR ${delivered[index].amount.toString()}",
             'ORDER DETAIL',
             Yourorderdetails(
-              id: delivered[index].sId,
+              id: delivered[index].id,
             ));
       },
       itemCount: delivered.length,

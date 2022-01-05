@@ -8,6 +8,7 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Detail.dart';
 import 'package:gold247/models/Metalgroup.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
@@ -353,6 +354,11 @@ class _SellOldState extends State<SellOld> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextFormField(
+                                inputFormatters: [
+                                  DecimalTextInputFormatter(decimalRange: 2)
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -363,7 +369,6 @@ class _SellOldState extends State<SellOld> {
                                   return null;
                                 },
                                 controller: valueController,
-                                keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(

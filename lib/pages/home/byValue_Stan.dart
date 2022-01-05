@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
@@ -16,6 +17,46 @@ import '../Eshop/COD_address.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:gold247/language/locale.dart';
+
+class DecimalTextInputFormatter extends TextInputFormatter {
+  DecimalTextInputFormatter({this.decimalRange})
+      : assert(decimalRange == null || decimalRange > 0);
+
+  final int decimalRange;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue, // unused.
+    TextEditingValue newValue,
+  ) {
+    TextSelection newSelection = newValue.selection;
+    String truncated = newValue.text;
+
+    if (decimalRange != null) {
+      String value = newValue.text;
+
+      if (value.contains(".") &&
+          value.substring(value.indexOf(".") + 1).length > decimalRange) {
+        truncated = oldValue.text;
+        newSelection = oldValue.selection;
+      } else if (value == ".") {
+        truncated = "0.";
+
+        newSelection = newValue.selection.copyWith(
+          baseOffset: math.min(truncated.length, truncated.length + 1),
+          extentOffset: math.min(truncated.length, truncated.length + 1),
+        );
+      }
+
+      return TextEditingValue(
+        text: truncated,
+        selection: newSelection,
+        composing: TextRange.empty,
+      );
+    }
+    return newValue;
+  }
+}
 
 class standardValue extends StatefulWidget {
   String durationString;
@@ -127,17 +168,19 @@ class _standardValueState extends State<standardValue> {
 
   String installmentID;
   pay(String id) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
 
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": amountController.text,
-      "gold": valueController.text,
+      "amount": num.parse(num.parse(valueController.text).toStringAsFixed(2)),
+      "gold": num.parse(num.parse(amountController.text).toStringAsFixed(2)),
       "mode": "online"
     };
     request.body = jsonEncode(body);
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
@@ -157,7 +200,7 @@ class _standardValueState extends State<standardValue> {
     request.bodyFields = {
       "userId": Userdata.id,
       "status": "Running",
-      "amount": amountController.text,
+      "amount": valueController.text,
       "planId": widget.planID, //Todo not in instant
       "installmentId": installmentID
     };
@@ -514,7 +557,11 @@ class _standardValueState extends State<standardValue> {
                                 },
                                 controller: valueController,
                                 cursorColor: primaryColor,
-                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  DecimalTextInputFormatter(decimalRange: 2)
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                                 style: primaryColor18BoldTextStyle,
 
                                 decoration: InputDecoration(

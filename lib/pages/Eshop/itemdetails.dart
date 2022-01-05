@@ -130,8 +130,9 @@ class _ItemdetailsState extends State<Itemdetails> {
             Container(
               color: whiteColor.withOpacity(0.5),
               child: Center(
-                  child:
-                      Image(image: NetworkImage(widget.item.item.images[0]))),
+                  child: Image(
+                      image: NetworkImage(
+                          "https://bks-gold.s3.ap-south-1.amazonaws.com/${widget.item.item.images[0]}"))),
             ),
             Padding(
               padding: const EdgeInsets.all(fixPadding * 2),
@@ -253,19 +254,23 @@ class _ItemdetailsState extends State<Itemdetails> {
                         locale.charges,
                         style: primaryColor18BoldTextStyle,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'GST',
-                            style: black16BoldTextStyle,
-                          ),
-                          Text(
-                            'INR ${(widget.item.amount * (widget.item.charges[1].percentage / 100)).toStringAsFixed(2)}',
-                            style: black16BoldTextStyle,
-                          ),
-                        ],
-                      ),
+                      widget.item.charges
+                              .map((item) => item.type)
+                              .contains("GST")
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'GST',
+                                  style: black16BoldTextStyle,
+                                ),
+                                Text(
+                                  'INR ${(widget.item.amount * (widget.item.charges[0].percentage / 100)).toStringAsFixed(2)}',
+                                  style: black16BoldTextStyle,
+                                ),
+                              ],
+                            )
+                          : Container(),
                       SizedBox(
                         width: double.infinity,
                         child: Divider(
@@ -273,39 +278,52 @@ class _ItemdetailsState extends State<Itemdetails> {
                           color: blackColor,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'MINTING',
-                            style: black16BoldTextStyle,
-                          ),
-                          Text(
-                            'INR ${(widget.item.amount * (widget.item.charges[2].percentage / 100)).toStringAsFixed(2)}',
-                            style: black16BoldTextStyle,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Divider(
-                          thickness: 1,
-                          color: blackColor,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'MAKING CHARGES',
-                            style: black16BoldTextStyle,
-                          ),
-                          Text(
-                            'INR ${(widget.item.amount * (widget.item.charges[0].percentage / 100)).toStringAsFixed(2)}',
-                            style: black16BoldTextStyle,
-                          ),
-                        ],
-                      ),
+                      widget.item.charges
+                              .map((item) => item.type)
+                              .contains("Minting Charges")
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'MINTING',
+                                  style: black16BoldTextStyle,
+                                ),
+                                Text(
+                                  'INR ${(widget.item.amount * (widget.item.charges[1].percentage / 100)).toStringAsFixed(2)}',
+                                  style: black16BoldTextStyle,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      widget.item.charges
+                              .map((item) => item.type)
+                              .contains("Minting Charges")
+                          ? SizedBox(
+                              width: double.infinity,
+                              child: Divider(
+                                thickness: 1,
+                                color: blackColor,
+                              ),
+                            )
+                          : Container(),
+                      widget.item.charges
+                              .map((item) => item.type)
+                              .contains("Making Charges")
+                          // widget.item.charges[0].type == "Making Charges"
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'MAKING CHARGES',
+                                  style: black16BoldTextStyle,
+                                ),
+                                Text(
+                                  'INR ${(widget.item.amount * (widget.item.charges[0].percentage / 100)).toStringAsFixed(2)}',
+                                  style: black16BoldTextStyle,
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
                   ),
                 ],

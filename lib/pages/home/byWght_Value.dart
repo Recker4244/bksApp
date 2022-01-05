@@ -1,11 +1,12 @@
 import 'dart:developer';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/cycle.dart';
 import 'package:gold247/pages/home/byValue_ProceedF.dart';
+import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -300,6 +301,11 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextFormField(
+                                inputFormatters: [
+                                  DecimalTextInputFormatter(decimalRange: 2)
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -317,7 +323,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                   });
                                 },
                                 controller: amountController,
-                                keyboardType: TextInputType.number,
+                                //keyboardType: TextInputType.number,
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
@@ -421,6 +427,9 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                                 primaryColor: primaryColor,
                               ),
                               child: TextFormField(
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {

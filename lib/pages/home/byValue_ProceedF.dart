@@ -117,17 +117,19 @@ class _ByValFlexiState extends State<ByValFlexi> {
   String otp;
   String installmentID;
   pay(String id) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
 
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": widget.gold.toStringAsFixed(2),
-      "gold": widget.val.toStringAsFixed(2),
+      "amount": num.parse(widget.gold.toStringAsFixed(2)),
+      "gold": num.parse(widget.val.toStringAsFixed(2)),
       "mode": "online"
     };
     request.body = jsonEncode(body);
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 

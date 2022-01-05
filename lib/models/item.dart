@@ -1,5 +1,6 @@
 class ItemList {
   String sKU;
+  Category category;
   List<Charges> charges;
   String collections;
   List<Composition> composition;
@@ -10,15 +11,18 @@ class ItemList {
   String id;
   Item item;
   String measurements;
-  Product product;
+  Item product;
   String ringsize;
   int units;
   String updatedAt;
+  Item variety;
+  Item collection;
   int amount;
   int totalAmount;
 
   ItemList(
       {this.sKU,
+      this.category,
       this.charges,
       this.collections,
       this.composition,
@@ -33,11 +37,16 @@ class ItemList {
       this.ringsize,
       this.units,
       this.updatedAt,
+      this.variety,
+      this.collection,
       this.amount,
       this.totalAmount});
 
   ItemList.fromJson(Map<String, dynamic> json) {
     sKU = json['SKU'];
+    category = json['category'] != null
+        ? new Category.fromJson(json['category'])
+        : null;
     if (json['charges'] != null) {
       charges = new List<Charges>();
       json['charges'].forEach((v) {
@@ -59,10 +68,15 @@ class ItemList {
     item = json['item'] != null ? new Item.fromJson(json['item']) : null;
     measurements = json['measurements'];
     product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? new Item.fromJson(json['product']) : null;
     ringsize = json['ringsize'];
     units = json['units'];
     updatedAt = json['updatedAt'];
+    variety =
+        json['variety'] != null ? new Item.fromJson(json['variety']) : null;
+    collection = json['collection'] != null
+        ? new Item.fromJson(json['collection'])
+        : null;
     amount = json['amount'];
     totalAmount = json['totalAmount'];
   }
@@ -70,6 +84,9 @@ class ItemList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['SKU'] = this.sKU;
+    if (this.category != null) {
+      data['category'] = this.category.toJson();
+    }
     if (this.charges != null) {
       data['charges'] = this.charges.map((v) => v.toJson()).toList();
     }
@@ -92,8 +109,55 @@ class ItemList {
     data['ringsize'] = this.ringsize;
     data['units'] = this.units;
     data['updatedAt'] = this.updatedAt;
+    if (this.variety != null) {
+      data['variety'] = this.variety.toJson();
+    }
+    if (this.collection != null) {
+      data['collection'] = this.collection.toJson();
+    }
     data['amount'] = this.amount;
     data['totalAmount'] = this.totalAmount;
+    return data;
+  }
+}
+
+class Category {
+  String categoryName;
+  String createdAt;
+  String docType;
+  String id;
+  List<String> images;
+  String updatedAt;
+  String video;
+
+  Category(
+      {this.categoryName,
+      this.createdAt,
+      this.docType,
+      this.id,
+      this.images,
+      this.updatedAt,
+      this.video});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    categoryName = json['category_name'];
+    createdAt = json['createdAt'];
+    docType = json['docType'];
+    id = json['id'];
+    images = json['images'].cast<String>();
+    updatedAt = json['updatedAt'];
+    video = json['video'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['category_name'] = this.categoryName;
+    data['createdAt'] = this.createdAt;
+    data['docType'] = this.docType;
+    data['id'] = this.id;
+    data['images'] = this.images;
+    data['updatedAt'] = this.updatedAt;
+    data['video'] = this.video;
     return data;
   }
 }
@@ -169,66 +233,50 @@ class Composition {
 }
 
 class Diamond {
-  String categoryId;
   String certifyAuthority;
   String clarity;
-  String collectionId;
   String color;
   String createdAt;
   String cut;
   String docType;
-  String gemstones;
   String id;
   String shape;
   String updatedAt;
-  String varietyId;
 
   Diamond(
-      {this.categoryId,
-      this.certifyAuthority,
+      {this.certifyAuthority,
       this.clarity,
-      this.collectionId,
       this.color,
       this.createdAt,
       this.cut,
       this.docType,
-      this.gemstones,
       this.id,
       this.shape,
-      this.updatedAt,
-      this.varietyId});
+      this.updatedAt});
 
   Diamond.fromJson(Map<String, dynamic> json) {
-    categoryId = json['category_id'];
     certifyAuthority = json['certify_authority'];
     clarity = json['clarity'];
-    collectionId = json['collection_id'];
     color = json['color'];
     createdAt = json['createdAt'];
     cut = json['cut'];
     docType = json['docType'];
-    gemstones = json['gemstones'];
     id = json['id'];
     shape = json['shape'];
     updatedAt = json['updatedAt'];
-    varietyId = json['variety_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_id'] = this.categoryId;
     data['certify_authority'] = this.certifyAuthority;
     data['clarity'] = this.clarity;
-    data['collection_id'] = this.collectionId;
     data['color'] = this.color;
     data['createdAt'] = this.createdAt;
     data['cut'] = this.cut;
     data['docType'] = this.docType;
-    data['gemstones'] = this.gemstones;
     data['id'] = this.id;
     data['shape'] = this.shape;
     data['updatedAt'] = this.updatedAt;
-    data['variety_id'] = this.varietyId;
     return data;
   }
 }
@@ -290,38 +338,38 @@ class MetalGroup {
 }
 
 class Metals {
-  String createAt;
+  String createdAt;
   String docType;
   String icon;
   String id;
   String name;
-  String updateAt;
+  String updatedAt;
 
   Metals(
-      {this.createAt,
+      {this.createdAt,
       this.docType,
       this.icon,
       this.id,
       this.name,
-      this.updateAt});
+      this.updatedAt});
 
   Metals.fromJson(Map<String, dynamic> json) {
-    createAt = json['createAt'];
+    createdAt = json['createdAt'];
     docType = json['docType'];
     icon = json['icon'];
     id = json['id'];
     name = json['name'];
-    updateAt = json['updateAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createAt'] = this.createAt;
+    data['createdAt'] = this.createdAt;
     data['docType'] = this.docType;
     data['icon'] = this.icon;
     data['id'] = this.id;
     data['name'] = this.name;
-    data['updateAt'] = this.updateAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
@@ -333,46 +381,9 @@ class Item {
   List<String> images;
   String name;
   String updatedAt;
-
-  Item(
-      {this.createdAt,
-      this.docType,
-      this.id,
-      this.images,
-      this.name,
-      this.updatedAt});
-
-  Item.fromJson(Map<String, dynamic> json) {
-    createdAt = json['createdAt'];
-    docType = json['docType'];
-    id = json['id'];
-    images = json['images'].cast<String>();
-    name = json['name'];
-    updatedAt = json['updatedAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdAt'] = this.createdAt;
-    data['docType'] = this.docType;
-    data['id'] = this.id;
-    data['images'] = this.images;
-    data['name'] = this.name;
-    data['updatedAt'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Product {
-  String createdAt;
-  String docType;
-  String id;
-  List<String> images;
-  String name;
-  String updatedAt;
   String video;
 
-  Product(
+  Item(
       {this.createdAt,
       this.docType,
       this.id,
@@ -381,7 +392,7 @@ class Product {
       this.updatedAt,
       this.video});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Item.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     docType = json['docType'];
     id = json['id'];

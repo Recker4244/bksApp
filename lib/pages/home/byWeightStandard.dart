@@ -7,6 +7,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/cod/cod_Flexu.dart';
 import 'package:gold247/pages/cod/cod_Stan.dart';
+import 'package:gold247/pages/home/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
@@ -133,7 +134,7 @@ class _Standard_PCState extends State<Standard_PC> {
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": num.parse(valueController.text),
+      "amount": num.parse(num.parse(valueController.text).toStringAsFixed(2)),
       "gold": num.parse(amountController.text),
       "mode": "online"
     };
@@ -222,6 +223,7 @@ class _Standard_PCState extends State<Standard_PC> {
     var locale = AppLocalizations.of(context);
     installmentID = await pay(response.paymentId);
     await createSubscription(installmentID);
+    Navigator.of(context).pop();
     Navigator.pushReplacement(
         context,
         PageTransition(
@@ -494,6 +496,11 @@ class _Standard_PCState extends State<Standard_PC> {
                                 ),
                               ),
                               child: TextFormField(
+                                inputFormatters: [
+                                  DecimalTextInputFormatter(decimalRange: 2)
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                                 cursorColor: primaryColor,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
@@ -514,7 +521,7 @@ class _Standard_PCState extends State<Standard_PC> {
                                     });
                                 },
                                 controller: amountController,
-                                keyboardType: TextInputType.number,
+
                                 style: primaryColor18BoldTextStyle,
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
