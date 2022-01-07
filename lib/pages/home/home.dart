@@ -2114,9 +2114,23 @@ class _HomeState extends State<Home> {
               ),
               SellOldGold(
                   data.sell,
-                  double.parse((data.sell * temp[1].referenceId.toDouble())
+                  double.parse((data.sell *
+                          temp
+                              .firstWhere((element) {
+                                if (element.shortName == "22 KT") return true;
+                                return false;
+                              })
+                              .referenceId
+                              .toDouble())
                       .toStringAsFixed(2)),
-                  double.parse((data.sell * temp[2].referenceId.toDouble())
+                  double.parse((data.sell *
+                          temp
+                              .firstWhere((element) {
+                                if (element.shortName == "18 KT") return true;
+                                return false;
+                              })
+                              .referenceId
+                              .toDouble())
                       .toStringAsFixed(2)),
                   width: width),
             ];
