@@ -88,11 +88,11 @@ class _GoldcoinsState extends State<Goldcoins> {
                                   style: primaryColor14MediumTextStyle,
                                 ),
                                 Text(
-                                  '${(widget.item[index].composition[0].metalGroup.fineness) / 10}% PURE GOLD ${widget.item[index].item.name}',
+                                  '${((widget.item[index].composition[0].metalGroup.fineness) / 10).toStringAsFixed(2)}% PURE GOLD ${widget.item[index].item.name}',
                                   style: primaryColor14MediumTextStyle,
                                 ),
                                 Text(
-                                  'INR ${widget.item[index].totalAmount}',
+                                  'INR ${(widget.item[index].totalAmount).toStringAsFixed(2)}',
                                   style: black14BoldTextStyle,
                                 ),
                               ],

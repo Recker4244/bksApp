@@ -136,10 +136,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   ),
                 ));
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },

@@ -19,7 +19,7 @@ import 'package:gold247/language/locale.dart';
 import 'package:sizer/sizer.dart';
 
 class ByWeightFlexi extends StatefulWidget {
-  double val;
+  num val;
   int duration;
   int mode;
   String planname;
@@ -251,7 +251,7 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                   children: <Widget>[
                     Center(
                         child: Text(
-                      "${widget.gold} ${locale.GRAM}",
+                      "${widget.val} ${locale.GRAM}",
                       style: black16BoldTextStyle,
                     )),
                     Center(

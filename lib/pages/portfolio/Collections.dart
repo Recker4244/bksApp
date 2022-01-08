@@ -194,10 +194,7 @@ class _CollectionsState extends State<Collections> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },
@@ -402,14 +399,16 @@ class _CollectionsState extends State<Collections> {
     return ListView.builder(
       itemBuilder: (context, index) {
         String plan = temp
-            .singleWhere((element) =>
-                element.installments().contains(complete[index].id))
+            .singleWhere(
+                (element) =>
+                    element.installments().contains(complete[index].id),
+                orElse: () => null)
             .planName();
         return Choice_Card1(
             '${plan.toUpperCase()}',
-            'INR 4330.0',
+            'INR ${complete[index].amount}',
             'COLLECTION DETAIL',
-            'COLLECTION DETAIL',
+            '',
             Eshop(),
             Eshop(),
             complete[index]);

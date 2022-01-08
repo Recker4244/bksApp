@@ -19,11 +19,11 @@ abstract class subscription {
 class Custom implements subscription {
   final custom.customSub plan;
   cycleDays() {
-    return plan.customPlan.cyclePeriod[0].cycle;
+    return plan.customPlan.cyclePeriod.cycle;
   }
 
   gracePeriod() {
-    return plan.customPlan.cyclePeriod[0].graceperiod;
+    return plan.customPlan.cyclePeriod.graceperiod;
   }
 
   updatedAt() {

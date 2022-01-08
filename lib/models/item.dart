@@ -7,7 +7,7 @@ class ItemList {
   String createdAt;
   String description;
   String docType;
-  int grossweight;
+  num grossweight;
   String id;
   Item item;
   String measurements;

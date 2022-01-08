@@ -2,7 +2,7 @@ class order {
   Address address;
   BuySell buySell;
   Cart cart;
-  int consignment;
+  String consignment;
   String createdAt;
   String deliveryCharge;
   String docType;
@@ -251,7 +251,7 @@ class ItemDetail {
   String createdAt;
   String description;
   String docType;
-  int grossweight;
+  num grossweight;
   String id;
   Item item;
   String measurements;

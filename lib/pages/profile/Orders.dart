@@ -150,7 +150,10 @@ class _OrdersState extends State<Orders> {
           "INR ${processing[index].amount.toStringAsFixed(2)}",
           'TRACK ORDER',
           'CANCEL ORDER',
-          Yourorderdetails(id: processing[index].id),
+          Yourorderdetails(
+            id: processing[index].id,
+            temp: processing[index],
+          ),
         );
       },
       itemCount: processing.length,
@@ -267,14 +270,15 @@ class _OrdersState extends State<Orders> {
                     ),
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.size,
-                                  alignment: Alignment.bottomCenter,
-                                  child: Yourorderdetails(
-                                    id: id,
-                                  )));
+                          // Navigator.push(
+                          //     context,
+                          //     PageTransition(
+                          //         type: PageTransitionType.size,
+                          //         alignment: Alignment.bottomCenter,
+                          //         child: Yourorderdetails(
+                          //           id: id,
+                          //           temp: na,
+                          //         )));
                         },
                         icon: Icon(Icons.arrow_forward_ios_outlined,
                             color: primaryColor)),

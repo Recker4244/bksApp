@@ -75,7 +75,8 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          locale.OrderID,
+                          "Order ID",
+                          //locale.OrderID,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,

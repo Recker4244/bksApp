@@ -11,33 +11,37 @@ import 'package:gold247/language/locale.dart';
 
 class Yourorderdetails extends StatefulWidget {
   final String id;
-  Yourorderdetails({this.id});
+  final order temp;
+  Yourorderdetails({this.id, this.temp});
   @override
   YourorderdetailsState createState() => YourorderdetailsState();
 }
 
 class YourorderdetailsState extends State<Yourorderdetails> {
-  orderdetails temp;
+  order temp = order();
 
   getorderbyid(String id) async {
-    var request = http.Request('GET', Uri.parse('${baseurl}/api/order/${id}'));
+    setState(() {
+      temp = widget.temp;
+    });
+    // var request = http.Request('GET', Uri.parse('${baseurl}/api/order/${id}'));
 
-    http.StreamedResponse response = await request.send();
+    // http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      setState(() {
-        temp = orderdetails.fromJson(jsonDecode(responseString));
-      });
-    } else {
-      print(response.reasonPhrase);
-    }
+    // if (response.statusCode == 200) {
+    //   final responseString = await response.stream.bytesToString();
+    //   setState(() {
+    //     temp = order.fromJson(jsonDecode(responseString));
+    //   });
+    // } else {
+    //   print(response.reasonPhrase);
+    // }
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    getorderbyid(Userdata.id);
+    getorderbyid(widget.id);
     super.initState();
   }
 
@@ -68,7 +72,7 @@ class YourorderdetailsState extends State<Yourorderdetails> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                "24 KT 1 GRAM GOLD COIN".toUpperCase(),
+                "${temp.cart.items}".toUpperCase(),
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 16,
@@ -225,7 +229,7 @@ class YourorderdetailsState extends State<Yourorderdetails> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        temp.sId,
+                        temp.id,
                         style: TextStyle(
                           color: blackColor,
                           fontSize: 14,

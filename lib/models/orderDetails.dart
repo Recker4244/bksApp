@@ -4,7 +4,7 @@ class orderdetails {
   int redeemGoldApplied;
   int instantGoldApplied;
   String otp;
-  double totalCharges;
+  num totalCharges;
   String sId;
   User user;
   Cart cart;
@@ -100,7 +100,7 @@ class User {
   String refCode;
   String gBPcode;
   List<String> referralBonusEntries;
-  double joiningBonus;
+  num joiningBonus;
   List<String> gBPBonusEntries;
   String deviceToken;
   String sId;
