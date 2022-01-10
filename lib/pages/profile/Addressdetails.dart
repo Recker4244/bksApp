@@ -31,6 +31,9 @@ class _AddressDetailsState extends State<AddressDetails> {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
       UserAddress temp = UserAddress.fromJson(det['data']);
+      List<UserAddress> t = [];
+      t.add(temp);
+      list_of_address = t;
     } else {
       print(response.reasonPhrase);
     }
@@ -122,7 +125,7 @@ class _AddressDetailsState extends State<AddressDetails> {
                                   Wrap(
                                     children: [
                                       Text(
-                                        locale.PINCODE,
+                                        "${locale.PINCODE} :",
                                         style: primaryColor18BoldTextStyle,
                                       ),
                                       Text(

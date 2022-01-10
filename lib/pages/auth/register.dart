@@ -10,6 +10,7 @@ import 'package:gold247/language/locale.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class Register extends StatefulWidget {
   String id;
@@ -121,7 +122,6 @@ class _RegisterState extends State<Register> {
         "dob": dobController.text,
         "refCode": refferController.text,
         "pan": pan.text.toUpperCase(),
-        "deviceToken": deviceToken
       },
     );
     final responseString = json.decode(response.body);
@@ -133,6 +133,44 @@ class _RegisterState extends State<Register> {
       });
       Navigator.push(context,
           PageTransition(type: PageTransitionType.fade, child: BottomBar()));
+    } else {
+      print(response.body);
+      Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return Dialog(
+            elevation: 0.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Wrap(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.clear_rounded,
+                        size: 40.sp,
+                        color: Colors.red,
+                      ),
+                      SizedBox(height: 25.0),
+                      Text(
+                        'Failed to create account, Try Again!',
+                        style: grey14MediumTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
     }
   }
 
