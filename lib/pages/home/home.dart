@@ -1030,7 +1030,7 @@ class _HomeState extends State<Home> {
                                             ),
                                             Text(
                                               item.mode == "Value"
-                                                  ? "${item.cyclePeriod.minValue} INR/ ${item.cyclePeriod.shortName}"
+                                                  ? "INR ${item.cyclePeriod.minValue}/ ${item.cyclePeriod.shortName}"
                                                   : "${item.cyclePeriod.minWeight} GRAM/${item.cyclePeriod.shortName}",
                                               style:
                                                   primaryColor14MediumTextStyle

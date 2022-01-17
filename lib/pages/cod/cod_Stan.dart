@@ -96,7 +96,7 @@ class _Adress_Details_Payment_StanState
     request.headers.addAll(headers);
     final body = {
       "user": Userdata.id,
-      "pin": PINcontroller.text,
+      "pin": int.parse(PINcontroller.text),
       "landMark": Landmarkcontroller.text,
       "isDefaultAddress": true
     };
