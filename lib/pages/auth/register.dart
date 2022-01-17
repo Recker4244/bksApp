@@ -114,16 +114,17 @@ class _RegisterState extends State<Register> {
         return FocusScope.of(context).requestFocus(fourthFocusNode);
       }
     }
-    http.Response response = await http.put(
-      Uri.parse("${baseurl}/api/user/" + widget.id),
-      body: {
-        "fname": nameController.text.toUpperCase(),
-        "email": emailController.text,
-        "dob": dobController.text,
-        "refCode": refferController.text,
-        "pan": pan.text.toUpperCase(),
-      },
-    );
+    final headers = {'Content-type': 'application/json'};
+    http.Response response =
+        await http.put(Uri.parse("${baseurl}/api/user/" + widget.id),
+            body: jsonEncode({
+              "fname": nameController.text.toUpperCase(),
+              "email": emailController.text,
+              "dob": dobController.text,
+              "refCode": refferController.text,
+              "pan": pan.text.toUpperCase(),
+            }),
+            headers: headers);
     final responseString = json.decode(response.body);
     if (response.statusCode == 200) {
       final responseString = json.decode(response.body);
@@ -341,7 +342,7 @@ class _RegisterState extends State<Register> {
                           context: context,
                           initialDate: selectedDate,
                           firstDate: DateTime(1900),
-                          lastDate: DateTime(2100));
+                          lastDate: DateTime.now());
                       if (picked != null && picked != selectedDate) {
                         setState(() {
                           selectedDate = picked;

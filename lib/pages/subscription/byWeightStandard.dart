@@ -7,7 +7,7 @@ import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/cod/cod_Flexu.dart';
 import 'package:gold247/pages/cod/cod_Stan.dart';
-import 'package:gold247/pages/home/byValue_Stan.dart';
+import 'package:gold247/pages/subscription/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';

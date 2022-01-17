@@ -6,7 +6,7 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
-import 'package:gold247/pages/home/byValue_Stan.dart';
+import 'package:gold247/pages/subscription/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
 

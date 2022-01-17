@@ -8,13 +8,15 @@ import 'package:gold247/models/Metalgroup.dart';
 import 'package:gold247/models/offerList.dart';
 import 'package:gold247/models/slider.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
-import 'package:gold247/pages/home/byValue_Stan.dart';
-import 'package:gold247/pages/home/byWeightStandard.dart';
+import 'package:gold247/pages/subscription/byValue_Stan.dart';
+import 'package:gold247/pages/subscription/byValue_Wght.dart';
+import 'package:gold247/pages/subscription/byWeightStandard.dart';
 import 'package:gold247/pages/portfolio/referral_bonus_details.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/pages/currencyScreen/buy_gold.dart';
 import 'package:gold247/pages/currencyScreen/sell_gold.dart';
+import 'package:gold247/pages/subscription/byWght_Value.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
@@ -23,14 +25,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shimmer/shimmer.dart';
-import 'byValue_Wght.dart';
-import 'byWght_Value.dart';
-import 'byValue_ProceedF.dart';
+
 import 'sellOldgold.dart';
 import 'package:gold247/models/user.dart';
 import 'package:sizer/sizer.dart';
 import 'package:share/share.dart';
-import 'byWeightStandard.dart';
+
 import 'package:gold247/language/locale.dart';
 
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -925,7 +925,7 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.symmetric(vertical: 2.0),
                     child: GestureDetector(
                       onTap: () {
-                        if (item.mode == "value") {
+                        if (item.mode == "Value") {
                           Navigator.push(
                               context,
                               PageTransition(

@@ -52,21 +52,25 @@ class _Adress_Details_Payment_FlexState
   PlanSubscriptions pSubs;
 
   bool available = true;
-  Future addAddres() async {
-    var request = http.Request(
-        'POST', Uri.parse('https://gold-v1.herokuapp.com/InsertUserAddress'));
-    request.bodyFields = {
-      'UserId': Userdata.id,
-      'address': addresscontroller.text,
-      'addtype': _character.toString(),
-      'landmark': Landmarkcontroller.text,
-      'plotno': PINcontroller.text,
-    };
+  Future addAddress() async {
+    loadingDialog(context);
+    var headers = {'Content-Type': 'application/json'};
 
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
+    request.headers.addAll(headers);
+    final body = {
+      "user": Userdata.id,
+      "pin": PINcontroller.text,
+      "landMark": Landmarkcontroller.text,
+      "isDefaultAddress": true
+    };
+    request.body = jsonEncode(body);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      pay(det['id']);
     } else {
       print(response.reasonPhrase);
     }
@@ -101,7 +105,7 @@ class _Adress_Details_Payment_FlexState
   DataIN info;
   String installmentID;
   String otp;
-  pay() async {
+  pay(String addressId) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
@@ -109,9 +113,10 @@ class _Adress_Details_Payment_FlexState
     final body = {
       "user": Userdata.id,
       "status": "Processing",
-      "amount": widget.amount,
-      "gold": widget.gold,
-      "mode": "COD"
+      "amount": num.parse(num.parse(widget.amount).toStringAsFixed(2)),
+      "gold": num.parse(num.parse(widget.gold).toStringAsFixed(2)),
+      "mode": "COD",
+      "address": addressId
     };
     request.body = jsonEncode(body);
     request.headers.addAll(headers);
@@ -453,7 +458,8 @@ class _Adress_Details_Payment_FlexState
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: InkWell(
                   onTap: () async {
-                    if (_formkeyflex.currentState.validate()) pay();
+                    if (_formkeyflex.currentState.validate())
+                      await addAddress();
                   },
                   child: Container(
                     decoration: BoxDecoration(

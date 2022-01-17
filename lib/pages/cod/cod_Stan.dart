@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 enum adressType { Home, Work, Others }
 adressType _character = adressType.Home;
@@ -52,21 +53,60 @@ class _Adress_Details_Payment_StanState
   PlanSubscriptions pSubs;
 
   bool available = true;
-  Future addAddres() async {
+  Future addAddress() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    //loadingDialog(context);
     var headers = {'Content-Type': 'application/json'};
+
     var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
-    request.bodyFields = {
-      'UserId': Userdata.id,
-      'address': addresscontroller.text,
-      'addtype': _character.toString(),
-      'landmark': Landmarkcontroller.text,
-      'plotno': PINcontroller.text,
-    };
     request.headers.addAll(headers);
+    final body = {
+      "user": Userdata.id,
+      "pin": PINcontroller.text,
+      "landMark": Landmarkcontroller.text,
+      "isDefaultAddress": true
+    };
+    request.body = jsonEncode(body);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      pay(det['id']);
     } else {
       print(response.reasonPhrase);
     }
@@ -101,7 +141,7 @@ class _Adress_Details_Payment_StanState
   DataIN info;
   String installmentID;
   String otp;
-  pay() async {
+  pay(String adressId) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
@@ -109,9 +149,10 @@ class _Adress_Details_Payment_StanState
     final body = {
       "user": Userdata.id,
       "status": "Processing",
-      "amount": widget.amount,
-      "gold": widget.gold,
-      "mode": "COD"
+      "amount": num.parse(num.parse(widget.amount).toStringAsFixed(2)),
+      "gold": num.parse(num.parse(widget.gold).toStringAsFixed(2)),
+      "mode": "COD",
+      "address": adressId
     };
     request.body = jsonEncode(body);
     request.headers.addAll(headers);
@@ -121,7 +162,7 @@ class _Adress_Details_Payment_StanState
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
-      installmentID = s['data']['_id'];
+      installmentID = s['data']['id'];
       otp = s['data']['otp'];
       createSubscription(installmentID);
     } else {
@@ -379,9 +420,13 @@ class _Adress_Details_Payment_StanState
                           borderSide: BorderSide(color: primaryColor, width: 1),
                         ),
                       ),
-                      onChanged: (value) {
-                        checkPincode(value);
+                      onFieldSubmitted: (value) {
+                        print(value);
                       },
+                      onEditingComplete: () {
+                        checkPincode(PINcontroller.text);
+                      },
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
@@ -451,7 +496,7 @@ class _Adress_Details_Payment_StanState
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: InkWell(
                   onTap: () async {
-                    if (_formkey.currentState.validate()) pay();
+                    if (_formkey.currentState.validate()) await addAddress();
                   },
                   child: Container(
                     decoration: BoxDecoration(

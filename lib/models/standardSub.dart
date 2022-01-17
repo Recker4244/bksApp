@@ -91,7 +91,7 @@ class standardSub {
 }
 
 class Installments {
-  int amount;
+  num amount;
   String collector;
   String createdAt;
   String docType;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const Color scaffoldLightColor = const Color(0xFFFFF1E0);
 const Color primaryColor = const Color(0xFF95203D);
@@ -13,6 +14,45 @@ const Color scaffoldBgColor = const Color(0xFFFFECCF);
 const String baseurl = "http://13.59.57.74:5000";
 const String patch = "13.59.57.74:5000";
 const double fixPadding = 10.0;
+
+loadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return Dialog(
+        elevation: 0.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Wrap(
+          children: [
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SpinKitRing(
+                    color: primaryColor,
+                    size: 40.0,
+                    lineWidth: 1.2,
+                  ),
+                  SizedBox(height: 25.0),
+                  Text(
+                    'Please Wait..',
+                    style: grey14MediumTextStyle,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 var errorScreen = SafeArea(
     child: Scaffold(
         backgroundColor: scaffoldBgColor,
