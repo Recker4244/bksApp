@@ -5,7 +5,7 @@ import 'package:gold247/models/customSub.dart';
 import 'package:gold247/models/referral.dart';
 import 'package:gold247/models/standardSub.dart';
 import 'package:gold247/models/subscription.dart';
-import 'package:gold247/pages/currencyScreen/buy_gold.dart';
+import 'package:gold247/pages/instantGold/buy_gold.dart';
 import 'package:gold247/pages/screens.dart';
 // import 'package:cryptox/widget/column_builder.dart';
 import 'package:flutter/material.dart';

@@ -6,6 +6,8 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/pages/instantGold/Bank_sellGold.dart';
+import 'package:gold247/pages/instantGold/crypto_chart_syncfusion.dart';
 import 'package:gold247/pages/subscription/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:flutter/material.dart';
@@ -97,94 +99,6 @@ class _CurrencyScreenState extends State<SellGold> {
   //   print("ok");
   //   return Instas;
   // }
-
-  void removefromwallet(String payId) async {
-    var locale = AppLocalizations.of(context);
-    var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
-
-    final body = {
-      "gold": num.parse(valueController.text),
-      "transactions": {
-        "paymentId": '$payId',
-        "amount": num.parse(amountController.text),
-        "status": "Debited"
-      }
-    };
-    request.headers.addAll(headers);
-    request.body = jsonEncode(body);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 201) {
-      print(await response.stream.bytesToString());
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                backgroundColor: scaffoldBgColor,
-                title: Center(
-                  child: CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.green,
-                    child: Icon(
-                      Icons.check,
-                      size: 30.0,
-                      color: scaffoldBgColor,
-                    ),
-                  ),
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Center(
-                          child: Text(
-                        locale.REQUESTPLACED,
-                        style: black16BoldTextStyle,
-                      )),
-                      Center(
-                          child: Text(
-                        locale.SUCCESS,
-                        style: black14MediumTextStyle,
-                      )),
-                      heightSpace,
-                      Center(
-                        child: Container(
-                          color: whiteColor,
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(payId),
-                          )),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Clipboard.setData(new ClipboardData(text: payId))
-                              .then((_) {
-                            final snackBar =
-                                SnackBar(content: Text('PaymentId Copied!'));
-
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          });
-                        },
-                        child: Center(
-                            child: Text(
-                          locale.copy,
-                          style: black14MediumTextStyle,
-                        )),
-                      ),
-                      heightSpace,
-                    ],
-                  ),
-                ),
-              ));
-    } else {
-      print(response.reasonPhrase);
-    }
-  }
 
   DataS datas;
   PlanSubscriptions pSubs;
@@ -827,8 +741,12 @@ class _CurrencyScreenState extends State<SellGold> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => BankDetails(
-                                            gold: valueController.text,
+                                      builder: (context) =>
+                                          Bank_sellInstantGold(
+                                            gold:
+                                                num.parse(valueController.text),
+                                            amount: num.parse(
+                                                amountController.text),
                                           )));
                             },
                             borderRadius: BorderRadius.circular(7.0),
@@ -1082,8 +1000,12 @@ class _CurrencyScreenState extends State<SellGold> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => BankDetails(
-                                            gold: valueController.text,
+                                      builder: (context) =>
+                                          Bank_sellInstantGold(
+                                            gold:
+                                                num.parse(valueController.text),
+                                            amount: num.parse(
+                                                amountController.text),
                                           )));
                             },
                             borderRadius: BorderRadius.circular(7.0),

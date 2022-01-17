@@ -2,7 +2,7 @@ import 'dart:js';
 
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:gold247/pages/currencyScreen/buy_gold.dart';
+import 'package:gold247/pages/instantGold/buy_gold.dart';
 import 'package:gold247/language/locale.dart';
 import 'package:page_transition/page_transition.dart';
 

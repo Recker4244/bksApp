@@ -26,7 +26,7 @@ String stringResponse;
 Map mapResponse;
 
 class _BankDetailsState extends State<BankDetails> {
-  bool hasBank;
+  bool value;
   String selectedAccountType = 'Savings';
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController ifscCodeController = TextEditingController();
@@ -55,11 +55,11 @@ class _BankDetailsState extends State<BankDetails> {
         setState(() {
           accountNumberController.text = responseString['data']['Accountnum'];
           ifscCodeController.text = responseString['data']['IFSC'];
-          hasBank = false;
+          value = false;
         });
       } else {
         setState(() {
-          hasBank = true;
+          value = true;
         });
       }
     }
@@ -177,7 +177,7 @@ class _BankDetailsState extends State<BankDetails> {
     if (response.statusCode == 200) {
       final responseString = jsonDecode(response.body);
 
-      if (hasBank == false) {
+      if (value == true) {
         http.Response responseBank = await http.post(
           Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
           body: {
@@ -212,7 +212,7 @@ class _BankDetailsState extends State<BankDetails> {
                       children: <Widget>[
                         Center(
                             child: Text(
-                          "Bank Details Updated",
+                          "${widget.gold} GRAM SOLD",
                           style: black16BoldTextStyle,
                         )),
                         Center(
@@ -223,14 +223,14 @@ class _BankDetailsState extends State<BankDetails> {
                         heightSpace,
                         Center(
                             child: Text(
-                          'Bank details have been verified and updated successfully',
+                          'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
                           style: black14MediumTextStyle,
                         )),
                       ],
                     ),
                   ),
                 ));
-      } else if (hasBank == false) {
+      } else if (value == false) {
         http.Response responseBank = await http.put(
           Uri.parse("${baseurl}/api/bank/update/${Userdata.id}"),
           body: {
@@ -245,44 +245,6 @@ class _BankDetailsState extends State<BankDetails> {
           //   bankdetail = bankDetails.fromJson(datas);
           // });
           Navigator.pop(context, true);
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    backgroundColor: scaffoldBgColor,
-                    title: Center(
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.green,
-                        child: Icon(
-                          Icons.check,
-                          size: 30.0,
-                          color: scaffoldBgColor,
-                        ),
-                      ),
-                    ),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            "Bank Details Added",
-                            style: black16BoldTextStyle,
-                          )),
-                          Center(
-                              child: Text(
-                            '${DateTime.now()}',
-                            style: black14MediumTextStyle,
-                          )),
-                          heightSpace,
-                          Center(
-                              child: Text(
-                            'Bank details have been verified and added successfully',
-                            style: black14MediumTextStyle,
-                          )),
-                        ],
-                      ),
-                    ),
-                  ));
           Navigator.pushReplacement<void, void>(
             context,
             MaterialPageRoute<void>(

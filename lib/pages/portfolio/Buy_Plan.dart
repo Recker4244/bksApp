@@ -1,6 +1,6 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
-import 'package:gold247/pages/currencyScreen/sell_gold.dart';
+import 'package:gold247/pages/instantGold/sell_gold.dart';
 import 'package:gold247/pages/profile/bank_details.dart';
 import 'package:gold247/widget/column_builder.dart';
 import 'package:flutter/material.dart';

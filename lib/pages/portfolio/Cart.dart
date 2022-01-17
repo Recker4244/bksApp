@@ -10,6 +10,7 @@ import 'package:gold247/models/cart.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/cod/cod_Flexu.dart';
 import 'package:gold247/pages/cod/cod_eshop.dart';
+import 'package:gold247/pages/instantGold/currency_screen.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/widget/column_builder.dart';
 import 'package:flutter/cupertino.dart';

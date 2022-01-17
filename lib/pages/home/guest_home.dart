@@ -1,7 +1,7 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/video.dart';
-import 'package:gold247/pages/currencyScreen/buy_gold.dart';
+import 'package:gold247/pages/instantGold/buy_gold.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/videoplayer.dart';
 import 'package:gold247/widget/column_builder.dart';
