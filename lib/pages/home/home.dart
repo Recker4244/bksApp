@@ -1706,8 +1706,7 @@ class _HomeState extends State<Home> {
                                 onPressed: () {
                                   print('clicked');
                                   _scrollController.scrollTo(
-                                      index: 10,
-                                      duration: Duration(seconds: 1));
+                                      index: 7, duration: Duration(seconds: 1));
                                 },
                                 icon: ImageIcon(
                                     AssetImage("assets/icon/icon2.png"),

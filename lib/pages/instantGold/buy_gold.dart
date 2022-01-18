@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/BuySellList.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
@@ -221,9 +222,33 @@ class _CurrencyScreenState extends State<BuyGold> {
     }
   }
 
+  List<BuySellList> buyselllist = [];
+  num average = 0;
+  getallbuysell() async {
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      List det = jsonDecode(responseString);
+      Iterable l = det;
+      buyselllist =
+          List<BuySellList>.from(l.map((e) => BuySellList.fromJson(e)));
+      for (int i = 0; i < buyselllist.length; i++) {
+        average += buyselllist[i].buy;
+      }
+      average = average / buyselllist.length;
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   Future<bool> init;
   Future<bool> initialise() async {
     await fetchData();
+    await getallbuysell();
     await getWalletBalanced();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -501,7 +526,8 @@ class _CurrencyScreenState extends State<BuyGold> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                aboutPortfolioItem(locale.AvgBuyPrice, 'INR ${data.buy}'),
+                aboutPortfolioItem(
+                    locale.AvgBuyPrice, 'INR ${average.toStringAsFixed(2)}'),
                 Container(
                   height: 10.h,
                   width: (width - fixPadding * 6.0) / 2,

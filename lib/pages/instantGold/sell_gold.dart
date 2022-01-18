@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/constant/constant.dart';
+import 'package:gold247/models/BuySellList.dart';
 import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
@@ -44,6 +45,29 @@ class _CurrencyScreenState extends State<SellGold> {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
       walletbalace = double.parse(det['data']['gold'].toString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  List<BuySellList> buyselllist = [];
+  num average = 0;
+  getallbuysell() async {
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/buy-sell-price'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      List det = jsonDecode(responseString);
+      Iterable l = det;
+      buyselllist =
+          List<BuySellList>.from(l.map((e) => BuySellList.fromJson(e)));
+      for (int i = 0; i < buyselllist.length; i++) {
+        average += buyselllist[i].sell;
+      }
+      average = average / buyselllist.length;
     } else {
       print(response.reasonPhrase);
     }
@@ -156,6 +180,7 @@ class _CurrencyScreenState extends State<SellGold> {
   Future<bool> initialise() async {
     await fetchData();
     await getWalletBalanced();
+    await getallbuysell();
     // _razorpay = Razorpay();
     // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -421,7 +446,8 @@ class _CurrencyScreenState extends State<SellGold> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                aboutPortfolioItem(locale.AvgSellPrice, 'INR ${data.sell}'),
+                aboutPortfolioItem(
+                    locale.AvgSellPrice, 'INR ${average.toStringAsFixed(2)}'),
                 Container(
                   height: 10.h,
                   width: (width - fixPadding * 6.0) / 2,
