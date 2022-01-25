@@ -9,6 +9,8 @@ import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_fail_screen.dart';
 import 'package:gold247/pages/buySccessFailScreen/buy_success_screen.dart';
 import 'package:gold247/pages/portfolio/Appointments.dart';
+import 'package:gold247/pages/portfolio/Collections.dart';
+import 'package:gold247/pages/profile/Collection_Details.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,8 +53,30 @@ class _Adress_Details_Payment_StanState
   String SubscribeID;
   DataS datas;
   PlanSubscriptions pSubs;
+  @override
+  void initState() {
+    super.initState();
+    getAddress();
+  }
 
   bool available = true;
+  getAddress() async {
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.id}'));
+    request.body = '''''';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      PINcontroller.text = det['data']['pin'].toString();
+      addresscontroller.text = det['data']['landMark'];
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   Future addAddress() async {
     showDialog(
       context: context,
@@ -97,7 +121,7 @@ class _Adress_Details_Payment_StanState
     final body = {
       "user": Userdata.id,
       "pin": int.parse(PINcontroller.text),
-      "landMark": Landmarkcontroller.text,
+      "landMark": addresscontroller.text,
       "isDefaultAddress": true
     };
     request.body = jsonEncode(body);
@@ -193,12 +217,21 @@ class _Adress_Details_Payment_StanState
       final responseString = await response.stream.bytesToString();
       Map s = jsonDecode(responseString);
       setState(() {
+        Navigator.of(context).pop();
         Navigator.pushReplacement(
             context,
             PageTransition(
                 type: PageTransitionType.size,
                 alignment: Alignment.bottomCenter,
-                child: Appointments()));
+                child: BottomBar(
+                  index: 4,
+                )));
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.size,
+                alignment: Alignment.bottomCenter,
+                child: Collections()));
         showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -432,48 +465,48 @@ class _Adress_Details_Payment_StanState
                 ),
               ),
               SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Container(
-                  color: whiteColor,
-                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                  child: Theme(
-                    data: ThemeData(
-                      primaryColor: whiteColor,
-                      textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: primaryColor,
-                      ),
-                    ),
-                    child: TextFormField(
-                      controller: Landmarkcontroller,
-                      validator: (value) =>
-                          value.isEmpty ? "Field cannot be empty" : null,
-                      keyboardType: TextInputType.streetAddress,
-                      style: primaryColor16MediumTextStyle,
-                      decoration: InputDecoration(
-                        labelText: locale.LandMark,
-                        labelStyle: TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(color: primaryColor, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(color: primaryColor, width: 1),
-                        ),
-                      ),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //   child: Container(
+              //     color: whiteColor,
+              //     // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+              //     child: Theme(
+              //       data: ThemeData(
+              //         primaryColor: whiteColor,
+              //         textSelectionTheme: TextSelectionThemeData(
+              //           cursorColor: primaryColor,
+              //         ),
+              //       ),
+              //       child: TextFormField(
+              //         controller: Landmarkcontroller,
+              //         validator: (value) =>
+              //             value.isEmpty ? "Field cannot be empty" : null,
+              //         keyboardType: TextInputType.streetAddress,
+              //         style: primaryColor16MediumTextStyle,
+              //         decoration: InputDecoration(
+              //           labelText: locale.LandMark,
+              //           labelStyle: TextStyle(
+              //               color: primaryColor,
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.w600),
+              //           enabledBorder: OutlineInputBorder(
+              //             borderRadius: const BorderRadius.all(
+              //               const Radius.circular(10.0),
+              //             ),
+              //             borderSide: BorderSide(color: primaryColor, width: 1),
+              //           ),
+              //           focusedBorder: OutlineInputBorder(
+              //             borderRadius: const BorderRadius.all(
+              //               const Radius.circular(10.0),
+              //             ),
+              //             borderSide: BorderSide(color: primaryColor, width: 1),
+              //           ),
+              //         ),
+              //         onChanged: (value) {},
+              //       ),
+              //     ),
+              //   ),
+              // ),
               heightSpace,
               !available
                   ? Text(

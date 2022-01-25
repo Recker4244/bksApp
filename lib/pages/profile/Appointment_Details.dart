@@ -1,18 +1,41 @@
+import 'dart:convert';
+
 import 'package:gold247/constant/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gold247/models/apointmentdetails.dart';
 import 'package:gold247/models/appointment.dart';
 import 'package:gold247/models/order.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
+import 'package:gold247/models/user.dart';
 
 class Appointmentdetails extends StatefulWidget {
-  final appointment temp;
-  Appointmentdetails({this.temp});
+  final id;
+  Appointmentdetails({this.id});
   @override
   AppointmentdetailsState createState() => AppointmentdetailsState();
 }
 
 class AppointmentdetailsState extends State<Appointmentdetails> {
+  AppointmentDetails appointmentdet = AppointmentDetails();
+  Future getAppointmentDetails() async {
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/appointment/${widget.id}'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      appointmentdet = AppointmentDetails.fromJson(det['data']);
+    } else {
+      print(response.reasonPhrase);
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context);
@@ -32,7 +55,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                 height: 20,
               ),
               Text(
-                "${widget.temp.weight} GRAM OLD GOLD SELL".toUpperCase(),
+                "${appointment} GRAM OLD GOLD SELL".toUpperCase(),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
@@ -151,7 +174,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.sId,
+                          appointmentdet.id,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -161,7 +184,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.appointmentDate,
+                          appointmentdet.id,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -171,7 +194,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.status.toUpperCase(),
+                          appointmentdet.id.toUpperCase(),
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -181,7 +204,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.updatedAt,
+                          appointmentdet.id,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -191,7 +214,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          widget.temp.verifier.name,
+                          appointmentdet.id,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -201,7 +224,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "INR ${widget.temp.valuation}",
+                          "INR ${appointmentdet.id}",
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -263,7 +286,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      widget.temp.otp,
+                      appointmentdet.id,
                       style: TextStyle(
                           color: blackColor,
                           fontSize: 14,
@@ -278,43 +301,68 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: scaffoldLightColor,
-      appBar: AppBar(
-        foregroundColor: primaryColor,
-        backgroundColor: scaffoldLightColor,
-        titleSpacing: 0.0,
-        elevation: 0.0,
-        title: Text(
-          locale.appoinmentDetails,
-          style: TextStyle(
-            color: primaryColor,
-            fontSize: 16,
-          ),
-        ),
-      ),
-      body: ListView(
-        children: [
-          box1(),
-          Container(
-            width: double.infinity,
-            height: 10,
-            color: scaffoldBgColor,
-          ),
-          box2(),
-          Container(
-            width: double.infinity,
-            height: 10,
-            color: scaffoldBgColor,
-          ),
-          box3(),
-          Container(
-            width: double.infinity,
-            height: 10,
-            color: scaffoldBgColor,
-          ),
-        ],
-      ),
+    return FutureBuilder(
+      future: getAppointmentDetails(),
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.none ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return SafeArea(
+            child: Scaffold(
+                backgroundColor: scaffoldBgColor,
+                body: Center(
+                    child: SpinKitRing(
+                  duration: Duration(milliseconds: 700),
+                  color: primaryColor,
+                  size: 40.0,
+                  lineWidth: 1.2,
+                ))),
+          );
+        } else {
+          if (snapshot.hasData) {
+            return Scaffold(
+              backgroundColor: scaffoldLightColor,
+              appBar: AppBar(
+                foregroundColor: primaryColor,
+                backgroundColor: scaffoldLightColor,
+                titleSpacing: 0.0,
+                elevation: 0.0,
+                title: Text(
+                  locale.appoinmentDetails,
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              body: ListView(
+                children: [
+                  box1(),
+                  Container(
+                    width: double.infinity,
+                    height: 10,
+                    color: scaffoldBgColor,
+                  ),
+                  box2(),
+                  Container(
+                    width: double.infinity,
+                    height: 10,
+                    color: scaffoldBgColor,
+                  ),
+                  box3(),
+                  Container(
+                    width: double.infinity,
+                    height: 10,
+                    color: scaffoldBgColor,
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return errorScreen;
+          }
+        }
+      },
     );
   }
 }

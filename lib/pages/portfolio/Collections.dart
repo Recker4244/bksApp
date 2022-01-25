@@ -1,6 +1,6 @@
 import 'package:gold247/constant/constant.dart';
-import 'package:gold247/models/customSub.dart';
-import 'package:gold247/models/standardSub.dart';
+import 'package:gold247/models/customSub.dart' as custom;
+import 'package:gold247/models/standardSub.dart' as standard;
 import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/Eshop/itemdetails.dart';
 import 'dart:convert';
@@ -26,18 +26,23 @@ class _CollectionsState extends State<Collections> {
   List processing = [];
   List cancelled = [];
   List complete = [];
+  Future<bool> initialise() async {
+    await getplans();
+    return true;
+  }
+
   changeStatus(String id) async {
+    loadingDialog(context);
     var headers = {'Content-Type': 'application/json'};
-    var request =
-        http.Request('POST', Uri.parse('${baseurl}/api/order/status/$id'));
+    var request = http.Request(
+        'PUT', Uri.parse('${baseurl}/api/installment/update/status/${id}'));
     request.body = json.encode({"status": "Cancelled"});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      await getplans();
-      setState(() {});
+      print(await response.stream.bytesToString());
     } else {
       print(response.reasonPhrase);
     }
@@ -49,6 +54,7 @@ class _CollectionsState extends State<Collections> {
     processing = [];
     cancelled = [];
     complete = [];
+    init = initialise();
     super.initState();
   }
 
@@ -65,10 +71,10 @@ class _CollectionsState extends State<Collections> {
       List<subscription> subs = [];
       for (int j = 0; j < dat.length; j++) {
         if (dat[j]['plan'] == null) {
-          customSub sub = customSub.fromJson(dat[j]);
+          custom.customSub sub = custom.customSub.fromJson(dat[j]);
           subs.add(Custom(sub));
         } else {
-          standardSub sub = standardSub.fromJson(dat[j]);
+          standard.standardSub sub = standard.standardSub.fromJson(dat[j]);
           subs.add(Standard(sub));
         }
       }
@@ -129,11 +135,11 @@ class _CollectionsState extends State<Collections> {
 
   //   return temp;
   // }
-
+  Future<bool> init;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getplans(),
+      future: init,
       initialData: null,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.none ||
@@ -207,6 +213,9 @@ class _CollectionsState extends State<Collections> {
         subscription plan = temp.singleWhere(
             (element) => element.installments().contains(processing[index]),
             orElse: () => null);
+        final installment = plan.installments().singleWhere(
+            (element) => element == processing[index],
+            orElse: () => null);
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(
@@ -222,13 +231,16 @@ class _CollectionsState extends State<Collections> {
               children: [
                 InkWell(
                   onTap: () {
+                    print(plan.planName());
                     Navigator.push(
                         context,
                         PageTransition(
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Collectiondetails(
-                                temp: plan, name: plan.planName())));
+                                temp: plan,
+                                name: plan.planName(),
+                                collection: installment)));
                   },
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(10.0),
@@ -289,6 +301,7 @@ class _CollectionsState extends State<Collections> {
                   children: [
                     InkWell(
                       onTap: () {
+                        print(plan.planName());
                         Navigator.push(
                             context,
                             PageTransition(
@@ -297,6 +310,7 @@ class _CollectionsState extends State<Collections> {
                                 child: Collectiondetails(
                                   temp: plan,
                                   name: plan.planName(),
+                                  collection: processing[index],
                                 )));
                       },
                       borderRadius: BorderRadius.vertical(
@@ -380,16 +394,158 @@ class _CollectionsState extends State<Collections> {
   Cancelled() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        String plan = temp
-            .singleWhere((element) =>
-                element.installments().contains(cancelled[index].id))
-            .planName();
-        return Choice_Card2(
-            '${plan.toUpperCase()}',
-            'INR ${cancelled[index].amount}',
-            'COLLECTION DETAIL',
-            Eshop(),
-            cancelled[index]);
+        subscription plan = temp.singleWhere(
+            (element) => element.installments().contains(cancelled[index]),
+            orElse: () => null);
+
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(
+              fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: whiteColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    print(plan.planName());
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.size,
+                            alignment: Alignment.bottomCenter,
+                            child: Collectiondetails(
+                              temp: plan,
+                              name: plan.planName(),
+                              collection: cancelled[index],
+                            )));
+                  },
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(10.0),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(fixPadding * 1.5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(10.0),
+                      ),
+                      color: whiteColor,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage('assets/crypto_icon/btc.png'),
+                              ),
+                            ),
+                            widthSpace,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${plan.planName()}',
+                                  style: grey12BoldTextStyle,
+                                ),
+                                height5Space,
+                                Text(
+                                  '${plan.savedAmount()}',
+                                  style: black16SemiBoldTextStyle,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 27.0,
+                          color: primaryColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        print(plan.planName());
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.size,
+                                alignment: Alignment.bottomCenter,
+                                child: Collectiondetails(
+                                  temp: plan,
+                                  name: plan.planName(),
+                                  collection: cancelled[index],
+                                )));
+                      },
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(10.0),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(fixPadding),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(10.0),
+                          ),
+                          color: Colors.white,
+                        ),
+                        child: Text(
+                          'Check Details'.toUpperCase(),
+                          style: primaryColor14MediumTextStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // InkWell(
+                //   onTap: () {
+                //     // Navigator.push(
+                //     //     context,
+                //     //     PageTransition(
+                //     //         type: PageTransitionType.size,
+                //     //         alignment: Alignment.bottomCenter,
+                //     //         child: ));
+                //   },
+                //   borderRadius: BorderRadius.vertical(
+                //     bottom: Radius.circular(10.0),
+                //   ),
+                //   child: Container(
+                //     padding: EdgeInsets.all(fixPadding),
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.vertical(
+                //         bottom: Radius.circular(10.0),
+                //       ),
+                //       color: Colors.white,
+                //     ),
+                //     child: Text(
+                //       'cancel collection'.toUpperCase(),
+                //       style: primaryColor16BoldTextStyle,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        );
       },
       itemCount: cancelled.length,
     );
@@ -398,20 +554,180 @@ class _CollectionsState extends State<Collections> {
   Deliverd() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        String plan = temp
-            .singleWhere(
-                (element) =>
-                    element.installments().contains(complete[index].id),
-                orElse: () => null)
-            .planName();
-        return Choice_Card1(
-            '${plan.toUpperCase()}',
-            'INR ${complete[index].amount}',
-            'COLLECTION DETAIL',
-            '',
-            Eshop(),
-            Eshop(),
-            complete[index]);
+        subscription plan = temp.singleWhere(
+            (element) => element.installments().contains(complete[index]),
+            orElse: () => null);
+
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(
+              fixPadding * 2.0, fixPadding * 2.0, fixPadding * 2.0, 0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: whiteColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    print(plan.planName());
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.size,
+                            alignment: Alignment.bottomCenter,
+                            child: Collectiondetails(
+                              temp: plan,
+                              name: plan.planName(),
+                              collection: complete[index],
+                            )));
+                  },
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(10.0),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(fixPadding * 1.5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(10.0),
+                      ),
+                      color: whiteColor,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              alignment: Alignment.center,
+                              child: Image(
+                                image: AssetImage('assets/crypto_icon/btc.png'),
+                              ),
+                            ),
+                            widthSpace,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${plan.planName()}',
+                                  style: grey12BoldTextStyle,
+                                ),
+                                height5Space,
+                                Text(
+                                  '${plan.savedAmount()}',
+                                  style: black16SemiBoldTextStyle,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 27.0,
+                          color: primaryColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        print(plan.planName());
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.size,
+                                alignment: Alignment.bottomCenter,
+                                child: Collectiondetails(
+                                  temp: plan,
+                                  name: plan.planName(),
+                                  collection: complete[index],
+                                )));
+                      },
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(10.0),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(fixPadding),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(10.0),
+                          ),
+                          color: Colors.white,
+                        ),
+                        child: Text(
+                          'Track collection'.toUpperCase(),
+                          style: primaryColor14MediumTextStyle,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        changeStatus(complete[index].id);
+                      },
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(10.0),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(fixPadding),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(10.0),
+                          ),
+                          color: Colors.white,
+                        ),
+                        child: Text(
+                          'Cancel collection'.toUpperCase(),
+                          style: primaryColor14MediumTextStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // InkWell(
+                //   onTap: () {
+                //     // Navigator.push(
+                //     //     context,
+                //     //     PageTransition(
+                //     //         type: PageTransitionType.size,
+                //     //         alignment: Alignment.bottomCenter,
+                //     //         child: ));
+                //   },
+                //   borderRadius: BorderRadius.vertical(
+                //     bottom: Radius.circular(10.0),
+                //   ),
+                //   child: Container(
+                //     padding: EdgeInsets.all(fixPadding),
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.vertical(
+                //         bottom: Radius.circular(10.0),
+                //       ),
+                //       color: Colors.white,
+                //     ),
+                //     child: Text(
+                //       'cancel collection'.toUpperCase(),
+                //       style: primaryColor16BoldTextStyle,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        );
       },
       itemCount: complete.length,
     );

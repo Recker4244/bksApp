@@ -670,7 +670,20 @@ class _standardValueState extends State<standardValue> {
                           heightSpace,
                           GestureDetector(
                             onTap: () async {
-                              openCheckout();
+                              if (num.parse(amountController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  Navigator.of(context).pop();
+                                  openCheckout();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

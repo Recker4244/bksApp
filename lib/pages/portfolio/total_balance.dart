@@ -38,9 +38,27 @@ class _TotalBalanceState extends State<TotalBalance> {
     }
   }
 
+  num planbonuspercentage = 0;
+  getplanbonus() async {
+    var request = http.Request('GET',
+        Uri.parse('${baseurl}/api/calculation/61b3a86dd59d6bacdd6ef59f'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(await response.stream.bytesToString());
+      setState(() {
+        planbonuspercentage = responseString['data'][0]['Percentage'] / 100;
+      });
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   void initState() {
     gethandlingcharges();
+    getplanbonus();
     super.initState();
   }
 
@@ -80,13 +98,17 @@ class _TotalBalanceState extends State<TotalBalance> {
             children: [
               InkWell(
                 onTap: () {
+                  num minGold = widget.sub.installments().first.gold;
                   Navigator.push(
                       context,
                       PageTransition(
                           type: PageTransitionType.size,
                           alignment: Alignment.bottomCenter,
                           child: Deposit(
-                              balance: widget.avail, sub: widget.sub.id())));
+                            balance: widget.avail,
+                            sub: widget.sub.id(),
+                            minGold: minGold,
+                          )));
                 },
                 child: Container(
                   height: 50.0,
@@ -105,7 +127,7 @@ class _TotalBalanceState extends State<TotalBalance> {
               ),
               InkWell(
                 onTap: () {
-                  if (widget.sub.status == "Running")
+                  if (widget.sub.status() == "Running")
                     lossOfGold();
                   else
                     Navigator.push(
@@ -115,7 +137,9 @@ class _TotalBalanceState extends State<TotalBalance> {
                             alignment: Alignment.bottomCenter,
                             child: Withdraw(
                               sub: widget.sub.id(),
-                              balance: widget.avail,
+                              balance:
+                                  (num.parse(widget.avail) * (1 - handling))
+                                      .toStringAsFixed(2),
                             )));
                 },
                 child: Container(
@@ -313,7 +337,7 @@ class _TotalBalanceState extends State<TotalBalance> {
 
   lossOfGold() {
     // double width = MediaQuery.of(context).size.width;
-    showDialog(
+    return showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
@@ -352,7 +376,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                       height: 13,
                     ),
                     Text(
-                      "${widget.avail} GRAM",
+                      "${(num.parse(widget.avail) * (1 - handling)).toStringAsFixed(2)} GRAM",
                       style: black22BoldTextStyle,
                     ),
                     // heightSpace,
@@ -390,7 +414,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                                 ),
                                 height5Space,
                                 Text(
-                                  "${widget.sub.planBonus} GRAM",
+                                  "${widget.sub.cycleDays() * num.parse(widget.avail) * planbonuspercentage} GRAM",
                                   style: TextStyle(
                                     fontFamily: 'Jost',
                                     fontSize: 18.0,
@@ -421,7 +445,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                               ),
                               height5Space,
                               Text(
-                                "${handling * double.parse(widget.avail)} INR",
+                                "${handling * num.parse(widget.avail)} INR",
                                 style: TextStyle(
                                   fontFamily: 'Jost',
                                   fontSize: 18.0,
@@ -481,7 +505,10 @@ class _TotalBalanceState extends State<TotalBalance> {
                                   type: PageTransitionType.size,
                                   alignment: Alignment.bottomCenter,
                                   child: Withdraw(
-                                    balance: widget.avail,
+                                    sub: widget.sub.id(),
+                                    balance: (num.parse(widget.avail) *
+                                            (1 - handling))
+                                        .toStringAsFixed(2),
                                   )));
                         },
                         child: Container(

@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:gold247/models/referral.dart';
 import 'package:gold247/models/subscription.dart';
 import 'package:gold247/language/locale.dart';
+import 'package:gold247/models/user.dart';
+import 'package:sizer/sizer.dart';
 
 class Collectiondetails extends StatefulWidget {
   String name;
   subscription temp;
-  Collectiondetails({this.temp, this.name});
+  final collection;
+  Collectiondetails({this.temp, this.name, this.collection});
   @override
   CollectiondetailsState createState() => CollectiondetailsState();
 }
@@ -23,7 +26,7 @@ class CollectiondetailsState extends State<Collectiondetails> {
         decoration: BoxDecoration(
           color: scaffoldLightColor,
         ),
-        width: double.infinity,
+        // width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
@@ -43,140 +46,206 @@ class CollectiondetailsState extends State<Collectiondetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          locale.OrderID,
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Order ID:",
+                      //locale.OrderID,
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          locale.reqeustPlacedOn,
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          locale.Status,
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          locale.collectorPhoneNumber,
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      widget.temp != null
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                locale.Collector,
-                                style: TextStyle(
-                                  color: blackColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          locale.ToCollect,
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "#${widget.temp.id}",
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 12,
-                          ),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "#${widget.collection.id}",
+                      //"#${widget.temp.id}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 12,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.temp.createdAt(),
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Plan Enrolled on:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.temp.status().toUpperCase(),
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${DateTime.parse(widget.collection.createdAt).toString()}",
+                      //widget.temp.createdAt(),
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 12,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.temp.planBonus.toString(),
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      locale.collectorPhoneNumber,
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
                       ),
-                      widget.temp != null
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Abhishek Kumar",
-                                style: TextStyle(
-                                  color: blackColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "INR ${widget.temp.savedAmount}",
-                          //"INR ${widget.temp.amount}",
-                          style: TextStyle(
-                            color: blackColor,
-                            fontSize: 14,
-                          ),
-                        ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${Userdata.mobile}",
+                      //widget.temp.status().toUpperCase(),
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
                       ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Collector:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${Userdata.fname}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Status:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${widget.collection.status}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "To Pay:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "INR ${widget.collection.amount}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Wrap(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Landmark:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 35.w,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${Userdata.addresses.first.landMark}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Pincode:",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${Userdata.addresses.first.pin}",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ],
               ),

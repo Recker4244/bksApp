@@ -288,6 +288,212 @@ class _Standard_PCState extends State<Standard_PC> {
             ));
   }
 
+  verify() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          child: Wrap(
+            children: [
+              Container(
+                color: scaffoldBgColor,
+                padding: EdgeInsets.all(fixPadding * 2.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    // Container(
+                    //   width: double.infinity,
+                    //   alignment: Alignment.topRight,
+                    //   child: InkWell(
+                    //     onTap: () => Navigator.pop(context),
+                    //     child: Icon(
+                    //       Icons.close_sharp,
+                    //       color: primaryColor,
+                    //       size: 35.0,
+                    //     ),
+                    //   ),
+                    // ),
+                    Icon(
+                      Icons.warning,
+                      size: 50.0,
+                      color: redColor,
+                    ),
+                    SizedBox(
+                      height: 13,
+                    ),
+                    // Text(
+                    //   "${(num.parse(widget.avail) * (1 - handling)).toStringAsFixed(2)} GRAM",
+                    //   style: black22BoldTextStyle,
+                    // ),
+                    // heightSpace,
+                    // SizedBox(height: 5),
+                    Text(
+                      "available balance".toUpperCase(),
+                      style: black16BoldTextStyle,
+                    ),
+                    SizedBox(height: 13),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // depositWithdrawalItem('Total Saved', '15.80 GRAM'),
+                          Padding(
+                            padding: const EdgeInsets.all(17),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "BONUS LOSS",
+                                  style: TextStyle(
+                                    fontFamily: 'Jost',
+                                    fontSize: 12.0,
+                                    color: scaffoldBgColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                height5Space,
+                                // Text(
+                                //   "${widget.sub.cycleDays() * num.parse(widget.avail) * planbonuspercentage} GRAM",
+                                //   style: TextStyle(
+                                //     fontFamily: 'Jost',
+                                //     fontSize: 18.0,
+                                //     color: scaffoldBgColor,
+                                //     fontWeight: FontWeight.bold,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 60.0,
+                            width: 0.7,
+                            color: whiteColor,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "HANDLING CHARGES",
+                                style: TextStyle(
+                                  fontFamily: 'Jost',
+                                  fontSize: 12.0,
+                                  color: scaffoldBgColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              height5Space,
+                              // Text(
+                              //   "${handling * num.parse(widget.avail)} INR",
+                              //   style: TextStyle(
+                              //     fontFamily: 'Jost',
+                              //     fontSize: 18.0,
+                              //     color: scaffoldBgColor,
+                              //     fontWeight: FontWeight.bold,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                          // depositWithdrawalItem('Bonus Earned', '1.80 GRAM'),
+                        ],
+                      ),
+                    ),
+                    // Text(
+                    //   dateTime,
+                    //   style: grey12BoldTextStyle,
+                    // ),
+                    // height20Space,
+                    // InkWell(
+                    //   onTap: () {
+                    //     FlutterClipboard.copy('UQDKDRX879J').then((value) {
+                    //       Fluttertoast.showToast(
+                    //         msg: 'Copied to clipboard',
+                    //         backgroundColor: Colors.black,
+                    //         textColor: whiteColor,
+                    //       );
+                    //     });
+                    //   },
+                    //   child: Container(
+                    //     padding: EdgeInsets.all(fixPadding),
+                    //     width: double.infinity,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10.0),
+                    //       color: whiteColor,
+                    //     ),
+                    //     child: Center(
+                    //       child: Text(
+                    //         'UQDKDRX879J',
+                    //         style: grey14BoldTextStyle,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 13.0),
+                    Text(
+                      'Still wish to proceed?',
+                      style: grey14BoldTextStyle,
+                    ),
+                    SizedBox(height: 13.0),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: InkWell(
+                        onTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     PageTransition(
+                          //         type: PageTransitionType.size,
+                          //         alignment: Alignment.bottomCenter,
+                          //         child: Withdraw(
+                          //           sub: widget.sub.id(),
+                          //           balance: (num.parse(widget.avail) *
+                          //                   (1 - handling))
+                          //               .toStringAsFixed(2),
+                          //         )));
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                            child: Text(
+                              "PROCEED TO SELL/REDEEM",
+                              style: TextStyle(
+                                fontFamily: 'Jost',
+                                fontSize: 14.0,
+                                color: scaffoldBgColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   _handlePaymentError(PaymentFailureResponse response) {
     var locale = AppLocalizations.of(context);
     return showDialog(
@@ -644,7 +850,22 @@ class _Standard_PCState extends State<Standard_PC> {
                           heightSpace,
                           GestureDetector(
                             onTap: () async {
-                              openCheckout();
+                              if (num.parse(amountController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  openCheckout();
+                                  Navigator.of(context).pop();
+                                } else {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                                Navigator.of(context).pop();
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -688,16 +909,36 @@ class _Standard_PCState extends State<Standard_PC> {
                           ),
                           height20Space,
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Adress_Details_Payment_Stan(
-                                            gold: amountController.text,
-                                            amount: valueController.text,
-                                            PlanID: widget.planID,
-                                          )));
+                            onTap: () async {
+                              if (num.parse(valueController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Adress_Details_Payment_Stan(
+                                                gold: amountController.text,
+                                                amount: valueController.text,
+                                                PlanID: widget.planID,
+                                              )));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Adress_Details_Payment_Stan(
+                                              gold: amountController.text,
+                                              amount: valueController.text,
+                                              PlanID: widget.planID,
+                                            )));
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

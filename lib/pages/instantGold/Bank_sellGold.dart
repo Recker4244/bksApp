@@ -12,13 +12,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gold247/language/locale.dart';
 
 class Bank_sellInstantGold extends StatefulWidget {
-  final num gold;
   final num amount;
-  const Bank_sellInstantGold({
-    Key key,
-    this.amount,
-    this.gold,
-  }) : super(key: key);
+  final num gold;
+
+  const Bank_sellInstantGold({Key key, this.amount, this.gold})
+      : super(key: key);
 
   @override
   _Bank_sellInstantGoldState createState() => _Bank_sellInstantGoldState();
@@ -28,13 +26,25 @@ String stringResponse;
 Map mapResponse;
 
 class _Bank_sellInstantGoldState extends State<Bank_sellInstantGold> {
-  //boolean - true if bank details dont exist , false if bank details exist
-  bool value;
+  bool hasBank;
   String selectedAccountType = 'Savings';
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController ifscCodeController = TextEditingController();
   FocusNode accountFocus = FocusNode();
   FocusNode ifscFocus = FocusNode();
+
+// Future<bool> verifyBanckAccount(String ifsc,String accntno)async{
+//    final String apiUrl =
+//         "https://api.sandbox.co.in/bank/${ifsc}/accounts/${accntno}/verify?name=${Userdata.fname} DOE&mobile=${Userdata.mobile}";
+//     var url = Uri.parse(apiUrl);
+//     var headers = {
+//   'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1Gd2FWOXJaWGtpT2lKclpYbGZiR2wyWlY5QlpHVXFLaW9xS2lvcUtpb3FLaW9xS2lvcUtpb3FLaW9xS2lvcUtsVjRjeUlzSW1semN5STZJbUZ3YVM1eGRXbGphMjh1WTI5dElpd2laWGh3SWpveE5Ua3dPVFk1TmpBd0xDSnBiblJsYm5RaU9pSlNSVVpTUlZOSVgxUlBTMFZPSWl3aWFXRjBJam94TlRVNU16UTNNakF3ZlEueHNmYkhQTERFRlRvTy1OUWdaUUpLM25OUjFxdlhvWmhaOHRqS3gzSExydjZiVkJaMHpJZEZ5ai1MUTg1YnJZS0xXQnFnZHlzZ1NDSXlDUXNtV2VOYkEiLCJzdWIiOiJqb2huQGRvZS5jb20iLCJhcGlfa2V5Ijoia2V5X2xpdmVfQWRlKioqKioqKioqKioqKioqKioqKioqKioqKipVeHMiLCJpc3MiOiJhcGkucXVpY2tvLmNvbSIsImV4cCI6MTU5MTA1NjAwMCwiaW50ZW50IjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNTkwOTY5NjAwfQ.nH23CR5RHGQ0U19I_vq3vyJ_85A1a2iEMQij5QHgJQdDuS9x7FmTidsr1CQabSFF5ujE40SFxHv1gJM20TauUw',
+//   'x-api-key': 'key_live_Ade**************************Uxs',
+//   'x-api-version': '3.1'
+// };
+// final response = await http.post(url, headers: headers);
+// if(response.statusCode==200){}
+// }
   Future getBankDetails() async {
     http.Response response = await http.get(
       Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
@@ -45,33 +55,40 @@ class _Bank_sellInstantGoldState extends State<Bank_sellInstantGold> {
         setState(() {
           accountNumberController.text = responseString['data']['Accountnum'];
           ifscCodeController.text = responseString['data']['IFSC'];
-          value = false;
+          hasBank = false;
         });
       } else {
         setState(() {
-          value = true;
+          hasBank = true;
         });
       }
     }
   }
 
-  // Future sell() async {
-  //   var headers = {'Content-Type': 'application/json'};
-  //   final body = {"buySellId": widget.buysellId, "goldsell": widget.gold};
-  //   var request = http.Request(
-  //       'POST',
-  //       Uri.parse(
-  //           '${baseurl}/api/sell-subscription/${widget.subscriptionId}/${Userdata.id}'));
-  //   request.body = jsonEncode(body);
+  Future removefromwallet(num gold, num amount) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
 
-  //   http.StreamedResponse response = await request.send();
+    final body = {
+      "gold": gold,
+      "transactions": {
+        "paymentId": "RZP_00000043",
+        "amount": amount,
+        "status": "Debited"
+      }
+    };
+    request.body = json.encode(body);
+    request.headers.addAll(headers);
 
-  //   if (response.statusCode == 200) {
-  //     print(await response.stream.bytesToString());
-  //   } else {
-  //     print(response.reasonPhrase);
-  //   }
-  // }
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   Future<String> getAccessToken() async {
     var headers = {
@@ -166,16 +183,15 @@ class _Bank_sellInstantGoldState extends State<Bank_sellInstantGold> {
     response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final responseString = jsonDecode(response.body);
-
-      if (value == true) {
-        http.Response responseBank = await http.post(
-          Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
-          body: {
-            "Accountnum": accountNumberController.text,
-            "IFSC": ifscCodeController.text,
-          },
-        );
-        if (responseBank.statusCode == 200) {
+      if (responseString['data']['account_exists']) {
+        if (hasBank == false) {
+          http.Response responseBank = await http.post(
+            Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
+            body: {
+              "Accountnum": accountNumberController.text,
+              "IFSC": ifscCodeController.text,
+            },
+          );
           final responseString = json.decode(responseBank.body);
           Map datas = responseString['data']['bank'];
           setState(() {
@@ -222,158 +238,124 @@ class _Bank_sellInstantGoldState extends State<Bank_sellInstantGold> {
                       ),
                     ),
                   ));
-        } else {
-          Navigator.pop(context, true);
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    backgroundColor: scaffoldBgColor,
-                    title: Center(
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.red,
-                        child: Icon(
-                          Icons.cancel_sharp,
-                          size: 30.0,
-                          color: scaffoldBgColor,
-                        ),
-                      ),
-                    ),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            "Failed to update bank details",
-                            style: black16BoldTextStyle,
-                          )),
-                          Center(
-                              child: Text(
-                            '${DateTime.now()}',
-                            style: black14MediumTextStyle,
-                          )),
-                          heightSpace,
-                          Center(
-                              child: Text(
-                            'Unable to update bank details',
-                            style: black14MediumTextStyle,
-                          )),
-                        ],
-                      ),
-                    ),
-                  ));
-        }
-      } else if (value == false) {
-        http.Response responseBank = await http.put(
-          Uri.parse("${baseurl}/api/wallet/update-bank/${Userdata.id}"),
-          body: {
-            "Accountnum": accountNumberController.text,
-            "IFSC": ifscCodeController.text,
-          },
-        );
-        if (responseBank.statusCode == 200) {
-          final responseString = json.decode(responseBank.body);
-          Map datas = responseString['data'];
-          // setState(() {
-          //   bankdetail = bankDetails.fromJson(datas);
-          // });
-          await removefromwallet(widget.gold, widget.amount);
-          Navigator.pop(context, true);
-          Navigator.pushReplacement<void, void>(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => BottomBar(
-                index: 1,
-              ),
-            ),
+        } else if (hasBank == false) {
+          http.Response responseBank = await http.put(
+            Uri.parse("${baseurl}/api/bank/update/${Userdata.id}"),
+            body: {
+              "Accountnum": accountNumberController.text,
+              "IFSC": ifscCodeController.text,
+            },
           );
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    backgroundColor: scaffoldBgColor,
-                    title: Center(
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.green,
-                        child: Icon(
-                          Icons.check,
-                          size: 30.0,
-                          color: scaffoldBgColor,
+          if (responseBank.statusCode == 200) {
+            final responseString = json.decode(responseBank.body);
+            Map datas = responseString['data'];
+            // setState(() {
+            //   bankdetail = bankDetails.fromJson(datas);
+            // });
+            Navigator.pop(context, true);
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      backgroundColor: scaffoldBgColor,
+                      title: Center(
+                        child: CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.green,
+                          child: Icon(
+                            Icons.check,
+                            size: 30.0,
+                            color: scaffoldBgColor,
+                          ),
                         ),
                       ),
-                    ),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            "${widget.gold} GRAM SOLD",
-                            style: black16BoldTextStyle,
-                          )),
-                          Center(
-                              child: Text(
-                            '${DateTime.now()}',
-                            style: black14MediumTextStyle,
-                          )),
-                          heightSpace,
-                          Center(
-                              child: Text(
-                            'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
-                            style: black14MediumTextStyle,
-                          )),
-                        ],
-                      ),
-                    ),
-                  ));
-        } else {
-          Navigator.pop(context, true);
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    backgroundColor: scaffoldBgColor,
-                    title: Center(
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.red,
-                        child: Icon(
-                          Icons.cancel_sharp,
-                          size: 30.0,
-                          color: scaffoldBgColor,
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Center(
+                                child: Text(
+                              "Bank Details Added",
+                              style: black16BoldTextStyle,
+                            )),
+                            Center(
+                                child: Text(
+                              '${DateTime.now()}',
+                              style: black14MediumTextStyle,
+                            )),
+                            heightSpace,
+                            Center(
+                                child: Text(
+                              'Bank details have been verified and added successfully',
+                              style: black14MediumTextStyle,
+                            )),
+                          ],
                         ),
                       ),
-                    ),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            "Failed to update bank details",
-                            style: black16BoldTextStyle,
-                          )),
-                          Center(
-                              child: Text(
-                            '${DateTime.now()}',
-                            style: black14MediumTextStyle,
-                          )),
-                          heightSpace,
-                          Center(
-                              child: Text(
-                            'Unable to update bank details',
-                            style: black14MediumTextStyle,
-                          )),
-                        ],
-                      ),
-                    ),
-                  ));
-        }
+                    ));
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => BottomBar(
+                  index: 1,
+                ),
+              ),
+            );
+            // showDialog(
+            //     context: context,
+            //     builder: (BuildContext context) => AlertDialog(
+            //           backgroundColor: scaffoldBgColor,
+            //           title: Center(
+            //             child: CircleAvatar(
+            //               radius: 20.0,
+            //               backgroundColor: Colors.green,
+            //               child: Icon(
+            //                 Icons.check,
+            //                 size: 30.0,
+            //                 color: scaffoldBgColor,
+            //               ),
+            //             ),
+            //           ),
+            //           content: SingleChildScrollView(
+            //             child: ListBody(
+            //               children: <Widget>[
+            //                 Center(
+            //                     child: Text(
+            //                   "${widget.gold} GRAM SOLD",
+            //                   style: black16BoldTextStyle,
+            //                 )),
+            //                 Center(
+            //                     child: Text(
+            //                   '${DateTime.now()}',
+            //                   style: black14MediumTextStyle,
+            //                 )),
+            //                 heightSpace,
+            //                 Center(
+            //                     child: Text(
+            //                   'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
+            //                   style: black14MediumTextStyle,
+            //                 )),
+            //               ],
+            //             ),
+            //           ),
+            //         ));
+          }
 
-        // return Navigator.push(
-        //   context,
-        //   PageTransition(
-        //     type: PageTransitionType.fade,
-        //     child: BankSuccessScreen(),
-        //   ),
-        // );
+          // return Navigator.push(
+          //   context,
+          //   PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: BankSuccessScreen(),
+          //   ),
+          // );
+        }
+      } else {
+        Navigator.pop(context, true);
+        return Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.fade,
+            child: BankFailScreen(),
+          ),
+        );
       }
     } else if (response.statusCode == 404) {
       Navigator.pop(context, true);
@@ -384,89 +366,6 @@ class _Bank_sellInstantGoldState extends State<Bank_sellInstantGold> {
           child: BankFailScreen(),
         ),
       );
-    }
-  }
-
-  Future removefromwallet(num gold, num amount) async {
-    var locale = AppLocalizations.of(context);
-
-    var headers = {'Content-Type': 'application/json'};
-    var request = http.Request(
-        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
-    request.body = json.encode({
-      "gold": gold,
-      "transaction": {"amount": amount, "status": "Debited"}
-    });
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 201) {
-      print(await response.stream.bytesToString());
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                backgroundColor: scaffoldBgColor,
-                title: Center(
-                  child: CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor: Colors.green,
-                    child: Icon(
-                      Icons.check,
-                      size: 30.0,
-                      color: scaffoldBgColor,
-                    ),
-                  ),
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Center(
-                          child: Text(
-                        "",
-                        style: black16BoldTextStyle,
-                      )),
-                      Center(
-                          child: Text(
-                        locale.SUCCESS,
-                        style: black14MediumTextStyle,
-                      )),
-                      heightSpace,
-                      // Center(
-                      //   child: Container(
-                      //     color: whiteColor,
-                      //     padding: EdgeInsets.all(8.0),
-                      //     child: Center(
-                      //         child: Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(payId),
-                      //     )),
-                      //   ),
-                      // ),
-                      GestureDetector(
-                        onTap: () {
-                          // Clipboard.setData(new ClipboardData(text: payId))
-                          //     .then((_) {
-                          //   final snackBar =
-                          //       SnackBar(content: Text('PaymentId Copied!'));
-
-                          //   ScaffoldMessenger.of(context)
-                          //       .showSnackBar(snackBar);
-                          // });
-                        },
-                        child: Center(
-                            child: Text(
-                          locale.copy,
-                          style: black14MediumTextStyle,
-                        )),
-                      ),
-                      heightSpace,
-                    ],
-                  ),
-                ),
-              ));
-    } else {
-      print(response.reasonPhrase);
     }
   }
 

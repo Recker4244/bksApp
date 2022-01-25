@@ -169,33 +169,6 @@ class _CurrencyScreenState extends State<BuyGold> {
   DataIN info;
   Installment Instas;
 
-  Future Instalments() async {
-    var uuid = Uuid().v1();
-    var request = http.Request(
-        'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
-    request.bodyFields = {
-      'paymentId': uuid,
-      'amount': amountController.text,
-      "status": "Plan Initiated",
-      "instantGoldApplied": "false",
-      "mode": "COD",
-    };
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      Map s = jsonDecode(responseString);
-      Instas = Installment.fromJson(s);
-
-      info = DataIN.fromJson(s['data']);
-      InstallID = info.sId;
-    } else {
-      print(response.reasonPhrase);
-    }
-    return Instas;
-  }
-
   DataS datas;
   PlanSubscriptions pSubs;
 
@@ -845,10 +818,23 @@ class _CurrencyScreenState extends State<BuyGold> {
                           // Buy Button
                           InkWell(
                             onTap: () async {
-                              openCheckout();
-                              Navigator.of(context).pop();
+                              if (num.parse(amountController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  openCheckout();
+                                  Navigator.of(context).pop();
+                                } else {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                                Navigator.of(context).pop();
+                              }
                             },
-                            borderRadius: BorderRadius.circular(7.0),
                             child: Container(
                               width: double.infinity,
                               padding: EdgeInsets.all(fixPadding * 1.7),
@@ -863,6 +849,27 @@ class _CurrencyScreenState extends State<BuyGold> {
                               ),
                             ),
                           ),
+                          // InkWell(
+                          //   onTap: () async {
+                          //     // pan(context);
+                          //     //if (await pan(context) == true) openCheckout();
+                          //     Navigator.of(context).pop();
+                          //   },
+                          //   borderRadius: BorderRadius.circular(7.0),
+                          // child: Container(
+                          //   width: double.infinity,
+                          //   padding: EdgeInsets.all(fixPadding * 1.7),
+                          //   alignment: Alignment.center,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(7.0),
+                          //     color: primaryColor,
+                          //   ),
+                          //   child: Text(
+                          //     locale.BUY.toUpperCase(),
+                          //     style: white16MediumTextStyle,
+                          //   ),
+                          // ),
+                          // ),
                         ],
                       ),
                     ),
@@ -1098,8 +1105,22 @@ class _CurrencyScreenState extends State<BuyGold> {
 
                           InkWell(
                             onTap: () async {
-                              openCheckout();
-                              Navigator.of(context).pop();
+                              if (num.parse(amountController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  openCheckout();
+                                  Navigator.of(context).pop();
+                                } else {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                                Navigator.of(context).pop();
+                              }
                             },
                             borderRadius: BorderRadius.circular(7.0),
                             child: Container(

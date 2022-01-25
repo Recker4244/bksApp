@@ -50,6 +50,11 @@ class _Adress_Details_Payment_FlexState
   String SubscribeID;
   DataS datas;
   PlanSubscriptions pSubs;
+  @override
+  void initState() {
+    super.initState();
+    getAddress();
+  }
 
   bool available = true;
   Future addAddress() async {
@@ -71,6 +76,23 @@ class _Adress_Details_Payment_FlexState
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
       pay(det['id']);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  getAddress() async {
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.id}'));
+    request.body = '''''';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      PINcontroller.text = det['data']['pin'].toString();
+      addresscontroller.text = det['data']['landMark'];
     } else {
       print(response.reasonPhrase);
     }

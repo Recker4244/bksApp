@@ -124,8 +124,8 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
     final body = {
       "paymentId": id,
       "status": "Saved",
-      "amount": widget.gold,
-      "gold": widget.val,
+      "amount": num.parse(widget.gold.toStringAsFixed(2)),
+      "gold": num.parse(widget.val.toStringAsFixed(2)),
       "mode": "online"
     };
     request.body = jsonEncode(body);
@@ -515,7 +515,20 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                           heightSpace,
                           GestureDetector(
                             onTap: () async {
-                              openCheckout();
+                              if (num.parse(widget.gold.toStringAsFixed(2)) >=
+                                  49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  openCheckout();
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -581,19 +594,45 @@ class _ByWeightFlexiState extends State<ByWeightFlexi> {
                           ),
                           height20Space,
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.size,
-                                      alignment: Alignment.bottomCenter,
-                                      child: Adress_Details_Payment_Flex(
-                                        mode: "Weight",
-                                        amount: widget.gold.toString(),
-                                        duration: widget.duration,
-                                        CPID: widget.CycleP,
-                                        gold: widget.val.toStringAsFixed(2),
-                                      )));
+                            onTap: () async {
+                              if (num.parse(widget.gold.toStringAsFixed(2)) >=
+                                  49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.size,
+                                          alignment: Alignment.bottomCenter,
+                                          child: Adress_Details_Payment_Flex(
+                                            mode: "Weight",
+                                            amount:
+                                                widget.gold.toStringAsFixed(2),
+                                            duration: widget.duration,
+                                            CPID: widget.CycleP,
+                                            gold: widget.val.toStringAsFixed(2),
+                                          )));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.size,
+                                        alignment: Alignment.bottomCenter,
+                                        child: Adress_Details_Payment_Flex(
+                                          mode: "Weight",
+                                          amount:
+                                              widget.gold.toStringAsFixed(2),
+                                          duration: widget.duration,
+                                          CPID: widget.CycleP,
+                                          gold: widget.val.toStringAsFixed(2),
+                                        )));
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

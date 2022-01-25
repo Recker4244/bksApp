@@ -203,7 +203,9 @@ class _EditProfileState extends State<EditProfile> {
       Map datas = responseString;
       await getuserdetails(Userdata.id);
       setState(() {});
-      Navigator.pop(context, true);
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      // Navigator.pop(context, true);
       Fluttertoast.showToast(
         msg: 'Changes Saved Successfully.',
         backgroundColor: Colors.black,

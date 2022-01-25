@@ -33,7 +33,8 @@ class _ItemdetailsState extends State<Itemdetails> {
     }
   }
 
-  addToCart() async {
+  Future addToCart() async {
+    loadingDialog(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/cart/add/${Userdata.id}'));
@@ -45,6 +46,8 @@ class _ItemdetailsState extends State<Itemdetails> {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      Navigator.of(context).pop();
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Cart()));
     } else {
       print(response.reasonPhrase);
     }
@@ -81,8 +84,6 @@ class _ItemdetailsState extends State<Itemdetails> {
               GestureDetector(
                 onTap: () async {
                   await addToCart();
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
                 },
                 child: Container(
                   height: 50.0,
@@ -211,7 +212,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                       ),
                       heightSpace,
                       Text(
-                        'Metal Purity : ${widget.item.composition[0].metalGroup.karatage} (${widget.item.composition[0].metalGroup.fineness / 10}%)',
+                        'Metal Purity : ${widget.item.composition[0].metalGroup.karatage} (${(widget.item.composition[0].metalGroup.fineness / 10).toStringAsFixed(2)}%)',
                         style: primaryColor16BoldTextStyle,
                       ),
                       Text(
@@ -265,7 +266,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                                   style: black16BoldTextStyle,
                                 ),
                                 Text(
-                                  'INR ${(widget.item.amount * (widget.item.charges[0].percentage / 100)).toStringAsFixed(2)}',
+                                  'INR ${(widget.item.amount * count * (widget.item.charges.firstWhere((element) => element.type == "GST").percentage / 100)).toStringAsFixed(2)}',
                                   style: black16BoldTextStyle,
                                 ),
                               ],
@@ -289,7 +290,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                                   style: black16BoldTextStyle,
                                 ),
                                 Text(
-                                  'INR ${(widget.item.amount * (widget.item.charges[1].percentage / 100)).toStringAsFixed(2)}',
+                                  'INR ${(widget.item.amount * count * (widget.item.charges.firstWhere((element) => element.type == "Minting Charges").percentage / 100)).toStringAsFixed(2)}',
                                   style: black16BoldTextStyle,
                                 ),
                               ],
@@ -318,7 +319,7 @@ class _ItemdetailsState extends State<Itemdetails> {
                                   style: black16BoldTextStyle,
                                 ),
                                 Text(
-                                  'INR ${(widget.item.amount * (widget.item.charges[0].percentage / 100)).toStringAsFixed(2)}',
+                                  'INR ${(widget.item.amount * count * (widget.item.charges.firstWhere((element) => element.type == "Making Charges").percentage / 100)).toStringAsFixed(2)}',
                                   style: black16BoldTextStyle,
                                 ),
                               ],

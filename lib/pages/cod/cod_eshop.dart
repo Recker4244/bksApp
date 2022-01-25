@@ -41,20 +41,41 @@ class _Adress_Details_Payment_EshopState
   String SubscribeID;
   DataS datas;
   PlanSubscriptions pSubs;
+  @override
+  void initState() {
+    super.initState();
+    getAddress();
+  }
+
+  getAddress() async {
+    var request = http.Request(
+        'GET', Uri.parse('${baseurl}/api/address/user/${Userdata.id}'));
+    request.body = '''''';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      PINcontroller.text = det['data']['pin'].toString();
+      addresscontroller.text = det['data']['landMark'];
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   bool available = true;
   Future addAddres() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('UserId') ?? "0";
-    var request = http.Request(
-        'POST', Uri.parse('https://gold-v1.herokuapp.com/InsertUserAddress'));
-    request.bodyFields = {
-      'UserId': Userdata.id,
-      'address': addresscontroller.text,
-      'addtype': _character.toString(),
-      'landmark': Landmarkcontroller.text,
-      'plotno': PINcontroller.text,
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
+
+    final body = {
+      "user": "61bce82da171b2554eff3c8a",
+      "pin": 226001,
+      "landMark":
+          "Ashok Marg · Ground Floor, Tekari Chambers Ashok Marg Lucknow",
+      "isDefaultAddress": true
     };
+    request.body = jsonEncode(body);
 
     http.StreamedResponse response = await request.send();
 

@@ -8,6 +8,7 @@ import 'package:gold247/models/BuySellprice.dart';
 import 'package:gold247/models/Detail.dart';
 import 'package:gold247/models/Metalgroup.dart';
 import 'package:gold247/models/user.dart';
+import 'package:gold247/pages/portfolio/Appointments.dart';
 import 'package:gold247/pages/subscription/byValue_Stan.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,16 +40,19 @@ class _SellOldState extends State<SellOld> {
   bool message;
 
   Future CreatePlans() async {
+    loadingDialog(context);
     var locale = AppLocalizations.of(context);
     //TODO add url and body
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/appointment/create/${Userdata.id}'));
-    request.bodyFields = {
-      "weight": valueController.text,
-      "metalGroup": karatageID,
-      "buySellPrice": data.buy.toStringAsFixed(2),
+    final body = {
+      "weight": num.parse(valueController.text),
+      "metalGroup": "${karatageID}",
+      "buySellPrice": "${data.id}",
     };
+    request.headers.addAll(headers);
+    request.body = jsonEncode(body);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
@@ -57,78 +61,97 @@ class _SellOldState extends State<SellOld> {
       message = s['success'];
       otp = s['data'];
       if (message == true) {
-        setState(() {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    backgroundColor: scaffoldBgColor,
-                    title: Center(
-                      child: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: Colors.green,
-                        child: Icon(
-                          Icons.check,
-                          size: 30.0,
-                          color: scaffoldBgColor,
-                        ),
-                      ),
-                    ),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            locale.REQUESTPLACED,
-                            style: black16BoldTextStyle,
-                          )),
-                          Center(
-                              child: Text(
-                            locale.SUCCESS,
-                            style: black14MediumTextStyle,
-                          )),
-                          heightSpace,
-                          Center(
-                            child: Container(
-                              color: whiteColor,
-                              padding: EdgeInsets.all(8.0),
-                              child: Center(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(otp),
-                              )),
-                            ),
-                          ),
-                          height20Space,
-                          Center(
-                              child: GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(new ClipboardData(text: otp))
-                                  .then((_) {
-                                final snackBar =
-                                    SnackBar(content: Text('OTP Copied!'));
+        Navigator.of(context).pop();
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar(
+              index: 4,
+            ),
+          ),
+        );
+        Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: Appointments(),
+          ),
+        );
 
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              });
-                            },
-                            child: Text(
-                              locale.copy,
-                              style: black12MediumTextStyle,
-                            ),
-                          )),
-                          heightSpace,
-                          Center(
-                              child: Text(
-                            locale.ShowThisCode,
-                            style: black12MediumTextStyle,
-                          ))
-                        ],
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  backgroundColor: scaffoldBgColor,
+                  title: Center(
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Colors.green,
+                      child: Icon(
+                        Icons.check,
+                        size: 30.0,
+                        color: scaffoldBgColor,
                       ),
                     ),
-                  ));
-        });
+                  ),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Center(
+                            child: Text(
+                          locale.REQUESTPLACED,
+                          style: black16BoldTextStyle,
+                        )),
+                        Center(
+                            child: Text(
+                          locale.SUCCESS,
+                          style: black14MediumTextStyle,
+                        )),
+                        heightSpace,
+                        Center(
+                          child: Container(
+                            color: whiteColor,
+                            padding: EdgeInsets.all(8.0),
+                            child: Center(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(otp),
+                            )),
+                          ),
+                        ),
+                        height20Space,
+                        Center(
+                            child: GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(new ClipboardData(text: otp))
+                                .then((_) {
+                              final snackBar =
+                                  SnackBar(content: Text('OTP Copied!'));
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            });
+                          },
+                          child: Text(
+                            locale.copy,
+                            style: black12MediumTextStyle,
+                          ),
+                        )),
+                        heightSpace,
+                        Center(
+                            child: Text(
+                          locale.ShowThisCode,
+                          style: black12MediumTextStyle,
+                        ))
+                      ],
+                    ),
+                  ),
+                ));
       }
     } else {
+      Navigator.of(context).pop();
       setState(() {
         showDialog(
             context: context,
@@ -429,6 +452,7 @@ class _SellOldState extends State<SellOld> {
                                     isEmpty: CyclePController == '',
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton<String>(
+                                        hint: Text("${temp.first.karatage}"),
                                         value: CyclePController,
                                         isDense: true,
                                         style: primaryColor16MediumTextStyle,
@@ -515,7 +539,7 @@ class _SellOldState extends State<SellOld> {
 //AlertDialog(
 //
 //    );
-                              setState(() {});
+                              //setState(() {});
                             },
                             child: Container(
                               color: primaryColor,
@@ -536,7 +560,7 @@ class _SellOldState extends State<SellOld> {
                 ),
               ));
             } else {
-              return Text("No data found");
+              return errorScreen;
             }
           }
         });

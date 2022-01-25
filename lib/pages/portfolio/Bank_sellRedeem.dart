@@ -26,7 +26,7 @@ String stringResponse;
 Map mapResponse;
 
 class _BankDetailsState extends State<BankDetails> {
-  bool value;
+  bool hasBank;
   String selectedAccountType = 'Savings';
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController ifscCodeController = TextEditingController();
@@ -55,11 +55,11 @@ class _BankDetailsState extends State<BankDetails> {
         setState(() {
           accountNumberController.text = responseString['data']['Accountnum'];
           ifscCodeController.text = responseString['data']['IFSC'];
-          value = false;
+          hasBank = false;
         });
       } else {
         setState(() {
-          value = true;
+          hasBank = true;
         });
       }
     }
@@ -78,8 +78,10 @@ class _BankDetailsState extends State<BankDetails> {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      return true;
     } else {
       print(response.reasonPhrase);
+      return false;
     }
   }
 
@@ -176,83 +178,50 @@ class _BankDetailsState extends State<BankDetails> {
     response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final responseString = jsonDecode(response.body);
-
-      if (value == true) {
-        http.Response responseBank = await http.post(
-          Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
-          body: {
-            "Accountnum": accountNumberController.text,
-            "IFSC": ifscCodeController.text,
-          },
-        );
-        final responseString = json.decode(responseBank.body);
-        Map datas = responseString['data']['bank'];
-        setState(() {
-          bankdetail = bankDetails.fromJson(datas);
-        });
-        Navigator.pop(context, true);
-
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-                  backgroundColor: scaffoldBgColor,
-                  title: Center(
-                    child: CircleAvatar(
-                      radius: 20.0,
-                      backgroundColor: Colors.green,
-                      child: Icon(
-                        Icons.check,
-                        size: 30.0,
-                        color: scaffoldBgColor,
-                      ),
-                    ),
-                  ),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        Center(
-                            child: Text(
-                          "${widget.gold} GRAM SOLD",
-                          style: black16BoldTextStyle,
-                        )),
-                        Center(
-                            child: Text(
-                          '${DateTime.now()}',
-                          style: black14MediumTextStyle,
-                        )),
-                        heightSpace,
-                        Center(
-                            child: Text(
-                          'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
-                          style: black14MediumTextStyle,
-                        )),
-                      ],
-                    ),
-                  ),
-                ));
-      } else if (value == false) {
-        http.Response responseBank = await http.put(
-          Uri.parse("${baseurl}/api/bank/update/${Userdata.id}"),
-          body: {
-            "Accountnum": accountNumberController.text,
-            "IFSC": ifscCodeController.text,
-          },
-        );
-        if (responseBank.statusCode == 200) {
+      if (responseString['data']['account_exists']) {
+        if (hasBank == false) {
+          http.Response responseBank = await http.post(
+            Uri.parse("${baseurl}/api/bank/${Userdata.id}"),
+            body: {
+              "Accountnum": accountNumberController.text,
+              "IFSC": ifscCodeController.text,
+            },
+          );
           final responseString = json.decode(responseBank.body);
-          Map datas = responseString['data'];
-          // setState(() {
-          //   bankdetail = bankDetails.fromJson(datas);
-          // });
+          Map datas = responseString['data']['bank'];
+          setState(() {
+            bankdetail = bankDetails.fromJson(datas);
+          });
+          var success = await sell();
+          if (success == false) {
+            Navigator.pop(context, true);
+            return Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                child: BankFailScreen(),
+              ),
+            );
+          }
+
           Navigator.pop(context, true);
-          Navigator.pushReplacement<void, void>(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => BottomBar(
-                index: 1,
+            PageTransition(
+              type: PageTransitionType.fade,
+              child: BottomBar(
+                index: 2,
               ),
             ),
           );
+          // Navigator.push(
+          //   context,
+          //   PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: BottomBar(index: 2,),
+          //   ),
+          // );
+
           showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -284,22 +253,131 @@ class _BankDetailsState extends State<BankDetails> {
                           heightSpace,
                           Center(
                               child: Text(
-                            'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
+                            'Money will be credited to your bank account ending with ${bankdetail.accountnum.substring(bankdetail.accountnum.length - 4)} within 72 Hours',
                             style: black14MediumTextStyle,
                           )),
                         ],
                       ),
                     ),
                   ));
-        }
+        } else if (hasBank == false) {
+          http.Response responseBank = await http.put(
+            Uri.parse("${baseurl}/api/bank/update/${Userdata.id}"),
+            body: {
+              "Accountnum": accountNumberController.text,
+              "IFSC": ifscCodeController.text,
+            },
+          );
+          if (responseBank.statusCode == 200) {
+            final responseString = json.decode(responseBank.body);
+            Map datas = responseString['data'];
+            // setState(() {
+            //   bankdetail = bankDetails.fromJson(datas);
+            // });
+            Navigator.pop(context, true);
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      backgroundColor: scaffoldBgColor,
+                      title: Center(
+                        child: CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.green,
+                          child: Icon(
+                            Icons.check,
+                            size: 30.0,
+                            color: scaffoldBgColor,
+                          ),
+                        ),
+                      ),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Center(
+                                child: Text(
+                              "Bank Details Added",
+                              style: black16BoldTextStyle,
+                            )),
+                            Center(
+                                child: Text(
+                              '${DateTime.now()}',
+                              style: black14MediumTextStyle,
+                            )),
+                            heightSpace,
+                            Center(
+                                child: Text(
+                              'Bank details have been verified and added successfully',
+                              style: black14MediumTextStyle,
+                            )),
+                          ],
+                        ),
+                      ),
+                    ));
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => BottomBar(
+                  index: 1,
+                ),
+              ),
+            );
+            // showDialog(
+            //     context: context,
+            //     builder: (BuildContext context) => AlertDialog(
+            //           backgroundColor: scaffoldBgColor,
+            //           title: Center(
+            //             child: CircleAvatar(
+            //               radius: 20.0,
+            //               backgroundColor: Colors.green,
+            //               child: Icon(
+            //                 Icons.check,
+            //                 size: 30.0,
+            //                 color: scaffoldBgColor,
+            //               ),
+            //             ),
+            //           ),
+            //           content: SingleChildScrollView(
+            //             child: ListBody(
+            //               children: <Widget>[
+            //                 Center(
+            //                     child: Text(
+            //                   "${widget.gold} GRAM SOLD",
+            //                   style: black16BoldTextStyle,
+            //                 )),
+            //                 Center(
+            //                     child: Text(
+            //                   '${DateTime.now()}',
+            //                   style: black14MediumTextStyle,
+            //                 )),
+            //                 heightSpace,
+            //                 Center(
+            //                     child: Text(
+            //                   'Money will be credited to your bank account ending with ${accountNumberController.text.substring(accountNumberController.text.length - 4)} within 72 Hours',
+            //                   style: black14MediumTextStyle,
+            //                 )),
+            //               ],
+            //             ),
+            //           ),
+            //         ));
+          }
 
-        // return Navigator.push(
-        //   context,
-        //   PageTransition(
-        //     type: PageTransitionType.fade,
-        //     child: BankSuccessScreen(),
-        //   ),
-        // );
+          // return Navigator.push(
+          //   context,
+          //   PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: BankSuccessScreen(),
+          //   ),
+          // );
+        }
+      } else {
+        Navigator.pop(context, true);
+        return Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.fade,
+            child: BankFailScreen(),
+          ),
+        );
       }
     } else if (response.statusCode == 404) {
       Navigator.pop(context, true);

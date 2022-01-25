@@ -122,10 +122,7 @@ class _MarketState extends State<Market> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! Something went wrong ")));
+            return errorScreen;
           }
         }
       },

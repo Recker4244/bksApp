@@ -135,20 +135,20 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                         SizedBox(
                           height: 4.h,
                         ),
-                        Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Weight',
-                              style: black18MediumTextStyle,
-                            ),
-                            Spacer(),
-                            Text(
-                              'Value',
-                              style: black18MediumTextStyle,
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       'Weight',
+                        //       style: black18MediumTextStyle,
+                        //     ),
+                        //     Spacer(),
+                        //     Text(
+                        //       'Value',
+                        //       style: black18MediumTextStyle,
+                        //     ),
+                        //   ],
+                        // ),
                         Container(
                           padding: EdgeInsets.all(20),
                           width: MediaQuery.of(context).size.width,
@@ -160,21 +160,63 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(
-                                '${widget.byweight} GRAM',
-                                style: white18MediumTextStyle,
+                              Column(
+                                children: [
+                                  Text(
+                                    'By Value',
+                                    style: white12MediumTextStyle,
+                                  ),
+                                  Text(
+                                    '${widget.byvalue} GRAM',
+                                    style: white14MediumTextStyle,
+                                  ),
+                                ],
                               ),
                               Text(
                                 '|',
                                 style: white18MediumTextStyle,
                               ),
-                              Text(
-                                '${widget.byvalue} GRAM',
-                                style: white18MediumTextStyle,
+                              Column(
+                                children: [
+                                  Text(
+                                    'By Weight',
+                                    style: white12MediumTextStyle,
+                                  ),
+                                  Text(
+                                    '${widget.byweight} GRAM',
+                                    style: white14MediumTextStyle,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
+                        // Container(
+                        //   padding: EdgeInsets.all(20),
+                        //   width: MediaQuery.of(context).size.width,
+                        //   alignment: Alignment.center,
+                        //   decoration: BoxDecoration(
+                        //       color: primaryColor,
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(20))),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: <Widget>[
+                        //       Text(
+                        //         '${widget.byweight} GRAM',
+                        //         style: white18MediumTextStyle,
+                        //       ),
+                        //       Text(
+                        //         '|',
+                        //         style: white18MediumTextStyle,
+                        //       ),
+                        //       Text(
+                        //         '${widget.byvalue} GRAM',
+                        //         style: white18MediumTextStyle,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -232,10 +274,7 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },

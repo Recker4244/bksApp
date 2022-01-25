@@ -521,7 +521,23 @@ class _ByValFlexiState extends State<ByValFlexi> {
                           heightSpace,
                           GestureDetector(
                             onTap: () async {
-                              openCheckout();
+                              if (num.parse(widget.val.toStringAsFixed(2)) >=
+                                  49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  openCheckout();
+                                  Navigator.of(context).pop();
+                                } else {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                openCheckout();
+                                Navigator.of(context).pop();
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -572,19 +588,44 @@ class _ByValFlexiState extends State<ByValFlexi> {
                           ),
                           height20Space,
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.size,
-                                      alignment: Alignment.bottomCenter,
-                                      child: Adress_Details_Payment_Flex(
-                                        mode: "Value",
-                                        amount: widget.val.toStringAsFixed(2),
-                                        duration: widget.duration,
-                                        CPID: widget.CycleP,
-                                        gold: widget.gold.toString(),
-                                      )));
+                            onTap: () async {
+                              if (num.parse(widget.val.toStringAsFixed(2)) >=
+                                  49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.size,
+                                          alignment: Alignment.bottomCenter,
+                                          child: Adress_Details_Payment_Flex(
+                                            mode: "Value",
+                                            amount:
+                                                widget.val.toStringAsFixed(2),
+                                            duration: widget.duration,
+                                            CPID: widget.CycleP,
+                                            gold: widget.gold.toString(),
+                                          )));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.size,
+                                        alignment: Alignment.bottomCenter,
+                                        child: Adress_Details_Payment_Flex(
+                                          mode: "Value",
+                                          amount: widget.val.toStringAsFixed(2),
+                                          duration: widget.duration,
+                                          CPID: widget.CycleP,
+                                          gold: widget.gold.toString(),
+                                        )));
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

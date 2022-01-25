@@ -1646,251 +1646,162 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              Row(
-                //mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Container(
-                    height: 25.h,
-                    width: 50.w,
-                    decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  print('clicked');
-                                  _scrollController.scrollTo(
-                                      index: 10,
-                                      duration: Duration(seconds: 1));
-                                },
-                                icon: ImageIcon(
-                                  AssetImage(
-                                    "assets/icon/icon1.png",
-                                  ),
-                                  size: 60,
-                                )),
-                            Text("Buy and Save",
+              Padding(
+                padding: EdgeInsets.only(
+                  left: fixPadding * 2.0,
+                  bottom: fixPadding,
+                ),
+                child: Row(
+                  //mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      height: 25.h,
+                      width: 50.w,
+                      decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    print('clicked');
+                                    _scrollController.scrollTo(
+                                        index: 10,
+                                        duration: Duration(seconds: 1));
+                                  },
+                                  icon: ImageIcon(
+                                    AssetImage(
+                                      "assets/icon/icon1.png",
+                                    ),
+                                    size: 60,
+                                  )),
+                              Text("Buy and Save",
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 8.sp,
+                                      fontWeight: FontWeight.bold)),
+                              IconButton(
+                                  onPressed: () {
+                                    _scrollController.scrollTo(
+                                        index: 5,
+                                        duration: Duration(seconds: 1));
+                                  },
+                                  icon: ImageIcon(
+                                      AssetImage("assets/icon/icon3.png"),
+                                      size: 60)),
+                              Text(
+                                "Buy Instant Gold",
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 8.sp,
-                                    fontWeight: FontWeight.bold)),
-                            IconButton(
-                                onPressed: () {
-                                  _scrollController.scrollTo(
-                                      index: 5, duration: Duration(seconds: 1));
-                                },
-                                icon: ImageIcon(
-                                    AssetImage("assets/icon/icon3.png"),
-                                    size: 60)),
-                            Text(
-                              "Buy Instant Gold",
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 8.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  print('clicked');
-                                  _scrollController.scrollTo(
-                                      index: 7, duration: Duration(seconds: 1));
-                                },
-                                icon: ImageIcon(
-                                    AssetImage("assets/icon/icon2.png"),
-                                    size: 60)),
-                            Text(
-                              "Book Your Gold",
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 8.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.rightToLeft,
-                                          child: BottomBar(
-                                            index: 3,
-                                          )));
-                                },
-                                icon: ImageIcon(
-                                    AssetImage("assets/icon/icon4.png"),
-                                    size: 60)),
-                            Text(
-                              "E-Shop",
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 8.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 25.h,
-                    width: 48.w,
-                    child: ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: offers.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (offers[index].type.toLowerCase() ==
-                                  "collection")
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Eshop(
-                                              id: offers[index].typeId,
-                                              type: offers[index]
-                                                      .type
-                                                      .toLowerCase() +
-                                                  "s",
-                                            )));
-                              else
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Eshop(
-                                              id: offers[index].typeId,
-                                              type: offers[index]
-                                                  .type
-                                                  .toLowerCase(),
-                                            )));
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Container(
-                                width: 40.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    "${offers[index].image}",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                //decoration: BoxDecoration(color: Colors.red),
+                                    fontWeight: FontWeight.bold),
                               ),
-                            ),
-                          );
-                        }),
-                  ),
-                ],
-              ),
-              Container(
-                height: 55.w,
-                child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: reverselist.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (reverselist[index].type.toLowerCase() ==
-                              "collection")
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Eshop(
-                                          id: reverselist[index].typeId,
-                                          type: reverselist[index]
-                                                  .type
-                                                  .toLowerCase() +
-                                              "s",
-                                        )));
-                          else
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Eshop(
-                                          id: reverselist[index].typeId,
-                                          type: reverselist[index]
-                                              .type
-                                              .toLowerCase(),
-                                        )));
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Container(
-                            width: 40.w,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image.network(
-                                "${reverselist[index].image}",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            //decoration: BoxDecoration(color: Colors.red),
+                            ],
                           ),
-                        ),
-                      );
-                    }),
-                // ListView(
-                //   padding: EdgeInsets.all(8),
-                //   scrollDirection: Axis.horizontal,
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.all(4.0),
-                //       child: Container(
-                //         width: 50.w,
-                //         child: ClipRRect(
-                //           borderRadius: BorderRadius.circular(15.0),
-                //           child: Image.network(
-                //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
-                //               fit: BoxFit.fitWidth),
-                //         ),
-                //         //decoration: BoxDecoration(color: Colors.red),
-                //       ),
-                //     ),
-                //     Padding(
-                //       padding: const EdgeInsets.all(4.0),
-                //       child: Container(
-                //         width: 50.w,
-                //         child: ClipRRect(
-                //           borderRadius: BorderRadius.circular(15.0),
-                //           child: Image.network(
-                //               "https://lh3.googleusercontent.com/p/AF1QipOyJJMN-zcoMpcALVi3VUxkj3E3crqas7gyH7Mj=s1280-p-no-v1",
-                //               fit: BoxFit.fitWidth),
-                //         ),
-                //         //decoration: BoxDecoration(color: Colors.red),
-                //       ),
-                //     ),
-                //     Padding(
-                //       padding: const EdgeInsets.all(4.0),
-                //       child: Container(
-                //         width: 50.w,
-                //         child: ClipRRect(
-                //           borderRadius: BorderRadius.circular(15.0),
-                //           child: Image.network(
-                //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhH56n_iwWT-0RqBy3Fa83ZF1lD60nM9_Ew&usqp=CAU",
-                //               fit: BoxFit.fitWidth),
-                //         ),
-                //         //decoration: BoxDecoration(color: Colors.red),
-                //       ),
-                //     ),
-                //   ],
-                // )
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    print('clicked');
+                                    _scrollController.scrollTo(
+                                        index: 7,
+                                        duration: Duration(seconds: 1));
+                                  },
+                                  icon: ImageIcon(
+                                      AssetImage("assets/icon/icon2.png"),
+                                      size: 60)),
+                              Text(
+                                "Book Your Gold",
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            type:
+                                                PageTransitionType.rightToLeft,
+                                            child: BottomBar(
+                                              index: 3,
+                                            )));
+                                  },
+                                  icon: ImageIcon(
+                                      AssetImage("assets/icon/icon4.png"),
+                                      size: 60)),
+                              Text(
+                                "E-Shop",
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 25.h,
+                      width: 48.w,
+                      child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 4),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: offers.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                if (offers[index].type.toLowerCase() ==
+                                    "collection")
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Eshop(
+                                                id: offers[index].typeId,
+                                                type: offers[index]
+                                                        .type
+                                                        .toLowerCase() +
+                                                    "s",
+                                              )));
+                                else
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Eshop(
+                                                id: offers[index].typeId,
+                                                type: offers[index]
+                                                    .type
+                                                    .toLowerCase(),
+                                              )));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Container(
+                                  width: 40.w,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      "${offers[index].image}",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  //decoration: BoxDecoration(color: Colors.red),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
               ),
               buyGold(data.buy.toStringAsFixed(2)),
-              sellGold(data.sell.toStringAsFixed(2)),
               height20Space,
               Padding(
                 padding: EdgeInsets.only(
@@ -2132,6 +2043,10 @@ class _HomeState extends State<Home> {
                               .toDouble())
                       .toStringAsFixed(2)),
                   width: width),
+              sellGold(data.sell.toStringAsFixed(2)),
+              SizedBox(
+                height: 2.h,
+              )
             ];
 
             return SafeArea(

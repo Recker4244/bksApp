@@ -1,10 +1,12 @@
 import 'package:gold247/constant/constant.dart';
 import 'package:gold247/models/BuySellprice.dart';
+import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/instantGold/sell_gold.dart';
+import 'package:gold247/pages/portfolio/Bank_sellRedeem.dart';
 import 'package:gold247/pages/portfolio/Cart.dart';
-import 'package:gold247/pages/profile/bank_details.dart';
+
 // import 'package:cryptox/pages/instantGold/currency_screen.dart';
 import 'package:gold247/widget/column_builder.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +63,25 @@ class _WithdrawState extends State<Withdraw> {
     endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 45;
     data = await fetchData();
     return true;
+  }
+
+  Future sellSubscription(String subId, String buysellId, String gold) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request('POST',
+        Uri.parse('${baseurl}/api/sell-subscription/${subId}/${Userdata.id}'));
+    request.body =
+        json.encode({"buySellId": "${buysellId}", "goldsell": num.parse(gold)});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   Future<bool> init;

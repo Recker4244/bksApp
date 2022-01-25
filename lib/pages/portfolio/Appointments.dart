@@ -131,7 +131,7 @@ class _AppointmentsState extends State<Appointments> {
     return ListView.builder(
       itemBuilder: (context, index) {
         String name =
-            "${processing[index].weight} GRAM ${processing[index].metalGroup.karatage} GOLD";
+            "${processing[index].weight} GRAM ${processing[index].valuation} GOLD";
         return Choice_Card1(
             name,
             'INR ${processing[index].valuation}',
@@ -149,7 +149,7 @@ class _AppointmentsState extends State<Appointments> {
     return ListView.builder(
       itemBuilder: (context, index) {
         String name =
-            "${cancelled[index].weight} GRAM ${cancelled[index].metalGroup.karatage} GOLD";
+            "${cancelled[index].weight} GRAM ${cancelled[index].valuation} GOLD";
         return Choice_Card2(name, 'INR ${cancelled[index].valuation}',
             'ORDER DETAIL', Eshop(), cancelled[index]);
       },
@@ -161,7 +161,7 @@ class _AppointmentsState extends State<Appointments> {
     return ListView.builder(
       itemBuilder: (context, index) {
         String name =
-            "${delivered[index].weight} GRAM ${delivered[index].metalGroup.karatage} GOLD";
+            "${delivered[index].weight} GRAM ${delivered[index].valuation} GOLD";
         return Choice_Card2(name, 'INR ${delivered[index].valuation}',
             'ORDER DETAIL', Eshop(), delivered[index]);
       },
@@ -196,9 +196,7 @@ class _AppointmentsState extends State<Appointments> {
                     PageTransition(
                         type: PageTransitionType.size,
                         alignment: Alignment.bottomCenter,
-                        child: Appointmentdetails(
-                          temp: apt,
-                        )));
+                        child: Appointmentdetails(id: apt.id)));
               },
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10.0),
@@ -252,9 +250,7 @@ class _AppointmentsState extends State<Appointments> {
                               PageTransition(
                                   type: PageTransitionType.size,
                                   alignment: Alignment.bottomCenter,
-                                  child: Appointmentdetails(
-                                    temp: apt,
-                                  )));
+                                  child: Appointmentdetails(id: apt.id)));
                         },
                         icon: Icon(Icons.arrow_forward_ios_outlined,
                             color: primaryColor)),
@@ -349,7 +345,7 @@ class _AppointmentsState extends State<Appointments> {
                         type: PageTransitionType.size,
                         alignment: Alignment.bottomCenter,
                         child: Appointmentdetails(
-                          temp: apt,
+                          id: "",
                         )));
               },
               borderRadius: BorderRadius.vertical(
@@ -414,7 +410,7 @@ class _AppointmentsState extends State<Appointments> {
                         type: PageTransitionType.size,
                         alignment: Alignment.bottomCenter,
                         child: Appointmentdetails(
-                          temp: apt,
+                          id: apt.id,
                         )));
               },
               borderRadius: BorderRadius.vertical(

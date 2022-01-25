@@ -41,11 +41,11 @@ class _CartState extends State<Cart> {
     final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.id,
-      "cart": det_of_cart['data']['_id'],
-      "transactions": det_of_transaction['data']['_id'],
+      "cart": det_of_cart['data']['id'],
+      "transactions": det_of_transaction['data']['id'],
       "status": "Processing",
       "address": list_of_address[0].sId,
-      "deliveryCharge": deliverycharges['_id'],
+      "deliveryCharge": deliverycharges.first['id'],
       "buySell": buysellid.toString(),
       "instantGoldApplied": int.parse(availablegold.toString())
     };
@@ -165,8 +165,8 @@ class _CartState extends State<Cart> {
 
   dynamic instantgold;
   Future getInstantGold() async {
-    var request = http.Request(
-        'GET', Uri.parse('${baseurl}/api/wallet/6158849d3b5cb8a0c1d96040'));
+    var request =
+        http.Request('GET', Uri.parse('${baseurl}/api/wallet/${Userdata.id}'));
 
     http.StreamedResponse response = await request.send();
 
@@ -179,10 +179,10 @@ class _CartState extends State<Cart> {
     }
   }
 
-  Map deliverycharges;
+  List deliverycharges;
   Future<String> getDeliveryCharge() async {
     var request = http.Request('GET',
-        Uri.parse('${baseurl}/api/calculation/617f87af1cff6bdaddd477eb'));
+        Uri.parse('${baseurl}/api/calculation/61bf85f0fb887283baaa3cf3'));
 
     http.StreamedResponse response = await request.send();
 
@@ -221,7 +221,7 @@ class _CartState extends State<Cart> {
     var options = {
       'key': Rkey,
       'amount': ((finalResult) * 100.0).toStringAsFixed(2),
-      'name': "Standard Plan",
+      'name': "BKS:My Gold Shopping Cart",
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
       'prefill': {'contact': Userdata.mobile, 'email': Userdata.email},
@@ -319,7 +319,8 @@ class _CartState extends State<Cart> {
   double availablebalance = 0.0;
   void ToPay(bool isavailable) {
     double subTotal = double.parse(Subtotal());
-    double delivery = double.parse(deliverycharges['Percentage'].toString());
+    double delivery =
+        double.parse(deliverycharges.first['Percentage'].toString());
 
     double redeemGold = redeemBalance;
     availablebalance =
@@ -382,6 +383,7 @@ class _CartState extends State<Cart> {
           if (snapshot.hasData) {
             return Scaffold(
               appBar: AppBar(
+                backgroundColor: primaryColor,
                 title: Text(
                   'Cart',
                 ),
@@ -398,8 +400,21 @@ class _CartState extends State<Cart> {
                     style: primaryColor18BoldTextStyle,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      openCheckout();
+                    onTap: () async {
+                      if (num.parse(
+                              ((finalResult) * 100.0).toStringAsFixed(2)) >=
+                          49000) {
+                        bool veri = await pan(context);
+                        if (veri) {
+                          Navigator.of(context).pop();
+                          openCheckout();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("PAN verification failed")));
+                        }
+                      } else {
+                        openCheckout();
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -449,17 +464,90 @@ class _CartState extends State<Cart> {
                   SizedBox(
                     height: 2.0,
                   ),
-                  Payment_Card(
-                    Icons.location_on,
-                    'You can pay at your doorstep',
-                    'Cash On Delivery',
-                    Adress_Details_Payment_Eshop(
-                      Cartid: det_of_cart['data']['_id'].toString(),
-                      deliverycharge: deliverycharges,
-                      buysellid: buysellid,
-                      instantgold: availablegold.toStringAsFixed(2),
+                  GestureDetector(
+                    onTap: () async {
+                      if (num.parse(
+                              ((finalResult) * 100.0).toStringAsFixed(2)) >=
+                          49000) {
+                        bool veri = await pan(context);
+                        if (veri) {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.size,
+                                alignment: Alignment.bottomCenter,
+                                child: Adress_Details_Payment_Eshop(
+                                  Cartid: det_of_cart['data']['id'].toString(),
+                                  deliverycharge: deliverycharges.first,
+                                  buysellid: buysellid,
+                                  instantgold: availablegold.toStringAsFixed(2),
+                                ),
+                              ));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("PAN verification failed")));
+                        }
+                      } else {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.size,
+                              alignment: Alignment.bottomCenter,
+                              child: Adress_Details_Payment_Eshop(
+                                Cartid: det_of_cart['data']['id'].toString(),
+                                deliverycharge: deliverycharges.first,
+                                buysellid: buysellid,
+                                instantgold: availablegold.toStringAsFixed(2),
+                              ),
+                            ));
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          )),
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: fixPadding * 2),
+                      padding: EdgeInsets.all(fixPadding * 2),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            size: 40,
+                          ),
+                          width20Space,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text(
+                                  'Cash On Delivery',
+                                  style: black16BoldTextStyle,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  'You can pay at your doorstep',
+                                  style: black14RegularTextStyle,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             );
@@ -486,12 +574,12 @@ class _CartState extends State<Cart> {
                   : EdgeInsets.all(fixPadding * 2.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.size,
-                          alignment: Alignment.center,
-                          child: CurrencyScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         type: PageTransitionType.size,
+                  //         alignment: Alignment.center,
+                  //         child: CurrencyScreen()));
                 },
                 borderRadius: BorderRadius.circular(20.0),
                 child: Container(
@@ -631,7 +719,7 @@ class _CartState extends State<Cart> {
                       style: primaryColor16MediumTextStyle,
                     ),
                     Text(
-                      'INR ${deliverycharges['Percentage'].toString()}',
+                      'INR ${deliverycharges.first['Percentage'].toString()}',
                       style: primaryColor16MediumTextStyle,
                     ),
                   ],

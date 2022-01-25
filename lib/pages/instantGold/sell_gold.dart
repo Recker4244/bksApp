@@ -773,7 +773,11 @@ class _CurrencyScreenState extends State<SellGold> {
                                                 num.parse(valueController.text),
                                             amount: num.parse(
                                                 amountController.text),
-                                          )));
+                                          ))).then((value) {
+                                setState(() {
+                                  getWalletBalanced();
+                                });
+                              });
                             },
                             borderRadius: BorderRadius.circular(7.0),
                             child: Container(

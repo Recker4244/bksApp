@@ -8,6 +8,7 @@ import 'package:gold247/pages/Eshop/eshop.dart';
 import 'package:gold247/pages/bottom_bar.dart';
 import 'package:gold247/pages/cod/cod_buygold.dart';
 import 'package:gold247/pages/instantGold/sell_gold.dart';
+import 'package:gold247/pages/market/market.dart';
 import 'package:gold247/pages/profile/bank_details.dart';
 // import 'package:cryptox/pages/instantGold/currency_screen.dart';
 import 'package:gold247/widget/column_builder.dart';
@@ -23,8 +24,10 @@ import 'package:gold247/language/locale.dart';
 
 class Deposit extends StatefulWidget {
   final String balance;
+  final num minGold;
   final String sub;
-  const Deposit({Key key, this.balance, this.sub}) : super(key: key);
+  const Deposit({Key key, this.balance, this.sub, this.minGold})
+      : super(key: key);
 
   @override
   _DepositState createState() => _DepositState();
@@ -65,14 +68,15 @@ class _DepositState extends State<Deposit> {
 
   String installmentId;
   void createInstallment(String payid) async {
+    loadingDialog(context);
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
         'POST', Uri.parse('${baseurl}/api/installment/create/${Userdata.id}'));
     final body = {
       "paymentId": payid,
       "status": "Saved",
-      "amount": amountController.text,
-      "gold": weightController.text,
+      "amount": num.parse(num.parse(amountController.text).toStringAsFixed(2)),
+      "gold": num.parse(num.parse(weightController.text).toStringAsFixed(2)),
       "mode": "online"
     };
     request.headers.addAll(headers);
@@ -83,7 +87,7 @@ class _DepositState extends State<Deposit> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      installmentId = det['data']['_id'];
+      installmentId = det['data']['id'];
       addInstallmentSubs();
     } else {
       print(response.reasonPhrase);
@@ -96,14 +100,24 @@ class _DepositState extends State<Deposit> {
         'POST',
         Uri.parse(
             '${baseurl}/api/subscription/installments/add/${widget.sub}'));
-    final body = {"installmentId": installmentId};
+    final body = {"installmentId": "$installmentId"};
     request.body = json.encode(body);
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
+    print(await response.stream.bytesToString());
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BottomBar(
+                    index: 2,
+                  )));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Market()));
+
       showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -124,14 +138,20 @@ class _DepositState extends State<Deposit> {
                     children: <Widget>[
                       Center(
                           child: Text(
-                        "REQUEST PLACED",
+                        "${num.parse(num.parse(weightController.text).toStringAsFixed(2))} GRAM SOLD",
                         style: black16BoldTextStyle,
                       )),
                       Center(
                           child: Text(
-                        'SUCCESS',
+                        '${DateTime.now()}',
                         style: black14MediumTextStyle,
                       )),
+                      heightSpace,
+                      // Center(
+                      //     child: Text(
+                      //   'Money will be credited to your bank account ending with ${bankdetail.accountnum.substring(bankdetail.accountnum.length - 4)} within 72 Hours',
+                      //   style: black14MediumTextStyle,
+                      // )),
                     ],
                   ),
                 ),
@@ -187,12 +207,12 @@ class _DepositState extends State<Deposit> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-
+    weightController.text = widget.minGold.toStringAsFixed(2);
+    amountController.text = (widget.minGold * data.buy).toStringAsFixed(2);
     return true;
   }
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    print(response.paymentId);
     await createInstallment(response.paymentId.toString());
   }
 
@@ -413,6 +433,9 @@ class _DepositState extends State<Deposit> {
                             validator: (value) {
                               if (value == null || value.isEmpty)
                                 return "Please enter the weight you want to save";
+                              if (num.parse(value) < widget.minGold) {
+                                return "Minimum Weightt: ${widget.minGold.toStringAsFixed(2)}";
+                              }
                               if (num.parse(value) <= 0)
                                 return "Weight must be greater than 0";
                               return null;
@@ -455,7 +478,7 @@ class _DepositState extends State<Deposit> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
-                        color: whiteColor,
+                        //color: whiteColor,
                         // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
                         child: Theme(
                           data: ThemeData(
@@ -465,10 +488,13 @@ class _DepositState extends State<Deposit> {
                             ),
                           ),
                           child: TextField(
+                            //enabled: false,
                             controller: amountController,
                             keyboardType: TextInputType.number,
-                            style: primaryColor16MediumTextStyle,
+                            style: primaryColor18BoldTextStyle,
                             decoration: InputDecoration(
+                              fillColor: whiteColor,
+                              filled: true,
                               labelText: 'Amount',
                               labelStyle: TextStyle(
                                   color: primaryColor,
@@ -478,12 +504,23 @@ class _DepositState extends State<Deposit> {
                                 'INR',
                                 style: primaryColor16MediumTextStyle,
                               ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10.0),
+                                ),
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 1),
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
                                   const Radius.circular(10.0),
                                 ),
                                 borderSide:
                                     BorderSide(color: primaryColor, width: 1),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: primaryColor, width: 0.7),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
@@ -543,7 +580,17 @@ class _DepositState extends State<Deposit> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        openCheckout();
+                        if (num.parse(weightController.text) >= 49000) {
+                          bool veri = await pan(context);
+                          if (veri) {
+                            openCheckout();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("PAN verification failed")));
+                          }
+                        } else {
+                          openCheckout();
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -656,10 +703,7 @@ class _DepositState extends State<Deposit> {
               ),
             );
           } else {
-            return SafeArea(
-                child: Scaffold(
-                    backgroundColor: scaffoldBgColor,
-                    body: Text(" Oops !! No data ")));
+            return errorScreen;
           }
         }
       },

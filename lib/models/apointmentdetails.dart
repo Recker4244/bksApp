@@ -1,4 +1,4 @@
-class appointment {
+class AppointmentDetails {
   String appointmentDate;
   String appointmentTime;
   BuySellPrice buySellPrice;
@@ -13,7 +13,7 @@ class appointment {
   int weight;
   int valuation;
 
-  appointment(
+  AppointmentDetails(
       {this.appointmentDate,
       this.appointmentTime,
       this.buySellPrice,
@@ -28,7 +28,7 @@ class appointment {
       this.weight,
       this.valuation});
 
-  appointment.fromJson(Map<String, dynamic> json) {
+  AppointmentDetails.fromJson(Map<String, dynamic> json) {
     appointmentDate = json['appointmentDate'];
     appointmentTime = json['appointmentTime'];
     buySellPrice = json['buySellPrice'] != null

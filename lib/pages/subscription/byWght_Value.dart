@@ -536,10 +536,7 @@ class _ByWght_ValueState extends State<ByWght_Value> {
                 ),
               ));
             } else {
-              return SafeArea(
-                  child: Scaffold(
-                      backgroundColor: scaffoldBgColor,
-                      body: Text(" Oops !! Something went wrong ")));
+              return errorScreen;
             }
           }
         });

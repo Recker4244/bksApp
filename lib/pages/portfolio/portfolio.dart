@@ -73,6 +73,21 @@ class _PortfolioState extends State<Portfolio> {
   double totalplanbonus = 0.0;
   double totalplanbonusbyweight = 0.0;
   double totalplanbonusbyvalue = 0.0;
+  getPortfolioBalance() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'http://13.59.57.74:5000/api/subscription/balance/user/61e2dcccb90813f59f88e95d'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   Future getplans() async {
     var request = http.Request(
         'GET', Uri.parse('${baseurl}/api/subscription/user/${Userdata.id}'));
@@ -94,15 +109,20 @@ class _PortfolioState extends State<Portfolio> {
         }
       }
       temp = subs;
+      //calculating total gold saved
       double n = 0.0;
       for (int i = 0; i < temp.length; i++) {
-        for (int j = 0; j < temp[i].installments().length; j++) {
-          n += double.parse(temp[i].installments()[j].gold.toStringAsFixed(2));
-        }
+        if (temp[i].status() == "Completed" || temp[i].status() == "Running")
+          for (int j = 0; j < temp[i].installments().length; j++) {
+            n +=
+                double.parse(temp[i].installments()[j].gold.toStringAsFixed(2));
+          }
       }
       planBonus = n;
+      //total plan bonus by value
       num d = det['value'];
       totalplanbonusbyvalue = d.toDouble();
+      //total plan bonus by weight
       num b = det['weight'];
       totalplanbonusbyweight = b.toDouble();
       totalplanbonus = totalplanbonusbyvalue + totalplanbonusbyweight;
@@ -256,7 +276,7 @@ class _PortfolioState extends State<Portfolio> {
                       Referal_Bonus_Detials()),
                   Choice_Card(
                       locale.TotalPlanBonus,
-                      "${totalplanbonus.toStringAsFixed(2)} GRAM",
+                      "${totalplanbonus.toStringAsFixed(4)} GRAM",
                       locale.CheckDetails,
                       FontAwesomeIcons.piggyBank,
                       Plan_Bonnus_Details(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gold247/models/user.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 const Color scaffoldLightColor = const Color(0xFFFFF1E0);
 const Color primaryColor = const Color(0xFF95203D);
@@ -51,6 +54,186 @@ loadingDialog(BuildContext context) {
       );
     },
   );
+}
+
+Future<String> getAccessToken() async {
+  var headers = {
+    'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
+    'x-api-secret': 'secret_live_x9NUTRidCJAidEDRj4JT9VyMwgcttZ2x',
+    'x-api-version': '1.0'
+  };
+  var request =
+      http.Request('POST', Uri.parse('https://api.sandbox.co.in/authenticate'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    final responseString = await response.stream.bytesToString();
+    Map det = jsonDecode(responseString);
+    return det['access_token'];
+  } else {
+    print(response.reasonPhrase);
+  }
+}
+
+Future<bool> verifyPan(String panno) async {
+  var token = await getAccessToken();
+  var headers = {
+    'Authorization': token,
+    'x-api-key': 'key_live_1XilWqECfePBMRzHKIfj4719kkc7q7C4',
+    'x-api-version': '1.0'
+  };
+  var request = http.Request(
+      'GET',
+      Uri.parse(
+          'https://api.sandbox.co.in/pans/${panno}/verify?consent=Y&reason=Opening an account'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+  if (response.statusCode == 200) {
+    final responseString = jsonDecode(await response.stream.bytesToString());
+    if (responseString['data']['full_name'] == Userdata.fname.toUpperCase())
+      return true;
+    else
+      return false;
+  }
+  return false;
+}
+
+Future<bool> pan(BuildContext context) async {
+  TextEditingController pan = TextEditingController();
+  if (Userdata.pan.isNotEmpty && Userdata.pan != null) return true;
+  bool verified = false;
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return Dialog(
+        elevation: 0.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Wrap(
+          children: [
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.lock_outline_rounded,
+                      size: 100.sp,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      "Enter your pan details for verification",
+                      style: black14MediumTextStyle,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Theme(
+                      data: ThemeData(
+                        primaryColor: greyColor,
+                      ),
+                      child: TextFormField(
+                        cursorColor: primaryColor,
+                        controller: pan,
+                        // keyboardType: TextInputType.number,
+                        style: primaryColor16BoldTextStyle,
+                        decoration: InputDecoration(
+                          filled: true,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(10.0),
+                            ),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(10.0),
+                            ),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 1),
+                          ),
+                          fillColor: whiteColor,
+                          labelText: "Enter your PAN no.",
+                          labelStyle: primaryColor18BoldTextStyle,
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 0.7),
+                          ),
+                        ),
+                        // InputDecoration(
+                        //   focusedBorder: OutlineInputBorder(
+                        //       borderSide: BorderSide(
+                        //           color: primaryColor, width: 2.0)),
+                        //   labelText: locale.weight,
+                        //   labelStyle: primaryColor18BoldTextStyle,
+                        //   suffix: Text(
+                        //     locale.GRAM,
+                        //     style: primaryColor18BoldTextStyle,
+                        //   ),
+                        //   border: OutlineInputBorder(
+                        //     borderSide:
+                        //         BorderSide(color: greyColor, width: 0.7),
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: InkWell(
+                      onTap: () async {
+                        loadingDialog(context);
+                        bool verify = await verifyPan(pan.text);
+                        print("Verifying pan");
+                        Navigator.of(context).pop();
+                        print("Status of verifying pan =$verified");
+                        verified = verify;
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 45,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Center(
+                          child: Text(
+                            "Verify",
+                            style: TextStyle(
+                              fontFamily: 'Jost',
+                              fontSize: 14.0,
+                              color: scaffoldBgColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+  return verified;
 }
 
 var errorScreen = SafeArea(
