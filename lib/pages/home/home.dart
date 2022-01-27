@@ -1140,7 +1140,7 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               Text(
                 locale.create,
-                style: primaryColor16MediumTextStyle,
+                style: primaryColor16BoldTextStyle,
               ),
               Expanded(
                 child: Row(
@@ -1679,11 +1679,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     size: 60,
                                   )),
-                              Text("Buy and Save",
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 8.sp,
-                                      fontWeight: FontWeight.bold)),
+                              Text("Buy and Save", style: khomePageHeading),
                               IconButton(
                                   onPressed: () {
                                     _scrollController.scrollTo(
@@ -1693,13 +1689,7 @@ class _HomeState extends State<Home> {
                                   icon: ImageIcon(
                                       AssetImage("assets/icon/icon3.png"),
                                       size: 60)),
-                              Text(
-                                "Buy Instant Gold",
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              Text("Buy Instant Gold", style: khomePageHeading),
                             ],
                           ),
                           Column(
@@ -1750,7 +1740,7 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       height: 25.h,
-                      width: 48.w,
+                      width: 45.w,
                       child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 4),
                           scrollDirection: Axis.horizontal,
@@ -2003,7 +1993,6 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.only(
                   left: fixPadding * 2.0,
-                  bottom: fixPadding,
                 ),
                 child: Text(
                   locale.refer,

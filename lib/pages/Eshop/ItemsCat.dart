@@ -135,11 +135,12 @@ class _ItemsCatState extends State<ItemsCat> {
               child: Scaffold(
                   appBar: AppBar(
                     automaticallyImplyLeading: false,
-                    backgroundColor: whiteColor,
+                    backgroundColor: primaryColor,
                     title: Center(
                       child: Text(
                         locale.shoptitle,
-                        style: primaryColor18BoldTextStyle,
+                        style: primaryColor18BoldTextStyle.copyWith(
+                            color: scaffoldBgColor),
                       ),
                     ),
                   ),
@@ -148,92 +149,87 @@ class _ItemsCatState extends State<ItemsCat> {
                       child: Column(
                     children: [
                       Container(
-                        height: 37.h,
+                        height: 30.h,
                         child: ListView.builder(
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 20.h,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(fixPadding),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Eshop(
-                                                      id: productList[index].id,
-                                                      type: "product",
-                                                    )));
-                                      },
-                                      child: previewCard(
-                                        name: productList[index].name,
-                                        id: productList[index].id,
-                                        images: productList[index].images,
-                                        video: productList[index].video,
-                                      ),
-                                    )),
-                              ),
+                            return Container(
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: fixPadding * 2,
+                                      horizontal: fixPadding),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Eshop(
+                                                    id: productList[index].id,
+                                                    type: "product",
+                                                  )));
+                                    },
+                                    child: previewCard(
+                                      name: productList[index].name,
+                                      id: productList[index].id,
+                                      images: productList[index].images,
+                                      video: productList[index].video,
+                                    ),
+                                  )),
                             );
                           },
                           scrollDirection: Axis.horizontal,
                           itemCount: productList.length,
                         ),
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
+
                       Text(
                         locale.collectionss,
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                       heightSpace,
                       Container(
-                        height: 33.h,
+                        height: 30.h,
                         child: ListView.builder(
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Padding(
-                                    padding: const EdgeInsets.all(fixPadding),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Eshop(
-                                                      id: collectionList[index]
-                                                          .id,
-                                                      type: "collections",
-                                                    )));
-                                      },
-                                      child: CollectionCard(
-                                        name: collectionList[index].name,
-                                        id: collectionList[index].id,
-                                        img1: collectionList[index].images[0],
-                                        img2: collectionList[index].images[1],
-                                        img3: collectionList[index].images[2],
-                                        video: collectionList[index].video,
-                                      ),
-                                    )),
-                              ),
+                            return Container(
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: fixPadding * 2,
+                                      horizontal: fixPadding),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Eshop(
+                                                    id: collectionList[index]
+                                                        .id,
+                                                    type: "collections",
+                                                  )));
+                                    },
+                                    child: CollectionCard(
+                                      name: collectionList[index].name,
+                                      id: collectionList[index].id,
+                                      img1: collectionList[index].images[0],
+                                      img2: collectionList[index].images[1],
+                                      img3: collectionList[index].images[2],
+                                      video: collectionList[index].video,
+                                    ),
+                                  )),
                             );
                           },
                           scrollDirection: Axis.horizontal,
                           itemCount: collectionList.length,
                         ),
                       ),
-                      height20Space,
+
                       Text(
                         locale.categories,
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                       heightSpace,
 
                       Container(
-                        height: 40.h,
+                        height: 30.h,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GridView.builder(
@@ -271,7 +267,7 @@ class _ItemsCatState extends State<ItemsCat> {
                       //height20Space,
                       Text(
                         locale.OurVarieties,
-                        style: primaryColor16MediumTextStyle,
+                        style: primaryColor16BoldTextStyle,
                       ),
                       heightSpace,
                       Container(
@@ -285,7 +281,7 @@ class _ItemsCatState extends State<ItemsCat> {
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 8,
                                       crossAxisSpacing: 8,
-                                      childAspectRatio: 3 / 3),
+                                      childAspectRatio: 1 / 1),
                               itemCount: varietyList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
@@ -345,14 +341,17 @@ class _varietyCardState extends State<varietyCard> {
         Container(
             decoration: BoxDecoration(
                 color: primaryColor,
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(10.0),
                 image: DecorationImage(
                     image: NetworkImage(widget.img2), fit: BoxFit.cover))),
         Container(
-          decoration: BoxDecoration(color: Colors.black38),
+          decoration: BoxDecoration(
+            color: Colors.black38,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: Center(
             child: Text(widget.name,
-                style: TextStyle(color: Colors.white, fontSize: 10.sp)),
+                style: TextStyle(color: scaffoldBgColor, fontSize: 10.sp)),
           ),
         )
       ],
@@ -470,7 +469,7 @@ class _CategoryCardState extends State<CategoryCard> {
           decoration: BoxDecoration(color: Colors.black38),
           child: Center(
             child: Text(widget.name,
-                style: TextStyle(color: Colors.white, fontSize: 10.sp)),
+                style: TextStyle(color: scaffoldBgColor, fontSize: 10.sp)),
           ),
         )
       ],
@@ -569,38 +568,61 @@ class previewCard extends StatefulWidget {
 class _previewCardState extends State<previewCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 90.w,
-      decoration: BoxDecoration(
-          color: primaryColor, borderRadius: BorderRadius.circular(20)),
-      child: CarouselSlider.builder(
-        itemCount: widget.images.length,
-        itemBuilder: (context, Index, realIndex) {
-          return Container(
-            decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: NetworkImage(
-                    widget.images[Index] != null
-                        ? widget.images[Index]
-                        : Placeholder(),
-                  ),
-                )),
-          );
-        },
-        options: CarouselOptions(
-          aspectRatio: 5 / 4,
-          viewportFraction: 1,
-          initialPage: 0,
-          enableInfiniteScroll: false,
-          reverse: false,
-          autoPlay: false,
-          enlargeCenterPage: false,
-          scrollDirection: Axis.horizontal,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: primaryColor, borderRadius: BorderRadius.circular(10)),
+          child: CarouselSlider.builder(
+            itemCount: widget.images.length,
+            itemBuilder: (context, Index, realIndex) {
+              return Container(
+                decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: NetworkImage(
+                        widget.images[Index] != null
+                            ? widget.images[Index]
+                            : Placeholder(),
+                      ),
+                    )),
+              );
+            },
+            options: CarouselOptions(
+              aspectRatio: 3 / 2,
+              viewportFraction: 1,
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              reverse: false,
+              autoPlay: false,
+              enlargeCenterPage: false,
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
         ),
-      ),
+        Positioned.fill(
+          bottom: fixPadding * 2.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "20% Off",
+              style: white16MediumTextStyle.copyWith(
+                color: scaffoldBgColor,
+                shadows: [
+                  Shadow(
+                    blurRadius: 12.0,
+                    color: Colors.black,
+                    offset: Offset(0.0, 0.0),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        )
+      ],
     );
   }
 }
@@ -624,46 +646,69 @@ class _CollectionCardState extends State<CollectionCard> {
   @override
   Widget build(BuildContext context) {
     List<String> images = [widget.img1, widget.img2, widget.img3];
-    return Container(
-      width: 80.w,
-      decoration: BoxDecoration(
-          color: primaryColor, borderRadius: BorderRadius.circular(20)),
-      child: CarouselSlider.builder(
-        itemCount: 4,
-        itemBuilder: (context, Index, realIndex) {
-          if (Index <= 2) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      images[Index] != null ? images[Index] : Placeholder(),
-                    ),
-                  )),
-            );
-          }
-          return Container(
-              width: 80.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: VideoDemo(
-                videolink: widget.video,
-              ));
-        },
-        options: CarouselOptions(
-          aspectRatio: 5 / 3,
-          viewportFraction: 1,
-          initialPage: 0,
-          enableInfiniteScroll: false,
-          reverse: false,
-          autoPlay: false,
-          enlargeCenterPage: false,
-          scrollDirection: Axis.horizontal,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: primaryColor, borderRadius: BorderRadius.circular(20)),
+          child: CarouselSlider.builder(
+            itemCount: 4,
+            itemBuilder: (context, Index, realIndex) {
+              if (Index <= 2) {
+                return Container(
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          images[Index] != null ? images[Index] : Placeholder(),
+                        ),
+                      )),
+                );
+              }
+              return Container(
+                  width: 80.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: VideoDemo(
+                    videolink: widget.video,
+                  ));
+            },
+            options: CarouselOptions(
+              aspectRatio: 3 / 2,
+              viewportFraction: 1,
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              reverse: false,
+              autoPlay: false,
+              enlargeCenterPage: false,
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
         ),
-      ),
+        Positioned.fill(
+          bottom: fixPadding * 2.0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "Temple Collection",
+              style: white16MediumTextStyle.copyWith(
+                color: scaffoldBgColor,
+                shadows: [
+                  Shadow(
+                    blurRadius: 12.0,
+                    color: Colors.black,
+                    offset: Offset(0.0, 0.0),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

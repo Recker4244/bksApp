@@ -276,6 +276,9 @@ const SizedBox width5Space = const SizedBox(width: 5.0);
 
 const SizedBox width20Space = const SizedBox(width: 20.0);
 
+TextStyle khomePageHeading =
+    TextStyle(color: primaryColor, fontSize: 8.sp, fontWeight: FontWeight.bold);
+
 const TextStyle appBarTextStyle = const TextStyle(
   fontFamily: 'Jost',
   fontSize: 18.0,

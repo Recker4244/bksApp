@@ -72,7 +72,7 @@ class _Referal_Bonus_DetialsState extends State<Referal_Bonus_Detials> {
                     elevation: 0,
                     leading: IconButton(
                       icon: Icon(
-                        Icons.close,
+                        Icons.arrow_back,
                         color: primaryColor,
                         size: 30,
                       ),

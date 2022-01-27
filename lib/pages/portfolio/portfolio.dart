@@ -276,7 +276,7 @@ class _PortfolioState extends State<Portfolio> {
                       Referal_Bonus_Detials()),
                   Choice_Card(
                       locale.TotalPlanBonus,
-                      "${totalplanbonus.toStringAsFixed(4)} GRAM",
+                      "${totalplanbonus.toStringAsFixed(2)} GRAM",
                       locale.CheckDetails,
                       FontAwesomeIcons.piggyBank,
                       Plan_Bonnus_Details(
