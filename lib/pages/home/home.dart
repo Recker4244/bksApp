@@ -410,7 +410,7 @@ class _HomeState extends State<Home> {
                   style: grey16MediumTextStyle,
                 ),
                 SizedBox(
-                  width: 70.w,
+                  width: 65.w,
                   child: Wrap(
                     children: [
                       Text(Userdata.fname ?? "Unknown User" + ' To BKS',
@@ -1038,9 +1038,6 @@ class _HomeState extends State<Home> {
                                                           color: Colors.black),
                                             ),
                                           ],
-                                        ),
-                                        SizedBox(
-                                          width: 1.w,
                                         ),
                                         Column(
                                           children: [
@@ -1740,7 +1737,7 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       height: 25.h,
-                      width: 45.w,
+                      width: 40.w,
                       child: ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 4),
                           scrollDirection: Axis.horizontal,
