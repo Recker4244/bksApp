@@ -223,14 +223,12 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                   SizedBox(
                     height: 4.h,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        if (temp.isEmpty) {
-                          return Center(
-                              child: GestureDetector(
+                  (temp.isEmpty)
+                      ? Positioned(
+                          bottom: 100,
+                          child: GestureDetector(
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   PageTransition(
                                       type: PageTransitionType.size,
@@ -238,16 +236,22 @@ class _Plan_Bonnus_DetailsState extends State<Plan_Bonnus_Details> {
                                       child: BottomBar()));
                             },
                             child: Container(
-                                child: Text(
-                                  "Invest Now to earn additional bonus",
-                                  style: white18MediumTextStyle,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Invest Now to earn additional bonus",
+                                    style: white18MediumTextStyle,
+                                  ),
                                 ),
                                 decoration: BoxDecoration(
                                     color: primaryColor,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20)))),
-                          ));
-                        }
+                                        BorderRadius.all(Radius.circular(10)))),
+                          ))
+                      : Container(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
                         return GestureDetector(
                             onTap: () {
                               Navigator.push(

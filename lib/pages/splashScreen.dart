@@ -57,8 +57,8 @@ class _SplashScreenState extends State<SplashScreen> {
   getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn');
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Login()));
     if (status != null && status == true) {
       token = prefs.getString('token');
 
