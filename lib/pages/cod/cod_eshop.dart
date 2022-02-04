@@ -7,8 +7,8 @@ import 'package:gold247/models/Installments.dart';
 import 'package:gold247/models/Plan_Subscription.dart';
 import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/bottom_bar.dart';
-import 'package:gold247/pages/buySccessFailScreen/buy_fail_screen.dart';
-import 'package:gold247/pages/buySccessFailScreen/buy_success_screen.dart';
+import 'package:gold247/pages/profile/Orders.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,10 +22,15 @@ class Adress_Details_Payment_Eshop extends StatefulWidget {
   final String Cartid;
   final Map deliverycharge;
   final String buysellid;
-  final String instantgold;
+  final bool instantgold;
+  final num amount;
 
   Adress_Details_Payment_Eshop(
-      {this.Cartid, this.buysellid, this.instantgold, this.deliverycharge});
+      {this.Cartid,
+      this.amount,
+      this.buysellid,
+      this.instantgold,
+      this.deliverycharge});
 
   @override
   _Adress_Details_Payment_EshopState createState() =>
@@ -112,15 +117,40 @@ class _Adress_Details_Payment_EshopState
     }
   }
 
+  Map det_of_transaction;
+  Future fetchTransactionid(String address) async {
+    loadingDialog(context);
+    var headers = {'Content-Type': 'application/json'};
+    final url = Uri.parse('${baseurl}/api/transaction/create/${Userdata.id}');
+    final body = {
+      //"paymentId": payid,
+      "status": "Order Placed",
+      "amount": widget.amount,
+      "mode": "COD",
+      "instantGoldApplied": false
+    };
+
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
+    if (response.statusCode == 200) {
+      det_of_transaction = jsonDecode(response.body);
+      final responseString = det_of_transaction['data'];
+      await createOrder(address);
+    } else {
+      Navigator.of(context).pop();
+      print(response.reasonPhrase);
+    }
+  }
+
   Map orderdetail;
-  createOrder() async {
+  createOrder(String addressId) async {
     final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.id,
       "cart": widget.Cartid,
-      "transactions": "BKS TEST",
+      "transactions": det_of_transaction['data']['id'],
       "status": "Processing",
-      "address": addresscontroller.text,
+      "address": addressId,
       "deliveryCharge": widget.deliverycharge,
       "buySell": widget.buysellid,
       "instantGoldApplied": widget.instantgold
@@ -128,11 +158,97 @@ class _Adress_Details_Payment_EshopState
     final response = await http.post(url, body: jsonEncode(body));
     if (response.statusCode == 200) {
       orderdetail = jsonDecode(response.body);
+      Navigator.of(context).pop();
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => BottomBar(),
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar(
+              index: 4,
+            ),
           ));
+      Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: Orders(),
+          ));
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                backgroundColor: scaffoldBgColor,
+                title: Center(
+                  child: CircleAvatar(
+                    radius: 20.0,
+                    backgroundColor: Colors.green,
+                    child: Icon(
+                      Icons.check,
+                      size: 30.0,
+                      color: scaffoldBgColor,
+                    ),
+                  ),
+                ),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Center(
+                          child: Text(
+                        "REQUEST PLACED",
+                        style: black16BoldTextStyle,
+                      )),
+                      Center(
+                          child: Text(
+                        'SUCCESS',
+                        style: black14MediumTextStyle,
+                      )),
+                      heightSpace,
+                      Center(
+                        child: Container(
+                          color: whiteColor,
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(orderdetail['otp']),
+                          )),
+                        ),
+                      ),
+                      heightSpace,
+                      Center(
+                          child: Text(
+                        'Show this code while you visit Store',
+                        style: black12MediumTextStyle,
+                      ))
+                    ],
+                  ),
+                ),
+              ));
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future addAddress() async {
+    loadingDialog(context); //loadingDialog(context);
+    var headers = {'Content-Type': 'application/json'};
+
+    var request = http.Request('POST', Uri.parse('${baseurl}/api/address/'));
+    request.headers.addAll(headers);
+    final body = {
+      "user": Userdata.id,
+      "pin": int.parse(PINcontroller.text),
+      "landMark": addresscontroller.text,
+      "isDefaultAddress": true
+    };
+    request.body = jsonEncode(body);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = jsonDecode(responseString);
+      fetchTransactionid(det['id']);
     } else {
       print(response.reasonPhrase);
     }
@@ -148,7 +264,7 @@ class _Adress_Details_Payment_EshopState
         backgroundColor: primaryColor,
         titleSpacing: 0.0,
         title: Text(
-          locale.BUYGOLD,
+          locale.addresstitle,
           style: TextStyle(
             color: scaffoldBgColor,
             fontSize: 16,
@@ -245,7 +361,11 @@ class _Adress_Details_Payment_EshopState
                           borderSide: BorderSide(color: primaryColor, width: 1),
                         ),
                       ),
-                      onChanged: (value) {
+                      onChanged: (value) {},
+                      // onEditingComplete: () {
+                      //   checkPincode(PINcontroller.text);
+                      // },
+                      onFieldSubmitted: (value) {
                         checkPincode(value);
                       },
                     ),
@@ -253,48 +373,49 @@ class _Adress_Details_Payment_EshopState
                 ),
               ),
               SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Container(
-                  color: whiteColor,
-                  // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
-                  child: Theme(
-                    data: ThemeData(
-                      primaryColor: whiteColor,
-                      textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: primaryColor,
-                      ),
-                    ),
-                    child: TextFormField(
-                      controller: Landmarkcontroller,
-                      validator: (value) =>
-                          value.isEmpty ? "Field cannot be empty" : null,
-                      keyboardType: TextInputType.streetAddress,
-                      style: primaryColor16MediumTextStyle,
-                      decoration: InputDecoration(
-                        labelText: locale.LandMark,
-                        labelStyle: TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(color: primaryColor, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                          borderSide: BorderSide(color: primaryColor, width: 1),
-                        ),
-                      ),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //   child: Container(
+              //     color: whiteColor,
+              //     // padding: EdgeInsets.only(bottom: fixPadding * 2.0),
+              //     child: Theme(
+              //       data: ThemeData(
+              //         primaryColor: whiteColor,
+              //         textSelectionTheme: TextSelectionThemeData(
+              //           cursorColor: primaryColor,
+              //         ),
+              //       ),
+              //       child: TextFormField(
+              //         controller: Landmarkcontroller,
+              //         validator: (value) =>
+              //             value.isEmpty ? "Field cannot be empty" : null,
+              //         keyboardType: TextInputType.streetAddress,
+              //         style: primaryColor16MediumTextStyle,
+              //         decoration: InputDecoration(
+              //           labelText: locale.LandMark,
+              //           labelStyle: TextStyle(
+              //               color: primaryColor,
+              //               fontSize: 18,
+              //               fontWeight: FontWeight.w600),
+              //           enabledBorder: OutlineInputBorder(
+              //             borderRadius: const BorderRadius.all(
+              //               const Radius.circular(10.0),
+              //             ),
+              //             borderSide: BorderSide(color: primaryColor, width: 1),
+              //           ),
+              //           focusedBorder: OutlineInputBorder(
+              //             borderRadius: const BorderRadius.all(
+              //               const Radius.circular(10.0),
+              //             ),
+              //             borderSide: BorderSide(color: primaryColor, width: 1),
+              //           ),
+              //         ),
+              //         onChanged: (value) {},
+              //       ),
+              //     ),
+              //   ),
+              // ),
+
               heightSpace,
               !available
                   ? Text(
@@ -317,111 +438,8 @@ class _Adress_Details_Payment_EshopState
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: InkWell(
                   onTap: () async {
-                    if (_formkeyeshop.currentState.validate()) {
-                      await createOrder();
-                      setState(() {
-                        if (orderdetail['otp'] != null) {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                    backgroundColor: scaffoldBgColor,
-                                    title: Center(
-                                      child: CircleAvatar(
-                                        radius: 20.0,
-                                        backgroundColor: Colors.green,
-                                        child: Icon(
-                                          Icons.check,
-                                          size: 30.0,
-                                          color: scaffoldBgColor,
-                                        ),
-                                      ),
-                                    ),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: <Widget>[
-                                          Center(
-                                              child: Text(
-                                            locale.COLLECTIONREQUESTPLACED,
-                                            style: black14BoldTextStyle,
-                                          )),
-                                          Center(
-                                              child: Text(
-                                            locale.SUCCESS,
-                                            style: black14MediumTextStyle,
-                                          )),
-                                          heightSpace,
-                                          Center(
-                                              child: Text(
-                                            DateTime.now().toString(),
-                                            style: black12MediumTextStyle,
-                                          )),
-                                          Center(
-                                            child: Container(
-                                              color: whiteColor,
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Center(
-                                                  child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(orderdetail["otp"]),
-                                              )),
-                                            ),
-                                          ),
-                                          // height20Space,
-                                          // Center(
-                                          //     child: Text(
-                                          //       "Tap to Copy Verification OTP",
-                                          //       style: black12MediumTextStyle,
-                                          //     )),
-                                          heightSpace,
-                                          Center(
-                                              child: Text(
-                                            locale.ShowThisCode,
-                                            style: black12MediumTextStyle,
-                                          ))
-                                        ],
-                                      ),
-                                    ),
-                                  ));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                    backgroundColor: scaffoldBgColor,
-                                    title: Center(
-                                      child: CircleAvatar(
-                                        radius: 20.0,
-                                        backgroundColor: Colors.red,
-                                        child: Icon(
-                                          Icons.sms_failed_rounded,
-                                          size: 30.0,
-                                          color: scaffoldBgColor,
-                                        ),
-                                      ),
-                                    ),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: <Widget>[
-                                          Center(
-                                              child: Center(
-                                            child: Text(
-                                              locale.COLLECTIONREQUESTFAILED,
-                                              style: black16BoldTextStyle,
-                                            ),
-                                          )),
-                                          Center(
-                                              child: Text(
-                                            locale.FAILED,
-                                            style: black14MediumTextStyle,
-                                          )),
-                                          heightSpace,
-                                        ],
-                                      ),
-                                    ),
-                                  ));
-                        }
-                      });
-                    }
+                    if (_formkeyeshop.currentState.validate())
+                      await addAddress();
                   },
                   child: Container(
                     decoration: BoxDecoration(

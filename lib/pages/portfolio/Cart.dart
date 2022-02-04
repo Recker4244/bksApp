@@ -11,6 +11,7 @@ import 'package:gold247/models/user.dart';
 import 'package:gold247/pages/cod/cod_Flexu.dart';
 import 'package:gold247/pages/cod/cod_eshop.dart';
 import 'package:gold247/pages/instantGold/currency_screen.dart';
+import 'package:gold247/pages/profile/Orders.dart';
 import 'package:gold247/pages/screens.dart';
 import 'package:gold247/widget/column_builder.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,21 +38,41 @@ class _CartState extends State<Cart> {
   int buyprice;
 
   Map create_order_response;
-  void createorder() async {
+  Future createorder() async {
+    var headers = {'Content-Type': 'application/json'};
     final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.id,
       "cart": det_of_cart['data']['id'],
       "transactions": det_of_transaction['data']['id'],
       "status": "Processing",
-      "address": list_of_address[0].sId,
+      "address":
+          Userdata.addresses.isNotEmpty ? Userdata.addresses[0].id : null,
       "deliveryCharge": deliverycharges.first['id'],
       "buySell": buysellid.toString(),
       "instantGoldApplied": int.parse(availablegold.toString())
     };
-    final response = await http.post(url, body: jsonEncode(body));
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       create_order_response = jsonDecode(response.body);
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: BottomBar(
+              index: 4,
+            ),
+          ));
+      Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: Orders(),
+          ));
       showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -125,20 +146,26 @@ class _CartState extends State<Cart> {
   }
 
   Map det_of_transaction;
-  void fetchTransactionid(String payid) async {
+  Future fetchTransactionid(String payid) async {
+    loadingDialog(context);
+    var headers = {'Content-Type': 'application/json'};
     final url = Uri.parse('${baseurl}/api/transaction/create/${Userdata.id}');
     final body = {
-      "paymentId": payid,
-      "status": "placed",
+      //"paymentId": payid,
+      "status": "Order Placed",
       "amount": finalResult,
-      "mode": "online"
+      "mode": "online",
+      "instantGoldApplied": false
     };
-    final response = await http.post(url, body: jsonEncode(body));
+
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       det_of_transaction = jsonDecode(response.body);
       final responseString = det_of_transaction['data'];
       //final transcationId = responseString['_id'];
     } else {
+      Navigator.of(context).pop();
       print(response.reasonPhrase);
     }
   }
@@ -157,7 +184,7 @@ class _CartState extends State<Cart> {
       Map det = jsonDecode(responseString);
       sell = det['data']['sell'];
       buy = det['data']['sell'];
-      buysellid = det['data']['_id'];
+      buysellid = det['data']['id'];
     } else {
       print(response.reasonPhrase);
     }
@@ -315,8 +342,8 @@ class _CartState extends State<Cart> {
   }
 
   bool ispressed = false;
-  double finalResult = 0.0;
-  double availablebalance = 0.0;
+  num finalResult = 0.0;
+  num availablebalance = 0.0;
   void ToPay(bool isavailable) {
     double subTotal = double.parse(Subtotal());
     double delivery =
@@ -401,12 +428,11 @@ class _CartState extends State<Cart> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      if (num.parse(
-                              ((finalResult) * 100.0).toStringAsFixed(2)) >=
+                      if (num.parse(((finalResult)).toStringAsFixed(2)) >=
                           49000) {
                         bool veri = await pan(context);
                         if (veri) {
-                          Navigator.of(context).pop();
+                          //Navigator.of(context).pop();
                           openCheckout();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -466,8 +492,7 @@ class _CartState extends State<Cart> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      if (num.parse(
-                              ((finalResult) * 100.0).toStringAsFixed(2)) >=
+                      if (num.parse(((finalResult)).toStringAsFixed(2)) >=
                           49000) {
                         bool veri = await pan(context);
                         if (veri) {
@@ -481,7 +506,8 @@ class _CartState extends State<Cart> {
                                   Cartid: det_of_cart['data']['id'].toString(),
                                   deliverycharge: deliverycharges.first,
                                   buysellid: buysellid,
-                                  instantgold: availablegold.toStringAsFixed(2),
+                                  instantgold: availablegold > 0 ? true : false,
+                                  amount: finalResult,
                                 ),
                               ));
                         } else {
@@ -498,7 +524,8 @@ class _CartState extends State<Cart> {
                                 Cartid: det_of_cart['data']['id'].toString(),
                                 deliverycharge: deliverycharges.first,
                                 buysellid: buysellid,
-                                instantgold: availablegold.toStringAsFixed(2),
+                                instantgold: availablegold > 0 ? true : false,
+                                amount: finalResult,
                               ),
                             ));
                       }

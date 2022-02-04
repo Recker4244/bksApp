@@ -95,12 +95,25 @@ Future<bool> verifyPan(String panno) async {
   http.StreamedResponse response = await request.send();
   if (response.statusCode == 200) {
     final responseString = jsonDecode(await response.stream.bytesToString());
-    if (responseString['data']['full_name'] == Userdata.fname.toUpperCase())
+    if (responseString['data']['full_name'] == Userdata.fname.toUpperCase()) {
+      Userdata.pan = panno;
+      await updateUserpan(panno);
       return true;
-    else
+    } else
       return false;
   }
   return false;
+}
+
+Future updateUserpan(String panno) async {
+  http.Response response = await http.put(
+    Uri.parse("${baseurl}/api/user/" + Userdata.id),
+    body: {
+      "pan": panno,
+    },
+  );
+
+  return;
 }
 
 Future<bool> pan(BuildContext context) async {
