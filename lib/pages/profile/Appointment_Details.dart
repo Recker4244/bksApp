@@ -10,6 +10,7 @@ import 'package:gold247/language/locale.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:gold247/models/user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Appointmentdetails extends StatefulWidget {
   final id;
@@ -29,11 +30,32 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
+      print(det);
       appointmentdet = AppointmentDetails.fromJson(det['data']);
     } else {
       print(response.reasonPhrase);
     }
     return true;
+  }
+
+  String verifier;
+  getSystemUser() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://goldv2.herokuapp.com/api/system-user/61acf7a7f861112ee8aa4e03'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      Map det = json.decode(responseString);
+      verifier = det['name'];
+      print(verifier);
+      //print(responseString);
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   @override
@@ -55,7 +77,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                 height: 20,
               ),
               Text(
-                "${appointment} GRAM OLD GOLD SELL".toUpperCase(),
+                "${appointmentdet.weight} GRAM OLD GOLD SELL".toUpperCase(),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
@@ -184,7 +206,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          appointmentdet.id,
+                          appointmentdet.buySellPrice.createdAt,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -194,7 +216,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          appointmentdet.id.toUpperCase(),
+                          appointmentdet.status,
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -204,7 +226,9 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          appointmentdet.id,
+                          appointmentdet.appointmentDate != null
+                              ? "${appointmentdet.appointmentDate} - ${appointmentdet.appointmentTime}"
+                              : "",
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -214,7 +238,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          appointmentdet.id,
+                          "${verifier}",
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -224,7 +248,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "INR ${appointmentdet.id}",
+                          "INR ${appointmentdet.buySellPrice.sell}",
                           style: TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -234,7 +258,10 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            if (!await launch(appointmentdet.storeLocation))
+                              throw 'could not launch';
+                          },
                           child: Text(
                             locale.directions,
                             style: TextStyle(
@@ -286,7 +313,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      appointmentdet.id,
+                      appointmentdet.opt,
                       style: TextStyle(
                           color: blackColor,
                           fontSize: 14,
