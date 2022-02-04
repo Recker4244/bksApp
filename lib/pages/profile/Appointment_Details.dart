@@ -32,7 +32,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
       Map det = jsonDecode(responseString);
       print(det);
       appointmentdet = AppointmentDetails.fromJson(det['data']);
-      await getSystemUser(appointmentdet.user.id);
+      await getSystemUser(appointmentdet.id);
     } else {
       print(response.reasonPhrase);
     }
