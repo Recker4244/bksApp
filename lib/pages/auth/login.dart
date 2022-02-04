@@ -302,6 +302,7 @@ class _LoginState extends State<Login> {
                       backgroundColor: getColor(primaryColor, whiteColor)),
                   onPressed: () async {
                     HapticFeedback.vibrate();
+
                     if (isCorrect) {
                       Navigator.push(
                         context,
@@ -310,20 +311,19 @@ class _LoginState extends State<Login> {
                           child: OTPScreen(),
                         ),
                       );
-                    }
-
-                    final PhoneNumberOb = numberController.text;
-                    final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
-                    http.Response response = await http.post(
-                      Uri.parse("${baseurl}/api/auth/register"),
-                      headers: {"Content-Type": "application/json"},
-                      body: json.encode(
-                          {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
-                    );
-                    print(response.body);
-                    if (response.statusCode == 200) {
-                      mobilenumber.phoneNumber = PhoneReplace;
-                      mobilenumber.whatsapp = whatsapp;
+                      final PhoneNumberOb = numberController.text;
+                      final PhoneReplace = PhoneNumberOb.replaceAll(" ", "");
+                      http.Response response = await http.post(
+                        Uri.parse("${baseurl}/api/auth/register"),
+                        headers: {"Content-Type": "application/json"},
+                        body: json.encode(
+                            {"mobile": PhoneReplace, "isWhatsapp": whatsapp}),
+                      );
+                      print(response.body);
+                      if (response.statusCode == 200) {
+                        mobilenumber.phoneNumber = PhoneReplace;
+                        mobilenumber.whatsapp = whatsapp;
+                      }
                     }
                   }),
               SizedBox(
