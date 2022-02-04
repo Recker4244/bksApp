@@ -37,19 +37,22 @@ class _CartState extends State<Cart> {
   int buyprice;
 
   Map create_order_response;
-  void createorder() async {
+  Future createorder() async {
+    var headers = {'Content-Type': 'application/json'};
     final url = Uri.parse('${baseurl}/api/order/');
     final body = {
       "user": Userdata.id,
       "cart": det_of_cart['data']['id'],
       "transactions": det_of_transaction['data']['id'],
       "status": "Processing",
-      "address": list_of_address[0].sId,
+      "address":
+          Userdata.addresses.isNotEmpty ? Userdata.addresses[0].id : null,
       "deliveryCharge": deliverycharges.first['id'],
       "buySell": buysellid.toString(),
       "instantGoldApplied": int.parse(availablegold.toString())
     };
-    final response = await http.post(url, body: jsonEncode(body));
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       create_order_response = jsonDecode(response.body);
       showDialog(
@@ -125,20 +128,26 @@ class _CartState extends State<Cart> {
   }
 
   Map det_of_transaction;
-  void fetchTransactionid(String payid) async {
+  Future fetchTransactionid(String payid) async {
+    loadingDialog(context);
+    var headers = {'Content-Type': 'application/json'};
     final url = Uri.parse('${baseurl}/api/transaction/create/${Userdata.id}');
     final body = {
-      "paymentId": payid,
-      "status": "placed",
+      //"paymentId": payid,
+      "status": "Order Placed",
       "amount": finalResult,
-      "mode": "online"
+      "mode": "online",
+      "instantGoldApplied": false
     };
-    final response = await http.post(url, body: jsonEncode(body));
+
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
       det_of_transaction = jsonDecode(response.body);
       final responseString = det_of_transaction['data'];
       //final transcationId = responseString['_id'];
     } else {
+      Navigator.of(context).pop();
       print(response.reasonPhrase);
     }
   }
@@ -406,7 +415,7 @@ class _CartState extends State<Cart> {
                           49000) {
                         bool veri = await pan(context);
                         if (veri) {
-                          Navigator.of(context).pop();
+                          //Navigator.of(context).pop();
                           openCheckout();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
