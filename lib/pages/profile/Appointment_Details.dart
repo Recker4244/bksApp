@@ -32,6 +32,7 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
       Map det = jsonDecode(responseString);
       print(det);
       appointmentdet = AppointmentDetails.fromJson(det['data']);
+      await getSystemUser(appointmentdet.user.id);
     } else {
       print(response.reasonPhrase);
     }
@@ -39,11 +40,9 @@ class AppointmentdetailsState extends State<Appointmentdetails> {
   }
 
   String verifier;
-  getSystemUser() async {
+  getSystemUser(String id) async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://goldv2.herokuapp.com/api/system-user/61acf7a7f861112ee8aa4e03'));
+        'GET', Uri.parse('https://goldv2.herokuapp.com/api/system-user/$id'));
 
     http.StreamedResponse response = await request.send();
 

@@ -67,6 +67,7 @@ class _CollectionsState extends State<Collections> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
+      print(det);
       List dat = det['data'];
       List<subscription> subs = [];
       for (int j = 0; j < dat.length; j++) {
@@ -232,13 +233,14 @@ class _CollectionsState extends State<Collections> {
                 InkWell(
                   onTap: () {
                     print(plan.planName());
+
                     Navigator.push(
                         context,
                         PageTransition(
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Collectiondetails(
-                                temp: plan,
+                                // temp: plan,
                                 name: plan.planName(),
                                 collection: installment)));
                   },
@@ -280,7 +282,7 @@ class _CollectionsState extends State<Collections> {
                                 ),
                                 height5Space,
                                 Text(
-                                  '${plan.savedAmount()}',
+                                  'INR ${plan.savedAmount()}',
                                   style: black16SemiBoldTextStyle,
                                 ),
                               ],
@@ -308,7 +310,7 @@ class _CollectionsState extends State<Collections> {
                                 type: PageTransitionType.size,
                                 alignment: Alignment.bottomCenter,
                                 child: Collectiondetails(
-                                  temp: plan,
+                                  // temp: plan,
                                   name: plan.planName(),
                                   collection: processing[index],
                                 )));
@@ -419,7 +421,7 @@ class _CollectionsState extends State<Collections> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Collectiondetails(
-                              temp: plan,
+                              // temp: plan,
                               name: plan.planName(),
                               collection: cancelled[index],
                             )));
@@ -490,7 +492,7 @@ class _CollectionsState extends State<Collections> {
                                 type: PageTransitionType.size,
                                 alignment: Alignment.bottomCenter,
                                 child: Collectiondetails(
-                                  temp: plan,
+                                  // temp: plan,
                                   name: plan.planName(),
                                   collection: cancelled[index],
                                 )));
@@ -579,7 +581,7 @@ class _CollectionsState extends State<Collections> {
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
                             child: Collectiondetails(
-                              temp: plan,
+                              // temp: plan,
                               name: plan.planName(),
                               collection: complete[index],
                             )));
@@ -650,7 +652,7 @@ class _CollectionsState extends State<Collections> {
                                 type: PageTransitionType.size,
                                 alignment: Alignment.bottomCenter,
                                 child: Collectiondetails(
-                                  temp: plan,
+                                  // temp: plan,
                                   name: plan.planName(),
                                   collection: complete[index],
                                 )));

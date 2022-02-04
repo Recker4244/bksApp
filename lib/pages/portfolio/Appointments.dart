@@ -35,6 +35,7 @@ class _AppointmentsState extends State<Appointments> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
+      print("app=$det");
       Iterable l = det['data'];
       temp =
           List<appointment>.from(l.map((model) => appointment.fromJson(model)));
@@ -54,6 +55,25 @@ class _AppointmentsState extends State<Appointments> {
     }
 
     return temp;
+  }
+
+  statusChange(String id) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'PUT', Uri.parse('http://13.59.57.74:5000/api/appointment/status/$id'));
+    request.body = json.encode({"status": "Cancelled"});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Cancelled Succesfully"),
+      ));
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   @override
@@ -268,7 +288,7 @@ class _AppointmentsState extends State<Appointments> {
                         PageTransition(
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
-                            child: navigateTo1));
+                            child: Appointmentdetails(id: apt.id)));
                   },
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(10.0),
@@ -289,13 +309,8 @@ class _AppointmentsState extends State<Appointments> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.size,
-                            alignment: Alignment.bottomCenter,
-                            child: navigateTo2));
+                  onTap: () async {
+                    await statusChange(apt.buySellPrice.id);
                   },
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(10.0),

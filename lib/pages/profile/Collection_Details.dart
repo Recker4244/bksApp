@@ -9,9 +9,9 @@ import 'package:sizer/sizer.dart';
 
 class Collectiondetails extends StatefulWidget {
   String name;
-  subscription temp;
+  //   finalsubscription temp;
   final collection;
-  Collectiondetails({this.temp, this.name, this.collection});
+  Collectiondetails({this.name, this.collection});
   @override
   CollectiondetailsState createState() => CollectiondetailsState();
 }
