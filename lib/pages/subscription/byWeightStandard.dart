@@ -854,7 +854,6 @@ class _Standard_PCState extends State<Standard_PC> {
                                 bool veri = await pan(context);
                                 if (veri) {
                                   openCheckout();
-                                  Navigator.of(context).pop();
                                 } else {
                                   Navigator.of(context).pop();
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -864,7 +863,6 @@ class _Standard_PCState extends State<Standard_PC> {
                                 }
                               } else {
                                 openCheckout();
-                                Navigator.of(context).pop();
                               }
                             },
                             child: Container(

@@ -96,19 +96,21 @@ class _TotalBalanceState extends State<TotalBalance> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: () {
-                  num minGold = widget.sub.installments().first.gold;
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.size,
-                          alignment: Alignment.bottomCenter,
-                          child: Deposit(
-                            balance: widget.avail,
-                            sub: widget.sub.id(),
-                            minGold: minGold,
-                          )));
+                  if (true) {
+                    num minGold = widget.sub.installments().first.gold;
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.size,
+                            alignment: Alignment.bottomCenter,
+                            child: Deposit(
+                              balance: widget.avail,
+                              sub: widget.sub.id(),
+                              minGold: minGold,
+                            )));
+                  }
                 },
                 child: Container(
                   height: 50.0,
@@ -445,7 +447,7 @@ class _TotalBalanceState extends State<TotalBalance> {
                               ),
                               height5Space,
                               Text(
-                                "${handling * num.parse(widget.avail)} INR",
+                                "${handling * num.parse(widget.avail)} GRAM",
                                 style: TextStyle(
                                   fontFamily: 'Jost',
                                   fontSize: 18.0,

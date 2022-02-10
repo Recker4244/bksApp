@@ -674,7 +674,6 @@ class _standardValueState extends State<standardValue> {
                                 bool veri = await pan(context);
                                 if (veri) {
                                   Navigator.of(context).pop();
-                                  openCheckout();
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -727,16 +726,36 @@ class _standardValueState extends State<standardValue> {
                           ),
                           height20Space,
                           GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Adress_Details_Payment_Stan(
-                                            gold: amountController.text,
-                                            amount: valueController.text,
-                                            PlanID: widget.planID,
-                                          )));
+                            onTap: () async {
+                              if (num.parse(valueController.text) >= 49000) {
+                                bool veri = await pan(context);
+                                if (veri) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Adress_Details_Payment_Stan(
+                                                gold: amountController.text,
+                                                amount: valueController.text,
+                                                PlanID: widget.planID,
+                                              )));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("PAN verification failed")));
+                                }
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Adress_Details_Payment_Stan(
+                                              gold: amountController.text,
+                                              amount: valueController.text,
+                                              PlanID: widget.planID,
+                                            )));
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(

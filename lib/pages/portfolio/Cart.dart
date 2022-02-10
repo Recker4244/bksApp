@@ -50,7 +50,7 @@ class _CartState extends State<Cart> {
           Userdata.addresses.isNotEmpty ? Userdata.addresses[0].id : null,
       "deliveryCharge": deliverycharges.first['id'],
       "buySell": buysellid.toString(),
-      "instantGoldApplied": int.parse(availablegold.toString())
+      "instantGoldApplied": num.parse(instantgold) > 0 ? false : true
     };
     final response =
         await http.post(url, body: jsonEncode(body), headers: headers);
@@ -506,7 +506,8 @@ class _CartState extends State<Cart> {
                                   Cartid: det_of_cart['data']['id'].toString(),
                                   deliverycharge: deliverycharges.first,
                                   buysellid: buysellid,
-                                  instantgold: availablegold > 0 ? true : false,
+                                  instantgold:
+                                      num.parse(instantgold) > 0 ? true : false,
                                   amount: finalResult,
                                 ),
                               ));
@@ -524,7 +525,8 @@ class _CartState extends State<Cart> {
                                 Cartid: det_of_cart['data']['id'].toString(),
                                 deliverycharge: deliverycharges.first,
                                 buysellid: buysellid,
-                                instantgold: availablegold > 0 ? true : false,
+                                instantgold:
+                                    num.parse(instantgold) > 0 ? true : false,
                                 amount: finalResult,
                               ),
                             ));
@@ -644,7 +646,7 @@ class _CartState extends State<Cart> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${list_of_cartItems[index].itemDetail.grossweight} GRAM ${list_of_cartItems[index].itemDetail.composition[0].metalGroup.karatage} ${list_of_cartItems[index].itemDetail.item.name.toUpperCase()}",
+                                  "${list_of_cartItems[index].itemDetail.createdAt} GRAM ${list_of_cartItems[index].itemDetail.composition[0].metalGroup.karatage} ${list_of_cartItems[index].itemDetail.item.name.toUpperCase()}",
                                   style: primaryColor16BoldTextStyle,
                                 ),
                                 // TODO
@@ -792,7 +794,7 @@ class _CartState extends State<Cart> {
                             style: primaryColor14MediumTextStyle,
                           ),
                           Text(
-                            '${double.parse(instantgold.toString()).toStringAsFixed(2)} GRAM',
+                            '${num.parse(instantgold.toString()).toStringAsFixed(2)} GRAM',
                             style: primaryColor14MediumTextStyle,
                           ),
                         ],

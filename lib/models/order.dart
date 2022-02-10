@@ -2,7 +2,7 @@ class order {
   Address address;
   BuySell buySell;
   Cart cart;
-  String consignment;
+  int consignment;
   String createdAt;
   String deliveryCharge;
   String docType;
@@ -15,7 +15,6 @@ class order {
   String transactions;
   String updatedAt;
   User user;
-  int amount;
 
   order(
       {this.address,
@@ -33,8 +32,7 @@ class order {
       this.totalCharges,
       this.transactions,
       this.updatedAt,
-      this.user,
-      this.amount});
+      this.user});
 
   order.fromJson(Map<String, dynamic> json) {
     address =
@@ -55,7 +53,6 @@ class order {
     transactions = json['transactions'];
     updatedAt = json['updatedAt'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    amount = json['amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,7 +81,6 @@ class order {
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
-    data['amount'] = this.amount;
     return data;
   }
 }
@@ -196,7 +192,7 @@ class Cart {
     docType = json['docType'];
     id = json['id'];
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = <Items>[];
       json['items'].forEach((v) {
         items.add(new Items.fromJson(v));
       });
@@ -251,7 +247,7 @@ class ItemDetail {
   String createdAt;
   String description;
   String docType;
-  num grossweight;
+  double grossweight;
   String id;
   Item item;
   String measurements;
@@ -260,6 +256,8 @@ class ItemDetail {
   int units;
   String updatedAt;
   String variety;
+  int amount;
+  int charge;
 
   ItemDetail(
       {this.sKU,
@@ -278,20 +276,22 @@ class ItemDetail {
       this.ringsize,
       this.units,
       this.updatedAt,
-      this.variety});
+      this.variety,
+      this.amount,
+      this.charge});
 
   ItemDetail.fromJson(Map<String, dynamic> json) {
     sKU = json['SKU'];
     category = json['category'];
     if (json['charges'] != null) {
-      charges = new List<Charges>();
+      charges = <Charges>[];
       json['charges'].forEach((v) {
         charges.add(new Charges.fromJson(v));
       });
     }
     collections = json['collections'];
     if (json['composition'] != null) {
-      composition = new List<Composition>();
+      composition = <Composition>[];
       json['composition'].forEach((v) {
         composition.add(new Composition.fromJson(v));
       });
@@ -308,6 +308,8 @@ class ItemDetail {
     units = json['units'];
     updatedAt = json['updatedAt'];
     variety = json['variety'];
+    amount = json['amount'];
+    charge = json['charge'];
   }
 
   Map<String, dynamic> toJson() {
@@ -335,6 +337,8 @@ class ItemDetail {
     data['units'] = this.units;
     data['updatedAt'] = this.updatedAt;
     data['variety'] = this.variety;
+    data['amount'] = this.amount;
+    data['charge'] = this.charge;
     return data;
   }
 }
@@ -348,14 +352,15 @@ class Charges {
   String id;
   String updatedAt;
 
-  Charges(
-      {this.percentage,
-      this.status,
-      this.type,
-      this.createdAt,
-      this.docType,
-      this.id,
-      this.updatedAt});
+  Charges({
+    this.percentage,
+    this.status,
+    this.type,
+    this.createdAt,
+    this.docType,
+    this.id,
+    this.updatedAt,
+  });
 
   Charges.fromJson(Map<String, dynamic> json) {
     percentage = json['Percentage'];
@@ -365,6 +370,7 @@ class Charges {
     docType = json['docType'];
     id = json['id'];
     updatedAt = json['updatedAt'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -376,6 +382,7 @@ class Charges {
     data['docType'] = this.docType;
     data['id'] = this.id;
     data['updatedAt'] = this.updatedAt;
+    data['status'] = this.status;
     return data;
   }
 }
@@ -497,7 +504,7 @@ class User {
     gBPBonusEntries = json['GBPBonusEntries'].cast<String>();
     gBPcode = json['GBPcode'];
     if (json['addresses'] != null) {
-      addresses = new List<Address>();
+      addresses = <Address>[];
       json['addresses'].forEach((v) {
         addresses.add(new Address.fromJson(v));
       });

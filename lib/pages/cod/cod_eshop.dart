@@ -246,9 +246,10 @@ class _Adress_Details_Payment_EshopState
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      Navigator.of(context).pop();
       final responseString = await response.stream.bytesToString();
       Map det = jsonDecode(responseString);
-      fetchTransactionid(det['id']);
+      fetchTransactionid(det['data']['savedAddress']['id']);
     } else {
       print(response.reasonPhrase);
     }

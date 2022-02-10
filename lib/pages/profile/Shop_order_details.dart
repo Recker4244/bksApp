@@ -259,7 +259,7 @@ class YourorderdetailsState extends State<Yourorderdetails> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        temp.consignment,
+                        temp.consignment.toString(),
                         style: TextStyle(
                           color: blackColor,
                           fontSize: 14,

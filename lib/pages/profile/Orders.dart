@@ -147,7 +147,7 @@ class _OrdersState extends State<Orders> {
           processing[index].id,
           "",
           //processing[index].item.productName.toUpperCase(),
-          "INR ${processing[index].amount.toStringAsFixed(2)}",
+          "INR ${processing[index].transactions}",
           'TRACK ORDER',
           'CANCEL ORDER',
           Yourorderdetails(
@@ -167,7 +167,7 @@ class _OrdersState extends State<Orders> {
             cancelled[index].id,
             "",
             //cancelled[index].item.productName.toUpperCase(),
-            "INR ${cancelled[index].amount.toStringAsFixed(2)}",
+            "INR ${cancelled[index]}",
             'ORDER DETAIL',
             Yourorderdetails(
               id: cancelled[index].id,
@@ -184,7 +184,7 @@ class _OrdersState extends State<Orders> {
             delivered[index].id,
             "",
             //delivered[index].item.productName.toUpperCase(),
-            "INR ${delivered[index].amount.toString()}",
+            "INR 9880}",
             'ORDER DETAIL',
             Yourorderdetails(
               id: delivered[index].id,
