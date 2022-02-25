@@ -24,13 +24,17 @@ class Adress_Details_Payment_Eshop extends StatefulWidget {
   final String buysellid;
   final bool instantgold;
   final num amount;
+  final num instantgoldbal;
+  final num sell;
 
   Adress_Details_Payment_Eshop(
       {this.Cartid,
       this.amount,
       this.buysellid,
       this.instantgold,
-      this.deliverycharge});
+      this.deliverycharge,
+      this.instantgoldbal,
+      this.sell});
 
   @override
   _Adress_Details_Payment_EshopState createState() =>
@@ -117,6 +121,31 @@ class _Adress_Details_Payment_EshopState
     }
   }
 
+  Future removefromwallet(num gold, num amount) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
+
+    final body = {
+      "gold": gold,
+      "transactions": {
+        "paymentId": "RZP_00000043",
+        "amount": amount,
+        "status": "Debited"
+      }
+    };
+    request.body = json.encode(body);
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   Map det_of_transaction;
   Future fetchTransactionid(String address) async {
     loadingDialog(context);
@@ -135,6 +164,10 @@ class _Adress_Details_Payment_EshopState
     if (response.statusCode == 200) {
       det_of_transaction = jsonDecode(response.body);
       final responseString = det_of_transaction['data'];
+      if (widget.instantgold) {
+        await removefromwallet(
+            widget.instantgoldbal, widget.instantgoldbal * widget.sell);
+      }
       await createOrder(address);
     } else {
       Navigator.of(context).pop();

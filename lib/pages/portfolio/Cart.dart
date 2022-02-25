@@ -542,6 +542,7 @@ class _CartState extends State<Cart> {
                                   instantgold:
                                       num.parse(instantgold) > 0 ? true : false,
                                   amount: finalResult,
+                                  sell: sell,
                                 ),
                               ));
                         } else {
@@ -560,7 +561,9 @@ class _CartState extends State<Cart> {
                                 buysellid: buysellid,
                                 instantgold:
                                     num.parse(instantgold) > 0 ? true : false,
+                                instantgoldbal: availablebalance / sell,
                                 amount: finalResult,
+                                sell: sell,
                               ),
                             ));
                       }
