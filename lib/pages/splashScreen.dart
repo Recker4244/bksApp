@@ -57,38 +57,38 @@ class _SplashScreenState extends State<SplashScreen> {
   getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn');
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => Login()));
-    if (status != null && status == true) {
-      token = prefs.getString('token');
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Login()));
+    // if (status != null && status == true) {
+    //   token = prefs.getString('token');
 
-      final userMap = jsonDecode(prefs.getString('user'));
+    //   final userMap = jsonDecode(prefs.getString('user'));
 
-      await getuserdetails(userMap['id']);
-      //Userdata = userdata.fromJson(userMap);
+    //   await getuserdetails(userMap['id']);
+    //   //Userdata = userdata.fromJson(userMap);
 
-      if (Userdata.isInvested)
-        Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => BottomBar(
-              index: 2,
-            ),
-          ),
-        );
-      else
-        Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => BottomBar(
-              index: 1,
-            ),
-          ),
-        );
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
-    }
+    //   if (Userdata.isInvested == true && Userdata.isInvested != null)
+    //     Navigator.pushReplacement<void, void>(
+    //       context,
+    //       MaterialPageRoute<void>(
+    //         builder: (BuildContext context) => BottomBar(
+    //           index: 2,
+    //         ),
+    //       ),
+    //     );
+    //   else
+    //     Navigator.pushReplacement<void, void>(
+    //       context,
+    //       MaterialPageRoute<void>(
+    //         builder: (BuildContext context) => BottomBar(
+    //           index: 1,
+    //         ),
+    //       ),
+    //     );
+    // } else {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => Login()));
+    // }
   }
 
   @override

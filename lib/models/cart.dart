@@ -1,33 +1,4 @@
 class CartItems {
-  ItemDetail itemDetail;
-  int quantity;
-  int amount;
-  num totalAmount;
-
-  CartItems({this.itemDetail, this.quantity, this.amount, this.totalAmount});
-
-  CartItems.fromJson(Map<String, dynamic> json) {
-    itemDetail = json['itemDetail'] != null
-        ? new ItemDetail.fromJson(json['itemDetail'])
-        : null;
-    quantity = json['quantity'];
-    amount = json['amount'];
-    totalAmount = json['totalAmount'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.itemDetail != null) {
-      data['itemDetail'] = this.itemDetail.toJson();
-    }
-    data['quantity'] = this.quantity;
-    data['amount'] = this.amount;
-    data['totalAmount'] = this.totalAmount;
-    return data;
-  }
-}
-
-class ItemDetail {
   String sKU;
   Category category;
   List<Charges> charges;
@@ -45,8 +16,11 @@ class ItemDetail {
   int units;
   String updatedAt;
   Collections variety;
+  int amount;
+  int totalAmount;
+  int quantity;
 
-  ItemDetail(
+  CartItems(
       {this.sKU,
       this.category,
       this.charges,
@@ -63,9 +37,12 @@ class ItemDetail {
       this.ringsize,
       this.units,
       this.updatedAt,
-      this.variety});
+      this.variety,
+      this.amount,
+      this.totalAmount,
+      this.quantity});
 
-  ItemDetail.fromJson(Map<String, dynamic> json) {
+  CartItems.fromJson(Map<String, dynamic> json) {
     sKU = json['SKU'];
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
@@ -101,6 +78,9 @@ class ItemDetail {
     variety = json['variety'] != null
         ? new Collections.fromJson(json['variety'])
         : null;
+    amount = json['amount'];
+    totalAmount = json['totalAmount'];
+    quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,6 +116,9 @@ class ItemDetail {
     if (this.variety != null) {
       data['variety'] = this.variety.toJson();
     }
+    data['amount'] = this.amount;
+    data['totalAmount'] = this.totalAmount;
+    data['quantity'] = this.quantity;
     return data;
   }
 }
@@ -202,7 +185,7 @@ class Charges {
 
   Charges.fromJson(Map<String, dynamic> json) {
     percentage = json['Percentage'];
-
+    status = json['Status'];
     type = json['Type'];
     createdAt = json['createdAt'];
     docType = json['docType'];

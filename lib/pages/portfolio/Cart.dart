@@ -264,6 +264,31 @@ class _CartState extends State<Cart> {
     }
   }
 
+  Future removefromwallet(num gold, num amount) async {
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'PUT', Uri.parse('${baseurl}/api/wallet/remove/${Userdata.id}'));
+
+    final body = {
+      "gold": gold,
+      "transactions": {
+        "paymentId": "RZP_00000043",
+        "amount": amount,
+        "status": "Debited"
+      }
+    };
+    request.body = json.encode(body);
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
   Future<bool> init;
   Future<bool> initialise() async {
     await buysellletest();
@@ -281,6 +306,14 @@ class _CartState extends State<Cart> {
 
   _handlePaymentSuccess(PaymentSuccessResponse response) async {
     await fetchTransactionid(response.paymentId.toString());
+    if (ispressed) {
+      if (finalResult > availablebalance) {
+        await removefromwallet(instantgold, availablebalance);
+      } else {
+        await removefromwallet(availablebalance / sell, availablebalance);
+      }
+    }
+
     await createorder();
   }
 
@@ -646,7 +679,7 @@ class _CartState extends State<Cart> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${list_of_cartItems[index].itemDetail.createdAt} GRAM ${list_of_cartItems[index].itemDetail.composition[0].metalGroup.karatage} ${list_of_cartItems[index].itemDetail.item.name.toUpperCase()}",
+                                  "${list_of_cartItems[index].grossweight} GRAM ${list_of_cartItems[index].composition[0].metalGroup.karatage} ${list_of_cartItems[index].item.name}",
                                   style: primaryColor16BoldTextStyle,
                                 ),
                                 // TODO
@@ -772,10 +805,12 @@ class _CartState extends State<Cart> {
           ),
           GestureDetector(
             onTap: () {
-              setState(() {
-                ispressed = !ispressed;
-                ToPay(ispressed);
-              });
+              if (instantgold > 0) {
+                setState(() {
+                  ispressed = !ispressed;
+                  ToPay(ispressed);
+                });
+              }
             },
             child: Container(
               height: 60,
@@ -794,7 +829,7 @@ class _CartState extends State<Cart> {
                             style: primaryColor14MediumTextStyle,
                           ),
                           Text(
-                            '${num.parse(instantgold.toString()).toStringAsFixed(2)} GRAM',
+                            '${(availablebalance / sell).toStringAsFixed(2)} GRAM',
                             style: primaryColor14MediumTextStyle,
                           ),
                         ],
